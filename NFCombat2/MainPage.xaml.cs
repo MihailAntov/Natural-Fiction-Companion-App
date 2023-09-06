@@ -9,16 +9,20 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void OnFightClicked(object sender, EventArgs e)
 	{
 		count++;
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+		//if (count == 1)
+		//{
+		//	this.FightBtn.Text = $"Fought {count} time";
+		//}
+		//else
+		//{
+		//	this.FightBtn.Text = $"Fought {count} times";
+		//}
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		SemanticScreenReader.Announce(FightBtn.Text);
 	}
 }
 
