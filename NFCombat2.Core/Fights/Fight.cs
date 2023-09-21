@@ -1,18 +1,22 @@
 ﻿using NFCombat2.Models.Actions;
+
+
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Player;
+
 
 namespace NFCombat2.Models.Fights
 {
     public abstract class Fight
     {
-        public Fight(IList<Enemy> enemies, Player player)
+        public Fight(IList<Enemy> enemies, PlayerBase player)
         {
             Enemies = enemies;
             Player = player;
         }
 
         public IList<Enemy> Enemies { get; set; }
-        public Player Player { get; set; }
+        public PlayerBase Player { get; set; }
         public virtual void AutoRound() { }
         public virtual void AutoEncounter() { }
 

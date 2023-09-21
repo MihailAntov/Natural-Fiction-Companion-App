@@ -7,7 +7,7 @@ namespace NFCombat2.Services.Contracts
 {
     public interface IOptionsService
     {
-        ICollection<MoveActionOptions> GetMoveOptions();
-        ICollection<StandardActionOptions> GetStandardActionOptions();
+        ICollection<MoveActionOptions> GetMoveOptions(Fight fight);
+        ICollection<StandardActionOptions> GetStandardActionOptions(Fight fight);
     }
 }

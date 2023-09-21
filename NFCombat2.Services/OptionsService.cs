@@ -8,12 +8,12 @@ namespace NFCombat2.Services
 {
     public class OptionsService : IOptionsService
     {
-        private readonly Fight fight;
-        public OptionsService(Fight fight)
+        
+        public OptionsService()
         {
-            this.fight = fight;
+           
         }
-        public ICollection<MoveActionOptions> GetMoveOptions()
+        public ICollection<MoveActionOptions> GetMoveOptions(Fight fight)
         {
             var options = new List<MoveActionOptions>();
             if(!fight.Enemies.Any(e=> e.Distance == 0))
@@ -28,7 +28,7 @@ namespace NFCombat2.Services
             return options;
         }
 
-        public ICollection<StandardActionOptions> GetStandardActionOptions()
+        public ICollection<StandardActionOptions> GetStandardActionOptions(Fight fight)
         {
             var options = new List<StandardActionOptions>();
             if(!fight.Enemies.Any(e=> e.Distance == 0))

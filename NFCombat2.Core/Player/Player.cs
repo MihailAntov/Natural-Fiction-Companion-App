@@ -1,6 +1,6 @@
-﻿namespace NFCombat2.Models
+﻿namespace NFCombat2.Models.Player
 {
-    public abstract class Player
+    public abstract class PlayerBase
     {
         public int Health { get; set; }
         public int MaxHealth { get; set; }

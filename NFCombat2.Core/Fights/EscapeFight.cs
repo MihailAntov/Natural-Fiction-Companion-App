@@ -1,8 +1,12 @@
-﻿namespace NFCombat2.Models.Fights
+﻿
+using NFCombat2.Models.Player;
+
+
+namespace NFCombat2.Models.Fights
 {
     public class EscapeFight : Fight
     {
-        public EscapeFight(IList<Enemy> enemies, Player player) : base(enemies, player)
+        public EscapeFight(IList<Enemy> enemies, PlayerBase player) : base(enemies, player)
         {
         }
 
