@@ -52,4 +52,13 @@
 	  <ProjectReference Include="..\NFCombat2.Services\NFCombat2.Services.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="EpisodePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="FightPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

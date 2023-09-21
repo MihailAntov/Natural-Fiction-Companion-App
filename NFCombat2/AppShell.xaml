@@ -6,9 +6,20 @@
     xmlns:local="clr-namespace:NFCombat2"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage" />-->
+
+    <TabBar>
+        <Tab Title="Episode" Icon="book.png">
+            <ShellContent ContentTemplate="{DataTemplate local:EpisodePage}" />
+        </Tab>
+        <Tab Title="Fight" Icon="gaming.png">
+            <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />
+        </Tab>
+
+    </TabBar>
+
 
 </Shell>
