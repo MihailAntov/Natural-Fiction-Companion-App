@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NFCombat2.Pages.CharacterPage"
+             Title="Character">
+    <VerticalStackLayout>
+        
+        <Picker x:Name="Class"
+        Title="Select a class"
+                SelectedIndexChanged="ChangedClass">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Войник</x:String>
+                    <x:String>Инженер</x:String>
+                    <x:String>Хакер</x:String>
+                    <x:String>Специален Отряд</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+            
+        </Picker>
+    </VerticalStackLayout>
+</ContentPage>

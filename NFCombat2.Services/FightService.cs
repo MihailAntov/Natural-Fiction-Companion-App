@@ -11,24 +11,24 @@ namespace NFCombat2.Services
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
             var enemies = new List<Enemy>();
-            var player = new Soldier();
+            
             Fight fight;
             switch (episodeNumber)
             {
                 case 0:
-                    fight = new RegularFight(enemies, player);
+                    fight = new RegularFight(enemies);
                     break;
                 case 1:
-                    fight = new ChaseFight(enemies, player);
+                    fight = new ChaseFight(enemies);
                     break;
                 case 2:
-                    fight = new SoloFight(enemies, player);
+                    fight = new SoloFight(enemies);
                     break;
                 case 3:
-                    fight = new TimedFight(enemies, player);
+                    fight = new TimedFight(enemies);
                     break;
                 default:
-                    fight = new VirtualFight(enemies, player);
+                    fight = new VirtualFight(enemies);
                     break;
             }
             return fight;

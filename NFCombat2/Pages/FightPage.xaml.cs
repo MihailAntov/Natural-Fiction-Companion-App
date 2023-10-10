@@ -2,7 +2,7 @@ using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
 
-namespace NFCombat2;
+namespace NFCombat2.Pages;
 
 public partial class FightPage : ContentPage
 {
