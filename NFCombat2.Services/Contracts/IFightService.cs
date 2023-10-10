@@ -4,6 +4,6 @@ namespace NFCombat2.Services.Contracts
 {
     public interface IFightService
     {
-        Fight GetFightByEpisodeNumber(int episodeNumber);
+        Task<Fight> GetFightByEpisodeNumber(int episodeNumber);
     }
 }

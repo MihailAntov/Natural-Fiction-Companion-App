@@ -2,6 +2,7 @@
 
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
 
 namespace NFCombat2.Services
@@ -20,7 +21,7 @@ namespace NFCombat2.Services
             {
                 options.Add(MoveActionOptions.GetCloser);
             }
-            if (fight.Player.Consumables.Any())
+            if (StaticPlayer.Consumables.Any())
             {
                 options.Add(MoveActionOptions.UseItem);
             }

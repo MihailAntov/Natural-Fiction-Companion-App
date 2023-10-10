@@ -9,21 +9,21 @@ namespace NFCombat2.Models.Fights
 {
     public abstract class Fight
     {
-        public Fight(IList<Enemy> enemies, PlayerBase player)
+        public Fight(IList<Enemy> enemies)
         {
             Enemies = enemies;
-            Player = player;
+            
         }
 
         public IList<Enemy> Enemies { get; set; }
-        public PlayerBase Player { get; set; }
+        
         public virtual void AutoRound() { }
         public virtual void AutoEncounter() { }
 
         public virtual void Round() { }
         public virtual void SetUp()
         {
-            foreach (var equipment in Player.Equipment)
+            foreach (var equipment in StaticPlayer.Equipment)
             {
                 equipment.AffectFight();
             }
@@ -34,7 +34,7 @@ namespace NFCombat2.Models.Fights
             get
             {
                 var options = new List<IMoveAction>();
-                foreach(var consumable in Player.Consumables)
+                foreach(var consumable in StaticPlayer.Consumables)
                 {
                     options.Add(consumable);
                 }
@@ -52,17 +52,17 @@ namespace NFCombat2.Models.Fights
         {
             foreach(var enemy in Enemies)
             {
-                if(enemy.Strength > Player.Strength)
+                if(enemy.Strength > StaticPlayer.Strength)
                 {
-                    Player.Health -= enemy.Strength - Player.Strength;
-                    if(Player.Health < 0)
+                    StaticPlayer.Health -= enemy.Strength - StaticPlayer.Strength;
+                    if(StaticPlayer.Health < 0)
                     {
-                        Player.Health = 0;
+                        StaticPlayer.Health = 0;
                     }
                 }
-                else if(Player.Strength > enemy.Strength)
+                else if(StaticPlayer.Strength > enemy.Strength)
                 {
-                    enemy.Health -= Player.Strength - enemy.Strength;
+                    enemy.Health -= StaticPlayer.Strength - enemy.Strength;
                     if(enemy.Health < 0)
                     {
                         enemy.Health = 0;

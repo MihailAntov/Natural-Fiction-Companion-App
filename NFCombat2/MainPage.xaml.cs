@@ -17,39 +17,20 @@ public partial class MainPage : ContentPage
 
 
 
-	private void OnFightClicked(object sender, EventArgs e)
+	private async void OnFightClicked(object sender, EventArgs e)
 	{
 		count++;
         var fightService = this.Handler.MauiContext.Services.GetRequiredService<IFightService>();
 
-		//if(fight == null)
-		//{
-			
-		//	fight = fightService.GetFightByEpisodeNumber(int.Parse(episode.Text));
-		//}
+		
 
         
 		if(!string.IsNullOrEmpty(episode.Text))
 		{
-			fight = fightService.GetFightByEpisodeNumber(int.Parse(episode.Text));
+			fight = await fightService.GetFightByEpisodeNumber(int.Parse(episode.Text));
             this.FightBtn.Text = fight.GetType().Name;
         }
-        
-
-        //fight.Enemies.Add(new Models.Enemy());
-
-
-
-        //if (count == 1)
-        //{
-        //	this.FightBtn.Text = $"Fought {count} time";
-        //}
-        //else
-        //{
-        //	this.FightBtn.Text = $"Fought {count} times";
-        //}
-
-        
+     
 		SemanticScreenReader.Announce(FightBtn.Text);
 	}
 }

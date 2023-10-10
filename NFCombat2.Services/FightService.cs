@@ -8,24 +8,30 @@ namespace NFCombat2.Services
 {
     public class FightService : IFightService
     {
-        public Fight GetFightByEpisodeNumber(int episodeNumber)
+        public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
             var enemies = new List<Enemy>();
             var player = new Soldier();
-
+            Fight fight;
             switch (episodeNumber)
             {
                 case 0:
-                    return new RegularFight(enemies, player);
+                    fight = new RegularFight(enemies, player);
+                    break;
                 case 1:
-                    return new ChaseFight(enemies, player);
+                    fight = new ChaseFight(enemies, player);
+                    break;
                 case 2:
-                    return new SoloFight(enemies, player);
+                    fight = new SoloFight(enemies, player);
+                    break;
                 case 3:
-                    return new TimedFight(enemies, player);
+                    fight = new TimedFight(enemies, player);
+                    break;
                 default:
-                    return new VirtualFight(enemies, player);
+                    fight = new VirtualFight(enemies, player);
+                    break;
             }
+            return fight;
         }
     }
 }

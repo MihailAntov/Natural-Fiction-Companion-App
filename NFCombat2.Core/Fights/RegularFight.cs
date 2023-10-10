@@ -6,7 +6,7 @@ namespace NFCombat2.Models.Fights
 {
     public class RegularFight : Fight
     {
-        public RegularFight(IList<Enemy> enemies, PlayerBase player) : base(enemies, player)
+        public RegularFight(IList<Enemy> enemies) : base(enemies)
         {
         }
 

@@ -5,7 +5,7 @@ namespace NFCombat2.Models.Fights
 {
     public class VirtualFight : Fight
     {
-        public VirtualFight(IList<Enemy> enemies, PlayerBase player) : base(enemies, player)
+        public VirtualFight(IList<Enemy> enemies) : base(enemies)
         {
 
         }

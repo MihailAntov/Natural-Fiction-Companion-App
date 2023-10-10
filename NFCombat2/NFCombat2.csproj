@@ -53,9 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="EpisodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="FightPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

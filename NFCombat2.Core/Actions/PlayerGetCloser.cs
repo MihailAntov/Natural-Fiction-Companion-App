@@ -2,6 +2,7 @@
 
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Player;
 
 namespace NFCombat2.Models.Actions
 {
@@ -17,7 +18,7 @@ namespace NFCombat2.Models.Actions
         {
             foreach(var enemy in fight.Enemies)
             {
-                enemy.Distance -= fight.Player.Speed;
+                enemy.Distance -= StaticPlayer.Speed;
                 if(enemy.Distance < 0 ) 
                 {
                     enemy.Distance = 0;
