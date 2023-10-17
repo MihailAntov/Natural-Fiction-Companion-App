@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Pages.FightPage"
              Title="Fight Simulator">
 
@@ -38,13 +39,23 @@
             x:Name="IncreaseHpBtn"
             Text="Increase HP"
             Clicked="IncreaseHealth"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+                IsVisible="false"/>
 
             <Button
             x:Name="ShowHpBtn"
             Text="Show HP"
             Clicked="ShowHealth"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+                IsVisible="false"/>
+
+            <Button
+            x:Name="ChooseStandardActionBtn"
+                Text="Standard Action" 
+                Clicked="ShowStandardOptions"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                />
 
         </VerticalStackLayout>
     </ScrollView>

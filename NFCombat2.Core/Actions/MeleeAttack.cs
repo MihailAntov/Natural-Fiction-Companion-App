@@ -5,15 +5,15 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Actions
 {
-    public class PlayerRangedAttack : IStandardAction
+    public class MeleeAttack : IStandardAction
     {
-        private readonly Fight fight;
-        public PlayerRangedAttack(Fight fight)
+        private readonly Fight _fight;
+        public MeleeAttack(Fight fight)
         {
-            this.fight = fight;
+            _fight = fight;
         }
 
-        public string Label => "Shoot";
+        public string Label => "Melee Attack";
 
         public void AffectFight()
         {

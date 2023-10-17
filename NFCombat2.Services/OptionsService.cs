@@ -1,6 +1,9 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Models;
+using NFCombat2.Models.Actions;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
@@ -29,18 +32,19 @@ namespace NFCombat2.Services
             return options;
         }
 
-        public ICollection<StandardActionOptions> GetStandardActionOptions(Fight fight)
+        public ICollection<IStandardAction> GetStandardActionOptions(Fight fight)
         {
-            var options = new List<StandardActionOptions>();
+            var options = new List<IStandardAction>();
             if(!fight.Enemies.Any(e=> e.Distance == 0))
             {
-                options.Add(StandardActionOptions.RangedAttack);
+                options.Add(new PlayerRangedAttack(fight));
             }
             else
             {
-                options.Add(StandardActionOptions.MeleeAttack);
+                options.Add(new MeleeAttack(fight));
             }
 
+            options.Add(new PlayerRangedAttack(fight));
             return options;
         }
     }

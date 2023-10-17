@@ -5,6 +5,8 @@ namespace NFCombat2.Models
 {
     public abstract class Item : IMoveAction
     {
+        public abstract string Label { get; }
+
         public abstract void AffectFight();
     }
 }

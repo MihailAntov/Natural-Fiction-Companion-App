@@ -5,6 +5,8 @@ namespace NFCombat2.Models
 {
     public abstract class Program : IStandardAction
     {
+        public abstract string Label { get; }
+
         public abstract void AffectFight();
 
     }
