@@ -17,7 +17,10 @@ namespace NFCombat2.Models.Actions
 
         public void AffectFight()
         {
-            
+            if(fight.Enemies.Any())
+            {
+                fight.Enemies.FirstOrDefault().Range++;
+            }
         }
     }
 }

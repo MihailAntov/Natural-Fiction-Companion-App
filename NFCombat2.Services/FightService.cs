@@ -11,12 +11,29 @@ namespace NFCombat2.Services
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
             var enemies = new List<Enemy>();
+            var targetDummy = new Enemy()
+            {
+                Name = "Target Dummy",
+                Health = 10,
+                Range = 5,
+                Speed = 2
+            };
+
+            var targetDummy2 = new Enemy()
+            {
+                Name = "Target Dummy",
+                Health = 10,
+                Range = 5,
+                Speed = 2
+            };
+            enemies.Add(targetDummy);
             
             Fight fight;
             switch (episodeNumber)
             {
                 case 0:
                     fight = new RegularFight(enemies);
+                    enemies.Add(targetDummy2);
                     break;
                 case 1:
                     fight = new ChaseFight(enemies);

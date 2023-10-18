@@ -2,6 +2,9 @@ using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
 using CommunityToolkit.Maui.Views;
+using NFCombat2.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace NFCombat2.Pages;
 
@@ -10,10 +13,13 @@ public partial class FightPage : ContentPage
 	private Fight fight;
 	private IFightService _fightService;
 	private IOptionsService _optionsService;
+	public ObservableCollection<Enemy> Enemies { get; set; }
 	
 	public FightPage()
 	{
 		InitializeComponent();
+		Enemies = new ObservableCollection<Enemy>();
+		BindingContext = this;
     }
     
 
@@ -26,6 +32,12 @@ public partial class FightPage : ContentPage
 		this.ShowHpBtn.IsVisible = true;
 		this.IncreaseHpBtn.IsVisible = true;
 		this.ChooseStandardActionBtn.IsVisible = true;
+		Enemies.Clear();
+		foreach(var enemy in fight.Enemies)
+		{
+			Enemies.Add(enemy);
+		}
+		//OnPropertyChanged(nameof(Enemies));
     }
 
 	public void IncreaseHealth(object sender, EventArgs e)

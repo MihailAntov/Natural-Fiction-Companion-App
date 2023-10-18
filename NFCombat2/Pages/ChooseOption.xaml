@@ -6,15 +6,18 @@
              xmlns:local="clr-namespace:NFCombat2.Pages">
 
 
-    <VerticalStackLayout BindableLayout.ItemsSource="{Binding StandardActions}">
-        <BindableLayout.ItemTemplate>
+    <ListView ItemsSource="{Binding StandardActions}" ItemTapped="AffectCombat">
+        <ListView.ItemTemplate>
             <DataTemplate>
-                <Button 
+                <ViewCell>
+                    <Label
                     Text="{Binding Label}"
-                    Clicked=""/>
+                        />
+                </ViewCell>
+
             </DataTemplate>
-        </BindableLayout.ItemTemplate>
+        </ListView.ItemTemplate>
         
-    </VerticalStackLayout>
+    </ListView>
 
 </ContentPage>

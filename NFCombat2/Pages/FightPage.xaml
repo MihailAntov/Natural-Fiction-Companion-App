@@ -12,6 +12,19 @@
         Padding="30,0"
         VerticalOptions="Center">
 
+            
+
+            <ListView ItemsSource="{Binding Enemies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell 
+                            Text="{Binding Name}"
+                            Detail="{Binding Range}"
+                        />
+                    </DataTemplate>
+                </ListView.ItemTemplate>    
+            </ListView>
+
             <Label
             Text="Natural Fiction"
             SemanticProperties.HeadingLevel="Level1"
