@@ -11,6 +11,7 @@ namespace NFCombat2.Services
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
             var enemies = new List<Enemy>();
+
             var targetDummy = new Enemy()
             {
                 Name = "Target Dummy",
@@ -27,8 +28,11 @@ namespace NFCombat2.Services
                 Speed = 2
             };
             enemies.Add(targetDummy);
-            
+
+            var fighter = new Soldier();
+
             Fight fight;
+            
             switch (episodeNumber)
             {
                 case 0:
@@ -48,6 +52,7 @@ namespace NFCombat2.Services
                     fight = new VirtualFight(enemies);
                     break;
             }
+            fight.Player = fighter;
             return fight;
         }
     }
