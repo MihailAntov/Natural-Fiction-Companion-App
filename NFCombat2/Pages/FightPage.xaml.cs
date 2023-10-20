@@ -42,12 +42,12 @@ public partial class FightPage : ContentPage
 
 	public void IncreaseHealth(object sender, EventArgs e)
 	{
-		StaticPlayer.Health++;
+		fight.Player.Health++;
 	}
 
 	public async void ShowHealth(object sender, EventArgs e)
 	{
-		await DisplayAlert("Health",$"{StaticPlayer.Health}","Okay");
+		await DisplayAlert("Health",$"{fight.Player.Health}","Okay");
 	}
 
 	public async void ShowStandardOptions(object sender, EventArgs e)

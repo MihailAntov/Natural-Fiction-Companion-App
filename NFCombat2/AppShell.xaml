@@ -12,18 +12,22 @@
         Route="MainPage" />-->
 
     <TabBar>
-        <Tab Title="Episode" Icon="character.png">
+        <Tab Title="Character" Icon="character.png">
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />
         </Tab>
-        <Tab Title="Fight" Icon="fight.png">
+        <Tab Title="Combat Simulator" Icon="fight.png">
             <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />
         </Tab>
 
-        <Tab Title="Fight" Icon="inventory.png">
+        <Tab Title="Equipment" Icon="inventory.png">
             <ShellContent ContentTemplate="{DataTemplate local:InventoryPage}" />
         </Tab>
 
-        <Tab Title="Fight" Icon="dice.png">
+        <Tab Title="Inventions" Icon="inventions.png">
+            <ShellContent ContentTemplate="{DataTemplate local:InventionsPage}" />
+        </Tab>
+
+        <Tab Title="Dice Roller" Icon="dice.png">
             <ShellContent ContentTemplate="{DataTemplate local:DicePage}" />
         </Tab>
 

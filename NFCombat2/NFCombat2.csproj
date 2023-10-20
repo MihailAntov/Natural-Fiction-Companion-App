@@ -49,6 +49,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\dice1.png" />
+	  <None Remove="Resources\Images\dice2.png" />
+	  <None Remove="Resources\Images\dice3.png" />
+	  <None Remove="Resources\Images\dice4.png" />
+	  <None Remove="Resources\Images\dice5.png" />
+	  <None Remove="Resources\Images\dice6.png" />
+	  <None Remove="Resources\Images\inventions.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 	</ItemGroup>
 
@@ -67,6 +77,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\FightPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\InventionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\InventoryPage.xaml">

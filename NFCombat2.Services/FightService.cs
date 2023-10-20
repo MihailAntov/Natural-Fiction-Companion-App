@@ -36,23 +36,22 @@ namespace NFCombat2.Services
             switch (episodeNumber)
             {
                 case 0:
-                    fight = new RegularFight(enemies);
+                    fight = new RegularFight(enemies, fighter);
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
-                    fight = new ChaseFight(enemies);
+                    fight = new ChaseFight(enemies, fighter);
                     break;
                 case 2:
-                    fight = new SoloFight(enemies);
+                    fight = new SoloFight(enemies, fighter);
                     break;
                 case 3:
-                    fight = new TimedFight(enemies);
+                    fight = new TimedFight(enemies, fighter);
                     break;
                 default:
-                    fight = new VirtualFight(enemies);
+                    fight = new VirtualFight(enemies, fighter);
                     break;
             }
-            fight.Player = fighter;
             return fight;
         }
     }

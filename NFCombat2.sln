@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFCombat2", "NFCombat2\NFCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFCombat2.Models", "NFCombat2.Core\NFCombat2.Models.csproj", "{5571DF0D-2FEE-4940-AFC6-BCA89E920CE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFCombat2.Services", "NFCombat2.Services\NFCombat2.Services.csproj", "{1D4866F6-FF60-4DE9-9039-697F84DD3BD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFCombat2.Services", "NFCombat2.Services\NFCombat2.Services.csproj", "{1D4866F6-FF60-4DE9-9039-697F84DD3BD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFCombat2.Common", "NFCombat2.Common\NFCombat2.Common.csproj", "{429F5AFB-732F-48D6-B5E5-1DED3F884F45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFCombat2.Common", "NFCombat2.Common\NFCombat2.Common.csproj", "{429F5AFB-732F-48D6-B5E5-1DED3F884F45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

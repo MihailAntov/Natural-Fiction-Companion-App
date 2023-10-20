@@ -3,10 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.DicePage"
              Title="Dice Roller">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition x:Name="SecondRow"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <FlexLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" Direction="Row"  Wrap="Wrap" JustifyContent="SpaceAround">
+            
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot0" Grid.Row="0" Grid.Column="0" Source="dice1" IsVisible="false"/>
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot1" Grid.Row="0" Grid.Column="1" Source="dice1" IsVisible="false"/>
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot2" Grid.Row="0" Grid.Column="2" Source="dice1" IsVisible="false"/>
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot3" Grid.Row="1" Grid.Column="0" Source="dice1" IsVisible="false"/>
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot4" Grid.Row="1" Grid.Column="1" Source="dice1" IsVisible="false"/>
+            <Image FlexLayout.Basis="30%" x:Name="DiceSlot5" Grid.Row="1" Grid.Column="2" Source="dice1" IsVisible="false"/>
+        </FlexLayout>
+
+        <Button Grid.Row="2" Grid.Column="1" Text="Roll" Clicked="OnRoll"/>
+        <Label Grid.Row="4" Grid.Column="0" FontSize="Large" HorizontalOptions="Center" Text="{Binding Dice}"/>
+        <Label Grid.Row="4" Grid.Column="1" FontSize="Large"  HorizontalOptions="Center" Text="d6 +"/>
+        <Label Grid.Row="4" Grid.Column="2"  FontSize="Large" HorizontalOptions="Center" Text="{Binding BonusDamage}"/>
+        <Stepper Scale="0.5" Grid.Row="5" Grid.Column="0"  Maximum="6" Minimum="1" ValueChanged="OnDiceChanged"/>
+        <Stepper Scale="0.5" Grid.Row="5" Grid.Column="2"  Maximum="100" Minimum="0" ValueChanged="OnBonusDamageChanged"/>
+        <Label Grid.Row="7" Grid.Column="1" FontAttributes="Bold"  x:Name="ResultLabel" FontSize="Large" HorizontalOptions="Center" Text="{Binding Result, StringFormat='Result: {0}'}" IsVisible="False"/>
+    </Grid>
+
+
+
+  
+    
+    
+   
+
+
+
+
+
 </ContentPage>

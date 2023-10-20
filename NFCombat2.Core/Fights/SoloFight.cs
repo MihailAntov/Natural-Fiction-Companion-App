@@ -4,7 +4,7 @@ namespace NFCombat2.Models.Fights
 {
     public class SoloFight : Fight
     {
-        public SoloFight(IList<Enemy> enemies ) : base(enemies)
+        public SoloFight(IList<Enemy> enemies, Player.Player player) : base(enemies, player)
         {
         }
 
