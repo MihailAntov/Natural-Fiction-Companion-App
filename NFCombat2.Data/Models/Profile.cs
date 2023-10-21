@@ -1,14 +1,18 @@
-﻿
+﻿using SQLite;
 
 using NFCombat2.Common.Enums;
 using NFCombat2.Data.Models.Items;
 
 namespace NFCombat2.Data.Models
 {
+    [Table("Profiles")]
     public class Profile
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public PlayerClass PlayerClass { get; set; } = PlayerClass.None;
+
+        [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
         public int ClassId { get; set; } = 0;
         public int Trauma { get; set; } = 0;
@@ -26,14 +30,14 @@ namespace NFCombat2.Data.Models
         public int MaxOverload { get; set; } = 10;
 
         public int MaxWeaponWeight { get; set; } = 1;
-        public ICollection<Weapon> Weapons { get; set; } = new HashSet<Weapon>();
-        public ICollection<Modification> Modifications { get; set; } = new HashSet<Modification>();
-        public ICollection<Modification> MainHandModifications { get; set; } = new HashSet<Modification>();
-        public ICollection<Modification> OffHandModifications { get; set; } = new HashSet<Modification>();
+        //public ICollection<Weapon> Weapons { get; set; } = new HashSet<Weapon>();
+        //public ICollection<Modification> Modifications { get; set; } = new HashSet<Modification>();
+        //public ICollection<Modification> MainHandModifications { get; set; } = new HashSet<Modification>();
+        //public ICollection<Modification> OffHandModifications { get; set; } = new HashSet<Modification>();
 
-        public ICollection<Equipment> Equipments { get; set; } = new HashSet<Equipment>();
-        public ICollection<Consumable> Consumables { get; set; } = new HashSet<Consumable>();
-        public ICollection<Invention> Inventions { get; set; } = new HashSet<Invention>();
+        //public ICollection<Equipment> Equipments { get; set; } = new HashSet<Equipment>();
+        //public ICollection<Consumable> Consumables { get; set; } = new HashSet<Consumable>();
+        //public ICollection<Invention> Inventions { get; set; } = new HashSet<Invention>();
 
     }
 }

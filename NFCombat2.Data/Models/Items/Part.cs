@@ -6,7 +6,8 @@ namespace NFCombat2.Data.Models.Items
     {
         public string Description { get; set; } = "Горивна Клетка";
         public string Letter { get; set; } = "а";
-        public int Number { get; set; } = 2;
+        public int Code { get; set; } = 2;
         public PartType Type { get; set; } = PartType.ReactiveAgent;
+        public int Quantity { get; set; }
     }
 }

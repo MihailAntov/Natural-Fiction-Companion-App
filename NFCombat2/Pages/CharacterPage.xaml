@@ -18,5 +18,9 @@
             </Picker.ItemsSource>
             
         </Picker>
+        <Label Text="Profile Name"/>
+        <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
+        <Button Text="Add Profile" Clicked="RegisterProfile"/>
+        <Button Text="View All Profiles" Clicked="GetAllProfiles"/>
     </VerticalStackLayout>
 </ContentPage>

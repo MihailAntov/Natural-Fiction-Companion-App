@@ -2,8 +2,9 @@
 
 namespace NFCombat2.Models.Player
 {
-    public abstract class Player
+    public class Player
     {
+        public string Name { get; set; } = null!;
         public int Health { get; set; } = 30;
         public int MaxHealth { get; set; } = 30;
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }

@@ -20,6 +20,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
 	  <ProjectReference Include="..\NFCombat2.Core\NFCombat2.Models.csproj" />
+	  <ProjectReference Include="..\NFCombat2.Data\NFCombat2.Data.csproj" />
 	</ItemGroup>
 
 </Project>
