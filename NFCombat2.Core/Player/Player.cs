@@ -11,6 +11,8 @@ namespace NFCombat2.Models.Player
         public IList<Weapon> Weapons { get; set; } = new List<Weapon>();
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
         public IList<Consumable> Consumables { get; set; } = new List<Consumable>();
+
+        public IList<Part> Parts { get; set; } = new List<Part>();
         public int Trauma { get; set; } = 0;
         public int MaxTrauma { get; set; } = 3;
         public int Ionization { get; set; } = 0;

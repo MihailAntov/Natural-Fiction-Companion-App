@@ -1,3 +1,5 @@
+using Microsoft.Maui.Layouts;
+
 namespace NFCombat2.Pages;
 
 public partial class DicePage : ContentPage
@@ -11,6 +13,8 @@ public partial class DicePage : ContentPage
 
 	public int Dice { get; set; } = 1;
 	public int BonusDamage { get; set; } = 0;
+
+	
 
 	public int Result { get; set; } = 0;
 	public Random random;
@@ -31,7 +35,7 @@ public partial class DicePage : ContentPage
 
 	void OnRoll(object sender, EventArgs e)
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 10; i++)
         {
             var diceImage = this.FindByName($"DiceSlot{i}") as Image;
             diceImage.IsVisible = false;
@@ -45,12 +49,14 @@ public partial class DicePage : ContentPage
 			dice.Add(random.Next(1, 7));
 		}
 
+		
 
 		for(int i = 0; i < dice.Count; i++)
 		{
 			int value = dice[i];
 			var diceImage = this.FindByName($"DiceSlot{i}") as Image;
 			diceImage.Source = $"dice{value}";
+			
 			diceImage.IsVisible = true;
 		}
 

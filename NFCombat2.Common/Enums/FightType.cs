@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NFCombat2.Data.Models
+namespace NFCombat2.Common.Enums
 {
-    internal class Enemy
+    internal class FightType
     {
     }
 }
