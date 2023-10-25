@@ -15,7 +15,7 @@ namespace NFCombat2.Models.Actions
 
         public string Label => "Melee Attack";
 
-        public void AffectFight()
+        public void AffectFight(Fight fight)
         {
             
         }

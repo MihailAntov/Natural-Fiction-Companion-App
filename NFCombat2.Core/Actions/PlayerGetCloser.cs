@@ -16,7 +16,7 @@ namespace NFCombat2.Models.Actions
 
         public string Label => "Get Closer";
 
-        public void AffectFight()
+        public void AffectFight(Fight fight)
         {
             foreach(var enemy in fight.Enemies)
             {

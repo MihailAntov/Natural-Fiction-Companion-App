@@ -15,7 +15,7 @@ namespace NFCombat2.Models.Actions
 
         public string Label => "Shoot";
 
-        public void AffectFight()
+        public void AffectFight(Fight fight)
         {
             if(fight.Enemies.Any())
             {

@@ -17,35 +17,20 @@ namespace NFCombat2.Services
         {
            
         }
-        public ICollection<MoveActionOptions> GetMoveOptions(Fight fight)
+
+        public ICollection<string> GetCategories(Fight fight)
         {
-            var options = new List<MoveActionOptions>();
-            if(!fight.Enemies.Any(e=> e.Distance == 0))
-            {
-                options.Add(MoveActionOptions.GetCloser);
-            }
-            if (StaticPlayer.Consumables.Any())
-            {
-                options.Add(MoveActionOptions.UseItem);
-            }
-            
-            return options;
+            return new List<string>() { "Shoot", "Item", "Move in" };
         }
 
-        public ICollection<IStandardAction> GetStandardActionOptions(Fight fight)
+        public ICollection<IMoveAction> GetItems(Fight fight)
         {
-            var options = new List<IStandardAction>();
-            if(!fight.Enemies.Any(e=> e.Distance == 0))
-            {
-                options.Add(new PlayerRangedAttack(fight));
-            }
-            else
-            {
-                options.Add(new MeleeAttack(fight));
-            }
+            return new List<IMoveAction>() { new Consumable() };
+        }
 
-            options.Add(new PlayerRangedAttack(fight));
-            return options;
+        public ICollection<IStandardAction> GetPrograms(Fight fight)
+        {
+            return new List<IStandardAction>();
         }
     }
 }

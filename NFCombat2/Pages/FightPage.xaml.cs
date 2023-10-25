@@ -1,10 +1,10 @@
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
-using CommunityToolkit.Maui.Views;
 using NFCombat2.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using NFCombat2.Views;
 
 namespace NFCombat2.Pages;
 
@@ -29,9 +29,9 @@ public partial class FightPage : ContentPage
 		_fightService = this.Handler.MauiContext.Services.GetRequiredService<IFightService>();
 		fight = await _fightService.GetFightByEpisodeNumber(result);
 		TestLabel.Text = fight.GetType().Name;
-		this.ShowHpBtn.IsVisible = true;
-		this.IncreaseHpBtn.IsVisible = true;
-		this.ChooseStandardActionBtn.IsVisible = true;
+		//this.ShowHpBtn.IsVisible = true;
+		//this.IncreaseHpBtn.IsVisible = true;
+		//this.ChooseStandardActionBtn.IsVisible = true;
 		Enemies.Clear();
 		foreach(var enemy in fight.Enemies)
 		{
@@ -50,15 +50,7 @@ public partial class FightPage : ContentPage
 		await DisplayAlert("Health",$"{fight.Player.Health}","Okay");
 	}
 
-	public async void ShowStandardOptions(object sender, EventArgs e)
-	{
-        _optionsService = this.Handler.MauiContext.Services.GetRequiredService<IOptionsService>();
-		var standardActionOptions = _optionsService.GetStandardActionOptions(this.fight);
-		var optionsPage = new ChooseStandardAction(standardActionOptions);
-		
-		
-		await Navigation.PushAsync(optionsPage);
-    }
+	
 
 	
 

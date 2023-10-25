@@ -8,6 +8,12 @@ namespace NFCombat2.Services
 {
     public class FightService : IFightService
     {
+        private Fight _fight;
+        public Fight GetFight()
+        {
+            return _fight;
+        }
+
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
             var enemies = new List<Enemy>();
@@ -52,6 +58,7 @@ namespace NFCombat2.Services
                     fight = new VirtualFight(enemies, fighter);
                     break;
             }
+            _fight = fight;
             return fight;
         }
     }

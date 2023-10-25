@@ -4,7 +4,8 @@
              x:Class="NFCombat2.Pages.CharacterPage"
              Title="Character">
     <VerticalStackLayout>
-        
+
+        <Label FontSize="Large" Text="{Binding CharacterName}"/>
         <Picker x:Name="Class"
         Title="Select a class"
                 SelectedIndexChanged="ChangedClass">

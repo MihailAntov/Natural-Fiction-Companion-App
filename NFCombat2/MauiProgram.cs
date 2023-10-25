@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NFCombat2.Services.Contracts;
 using NFCombat2.Pages;
 using NFCombat2.Data;
+using NFCombat2.Views;
 
 namespace NFCombat2;
 
@@ -13,9 +14,10 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder.Services.AddScoped<IOptionsService, OptionsService>();
-		builder.Services.AddScoped<IFightService, FightService>();
+		builder.Services.AddSingleton<IFightService, FightService>();
 		builder.Services.AddScoped<IProfileService, ProfileService>();
 		builder.Services.AddSingleton<CharacterPage>();
+		builder.Services.AddSingleton<OptionPickerView>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<ProfileRepository>(s => ActivatorUtilities.CreateInstance<ProfileRepository>(s, dbPath));

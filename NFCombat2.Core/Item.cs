@@ -7,6 +7,6 @@ namespace NFCombat2.Models
     {
         public abstract string Label { get; }
 
-        public abstract void AffectFight();
+        public abstract void AffectFight(Fight fight);
     }
 }

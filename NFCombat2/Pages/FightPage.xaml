@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:NFCombat2.Views"
              x:Class="NFCombat2.Pages.FightPage"
              Title="Fight Simulator">
 
@@ -11,9 +11,6 @@
         Spacing="25"
         Padding="30,0"
         VerticalOptions="Center">
-
-            
-
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -48,28 +45,14 @@
             Clicked="GetEpisode" 
             HorizontalOptions="Center" />
 
-            <Button
-            x:Name="IncreaseHpBtn"
-            Text="Increase HP"
-            Clicked="IncreaseHealth"
-            HorizontalOptions="Center"
-                IsVisible="false"/>
 
-            <Button
-            x:Name="ShowHpBtn"
-            Text="Show HP"
-            Clicked="ShowHealth"
-            HorizontalOptions="Center" 
-                IsVisible="false"/>
 
-            <Button
-            x:Name="ChooseStandardActionBtn"
-                Text="Standard Action" 
-                Clicked="ShowStandardOptions"
-                HorizontalOptions="Center"
-                IsVisible="false"
-                />
+            <views:OptionPickerView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                
+            </views:OptionPickerView>
+
 
         </VerticalStackLayout>
+        
     </ScrollView>
 </ContentPage>

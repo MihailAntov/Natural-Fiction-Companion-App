@@ -15,7 +15,7 @@ namespace NFCombat2.Models.Actions
 
         public string Label => throw new NotImplementedException();
 
-        public void AffectFight()
+        public void AffectFight(Fight fight)
         {
             foreach(var enemy in fight.Enemies)
             {
