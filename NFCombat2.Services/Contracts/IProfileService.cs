@@ -7,5 +7,6 @@ namespace NFCombat2.Services.Contracts
     {
         public void Save(string name);
         public List<Player> GetAll();
+        public Player CurrentPlayer();
     }
 }

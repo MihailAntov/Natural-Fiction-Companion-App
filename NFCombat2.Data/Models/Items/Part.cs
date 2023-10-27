@@ -11,3 +11,5 @@ namespace NFCombat2.Data.Models.Items
         public int Quantity { get; set; }
     }
 }
+
+

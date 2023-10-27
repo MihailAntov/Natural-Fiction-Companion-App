@@ -12,8 +12,9 @@ namespace NFCombat2.Models.Actions
         {
             this.fight = fight;
         }
+        public Enemy Target { get; set; }
 
-        public string Label => "Shoot";
+        public string Label { get; set; }
 
         public void AffectFight(Fight fight)
         {

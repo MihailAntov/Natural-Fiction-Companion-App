@@ -1,34 +1,85 @@
-﻿
+﻿using NFCombat2.Models;
+using NFCombat2.Models.Fights;
+using NFCombat2.Services.Contracts;
+using System.Collections.ObjectModel;
+using NFCombat2.Models.Contracts;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-//namespace NFCombat2.ViewModels
-//{
-//    public class FightPageViewModel
-//    {
-//        public async void GetEpisode(object sender, EventArgs e)
-//        {
-//            int result = int.Parse(await DisplayPromptAsync("Enter episode number", null, "Enter", "Cancel", null, maxLength: 3, keyboard: Keyboard.Numeric));
-//            _fightService = this.Handler.MauiContext.Services.GetRequiredService<IFightService>();
-//            fight = await _fightService.GetFightByEpisodeNumber(result);
-//            TestLabel.Text = fight.GetType().Name;
-//            //this.ShowHpBtn.IsVisible = true;
-//            //this.IncreaseHpBtn.IsVisible = true;
-//            //this.ChooseStandardActionBtn.IsVisible = true;
-//            Enemies.Clear();
-//            foreach (var enemy in fight.Enemies)
-//            {
-//                Enemies.Add(enemy);
-//            }
-//            //OnPropertyChanged(nameof(Enemies));
-//        }
+namespace NFCombat2.ViewModels
+{
+    public class FightPageViewModel : INotifyPropertyChanged
+    {
 
-//        public void IncreaseHealth(object sender, EventArgs e)
-//        {
-//            fight.Player.Health++;
-//        }
+        private Fight fight;
+        private IFightService _fightService;
+        private IOptionsService _optionsService;
 
-//        public async void ShowHealth(object sender, EventArgs e)
-//        {
-//            await DisplayAlert("Health", $"{fight.Player.Health}", "Okay");
-//        }
-//    }
-//}
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Command GetEpisodeCommand { get; }
+        private string testLabel;
+        public string TestLabel
+        {
+            get { return testLabel; }
+            set
+            {
+                if(testLabel != value)
+                {
+                    testLabel = value;
+                    OnPropertyChanged(nameof(TestLabel));
+                }
+            }
+        }
+        public string EpisodeNumber { get; set; }
+        
+
+        public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
+        public ObservableCollection<string> Categories { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<IAction> Options { get; set; } = new ObservableCollection<IAction>();
+        public OptionPickerViewModel OptionPickerViewModel { get; set; } 
+
+        private bool notInCombat = true;
+        public bool NotInCombat { get { return notInCombat; } 
+            set
+            {
+                if (notInCombat != value)
+                {
+                    notInCombat = value;
+                    OnPropertyChanged(nameof(NotInCombat));
+                }
+            }
+        }
+
+        public FightPageViewModel(IFightService fightService, IOptionsService optionsService, OptionPickerViewModel opctionPickerViewModel)
+        {
+                _fightService = fightService;
+                _optionsService = optionsService;
+            OptionPickerViewModel = opctionPickerViewModel;
+            GetEpisodeCommand = new Command(GetEpisode);
+        }
+        public async void GetEpisode()
+        {
+            int.TryParse(EpisodeNumber, out int episode);
+            
+            fight = await _fightService.GetFightByEpisodeNumber(episode);
+            TestLabel = fight.GetType().Name;
+
+            Enemies.Clear();
+            foreach (var enemy in fight.Enemies)
+            {
+                Enemies.Add(enemy);
+            }
+            //OptionPickerViewModel.Categories = new ObservableCollection<string>(_optionsService.GetCategories(fight));
+        }
+
+        public void IncreaseHealth(object sender, EventArgs e)
+        {
+            fight.Player.Health++;
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+    }
+}

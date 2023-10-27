@@ -13,6 +13,15 @@ namespace NFCombat2.Services
         {
             repo = repository;
         }
+
+        public Player CurrentPlayer()
+        {
+            return repo.GetAllProfiles().Select(p=> new Player
+            {
+                Name = p.Name
+            }).First();
+        }
+
         public List<Player> GetAll()
         {
             return repo.GetAllProfiles()

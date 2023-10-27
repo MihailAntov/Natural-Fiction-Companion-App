@@ -42,18 +42,23 @@ namespace NFCombat2.ViewModels
         public string ProfileName { get; set; }
 
 
-        public async void RegisterProfile(object sender, EventArgs e)
+        public async void RegisterProfile()
         {
             string name = ProfileName;
             _profileService.Save(name);
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");
         }
 
-        public async void GetAllProfiles(object sender, EventArgs e)
+        public async void GetAllProfiles()
         {
             var profiles = _profileService.GetAll();
             string result = string.Join(",", profiles.Select(x => $"{x.Name}, HP:{x.Health}"));
             //await DisplayAlert("profiles", result, "Okay");
+        }
+
+        public async void SwitchToProfile(int profileId)
+        {
+
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

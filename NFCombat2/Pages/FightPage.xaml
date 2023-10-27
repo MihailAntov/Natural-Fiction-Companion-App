@@ -7,10 +7,19 @@
 
 
     <ScrollView>
+        
+       
+        
         <VerticalStackLayout
         Spacing="25"
         Padding="30,0"
         VerticalOptions="Center">
+
+            <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
+
+
+
+
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -29,8 +38,7 @@
             HorizontalOptions="Center" />
 
             <Label
-            Text="Companion App"
-            x:Name="TestLabel"
+            Text="{Binding TestLabel}"
             SemanticProperties.HeadingLevel="Level2"
             SemanticProperties.Description=""
             FontSize="18"
@@ -38,18 +46,24 @@
 
 
 
-            <Button
-            x:Name="GetEpisodeBtn"
-            Text="Enter Episode!"
+            <Entry
+            IsVisible="{Binding NotInCombat}"
+            Keyboard="Numeric"
+            Text="{Binding EpisodeNumber}"
             SemanticProperties.Hint="Loads an episode"
-            Clicked="GetEpisode" 
+            Placeholder="Enter episode number"
             HorizontalOptions="Center" />
+            
+            
+            <Button 
+                Text="Find"
+                IsVisible="{Binding NotInCombat}"
+                Command="{Binding GetEpisodeCommand}"
+                />
 
 
 
-            <views:OptionPickerView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                
-            </views:OptionPickerView>
+            
 
 
         </VerticalStackLayout>

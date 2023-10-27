@@ -4,14 +4,15 @@ namespace NFCombat2.Models
 {
     public class Consumable : Item
     {
-        public override string Label => "Test Label";
-
-        public override void AffectFight(Fight fight)
+        public Consumable(string label, Action<Fight> effect)
         {
-            foreach (var enemy in fight.Enemies)
-            {
-                enemy.Health -= 3;
-            }
+                Label = label;
+            Effect = effect;
         }
+        public override string Label { get; set; }
+
+        public Action<Fight> Effect { get; set; }
+        public override void AffectFight(Fight fight) => Effect(fight);
+        
     }
 }

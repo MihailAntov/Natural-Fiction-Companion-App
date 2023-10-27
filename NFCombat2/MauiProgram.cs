@@ -4,6 +4,7 @@ using NFCombat2.Services.Contracts;
 using NFCombat2.Pages;
 using NFCombat2.Data;
 using NFCombat2.Views;
+using NFCombat2.ViewModels;
 
 namespace NFCombat2;
 
@@ -17,7 +18,11 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IFightService, FightService>();
 		builder.Services.AddScoped<IProfileService, ProfileService>();
 		builder.Services.AddSingleton<CharacterPage>();
+		builder.Services.AddSingleton<FightPage>();
 		builder.Services.AddSingleton<OptionPickerView>();
+
+		builder.Services.AddSingleton<FightPageViewModel>();
+		builder.Services.AddSingleton<OptionPickerViewModel>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<ProfileRepository>(s => ActivatorUtilities.CreateInstance<ProfileRepository>(s, dbPath));

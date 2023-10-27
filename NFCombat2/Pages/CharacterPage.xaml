@@ -23,5 +23,9 @@
         <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
         <Button Text="Add Profile" Clicked="RegisterProfile"/>
         <Button Text="View All Profiles" Clicked="GetAllProfiles"/>
+        
+            <Stepper Minimum="0" Maximum="5" WidthRequest="90"  />
+        
+        
     </VerticalStackLayout>
 </ContentPage>

@@ -3,11 +3,16 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models
 {
-    public abstract class Program : IStandardAction
+    public class Program : IStandardAction
     {
-        public abstract string Label { get; }
-
-        public abstract void AffectFight(Fight fight);
+        public Program(string label, Action<Fight> effect)
+        {
+            Label = label;
+            Effect = effect;
+        }
+        public string Label { get; set; }
+        Action<Fight> Effect { get; set; } 
+        public void AffectFight(Fight fight) => Effect(fight);
 
     }
 }

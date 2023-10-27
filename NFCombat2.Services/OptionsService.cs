@@ -18,19 +18,84 @@ namespace NFCombat2.Services
            
         }
 
+
+        public ICollection<Item> GetItems(Fight fight)
+        {
+            var result = new List<Item>
+            {
+                new Consumable("Health kit", (fight) => { fight.Player.Health += 10; }),
+                new Consumable("Grenade", (fight) =>
+                {
+                    foreach (var enemy in fight.Enemies)
+                    {
+                        enemy.Health -= 5;
+                    }
+                })
+            };
+            return result;
+        }
+
         public ICollection<string> GetCategories(Fight fight)
         {
-            return new List<string>() { "Shoot", "Item", "Move in" };
+            return new List<string>()
+            {
+                "Shoot",
+                "Move",
+                "Programs",
+                "Items"
+            };
         }
 
-        public ICollection<IMoveAction> GetItems(Fight fight)
+        
+        public ICollection<Program> GetPrograms(Fight fight)
         {
-            return new List<IMoveAction>() { new Consumable() };
+            var result = new List<Program>
+            {
+                new Program("Zap", (fight) => fight.Enemies.FirstOrDefault().Health -= 5),
+                new Program("ZapZap", (fight) => fight.Enemies.FirstOrDefault().Health -= 10)
+            };
+            return result;
         }
 
-        public ICollection<IStandardAction> GetPrograms(Fight fight)
+        public ICollection<PlayerRangedAttack> GetTargets(Fight fight, int? hand)
         {
-            return new List<IStandardAction>();
+            int weaponIndex = hand ?? 0;
+            Weapon weapon = fight.Player.Weapons[0];
+            return fight.Enemies
+                .Where(e => e.Distance <= weapon.Range)
+                .Select(e=> new PlayerRangedAttack(fight)
+                {
+                    Label = e.Name,
+                    Target = e
+                }).ToList();    
         }
+
+        public ICollection<IAction> GetOptions(Fight fight, string category)
+        {
+            //todo remove temporary items and programs
+
+            var result = new List<IAction>();
+            switch (category) 
+            {
+                case "Items":
+                    result = GetItems(fight) as List<IAction>;
+                    
+                    break;
+                case "Programs":
+                    result = GetPrograms(fight) as List<IAction>;
+                    break;
+                case "Shoot":
+                    result = GetTargets(fight, null) as List<IAction>;
+                    break;
+                case "ShootWithOffHand":
+                    result = GetTargets(fight, 1) as List<IAction>;
+                    break;
+            }
+
+            return result;
+        }
+
+
+
     }
 }
