@@ -1,42 +1,90 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="OptionPicker"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.OptionPickerView">
-    <!--<VerticalStackLayout BindableLayout.ItemsSource="{Binding Categories}">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                
+    <VerticalStackLayout>
+        
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Categories}" IsVisible="{Binding ChoosingCategory}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+
                     <Button Margin="5"
-                            HorizontalOptions="StartAndExpand"
-                            WidthRequest="120"
-                            Text="{Binding}"
-                            Clicked="OptionTapped"
-                            
-                            
-                            
-                       
-                    />
-                
+                                HorizontalOptions="StartAndExpand"
+                                WidthRequest="120"
+                                Text="{Binding}"
+                            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+                            CommandParameter="{Binding}"
+                                
 
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
+                                
+                        />
+                        
 
-    </VerticalStackLayout>-->
+                    
 
-    <ListView ItemsSource="{Binding Categories}" ItemTapped="OptionClicked" IsVisible="{Binding ChoosingCategory}">
+
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+            
+            
+        </VerticalStackLayout>
+
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingCategory, Converter={Helpers:InverseBoolConverter}}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+
+                    <Button Margin="5"
+                        HorizontalOptions="StartAndExpand"
+                        WidthRequest="120"
+                        Text="{Binding Label}"
+                    Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+                    CommandParameter="{Binding}"
+                        
+
+                        
+                />
+
+
+
+
+
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+
+
+        </VerticalStackLayout>
+
+        <!--<ListView ItemsSource="{Binding Categories}" ItemTapped="OptionChosen" IsVisible="{Binding ChoosingCategory}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label
+            Text="{Binding}"
+                />
+                    </ViewCell>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <ListView ItemsSource="{Binding Options}" ItemTapped="OptionChosen" IsVisible="{Binding ChoosingCategory, Converter={Helpers:InverseBoolConverter}}">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
                     <Label
-                Text="{Binding}"
+                Text="{Binding Label}"
                     />
                 </ViewCell>
 
             </DataTemplate>
         </ListView.ItemTemplate>
 
-    </ListView>
+    </ListView>-->
 
+    </VerticalStackLayout>
     
 
 

@@ -18,22 +18,31 @@ namespace NFCombat2.ViewModels
             _optionsService = optionsService;
             _fightService = fightService;
 
-            if (Categories == null)
+            //if (Categories == null)
+            //{
+            //    Categories = new ObservableCollection<string>(_optionsService.GetCategories(_fightService.GetFight()));
+            //}
+            OptionChosen = new Command(Option);
+        }
+        private bool choosingCategory = true;
+        public bool ChoosingCategory
+        {
+            get { return choosingCategory; }
+            set
             {
-                Categories = new ObservableCollection<string>(_optionsService.GetCategories(_fightService.GetFight()));
+                if (choosingCategory != value)
+                {
+                    choosingCategory = value;
+                    OnPropertyChanged(nameof(ChoosingCategory));
+                }
             }
-
-            OptionTapped = new Command(execute: (e)=> OptionClicked(e));
-
-            
         }
 
-
-
+        public Command OptionChosen { get; set; }
 
         public ObservableCollection<IAction> Actions {get; set;}
         public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand OptionTapped { get; private set;}
+       
 
         private ObservableCollection<string> categories;
         public ObservableCollection<string> Categories { get { return categories; }
@@ -43,10 +52,18 @@ namespace NFCombat2.ViewModels
                 OnPropertyChanged(nameof(Categories));
             }
         }
+        private ObservableCollection<IAction> options;
+        public ObservableCollection<IAction> Options
+        {
+            get { return options; }
+            set
+            {
+                options = value;
+                OnPropertyChanged(nameof(Options)); 
+            }
+        }
 
-        public ObservableCollection<IAction> Options { get; set; }
-
-        public async void OptionClicked(object e)
+        public async void Option(object e)
         {
 
             
@@ -57,18 +74,20 @@ namespace NFCombat2.ViewModels
                 switch (category)
                 {
                     case "Programs":
-                        options = _optionsService.GetPrograms(fight) as ICollection<IAction>;
+                        options = _optionsService.GetPrograms(fight);
                         break;
                     case "Shoot":
                     case "Attack":
                         break;
-                    case "Item":
-                        options = _optionsService.GetItems(fight) as ICollection<IAction>;
+                    case "Items":
+                        options = _optionsService.GetItems(fight);
                         break;
-                    case "Move in":
+                    case "Move":
                         break;
                 }
                 Options = new ObservableCollection<IAction>(options);
+                ChoosingCategory = false;
+
             }
 
 

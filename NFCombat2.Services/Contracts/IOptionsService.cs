@@ -10,10 +10,10 @@ namespace NFCombat2.Services.Contracts
 {
     public interface IOptionsService
     {
-        ICollection<Program> GetPrograms(Fight fight);
-        ICollection<Item> GetItems(Fight fight);
+        ICollection<IAction> GetPrograms(Fight fight);
+        ICollection<IAction> GetItems(Fight fight);
         ICollection<IAction> GetOptions(Fight fight, string category);
-        ICollection<PlayerRangedAttack> GetTargets(Fight fight, int? hand);
+        ICollection<IAction> GetTargets(Fight fight, int? hand);
         ICollection<string> GetCategories (Fight fight);    
     }
 }

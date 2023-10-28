@@ -19,9 +19,9 @@ namespace NFCombat2.Services
         }
 
 
-        public ICollection<Item> GetItems(Fight fight)
+        public ICollection<IAction> GetItems(Fight fight)
         {
-            var result = new List<Item>
+            var result = new List<IAction>
             {
                 new Consumable("Health kit", (fight) => { fight.Player.Health += 10; }),
                 new Consumable("Grenade", (fight) =>
@@ -47,9 +47,9 @@ namespace NFCombat2.Services
         }
 
         
-        public ICollection<Program> GetPrograms(Fight fight)
+        public ICollection<IAction> GetPrograms(Fight fight)
         {
-            var result = new List<Program>
+            var result = new List<IAction>
             {
                 new Program("Zap", (fight) => fight.Enemies.FirstOrDefault().Health -= 5),
                 new Program("ZapZap", (fight) => fight.Enemies.FirstOrDefault().Health -= 10)
@@ -57,7 +57,7 @@ namespace NFCombat2.Services
             return result;
         }
 
-        public ICollection<PlayerRangedAttack> GetTargets(Fight fight, int? hand)
+        public ICollection<IAction> GetTargets(Fight fight, int? hand)
         {
             int weaponIndex = hand ?? 0;
             Weapon weapon = fight.Player.Weapons[0];
@@ -67,7 +67,7 @@ namespace NFCombat2.Services
                 {
                     Label = e.Name,
                     Target = e
-                }).ToList();    
+                }).ToList<IAction>();    
         }
 
         public ICollection<IAction> GetOptions(Fight fight, string category)

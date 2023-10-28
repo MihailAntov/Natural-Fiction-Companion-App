@@ -39,17 +39,7 @@ namespace NFCombat2.ViewModels
         public ObservableCollection<IAction> Options { get; set; } = new ObservableCollection<IAction>();
         public OptionPickerViewModel OptionPickerViewModel { get; set; } 
 
-        private bool notInCombat = true;
-        public bool NotInCombat { get { return notInCombat; } 
-            set
-            {
-                if (notInCombat != value)
-                {
-                    notInCombat = value;
-                    OnPropertyChanged(nameof(NotInCombat));
-                }
-            }
-        }
+        
 
         public FightPageViewModel(IFightService fightService, IOptionsService optionsService, OptionPickerViewModel opctionPickerViewModel)
         {
@@ -70,7 +60,7 @@ namespace NFCombat2.ViewModels
             {
                 Enemies.Add(enemy);
             }
-            //OptionPickerViewModel.Categories = new ObservableCollection<string>(_optionsService.GetCategories(fight));
+            OptionPickerViewModel.Categories = new ObservableCollection<string>(_optionsService.GetCategories(fight));
         }
 
         public void IncreaseHealth(object sender, EventArgs e)
