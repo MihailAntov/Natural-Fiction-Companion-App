@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Models.DiceRoller;
+using NFCombat2.Services.Contracts;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -10,9 +11,11 @@ namespace NFCombat2.ViewModels
 {
     public class DicePageViewModel : INotifyPropertyChanged
     {
+        
         public DicePageViewModel()
         {
             DiceCollection = new List<Dice>();
+            
             for (int i = 0; i < 10; i++)
             {
                 var nextDice = new Models.DiceRoller.Dice(6,$"dice{i}");

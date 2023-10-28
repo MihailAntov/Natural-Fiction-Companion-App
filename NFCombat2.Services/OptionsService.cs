@@ -5,7 +5,7 @@ using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items;
-using NFCombat2.Models.Player;
+using NFCombat2.Models.Programs;
 using NFCombat2.Services.Contracts;
 
 namespace NFCombat2.Services
@@ -46,13 +46,24 @@ namespace NFCombat2.Services
             };
         }
 
+        public ICollection<string> GetBonusCategories(Fight fight)
+        {
+            return new List<string>()
+            {
+                "Shoot",
+                "Move",
+                "Items"
+            };
+        }
+
         
         public ICollection<IAction> GetPrograms(Fight fight)
         {
             var result = new List<IAction>
             {
-                new Program("Zap", (fight) => fight.Enemies.FirstOrDefault().Health -= 5),
-                new Program("ZapZap", (fight) => fight.Enemies.FirstOrDefault().Health -= 10)
+                new Program("Zap Bonus Action", new List<IProgramEffect>() {new DamageEffect(1,0), new BonusActionEffect()}),
+                new Program("ZapZap", new List<IProgramEffect>() {new DamageEffect(2,3)}),
+                
             };
             return result;
         }

@@ -67,10 +67,10 @@ namespace NFCombat2.ViewModels
         {
 
             
+            var fight = _fightService.GetFight();
             if (e is string category)
             {
                 ICollection<IAction> options = new List<IAction>();
-                var fight = _fightService.GetFight();
                 switch (category)
                 {
                     case "Programs":
@@ -91,9 +91,18 @@ namespace NFCombat2.ViewModels
             }
 
 
-            if (e is IStandardAction standardAction)
+            if (e is IAffectCombat combatEffect)
             {
-                standardAction.AffectFight(_fightService.GetFight());
+                _fightService.SelectAction(combatEffect);
+
+            }
+
+            _fightService.ResolveEffects();
+
+            if (fight.HasBonusAction)
+            {
+                Categories = new ObservableCollection<String>(_optionsService.GetBonusCategories(fight));
+                ChoosingCategory = true;
             }
 
 

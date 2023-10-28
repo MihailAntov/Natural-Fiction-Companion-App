@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NFCombat2.Models
+namespace NFCombat2.Models.Fights
 {
     public class Enemy : INotifyPropertyChanged
     {
@@ -11,8 +11,11 @@ namespace NFCombat2.Models
         public int Health { get; set; }
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }
         public Accuracy Accuracy { get; set; }
-        public int Range { get { return range; } set 
-            { 
+        public int Range
+        {
+            get { return range; }
+            set
+            {
                 range = value;
                 OnPropertyChanged();
             }
@@ -21,6 +24,7 @@ namespace NFCombat2.Models
         public int FlatDamage { get; set; }
         public int Distance { get; set; }
         public int Speed { get; set; }
+        public int RemainingFrozenTurns { get; set; } = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

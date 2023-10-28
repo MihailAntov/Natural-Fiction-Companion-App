@@ -4,6 +4,6 @@ namespace NFCombat2.Models.Contracts
 {
     public interface IProgramEffect : IAffectCombat
     {
-        void AreaAffectFight(Fight fight);
+        
     }
 }

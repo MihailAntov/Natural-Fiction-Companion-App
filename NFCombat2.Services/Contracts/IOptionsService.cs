@@ -15,5 +15,6 @@ namespace NFCombat2.Services.Contracts
         ICollection<IAction> GetOptions(Fight fight, string category);
         ICollection<IAction> GetTargets(Fight fight, int? hand);
         ICollection<string> GetCategories (Fight fight);    
+        ICollection<string> GetBonusCategories(Fight fight);    
     }
 }

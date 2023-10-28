@@ -1,7 +1,8 @@
 ﻿using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
+using NFCombat2.Models.Combat;
 using NFCombat2.Services.Contracts;
-
+using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
 {
@@ -59,6 +60,19 @@ namespace NFCombat2.Services
             }
             _fight = fight;
             return fight;
+        }
+
+        public void ResolveEffects()
+        {
+            foreach(var effect in _fight.Effects)
+            {
+                effect.AffectFight(_fight);
+            }
+        }
+
+        public void SelectAction(IAffectCombat effect)
+        {
+            effect.AffectFight(_fight);
         }
     }
 }

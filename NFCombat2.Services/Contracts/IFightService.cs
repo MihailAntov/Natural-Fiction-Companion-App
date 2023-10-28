@@ -1,4 +1,5 @@
 ﻿using NFCombat2.Models.Fights;
+using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services.Contracts
 {
@@ -7,5 +8,8 @@ namespace NFCombat2.Services.Contracts
         
         Task<Fight> GetFightByEpisodeNumber(int episodeNumber);
         Fight GetFight();
+
+        void SelectAction(IAffectCombat effect);
+        void ResolveEffects();
     }
 }

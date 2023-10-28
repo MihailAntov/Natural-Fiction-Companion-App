@@ -17,6 +17,7 @@ public static class MauiProgram
 		builder.Services.AddScoped<IOptionsService, OptionsService>();
 		builder.Services.AddSingleton<IFightService, FightService>();
 		builder.Services.AddScoped<IProfileService, ProfileService>();
+		
 		builder.Services.AddSingleton<CharacterPage>();
 		builder.Services.AddSingleton<FightPage>();
 		builder.Services.AddSingleton<OptionPickerView>();
