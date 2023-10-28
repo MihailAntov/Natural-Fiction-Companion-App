@@ -9,47 +9,44 @@ using NFCombat2;
 
 namespace NFCombat2.Models.Programs
 {
-    public class DamageEffect : IProgramEffect
+    public class DamageEffect : IProgramEffect , ITarget
     {
         
-        public DamageEffect(int numberOfDice, int flatDamage,bool areaOfEffect = false, int delayedNumberOfDice = 0, int delayedFlatDamage = 0, int delayedDuration = 0)
+        public DamageEffect(int numberOfDice, int flatDamage,Program program, int delayedNumberOfDice = 0, int delayedFlatDamage = 0, int delayedDuration = 0)
         {
             _numberOfDice = numberOfDice;
             _flatDamage = flatDamage;
             _delayedNumberOfDice = delayedNumberOfDice;
             _delayedFlatDamage = delayedFlatDamage;
             _delayedDuration = delayedDuration;
-            _areaOfEffect = areaOfEffect;
+            AreaOfEffect = program.AreaOfEffect;
+            MinRange = program.MinRange;
+            MaxRange = program.MaxRange;
         }
-        private bool _areaOfEffect { get; set; }
-        private int _numberOfDice { get; set; }
-        private int _flatDamage { get; set; }
-        private int _delayedNumberOfDice { get; set; }
-        private int _delayedFlatDamage { get; set; }
-        private int _delayedDuration { get; set; }
+        private int _numberOfDice;
+        private int _flatDamage;
+        private int _delayedNumberOfDice;
+        private int _delayedFlatDamage;
+        private int _delayedDuration;
+        
+        public bool AreaOfEffect { get; set; }
 
-        public Enemy Target { get; set; }
+        public ICollection<Enemy> Targets { get; set; }
+        public int MinRange { get; set; }
+        public int MaxRange { get; set; }
 
         public void AffectFight(Fight fight)
         {
             int amount = DiceCalculator.Calculate(_numberOfDice, _flatDamage);
-            IList<Enemy> targets = new List<Enemy>();
 
-            if (!_areaOfEffect)
-            {
-                targets.Add(Target);
-            }
-            else
-            {
-                targets = fight.Enemies;
-            }
+            
 
-                fight.Effects.Enqueue(new DealDamage(amount, targets));
+                fight.Effects.Enqueue(new DealDamage(amount, Targets));
                 
             if(_delayedDuration > 0)
             {
                 int delayedAmount = DiceCalculator.Calculate(_delayedNumberOfDice, _delayedFlatDamage);
-                fight.DelayedEffects.Enqueue(new DealDamage(delayedAmount, targets));
+                fight.DelayedEffects.Enqueue(new DealDamage(delayedAmount, Targets));
             }
         }
 

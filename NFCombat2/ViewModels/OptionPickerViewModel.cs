@@ -1,15 +1,18 @@
 ﻿using NFCombat2.Models.Contracts;
 using NFCombat2.Services.Contracts;
+using NFCombat2.Models.Fights;
+using NFCombat2.Models.Programs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using NFCombat2.Models.Actions;
 
 namespace NFCombat2.ViewModels
 {
     public class OptionPickerViewModel : INotifyPropertyChanged
     {
-      
+
         private IOptionsService _optionsService;
         private IFightService _fightService;
 
@@ -17,12 +20,8 @@ namespace NFCombat2.ViewModels
         {
             _optionsService = optionsService;
             _fightService = fightService;
-
-            //if (Categories == null)
-            //{
-            //    Categories = new ObservableCollection<string>(_optionsService.GetCategories(_fightService.GetFight()));
-            //}
             OptionChosen = new Command(Option);
+
         }
         private bool choosingCategory = true;
         public bool ChoosingCategory
@@ -34,6 +33,24 @@ namespace NFCombat2.ViewModels
                 {
                     choosingCategory = value;
                     OnPropertyChanged(nameof(ChoosingCategory));
+                }
+            }
+        }
+
+        private Program _program;
+        private PlayerRangedAttack _playerRangedAttack;
+        private MeleeAttack _meleeAttack;
+
+        private bool choosingTarget = false;
+        public bool ChoosingTarget
+        {
+            get { return choosingTarget; }
+            set
+            {
+                if(choosingTarget != value)
+                {
+                    choosingTarget = value; 
+                    OnPropertyChanged(nameof(ChoosingTarget));
                 }
             }
         }
@@ -63,6 +80,8 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        public ObservableCollection<Enemy> Targets { get; set; }
+
         public async void Option(object e)
         {
 
@@ -88,6 +107,23 @@ namespace NFCombat2.ViewModels
                 Options = new ObservableCollection<IAction>(options);
                 ChoosingCategory = false;
 
+            }
+
+            if(e is ITarget targettingEffect)
+            {
+                
+                    
+                var targets = _optionsService.GetTargets(fight, program.MinRange, program.MaxRange);
+                    Targets = new ObservableCollection<Enemy>(targets);
+                
+                
+                
+            }
+
+            if(e is Enemy target)
+            {
+                TargetingEffect.Targets.Add(target);
+                _fightService.SelectAction((IAffectCombat)TargetingEffect);
             }
 
 

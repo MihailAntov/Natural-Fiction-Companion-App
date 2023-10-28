@@ -3,19 +3,22 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
 {
-    internal class DealDamage : IAffectCombat
+    internal class DealDamage : IAffectCombat, ITarget
     {
-        private ICollection<Enemy> _targets;
+        
         private int _amount;
         public DealDamage(int amount, ICollection<Enemy> targets)
         {
             _amount = amount;
-            _targets = targets;
+            Targets = targets;
         }
+
+        public ICollection<Enemy> Targets { get; set; }
+
         public void AffectFight(Fight fight)
         {
 
-            foreach(var target in _targets)
+            foreach(var target in Targets)
             {
                 target.Health -= _amount;
             }

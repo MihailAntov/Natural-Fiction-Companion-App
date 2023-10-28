@@ -3,18 +3,18 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
 {
-    public class Freeze : IAffectCombat
+    public class Freeze : IAffectCombat , ITarget
     {
         private int _turns;
-        private IList<Enemy> _targets;
-        public Freeze(int turns, IList<Enemy> targets)
+        public Freeze(int turns, ICollection<Enemy> targets)
         {
             _turns = turns;
-            _targets = targets;
+            Targets = targets;
         }
+        public ICollection<Enemy> Targets {get; set;}
         public void AffectFight(Fight fight)
         {
-            foreach(var  enemy in _targets)
+            foreach(var  enemy in Targets)
             {
                 enemy.RemainingFrozenTurns += _turns;
             }

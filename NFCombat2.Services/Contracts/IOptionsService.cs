@@ -12,8 +12,7 @@ namespace NFCombat2.Services.Contracts
     {
         ICollection<IAction> GetPrograms(Fight fight);
         ICollection<IAction> GetItems(Fight fight);
-        ICollection<IAction> GetOptions(Fight fight, string category);
-        ICollection<IAction> GetTargets(Fight fight, int? hand);
+        ICollection<Enemy> GetTargets(Fight fight, int minRange = 0, int maxRange = 1000);
         ICollection<string> GetCategories (Fight fight);    
         ICollection<string> GetBonusCategories(Fight fight);    
     }

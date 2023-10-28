@@ -59,52 +59,29 @@ namespace NFCombat2.Services
         
         public ICollection<IAction> GetPrograms(Fight fight)
         {
+            var program1 = new Program("Zap Bonus Action");
+            program1.Effects.Append(new DamageEffect(1, 0, program1));
+            program1.Effects.Append(new BonusActionEffect());
+
+            var program2 = new Program("ZapZap");
+            program2.Effects.Append(new DamageEffect(2, 2,program2));
+            
             var result = new List<IAction>
             {
-                new Program("Zap Bonus Action", new List<IProgramEffect>() {new DamageEffect(1,0), new BonusActionEffect()}),
-                new Program("ZapZap", new List<IProgramEffect>() {new DamageEffect(2,3)}),
-                
+                program1,
+                program2  
             };
             return result;
         }
 
-        public ICollection<IAction> GetTargets(Fight fight, int? hand)
+        public ICollection<Enemy> GetTargets(Fight fight, int minRange, int maxRange)
         {
-            int weaponIndex = hand ?? 0;
-            Weapon weapon = fight.Player.Weapons[0];
             return fight.Enemies
-                .Where(e => e.Distance <= weapon.Range)
-                .Select(e=> new PlayerRangedAttack(fight)
-                {
-                    Label = e.Name,
-                    Target = e
-                }).ToList<IAction>();    
+                .Where(e => e.Distance >= minRange && e.Distance <= maxRange)
+                .ToList(); 
         }
 
-        public ICollection<IAction> GetOptions(Fight fight, string category)
-        {
-            //todo remove temporary items and programs
-
-            var result = new List<IAction>();
-            switch (category) 
-            {
-                case "Items":
-                    result = GetItems(fight) as List<IAction>;
-                    
-                    break;
-                case "Programs":
-                    result = GetPrograms(fight) as List<IAction>;
-                    break;
-                case "Shoot":
-                    result = GetTargets(fight, null) as List<IAction>;
-                    break;
-                case "ShootWithOffHand":
-                    result = GetTargets(fight, 1) as List<IAction>;
-                    break;
-            }
-
-            return result;
-        }
+        
 
 
 

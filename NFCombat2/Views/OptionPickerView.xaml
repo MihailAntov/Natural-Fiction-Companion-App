@@ -15,16 +15,8 @@
                                 WidthRequest="120"
                                 Text="{Binding}"
                             Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
-                            CommandParameter="{Binding}"
-                                
-
-                                
+                            CommandParameter="{Binding}"     
                         />
-                        
-
-                    
-
-
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
             
@@ -34,55 +26,32 @@
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingCategory, Converter={Helpers:InverseBoolConverter}}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-
                     <Button Margin="5"
                         HorizontalOptions="StartAndExpand"
                         WidthRequest="120"
                         Text="{Binding Label}"
                     Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
-                    CommandParameter="{Binding}"
-                        
-
-                        
+                    CommandParameter="{Binding}"       
                 />
-
-
-
-
-
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
-
-
         </VerticalStackLayout>
 
-        <!--<ListView ItemsSource="{Binding Categories}" ItemTapped="OptionChosen" IsVisible="{Binding ChoosingCategory}">
-            <ListView.ItemTemplate>
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Targets}" IsVisible="{Binding ChoosingTarget}">
+            <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <Label
-            Text="{Binding}"
-                />
-                    </ViewCell>
-
+                    <Button Margin="5"
+                HorizontalOptions="StartAndExpand"
+                WidthRequest="120"
+                Text="{Binding Name}"
+            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+            CommandParameter="{Binding}"       
+        />
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
 
-        </ListView>
 
-        <ListView ItemsSource="{Binding Options}" ItemTapped="OptionChosen" IsVisible="{Binding ChoosingCategory, Converter={Helpers:InverseBoolConverter}}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Label
-                Text="{Binding Label}"
-                    />
-                </ViewCell>
-
-            </DataTemplate>
-        </ListView.ItemTemplate>
-
-    </ListView>-->
 
     </VerticalStackLayout>
     
