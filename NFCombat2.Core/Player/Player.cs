@@ -1,5 +1,7 @@
 ﻿
 
+using NFCombat2.Models.Items;
+
 namespace NFCombat2.Models.Player
 {
     public class Player

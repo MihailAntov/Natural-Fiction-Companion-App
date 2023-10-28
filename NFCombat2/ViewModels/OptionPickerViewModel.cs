@@ -91,14 +91,14 @@ namespace NFCombat2.ViewModels
             }
 
 
-            //if (e is IStandardAction standardAction)
-            //{
-            //    standardAction.AffectFight(_fightService.GetFight());
-            //}
+            if (e is IStandardAction standardAction)
+            {
+                standardAction.AffectFight(_fightService.GetFight());
+            }
 
-            
 
-           
+
+
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

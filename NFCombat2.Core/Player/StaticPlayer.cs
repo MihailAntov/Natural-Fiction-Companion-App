@@ -1,5 +1,8 @@
 ﻿
 
+using NFCombat2.Models.Items;
+using NFCombat2.Models.Programs;
+
 namespace NFCombat2.Models.Player
 {
     public static class StaticPlayer 

@@ -1,10 +1,10 @@
 ﻿
 
 using NFCombat2.Common.Enums;
-using NFCombat2.Models;
 using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items;
 using NFCombat2.Models.Player;
 using NFCombat2.Services.Contracts;
 

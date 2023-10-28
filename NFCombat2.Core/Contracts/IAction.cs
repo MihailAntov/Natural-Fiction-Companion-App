@@ -2,9 +2,9 @@
 
 namespace NFCombat2.Models.Contracts
 {
-    public interface IAction
+    public interface IAction : IAffectCombat
     {
-        public void AffectFight(Fight fight);
+        
         public string Label { get; }
     }
 }

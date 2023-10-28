@@ -1,5 +1,7 @@
 ﻿
 
+using NFCombat2.Models.Programs;
+
 namespace NFCombat2.Models.Player
 {
     public class Hacker : Player

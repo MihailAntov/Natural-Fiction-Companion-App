@@ -1,6 +1,6 @@
 ﻿using NFCombat2.Common.Enums;
 
-namespace NFCombat2.Models
+namespace NFCombat2.Models.Items
 {
     public abstract class Weapon
     {

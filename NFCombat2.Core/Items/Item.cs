@@ -1,7 +1,7 @@
 ﻿using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models
+namespace NFCombat2.Models.Items
 {
     public abstract class Item : IMoveAction
     {

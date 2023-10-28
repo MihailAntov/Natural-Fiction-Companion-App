@@ -21,9 +21,4 @@
 	  <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Items\" />
-	  <Folder Include="Programs\" />
-	</ItemGroup>
-
 </Project>
