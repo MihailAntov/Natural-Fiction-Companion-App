@@ -3,7 +3,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
 {
-    internal class DealDamage : IAffectCombat, ITarget
+    internal class DealDamage : IAffectCombat
     {
         
         private int _amount;

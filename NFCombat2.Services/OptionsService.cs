@@ -60,11 +60,11 @@ namespace NFCombat2.Services
         public ICollection<IAction> GetPrograms(Fight fight)
         {
             var program1 = new Program("Zap Bonus Action");
-            program1.Effects.Append(new DamageEffect(1, 0, program1));
-            program1.Effects.Append(new BonusActionEffect());
+             program1.Effects.Add(new DamageEffect(1, 0, program1));
+            program1.Effects.Add(new BonusActionEffect());
 
             var program2 = new Program("ZapZap");
-            program2.Effects.Append(new DamageEffect(2, 2,program2));
+            program2.Effects.Add(new DamageEffect(2, 2,program2));
             
             var result = new List<IAction>
             {

@@ -3,7 +3,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
 {
-    public class Freeze : IAffectCombat , ITarget
+    public class Freeze : IAffectCombat
     {
         private int _turns;
         public Freeze(int turns, ICollection<Enemy> targets)

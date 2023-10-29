@@ -23,7 +23,7 @@
             
         </VerticalStackLayout>
 
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingCategory, Converter={Helpers:InverseBoolConverter}}">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Button Margin="5"

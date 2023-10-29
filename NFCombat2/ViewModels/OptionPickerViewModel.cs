@@ -37,9 +37,20 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        private Program _program;
-        private PlayerRangedAttack _playerRangedAttack;
-        private MeleeAttack _meleeAttack;
+        private bool choosingOption = false;
+        public bool ChoosingOption
+        {
+            get { return choosingOption; }
+            set
+            {
+                if (choosingOption != value)
+                {
+                    choosingOption = value;
+                    OnPropertyChanged(nameof(ChoosingOption));
+                }
+            }
+        }
+
 
         private bool choosingTarget = false;
         public bool ChoosingTarget
@@ -79,9 +90,23 @@ namespace NFCombat2.ViewModels
                 OnPropertyChanged(nameof(Options)); 
             }
         }
-
-        public ObservableCollection<Enemy> Targets { get; set; }
-
+        private ObservableCollection<Enemy> targets;
+        public ObservableCollection<Enemy> Targets
+        {
+            get
+            {
+                return targets;
+            }
+            set
+            {
+                if (targets != value)
+                {
+                    targets = value;
+                    OnPropertyChanged(nameof(Targets));
+                }
+            }
+        }
+        public ITarget TargetingEffect { get; set; }
         public async void Option(object e)
         {
 
@@ -106,16 +131,20 @@ namespace NFCombat2.ViewModels
                 }
                 Options = new ObservableCollection<IAction>(options);
                 ChoosingCategory = false;
+                ChoosingOption = true;
+                return;
 
             }
 
-            if(e is ITarget targettingEffect)
+            if(e is ITarget targetingEffect && !targetingEffect.AreaOfEffect)
             {
                 
-                    
-                var targets = _optionsService.GetTargets(fight, program.MinRange, program.MaxRange);
-                    Targets = new ObservableCollection<Enemy>(targets);
-                
+                TargetingEffect = targetingEffect;
+                var targets = _optionsService.GetTargets(fight, targetingEffect.MinRange, targetingEffect.MaxRange);
+                Targets = new ObservableCollection<Enemy>(targets);
+                ChoosingOption = false;
+                ChoosingTarget = true;
+                return;
                 
                 
             }
@@ -124,6 +153,9 @@ namespace NFCombat2.ViewModels
             {
                 TargetingEffect.Targets.Add(target);
                 _fightService.SelectAction((IAffectCombat)TargetingEffect);
+                ChoosingTarget = false;
+                ChoosingCategory = true;
+                
             }
 
 
@@ -139,6 +171,7 @@ namespace NFCombat2.ViewModels
             {
                 Categories = new ObservableCollection<String>(_optionsService.GetBonusCategories(fight));
                 ChoosingCategory = true;
+                fight.HasBonusAction = false;
             }
 
 

@@ -8,7 +8,17 @@ namespace NFCombat2.Models.Fights
     {
         private int range;
         public string Name { get; set; }
-        public int Health { get; set; }
+        private int health;
+        public int Health { get { return health; } 
+            set
+            {
+                if(health != value)
+                {
+                    health = value;
+                    OnPropertyChanged("Health");
+                }
+            }
+        }
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }
         public Accuracy Accuracy { get; set; }
         public int Range

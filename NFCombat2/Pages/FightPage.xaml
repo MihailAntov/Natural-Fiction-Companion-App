@@ -25,7 +25,7 @@
                     <DataTemplate>
                         <TextCell 
                             Text="{Binding Name}"
-                            Detail="{Binding Range}"
+                            Detail="{Binding Health}"
                         />
                     </DataTemplate>
                 </ListView.ItemTemplate>    

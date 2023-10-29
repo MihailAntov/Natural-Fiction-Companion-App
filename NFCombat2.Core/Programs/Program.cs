@@ -15,13 +15,17 @@ namespace NFCombat2.Models.Programs
         public int Cost { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
-        public IEnumerable<IProgramEffect> Effects { get; set; }
-        public ICollection<Enemy> Targets { get; set; }
+        public ICollection<IProgramEffect> Effects { get; set; } = new List<IProgramEffect>();
+        public ICollection<Enemy> Targets { get; set; } = new List<Enemy>();
 
         public void AffectFight(Fight fight)
         {
             foreach (var effect in Effects)
             {
+                if(effect is ITarget targettingEffect)
+                {
+                    targettingEffect.Targets = Targets;
+                }
                 effect.AffectFight(fight);
             }
         }

@@ -64,9 +64,14 @@ namespace NFCombat2.Services
 
         public void ResolveEffects()
         {
-            foreach(var effect in _fight.Effects)
+            //foreach(var effect in _fight.Effects)
+            //{
+            //    effect.AffectFight(_fight);
+
+            //}
+            while(_fight.Effects.Count > 0)
             {
-                effect.AffectFight(_fight);
+                _fight.Effects.Dequeue().AffectFight(_fight);
             }
         }
 
