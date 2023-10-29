@@ -28,7 +28,7 @@ namespace NFCombat2.Services
 
             var targetDummy2 = new Enemy()
             {
-                Name = "Target Dummy",
+                Name = "Target Dummy Test Long Text",
                 Health = 10,
                 Range = 5,
                 Speed = 2
@@ -75,7 +75,7 @@ namespace NFCombat2.Services
             }
         }
 
-        public void SelectAction(IAffectCombat effect)
+        public void AddEffect(IAffectCombat effect)
         {
             effect.AffectFight(_fight);
         }

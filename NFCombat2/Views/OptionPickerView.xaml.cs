@@ -20,17 +20,7 @@ public partial class OptionPickerView : ContentView
         this.BindingContext = this.Handler.MauiContext.Services.GetRequiredService<OptionPickerViewModel>();
     }
 
-    //public async void OptionChosen(object sender, ItemTappedEventArgs e)
-    //{
-    //    if (this.BindingContext is OptionPickerViewModel viewModel)
-    //    {
-    //        if (e.Item is string category)
-    //        {
-    //            viewModel.Option(category);
-    //        }
-
-    //    }
-    //}
+   
 
 
 

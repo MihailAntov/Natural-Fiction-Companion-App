@@ -14,6 +14,7 @@ namespace NFCombat2.Models.Actions
         }
 
         public string Label => throw new NotImplementedException();
+        public string Description =>throw new NotImplementedException();
 
         public void AffectFight(Fight fight)
         {

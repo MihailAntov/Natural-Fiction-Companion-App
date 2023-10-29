@@ -15,12 +15,13 @@ namespace NFCombat2.Models.Actions
         }
 
         public string Label => "Get Closer";
+        public string Description => $"Lower the distance to the enemy by {fight.Player.Speed}";
 
         public void AffectFight(Fight fight)
         {
             foreach(var enemy in fight.Enemies)
             {
-                enemy.Distance -= StaticPlayer.Speed;
+                enemy.Distance -= fight.Player.Speed;
                 if(enemy.Distance < 0 ) 
                 {
                     enemy.Distance = 0;

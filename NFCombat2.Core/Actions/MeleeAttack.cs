@@ -14,6 +14,7 @@ namespace NFCombat2.Models.Actions
         }
 
         public string Label => "Melee Attack";
+        public string Description { get; set; }
 
         public ICollection<Enemy> Targets { get; set; }
         public bool AreaOfEffect { get; set; }

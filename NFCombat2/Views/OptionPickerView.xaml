@@ -11,10 +11,9 @@
                 <DataTemplate>
 
                     <Button Margin="5"
-                                HorizontalOptions="StartAndExpand"
-                                WidthRequest="120"
+                                
                                 Text="{Binding}"
-                            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+                            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
                             CommandParameter="{Binding}"     
                         />
                 </DataTemplate>
@@ -27,26 +26,31 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Button Margin="5"
-                        HorizontalOptions="StartAndExpand"
-                        WidthRequest="120"
+                        
                         Text="{Binding Label}"
-                    Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+                    Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
                     CommandParameter="{Binding}"       
                 />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
 
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Targets}" IsVisible="{Binding ChoosingTarget}">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Targets}" IsVisible="{Binding ChoosingTarget}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
+                    <HorizontalStackLayout>
+                        
                     <Button Margin="5"
-                HorizontalOptions="StartAndExpand"
-                WidthRequest="120"
-                Text="{Binding Name}"
-            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosen}"
+                
+                
+                Text="{Binding Name}" 
+            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
             CommandParameter="{Binding}"       
         />
+                        <Button Text="Info" Opacity="50"
+                                Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.Info}"
+                                CommandParameter="{Binding}"/>
+                    </HorizontalStackLayout>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>

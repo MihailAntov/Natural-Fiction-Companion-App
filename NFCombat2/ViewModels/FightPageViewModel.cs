@@ -17,6 +17,7 @@ namespace NFCombat2.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Command GetEpisodeCommand { get; }
+        public Command ExitCombatCommand { get; }
         private string testLabel;
         public string TestLabel
         {
@@ -31,7 +32,20 @@ namespace NFCombat2.ViewModels
             }
         }
         public string EpisodeNumber { get; set; }
-        
+
+        private bool notInCombat = true;
+        public bool NotInCombat
+        {
+            get { return notInCombat; }
+            set
+            {
+                if(notInCombat != value)
+                {
+                    notInCombat = value;
+                    OnPropertyChanged(nameof(NotInCombat));
+                }
+            }
+        } 
 
         public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
         public ObservableCollection<string> Categories { get; set; } = new ObservableCollection<string>();
@@ -46,6 +60,7 @@ namespace NFCombat2.ViewModels
                 _optionsService = optionsService;
             OptionPickerViewModel = opctionPickerViewModel;
             GetEpisodeCommand = new Command(GetEpisode);
+            ExitCombatCommand = new Command(ExitCombat);
         }
         public async void GetEpisode()
         {
@@ -60,11 +75,17 @@ namespace NFCombat2.ViewModels
                 Enemies.Add(enemy);
             }
             OptionPickerViewModel.Categories = new ObservableCollection<string>(_optionsService.GetCategories(fight));
+            NotInCombat = false;
         }
 
-        public void IncreaseHealth(object sender, EventArgs e)
+        public async void ExitCombat()
         {
-            fight.Player.Health++;
+            NotInCombat = true;
+            fight = null;
+            Enemies.Clear();
+            OptionPickerViewModel.Categories.Clear();
+            OptionPickerViewModel.Targets.Clear();
+            OptionPickerViewModel.Options.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

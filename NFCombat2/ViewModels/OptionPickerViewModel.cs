@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using NFCombat2.Models.Actions;
 
+
 namespace NFCombat2.ViewModels
 {
     public class OptionPickerViewModel : INotifyPropertyChanged
@@ -20,7 +21,8 @@ namespace NFCombat2.ViewModels
         {
             _optionsService = optionsService;
             _fightService = fightService;
-            OptionChosen = new Command(Option);
+            OptionChosenCommand = new Command(Option);
+            InfoCommand = new Command(Info);
 
         }
         private bool choosingCategory = true;
@@ -66,7 +68,8 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public Command OptionChosen { get; set; }
+        public Command OptionChosenCommand { get; set; }
+        public Command InfoCommand { get; set; }
 
         public ObservableCollection<IAction> Actions {get; set;}
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,10 +110,17 @@ namespace NFCombat2.ViewModels
             }
         }
         public ITarget TargetingEffect { get; set; }
+
+        public async void Info(object e)
+        {
+            //TODO invoke popup service to display info on program
+        }
+
+
         public async void Option(object e)
         {
 
-            
+
             var fight = _fightService.GetFight();
             if (e is string category)
             {
@@ -136,32 +146,32 @@ namespace NFCombat2.ViewModels
 
             }
 
-            if(e is ITarget targetingEffect && !targetingEffect.AreaOfEffect)
+            if (e is ITarget targetingEffect && !targetingEffect.AreaOfEffect)
             {
-                
+
                 TargetingEffect = targetingEffect;
                 var targets = _optionsService.GetTargets(fight, targetingEffect.MinRange, targetingEffect.MaxRange);
                 Targets = new ObservableCollection<Enemy>(targets);
                 ChoosingOption = false;
                 ChoosingTarget = true;
                 return;
-                
-                
+
+
             }
 
-            if(e is Enemy target)
+            if (e is Enemy target)
             {
                 TargetingEffect.Targets.Add(target);
-                _fightService.SelectAction((IAffectCombat)TargetingEffect);
+                _fightService.AddEffect((IAffectCombat)TargetingEffect);
                 ChoosingTarget = false;
                 ChoosingCategory = true;
-                
+
             }
 
 
             if (e is IAffectCombat combatEffect)
             {
-                _fightService.SelectAction(combatEffect);
+                _fightService.AddEffect(combatEffect);
 
             }
 
@@ -178,6 +188,8 @@ namespace NFCombat2.ViewModels
 
 
         }
+
+        
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:NFCombat2.Views"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Pages.FightPage"
              Title="Fight Simulator">
 
@@ -13,12 +14,13 @@
         <VerticalStackLayout
         Spacing="25"
         Padding="30,0"
-        VerticalOptions="Center">
+        VerticalOptions="StartAndExpand">
 
-            <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
-
-
-
+            <Button IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}"
+                    Text="X"
+                    HorizontalOptions="End"
+                    Command="{Binding ExitCombatCommand}"
+                    />
 
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
@@ -31,11 +33,7 @@
                 </ListView.ItemTemplate>    
             </ListView>
 
-            <Label
-            Text="Natural Fiction"
-            SemanticProperties.HeadingLevel="Level1"
-            FontSize="32"
-            HorizontalOptions="Center" />
+            
 
             <Label
             Text="{Binding TestLabel}"
@@ -44,7 +42,7 @@
             FontSize="18"
             HorizontalOptions="Center" />
 
-
+            <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
 
             <Entry
             IsVisible="{Binding NotInCombat}"
@@ -53,19 +51,16 @@
             SemanticProperties.Hint="Loads an episode"
             Placeholder="Enter episode number"
             HorizontalOptions="Center" />
-            
-            
+
+
             <Button 
                 Text="Find"
                 IsVisible="{Binding NotInCombat}"
                 Command="{Binding GetEpisodeCommand}"
                 />
-
-
-
             
 
-
+            
         </VerticalStackLayout>
         
     </ScrollView>

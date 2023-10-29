@@ -6,5 +6,6 @@ namespace NFCombat2.Models.Contracts
     {
         
         public string Label { get; }
+        public string Description { get; }
     }
 }

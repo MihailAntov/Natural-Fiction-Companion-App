@@ -19,6 +19,7 @@ namespace NFCombat2.Models.Actions
         public Enemy Target { get; set; }
 
         public string Label { get; set; }
+        public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; }
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; }
