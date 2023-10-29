@@ -18,12 +18,27 @@ public partial class FightPage : ContentPage
 		InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if(this.Handler != null)
+        {
+            this.BindingContext = this.Handler.MauiContext.Services.GetRequiredService<FightPageViewModel>();
+        }
+    }
+
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
-        
-        this.BindingContext = this.Handler.MauiContext.Services.GetRequiredService<FightPageViewModel>();
+        if (this.Handler != null)
+        {
+            this.BindingContext = this.Handler.MauiContext.Services.GetRequiredService<FightPageViewModel>();
+        }
     }
+
+
+
+
 
 
 

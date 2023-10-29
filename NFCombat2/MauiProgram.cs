@@ -5,6 +5,7 @@ using NFCombat2.Pages;
 using NFCombat2.Data;
 using NFCombat2.Views;
 using NFCombat2.ViewModels;
+using Microsoft.Maui.LifecycleEvents;
 
 namespace NFCombat2;
 
@@ -14,9 +15,9 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder.Services.AddScoped<IOptionsService, OptionsService>();
+		builder.Services.AddSingleton<IOptionsService, OptionsService>();
 		builder.Services.AddSingleton<IFightService, FightService>();
-		builder.Services.AddScoped<IProfileService, ProfileService>();
+		builder.Services.AddSingleton<IProfileService, ProfileService>();
 		
 		builder.Services.AddSingleton<CharacterPage>();
 		builder.Services.AddSingleton<FightPage>();
