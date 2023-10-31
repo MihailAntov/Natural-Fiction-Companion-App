@@ -21,25 +21,29 @@ namespace NFCombat2.ViewModels
         {
             _optionsService = optionsService;
             _fightService = fightService;
-            OptionChosenCommand = new Command(Option);
+            OptionChosenCommand = new Command<IOption>(o=> Option(o.Content));
             InfoCommand = new Command(Info);
 
         }
-        private bool choosingCategory = true;
-        public bool ChoosingCategory
-        {
-            get { return choosingCategory; }
-            set
-            {
-                if (choosingCategory != value)
-                {
-                    choosingCategory = value;
-                    OnPropertyChanged(nameof(ChoosingCategory));
-                }
-            }
-        }
 
-        private bool choosingOption = false;
+        private bool _moveActionChosen;
+        private bool _standardActionChosen;
+
+        //private bool choosingCategory = true;
+        //public bool ChoosingCategory
+        //{
+        //    get { return choosingCategory; }
+        //    set
+        //    {
+        //        if (choosingCategory != value)
+        //        {
+        //            choosingCategory = value;
+        //            OnPropertyChanged(nameof(ChoosingCategory));
+        //        }
+        //    }
+        //}
+
+        private bool choosingOption = true;
         public bool ChoosingOption
         {
             get { return choosingOption; }
@@ -53,38 +57,52 @@ namespace NFCombat2.ViewModels
             }
         }
 
-
-        private bool choosingTarget = false;
-        public bool ChoosingTarget
+        private bool isInfoNeeded = false;
+        public bool IsInfoNeeded
         {
-            get { return choosingTarget; }
+            get { return isInfoNeeded; }
             set
             {
-                if(choosingTarget != value)
+                if (isInfoNeeded != value)
                 {
-                    choosingTarget = value; 
-                    OnPropertyChanged(nameof(ChoosingTarget));
+                    isInfoNeeded = value;
+                    OnPropertyChanged(nameof(IsInfoNeeded));
                 }
             }
         }
+
+
+        //private bool choosingTarget = false;
+        //public bool ChoosingTarget
+        //{
+        //    get { return choosingTarget; }
+        //    set
+        //    {
+        //        if(choosingTarget != value)
+        //        {
+        //            choosingTarget = value; 
+        //            OnPropertyChanged(nameof(ChoosingTarget));
+        //        }
+        //    }
+        //}
 
         public Command OptionChosenCommand { get; set; }
         public Command InfoCommand { get; set; }
 
         public ObservableCollection<IAction> Actions {get; set;}
         public event PropertyChangedEventHandler PropertyChanged;
-       
 
-        private ObservableCollection<string> categories;
-        public ObservableCollection<string> Categories { get { return categories; }
-            set 
-            {
-                categories = value;
-                OnPropertyChanged(nameof(Categories));
-            }
-        }
-        private ObservableCollection<IAction> options;
-        public ObservableCollection<IAction> Options
+
+        //private ObservableCollection<string> categories;
+        //public ObservableCollection<string> Categories { get { return categories; }
+        //    set 
+        //    {
+        //        categories = value;
+        //        OnPropertyChanged(nameof(Categories));
+        //    }
+        //}
+        private ObservableCollection<IOption> options;
+        public ObservableCollection<IOption> Options
         {
             get { return options; }
             set
@@ -93,22 +111,22 @@ namespace NFCombat2.ViewModels
                 OnPropertyChanged(nameof(Options)); 
             }
         }
-        private ObservableCollection<Enemy> targets;
-        public ObservableCollection<Enemy> Targets
-        {
-            get
-            {
-                return targets;
-            }
-            set
-            {
-                if (targets != value)
-                {
-                    targets = value;
-                    OnPropertyChanged(nameof(Targets));
-                }
-            }
-        }
+        //private ObservableCollection<Enemy> targets;
+        //public ObservableCollection<Enemy> Targets
+        //{
+        //    get
+        //    {
+        //        return targets;
+        //    }
+        //    set
+        //    {
+        //        if (targets != value)
+        //        {
+        //            targets = value;
+        //            OnPropertyChanged(nameof(Targets));
+        //        }
+        //    }
+        //}
         public ITarget TargetingEffect { get; set; }
 
         public async void Info(object e)
@@ -116,15 +134,31 @@ namespace NFCombat2.ViewModels
             //TODO invoke popup service to display info on program
         }
 
+        public async void CleanUp()
+        {
+            Options?.Clear();
+            ChoosingOption = false;
+            
+
+        }
+
+        private async void CompleteTurn()
+        {
+            _fightService.ResolveEffects();
+            var categories = _optionsService.GetMoveActions(_fightService.GetFight());
+            Options = new ObservableCollection<IOption>(categories);
+        }
+
 
         public async void Option(object e)
         {
-
-
             var fight = _fightService.GetFight();
+
+            
+
             if (e is string category)
             {
-                ICollection<IAction> options = new List<IAction>();
+                ICollection<IOption> options = new List<IOption>();
                 switch (category)
                 {
                     case "Programs":
@@ -139,9 +173,7 @@ namespace NFCombat2.ViewModels
                     case "Move":
                         break;
                 }
-                Options = new ObservableCollection<IAction>(options);
-                ChoosingCategory = false;
-                ChoosingOption = true;
+                Options = new ObservableCollection<IOption>(options);
                 return;
 
             }
@@ -151,9 +183,7 @@ namespace NFCombat2.ViewModels
 
                 TargetingEffect = targetingEffect;
                 var targets = _optionsService.GetTargets(fight, targetingEffect.MinRange, targetingEffect.MaxRange);
-                Targets = new ObservableCollection<Enemy>(targets);
-                ChoosingOption = false;
-                ChoosingTarget = true;
+                Options = new ObservableCollection<IOption>(targets);
                 return;
 
 
@@ -163,27 +193,27 @@ namespace NFCombat2.ViewModels
             {
                 TargetingEffect.Targets.Add(target);
                 _fightService.AddEffect((IAffectCombat)TargetingEffect);
-                ChoosingTarget = false;
-                ChoosingCategory = true;
-
+                CompleteTurn();
+                
             }
 
 
             if (e is IAffectCombat combatEffect)
             {
                 _fightService.AddEffect(combatEffect);
+                CompleteTurn();
 
             }
 
             _fightService.ResolveEffects();
 
+
             if (fight.HasBonusAction)
             {
-                Categories = new ObservableCollection<String>(_optionsService.GetBonusCategories(fight));
-                ChoosingCategory = true;
+                Options = new ObservableCollection<IOption>(_optionsService.GetBonusActions(fight));
                 fight.HasBonusAction = false;
+                return;
             }
-
 
 
 

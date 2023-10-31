@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using NFCombat2.Models.Contracts;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using NFCombat2.Models.Player;
 
 namespace NFCombat2.ViewModels
 {
@@ -48,6 +49,16 @@ namespace NFCombat2.ViewModels
         } 
 
         public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
+        private Player player;
+        public Player Player { get { return player; } set 
+            {
+                if(player != value)
+                {
+                    player = value;
+                    OnPropertyChanged(nameof(Player));
+                }
+            } 
+        }
         public ObservableCollection<string> Categories { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<IAction> Options { get; set; } = new ObservableCollection<IAction>();
         public OptionPickerViewModel OptionPickerViewModel { get; set; } 
@@ -58,6 +69,7 @@ namespace NFCombat2.ViewModels
         {
                 _fightService = fightService;
                 _optionsService = optionsService;
+            
             OptionPickerViewModel = opctionPickerViewModel;
             GetEpisodeCommand = new Command(GetEpisode);
             ExitCombatCommand = new Command(ExitCombat);
@@ -67,6 +79,7 @@ namespace NFCombat2.ViewModels
             int.TryParse(EpisodeNumber, out int episode);
             
             fight = await _fightService.GetFightByEpisodeNumber(episode);
+            Player = fight.Player;
             TestLabel = fight.GetType().Name;
 
             Enemies.Clear();
@@ -74,7 +87,7 @@ namespace NFCombat2.ViewModels
             {
                 Enemies.Add(enemy);
             }
-            OptionPickerViewModel.Categories = new ObservableCollection<string>(_optionsService.GetCategories(fight));
+            OptionPickerViewModel.Options = new ObservableCollection<IOption>(_optionsService.GetMoveActions(fight));
             NotInCombat = false;
         }
 
@@ -83,9 +96,7 @@ namespace NFCombat2.ViewModels
             NotInCombat = true;
             fight = null;
             Enemies.Clear();
-            OptionPickerViewModel.Categories.Clear();
-            OptionPickerViewModel.Targets.Clear();
-            OptionPickerViewModel.Options.Clear();
+            OptionPickerViewModel.CleanUp();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

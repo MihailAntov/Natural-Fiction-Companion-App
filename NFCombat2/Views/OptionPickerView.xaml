@@ -6,13 +6,13 @@
              x:Class="NFCombat2.Views.OptionPickerView">
     <VerticalStackLayout>
         
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Categories}" IsVisible="{Binding ChoosingCategory}">
+        <!--<VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingCategory}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
 
                     <Button Margin="5"
                                 
-                                Text="{Binding}"
+                                Text="{Binding Label}"
                             Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
                             CommandParameter="{Binding}"     
                         />
@@ -33,9 +33,9 @@
                 />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
 
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Targets}" IsVisible="{Binding ChoosingTarget}" >
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <HorizontalStackLayout>
@@ -43,11 +43,11 @@
                     <Button Margin="5"
                 
                 
-                Text="{Binding Name}" 
+                Text="{Binding Label}" 
             Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
             CommandParameter="{Binding}"       
         />
-                        <Button Text="Info" Opacity="50"
+                        <Button Text="Info" Opacity="50" IsVisible="{Binding IsInfoNeeded}"
                                 Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.Info}"
                                 CommandParameter="{Binding}"/>
                     </HorizontalStackLayout>

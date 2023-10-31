@@ -19,9 +19,9 @@ namespace NFCombat2.Services
         }
 
 
-        public ICollection<IAction> GetItems(Fight fight)
+        public ICollection<IOption> GetItems(Fight fight)
         {
-            var result = new List<IAction>
+            var objects = new List<IAction>
             {
                 new Consumable("Health kit", (fight) => { fight.Player.Health += 10; }),
                 new Consumable("Grenade", (fight) =>
@@ -32,32 +32,53 @@ namespace NFCombat2.Services
                     }
                 })
             };
+
+            var result = objects.Select(o => new Option(o.Label, o)).ToList<IOption>();
             return result;
         }
 
-        public ICollection<string> GetCategories(Fight fight)
+        public ICollection<IOption> GetStandardActions(Fight fight)
         {
-            return new List<string>()
+            var objects = new List<string>()
             {
                 "Shoot",
-                "Move",
                 "Programs",
                 "Items"
             };
+
+            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            return result;
         }
 
-        public ICollection<string> GetBonusCategories(Fight fight)
+        public ICollection<IOption> GetBonusActions(Fight fight)
         {
-            return new List<string>()
+            var objects = new List<string>()
             {
                 "Shoot",
                 "Move",
                 "Items"
             };
+
+            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            return result;
         }
 
-        
-        public ICollection<IAction> GetPrograms(Fight fight)
+        public ICollection<IOption> GetMoveActions(Fight fight)
+        {
+            var objects = new List<string>()
+            {
+                "Move",
+                "Items"
+            };
+
+            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            return result;
+        }
+
+
+
+
+        public ICollection<IOption> GetPrograms(Fight fight)
         {
             var program1 = new Program("Zap Bonus Action","Нанася 1 зар щети на избран опонент. Можете да предприемете допълнително действие.");
              program1.Effects.Add(new DamageEffect(1, 0, program1));
@@ -66,19 +87,27 @@ namespace NFCombat2.Services
             var program2 = new Program("ZapZap", "Нанася 2 зара щети + 2 на избран опонент.");
             program2.Effects.Add(new DamageEffect(2, 2,program2));
             
-            var result = new List<IAction>
+            var objects = new List<IAction>
             {
                 program1,
                 program2  
             };
+
+
+            var result = objects.Select(o => new Option(o.Label, o)).ToList<IOption>();
             return result;
         }
 
-        public ICollection<Enemy> GetTargets(Fight fight, int minRange, int maxRange)
+        public ICollection<IOption> GetTargets(Fight fight, int minRange, int maxRange)
         {
-            return fight.Enemies
+            
+            
+            var objects = fight.Enemies
                 .Where(e => e.Distance >= minRange && e.Distance <= maxRange)
-                .ToList(); 
+                .ToList();
+
+            var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
+            return result;
         }
 
         

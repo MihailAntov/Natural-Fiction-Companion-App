@@ -12,6 +12,8 @@ namespace NFCombat2.Models.Items
         public override string Label { get; set; }
 
         public Action<Fight> Effect { get; set; }
+        public override string Description { get; set; }
+
         public override void AffectFight(Fight fight) => Effect(fight);
 
     }

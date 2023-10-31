@@ -22,6 +22,9 @@
                     Command="{Binding ExitCombatCommand}"
                     />
 
+
+            
+
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -32,6 +35,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>    
             </ListView>
+
+           
+
+            
 
             
 

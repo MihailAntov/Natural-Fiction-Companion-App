@@ -35,7 +35,7 @@ namespace NFCombat2.Services
             };
             enemies.Add(targetDummy);
 
-            var fighter = new Soldier();
+            var fighter = new Soldier() {Name = "Istvan" };
 
             Fight fight;
             
