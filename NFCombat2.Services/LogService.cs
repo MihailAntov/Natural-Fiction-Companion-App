@@ -11,6 +11,9 @@ namespace NFCombat2.Services
     {
         private readonly IProfileService _profileService;
         public ObservableCollection<string> Messages { get; set; } = new ObservableCollection<string>();
+
+        
+
         public LogService(IProfileService profileService)
         {
             _profileService = profileService;

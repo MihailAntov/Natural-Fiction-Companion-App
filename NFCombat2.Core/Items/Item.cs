@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Items
@@ -7,6 +8,8 @@ namespace NFCombat2.Models.Items
     {
         public abstract string Label { get; set; }
         public abstract string Description { get; set; }
+
+        public MessageType MessageType => MessageType.UseItemMessage;
 
         public abstract void AffectFight(Fight fight);
     }

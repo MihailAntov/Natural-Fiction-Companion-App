@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
@@ -12,6 +13,8 @@ namespace NFCombat2.Models.Combat
             _amount = amount;
             _enemy = enemy;
         }
+
+        public MessageType MessageType => MessageType.ChangeDistanceMessage;
 
         public void AffectFight(Fight fight)
         {

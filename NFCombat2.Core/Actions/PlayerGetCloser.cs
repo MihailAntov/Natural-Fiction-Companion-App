@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
@@ -16,6 +17,8 @@ namespace NFCombat2.Models.Actions
 
         public string Label => "Get Closer";
         public string Description => $"Lower the distance to the enemy by {fight.Player.Speed}";
+
+        public MessageType MessageType => MessageType.MoveCloserMessage;
 
         public void AffectFight(Fight fight)
         {

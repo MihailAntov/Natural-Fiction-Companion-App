@@ -18,6 +18,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IOptionsService, OptionsService>();
 		builder.Services.AddSingleton<IFightService, FightService>();
 		builder.Services.AddSingleton<IProfileService, ProfileService>();
+		builder.Services.AddSingleton<ILogService, LogService>();
 		
 		builder.Services.AddSingleton<CharacterPage>();
 		builder.Services.AddSingleton<FightPage>();

@@ -9,6 +9,11 @@ namespace NFCombat2.Services
     public class FightService : IFightService
     {
         private Fight _fight;
+        private ILogService _logService;
+        public FightService(ILogService logService)
+        {
+            _logService = logService;
+        }
         public Fight GetFight()
         {
             return _fight;
@@ -74,6 +79,7 @@ namespace NFCombat2.Services
         public void AddEffect(IAffectCombat effect)
         {
             effect.AffectFight(_fight);
+            _logService.Log(effect.MessageType);
         }
     }
 }

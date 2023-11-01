@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.DiceRoller;
 using NFCombat2.Models.Fights;
 
@@ -13,6 +14,9 @@ namespace NFCombat2.Models.Combat
             _dice = dice;
             _delayedDice = delayedDice;
         }
+
+        public MessageType MessageType => MessageType.ProgramHealMessage;
+
         public void AffectFight(Fight fight)
         {
             fight.Player.Health += DiceCalculator.Calculate(_dice);
@@ -20,11 +24,6 @@ namespace NFCombat2.Models.Combat
             {
                 fight.DelayedEffects.Enqueue(new Heal(_delayedDice, 0));
             }
-        }
-
-        public string Log()
-        {
-            return 
         }
     }
 }

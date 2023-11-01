@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
@@ -14,6 +15,8 @@ namespace NFCombat2.Models.Combat
         }
 
         public ICollection<Enemy> Targets { get; set; }
+
+        public MessageType MessageType => MessageType.DamageMessage;
 
         public void AffectFight(Fight fight)
         {

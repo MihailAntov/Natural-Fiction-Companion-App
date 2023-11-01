@@ -6,10 +6,11 @@ using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.DiceRoller;
 using NFCombat2;
+using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Models.Programs
 {
-    public class DamageEffect : IProgramEffect , ITarget
+    public class DamageEffect : IProgramEffect, ITarget
     {
         
         public DamageEffect(int numberOfDice, int flatDamage,Program program, int delayedNumberOfDice = 0, int delayedFlatDamage = 0, int delayedDuration = 0)
@@ -34,6 +35,8 @@ namespace NFCombat2.Models.Programs
         public ICollection<Enemy> Targets { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
+
+        public MessageType MessageType => MessageType.ProgramDamageMessage;
 
         public void AffectFight(Fight fight)
         {

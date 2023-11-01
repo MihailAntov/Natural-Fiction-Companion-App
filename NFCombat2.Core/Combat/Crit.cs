@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
@@ -10,6 +11,9 @@ namespace NFCombat2.Models.Combat
         {
             _numberOfCrits = numberOfCrits;
         }
+
+        public MessageType MessageType => MessageType.CritMessage;
+
         public void AffectFight(Fight fight)
         {
             fight.RemainingCrits += _numberOfCrits;

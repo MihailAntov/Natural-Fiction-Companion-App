@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
@@ -20,6 +21,8 @@ namespace NFCombat2.Models.Actions
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; } = 0;
         public int MaxRange { get; set; } = 0;
+
+        public MessageType MessageType => MessageType.AttackMessage;
 
         public void AffectFight(Fight fight)
         {

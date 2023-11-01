@@ -36,12 +36,17 @@
                 </ListView.ItemTemplate>    
             </ListView>
 
-           
-
+            <Border IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
+                <ListView 
+                    ItemsSource="{Binding Messages}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
             
-
-            
-
             <Label
             Text="{Binding TestLabel}"
             SemanticProperties.HeadingLevel="Level2"

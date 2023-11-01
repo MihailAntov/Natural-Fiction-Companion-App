@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Models.Combat;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -21,6 +22,8 @@ namespace NFCombat2.Models.Programs
         public ICollection<Enemy> Targets { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
+
+        public MessageType MessageType => throw new NotImplementedException();
 
         public void AffectFight(Fight fight)
         {

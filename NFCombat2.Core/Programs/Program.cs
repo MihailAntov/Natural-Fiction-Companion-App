@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Programs
@@ -20,6 +21,8 @@ namespace NFCombat2.Models.Programs
         public ICollection<Enemy> Targets { get; set; } = new List<Enemy>();
 
         public string Description { get; set; }
+
+        public MessageType MessageType => MessageType.UseProgramMessage;
 
         public void AffectFight(Fight fight)
         {

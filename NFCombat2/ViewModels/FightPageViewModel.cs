@@ -14,8 +14,21 @@ namespace NFCombat2.ViewModels
         private Fight fight;
         private IFightService _fightService;
         private IOptionsService _optionsService;
+        private ILogService _logService;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public FightPageViewModel(IFightService fightService, IOptionsService optionsService, ILogService logService, OptionPickerViewModel opctionPickerViewModel)
+        {
+            _fightService = fightService;
+            _optionsService = optionsService;
+            _logService = logService;
+
+            OptionPickerViewModel = opctionPickerViewModel;
+            GetEpisodeCommand = new Command(GetEpisode);
+            ExitCombatCommand = new Command(ExitCombat);
+            Messages = _logService.Messages;
+        }
 
         public Command GetEpisodeCommand { get; }
         public Command ExitCombatCommand { get; }
@@ -49,6 +62,7 @@ namespace NFCombat2.ViewModels
         } 
 
         public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
+        public ObservableCollection<string> Messages { get; set; } = new ObservableCollection<string>();
         private Player player;
         public Player Player { get { return player; } set 
             {
@@ -64,16 +78,8 @@ namespace NFCombat2.ViewModels
         public OptionPickerViewModel OptionPickerViewModel { get; set; } 
 
         
+        
 
-        public FightPageViewModel(IFightService fightService, IOptionsService optionsService, OptionPickerViewModel opctionPickerViewModel)
-        {
-                _fightService = fightService;
-                _optionsService = optionsService;
-            
-            OptionPickerViewModel = opctionPickerViewModel;
-            GetEpisodeCommand = new Command(GetEpisode);
-            ExitCombatCommand = new Command(ExitCombat);
-        }
         public async void GetEpisode()
         {
             int.TryParse(EpisodeNumber, out int episode);
