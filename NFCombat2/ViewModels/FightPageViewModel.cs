@@ -31,6 +31,7 @@ namespace NFCombat2.ViewModels
 
         public Command GetEpisodeCommand { get; }
         public Command ExitCombatCommand { get; }
+        public ListView MessageBoard { get; set; }
         private string testLabel;
         public string TestLabel
         {
@@ -93,6 +94,7 @@ namespace NFCombat2.ViewModels
                 Enemies.Add(enemy);
             }
             OptionPickerViewModel.Options = new ObservableCollection<IOption>(_optionsService.GetMoveActions(fight));
+            OptionPickerViewModel.ChoosingOption = true;
             NotInCombat = false;
         }
 
@@ -102,6 +104,7 @@ namespace NFCombat2.ViewModels
             fight = null;
             Enemies.Clear();
             OptionPickerViewModel.CleanUp();
+            _logService.Messages.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

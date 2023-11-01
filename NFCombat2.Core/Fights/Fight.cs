@@ -20,9 +20,9 @@ namespace NFCombat2.Models.Fights
         public IList<Enemy> Enemies { get; set; }
         
         public Queue<IAction> Actions { get; set; } = new Queue<IAction>();
-        public Queue<IAffectCombat> DelayedEffects { get; set; } = new Queue<IAffectCombat>();
+        public Queue<ICombatResolution> DelayedEffects { get; set; } = new Queue<ICombatResolution>();
 
-        public Queue<IAffectCombat> Effects { get; set; } = new Queue<IAffectCombat>();
+        public Queue<ICombatResolution> Effects { get; set; } = new Queue<ICombatResolution>();
         public bool HasBonusAction { get; set; } = false;
         public int RemainingCrits { get; set; } = 0;
 

@@ -2,7 +2,7 @@
 
 namespace NFCombat2.Models.Contracts
 {
-    public interface IProgramEffect : IAffectCombat
+    public interface IProgramEffect : ICombatAction
     {
         
     }

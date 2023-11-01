@@ -1,26 +1,28 @@
 ﻿
 
 using NFCombat2.Common.Enums;
-using NFCombat2.Models.Combat;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Programs
 {
-    public class CritEffect : IProgramEffect
+    public class CritProgramEffect : IProgramEffect
     {
         private int _numberOfCrits;
-        public CritEffect(int numberOfCrits)
+        public CritProgramEffect(int numberOfCrits)
         {
             _numberOfCrits = numberOfCrits;
         }
 
         public MessageType MessageType => MessageType.ProgramCritMessage;
         public string[] MessageArgs =>Array.Empty<string>();
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
             //fight.RemainingCrits += _numberOfCrits;
-            fight.Effects.Enqueue(new Crit(_numberOfCrits));
+            var crit = new Crit(_numberOfCrits);
+            fight.Effects.Enqueue(crit);
+            return crit;
         }
 
         

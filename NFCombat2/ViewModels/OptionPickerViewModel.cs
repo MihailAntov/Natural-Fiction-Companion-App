@@ -144,15 +144,15 @@ namespace NFCombat2.ViewModels
             if (e is Enemy target)
             {
                 TargetingEffect.Targets.Add(target);
-                var effect = (IAffectCombat)TargetingEffect;
-                _fightService.AddEffect((IAffectCombat)TargetingEffect);
+                var effect = (ICombatAction)TargetingEffect;
+                _fightService.AddEffect((ICombatAction)TargetingEffect);
                 _logService.Log(effect.MessageType, effect.MessageArgs);
                 CompleteTurn();
                 
             }
 
 
-            if (e is IAffectCombat combatEffect)
+            if (e is ICombatAction combatEffect)
             {
                 _fightService.AddEffect(combatEffect);
                 CompleteTurn();

@@ -1,7 +1,7 @@
 ﻿
 
 using NFCombat2.Models.Actions;
-using NFCombat2.Models.Combat;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.DiceRoller;
@@ -10,10 +10,10 @@ using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Models.Programs
 {
-    public class DamageEffect : IProgramEffect, ITarget
+    public class DamageProgramEffect : IProgramEffect, ITarget
     {
         
-        public DamageEffect(int numberOfDice, int flatDamage,Program program, int delayedNumberOfDice = 0, int delayedFlatDamage = 0, int delayedDuration = 0)
+        public DamageProgramEffect(int numberOfDice, int flatDamage,Program program, int delayedNumberOfDice = 0, int delayedFlatDamage = 0, int delayedDuration = 0)
         {
             _numberOfDice = numberOfDice;
             _flatDamage = flatDamage;
@@ -38,19 +38,21 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.ProgramDamageMessage;
         public string[] MessageArgs => Array.Empty<string>();   
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
             int amount = DiceCalculator.Calculate(_numberOfDice, _flatDamage);
 
-            
+            var damage = new DealDamage(amount, Targets);
 
-                fight.Effects.Enqueue(new DealDamage(amount, Targets));
+                fight.Effects.Enqueue(damage);
                 
             if(_delayedDuration > 0)
             {
                 int delayedAmount = DiceCalculator.Calculate(_delayedNumberOfDice, _delayedFlatDamage);
                 fight.DelayedEffects.Enqueue(new DealDamage(delayedAmount, Targets));
             }
+
+            return damage;
         }
 
         

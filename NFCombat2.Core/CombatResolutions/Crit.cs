@@ -2,9 +2,9 @@
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Combat
+namespace NFCombat2.Models.CombatResolutions
 {
-    public class Crit : IAffectCombat
+    public class Crit : ICombatResolution
     {
         private int _numberOfCrits;
         public Crit(int numberOfCrits)
@@ -14,7 +14,7 @@ namespace NFCombat2.Models.Combat
         public string[] MessageArgs => new string[] { _numberOfCrits.ToString() };
         public MessageType MessageType => MessageType.CritMessage;
 
-        public void AffectFight(Fight fight)
+        public void Resolve(Fight fight)
         {
             fight.RemainingCrits += _numberOfCrits;
         }

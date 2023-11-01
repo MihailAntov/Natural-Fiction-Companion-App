@@ -1,6 +1,5 @@
 ﻿
 
-using NFCombat2.Common.Enums;
 using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -21,16 +20,11 @@ namespace NFCombat2.Services
 
         public ICollection<IOption> GetItems(Fight fight)
         {
+            MobileHealthKit healthKit = new();
+            Grenade grenade = new();
             var objects = new List<IAction>
             {
-                new Consumable("Health kit", (fight) => { fight.Player.Health += 10; }),
-                new Consumable("Grenade", (fight) =>
-                {
-                    foreach (var enemy in fight.Enemies)
-                    {
-                        enemy.Health -= 5;
-                    }
-                })
+                healthKit, grenade
             };
 
             var result = objects.Select(o => new Option(o.Label, o)).ToList<IOption>();
@@ -81,11 +75,11 @@ namespace NFCombat2.Services
         public ICollection<IOption> GetPrograms(Fight fight)
         {
             var program1 = new Program("Zap Bonus Action","Нанася 1 зар щети на избран опонент. Можете да предприемете допълнително действие.");
-             program1.Effects.Add(new DamageEffect(1, 0, program1));
-            program1.Effects.Add(new BonusActionEffect());
+             program1.Effects.Add(new DamageProgramEffect(1, 0, program1));
+            program1.Effects.Add(new BonusActionProgramEffect());
 
             var program2 = new Program("ZapZap", "Нанася 2 зара щети + 2 на избран опонент.");
-            program2.Effects.Add(new DamageEffect(2, 2,program2));
+            program2.Effects.Add(new DamageProgramEffect(2, 2,program2));
             
             var objects = new List<IAction>
             {

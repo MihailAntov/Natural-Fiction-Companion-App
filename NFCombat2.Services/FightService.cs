@@ -1,6 +1,6 @@
 ﻿using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
-using NFCombat2.Models.Combat;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Services.Contracts;
 using NFCombat2.Models.Contracts;
 
@@ -72,15 +72,17 @@ namespace NFCombat2.Services
             while(_fight.Effects.Count > 0)
             {
                 var effect = _fight.Effects.Dequeue();
-                effect.AffectFight(_fight);
-                _logService.Log(effect.MessageType, effect.MessageArgs);
+                
+                effect.Resolve(_fight);
+                
             }
         }
 
-        public void AddEffect(IAffectCombat effect)
+        public void AddEffect(ICombatAction effect)
         {
-            effect.AffectFight(_fight);
             _logService.Log(effect.MessageType, effect.MessageArgs);
+            var resolution = effect.AddToCombatEffects(_fight);
+            _logService.Log(resolution.MessageType, resolution.MessageArgs);
         }
     }
 }

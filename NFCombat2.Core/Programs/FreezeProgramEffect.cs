@@ -1,16 +1,16 @@
 ﻿
 
 using NFCombat2.Common.Enums;
-using NFCombat2.Models.Combat;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Programs
 {
-    public class FreezeEffect : IProgramEffect, ITarget
+    public class FreezeProgramEffect : IProgramEffect, ITarget
     {
         private int _turns;
-        public FreezeEffect(int turns, Program program)
+        public FreezeProgramEffect(int turns, Program program)
         {
                 _turns = turns;
             AreaOfEffect = program.AreaOfEffect;
@@ -25,11 +25,11 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.ProgramFreezeMessage;
 
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
-
-            fight.Effects.Enqueue(new Freeze(_turns, Targets));
-
+            var freeze = new Freeze(_turns, Targets);
+            fight.Effects.Enqueue(freeze);
+            return freeze;
         }
 
         

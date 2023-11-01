@@ -9,7 +9,7 @@ namespace NFCombat2.Services.Contracts
         Task<Fight> GetFightByEpisodeNumber(int episodeNumber);
         Fight GetFight();
 
-        void AddEffect(IAffectCombat effect);
+        void AddEffect(ICombatAction effect);
         void ResolveEffects();
     }
 }

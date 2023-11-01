@@ -30,12 +30,13 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.ShootMessage;
 
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
             if(fight.Enemies.Any())
             {
                 fight.Enemies.FirstOrDefault().Range++;
             }
+            return null;
         }
     }
 }

@@ -25,9 +25,9 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.AttackMessage;
 
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
-            
+            return null;
         }
     }
 }

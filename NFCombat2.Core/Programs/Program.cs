@@ -26,7 +26,7 @@ namespace NFCombat2.Models.Programs
 
         public string[] MessageArgs => new string[] { Label };
 
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
             foreach (var effect in Effects)
             {
@@ -34,8 +34,10 @@ namespace NFCombat2.Models.Programs
                 {
                     targettingEffect.Targets = Targets;
                 }
-                effect.AffectFight(fight);
+                effect.AddToCombatEffects(fight);
             }
+
+            return null;
         }
 
 

@@ -12,7 +12,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.BonusActionMessage, "{You can take another action this turn." },
             {MessageType.CritMessage, "Your next {0} shots deal double damage!" },
             {MessageType.DamageMessage, "{0} takes {1} damage." },
-            {MessageType.DamageAoeMessage, "{0} each take {1} damage." },
+            {MessageType.DamageAoeMessage, "{0} enemies each take {1} damage." },
             {MessageType.TakeDamageMessage, "You take {0} damage." },
             {MessageType.FreezeAoeMessage, "{0} enemies cannot move for {1} turns." },
             {MessageType.FreezeMessage, "{0} cannot move for {1} turns." },

@@ -2,9 +2,9 @@
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Combat
+namespace NFCombat2.Models.CombatResolutions
 {
-    public class Freeze : IAffectCombat
+    public class Freeze : ICombatResolution
     {
         private int _turns;
         public Freeze(int turns, ICollection<Enemy> targets)
@@ -15,10 +15,12 @@ namespace NFCombat2.Models.Combat
         public ICollection<Enemy> Targets { get; set; }
         public Enemy Target { get; set; }
 
-        public MessageType MessageType { get 
+        public MessageType MessageType
+        {
+            get
             {
                 return Targets.Count == 1 ? MessageType.FreezeMessage : MessageType.FreezeAoeMessage;
-            } 
+            }
         }
 
         public string[] MessageArgs
@@ -29,9 +31,9 @@ namespace NFCombat2.Models.Combat
             }
         }
 
-        public void AffectFight(Fight fight)
+        public void Resolve(Fight fight)
         {
-            foreach(var enemy in Targets)
+            foreach (var enemy in Targets)
             {
                 enemy.RemainingFrozenTurns += _turns;
             }

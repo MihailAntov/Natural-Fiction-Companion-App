@@ -2,9 +2,9 @@
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Combat
+namespace NFCombat2.Models.CombatResolutions
 {
-    public class ChangeDistance : IAffectCombat
+    public class ChangeDistance : ICombatResolution
     {
         private int _amount;
         private Enemy _enemy;
@@ -16,7 +16,7 @@ namespace NFCombat2.Models.Combat
 
         public MessageType MessageType => MessageType.ChangeDistanceMessage;
         public string[] MessageArgs => Array.Empty<string>();
-        public void AffectFight(Fight fight)
+        public void Resolve(Fight fight)
         {
             _enemy.Distance -= _amount;
         }

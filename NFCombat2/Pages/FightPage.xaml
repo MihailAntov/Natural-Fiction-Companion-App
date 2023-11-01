@@ -36,15 +36,15 @@
                 </ListView.ItemTemplate>    
             </ListView>
 
-            <Border IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
-                <ListView 
+            <Border MaximumHeightRequest="150" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
+                <CollectionView ItemsUpdatingScrollMode="KeepLastItemInView"
                     ItemsSource="{Binding Messages}">
-                    <ListView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding}"/>
+                            <Label Text="{Binding}"/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Border>
 
             

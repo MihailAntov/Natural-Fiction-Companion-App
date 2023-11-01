@@ -25,7 +25,7 @@ namespace NFCombat2.Models.Actions
 
         public string[] MessageArgs => new string[] { Enemy.Name, Enemy.Distance.ToString() };
 
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
             foreach(var enemy in fight.Enemies)
             {
@@ -35,6 +35,7 @@ namespace NFCombat2.Models.Actions
                     enemy.Distance = 0;
                 }
             }
+            return null;
         }
     }
 }

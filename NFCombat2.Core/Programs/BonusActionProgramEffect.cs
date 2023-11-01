@@ -1,17 +1,20 @@
 ﻿using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using NFCombat2.Models.Combat;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Models.Programs
 {
-    public class BonusActionEffect : IProgramEffect
+    public class BonusActionProgramEffect : IProgramEffect
     {
         public MessageType MessageType => MessageType.ProgramBonusActionmessage;
         public string[] MessageArgs => Array.Empty<string>();
-        public void AffectFight(Fight fight)
+        public ICombatResolution AddToCombatEffects(Fight fight)
         {
-            fight.Effects.Enqueue(new BonusAction());
+            var bonus = new BonusAction();
+            fight.Effects.Enqueue(bonus);
+            return bonus;
+
         }
 
         
