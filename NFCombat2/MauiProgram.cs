@@ -5,6 +5,7 @@ using NFCombat2.Pages;
 using NFCombat2.Data;
 using NFCombat2.Views;
 using NFCombat2.ViewModels;
+using CommunityToolkit.Maui;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace NFCombat2;
@@ -32,6 +33,7 @@ public static class MauiProgram
 
         builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
