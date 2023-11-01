@@ -8,6 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using NFCombat2.Models.Actions;
 using NFCombat2.Services;
+using CommunityToolkit.Maui.Views;
+using NFCombat2.Popups;
+using NFCombat2.Views;
 
 namespace NFCombat2.ViewModels
 {
@@ -17,14 +20,16 @@ namespace NFCombat2.ViewModels
         private IOptionsService _optionsService;
         private IFightService _fightService;
         private ILogService _logService;
-        public OptionPickerViewModel(IOptionsService optionsService, IFightService fightService, ILogService logService)
+        private IPopupService _popupService;
+        public OptionPickerViewModel(IOptionsService optionsService, IFightService fightService, ILogService logService, IPopupService popupService)
         {
             _optionsService = optionsService;
             _fightService = fightService;
             _logService = logService;
-            OptionChosenCommand = new Command<IOption>(o=> Option(o.Content));
-            InfoCommand = new Command(Info);
-            
+            _popupService = popupService;
+            OptionChosenCommand = new Command<IOption>(o => Option(o.Content));
+            InfoCommand = new Command<IOption>(o => Info(o.Content));
+
 
         }
 
@@ -61,11 +66,11 @@ namespace NFCombat2.ViewModels
         public Command OptionChosenCommand { get; set; }
         public Command InfoCommand { get; set; }
 
-        public ObservableCollection<IAction> Actions {get; set;}
+        public ObservableCollection<IAction> Actions { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-     
+
         private ObservableCollection<IOption> options;
         public ObservableCollection<IOption> Options
         {
@@ -73,22 +78,35 @@ namespace NFCombat2.ViewModels
             set
             {
                 options = value;
-                OnPropertyChanged(nameof(Options)); 
+                OnPropertyChanged(nameof(Options));
             }
         }
-       
+
         public ITarget TargetingEffect { get; set; }
 
         public async void Info(object e)
         {
-            //TODO invoke popup service to display info on program
+            if (e is IAction action)
+            {
+                string description = action.Description;
+                var viewModel = new InfoViewModel(description);
+                var info = new InfoPopUp()
+                {
+                    Content = new InfoView(viewModel)
+                };
+                _popupService.ShowPopup(info);
+            }
+
+
+
+
         }
 
         public async void CleanUp()
         {
             Options?.Clear();
             ChoosingOption = false;
-            
+
 
         }
 
@@ -105,7 +123,7 @@ namespace NFCombat2.ViewModels
         {
             var fight = _fightService.GetFight();
 
-            
+
 
             if (e is string category)
             {
@@ -149,7 +167,7 @@ namespace NFCombat2.ViewModels
                 _fightService.AddEffect((ICombatAction)TargetingEffect);
                 _logService.Log(effect.MessageType, effect.MessageArgs);
                 CompleteTurn();
-                
+
             }
 
 
@@ -174,7 +192,7 @@ namespace NFCombat2.ViewModels
 
         }
 
-        
+
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

@@ -16,6 +16,7 @@ namespace NFCombat2.Models.Items
         public override string Label { get; set; }
 
         public override string[] MessageArgs => new string[] { Label };
+        public override string Description { get; set; } = "Heals you for two dice worth of health.";
 
         public override ICombatResolution AddToCombatEffects(Fight fight)
         {

@@ -14,6 +14,7 @@ namespace NFCombat2.Models.Items
         }
 
         public override string Label { get; set; }
+        public override string Description { get; set; } = "Deals two dice worth of damage to each opponent within 10 meters.";
 
         public override string[] MessageArgs => new string[] { Label };
 
