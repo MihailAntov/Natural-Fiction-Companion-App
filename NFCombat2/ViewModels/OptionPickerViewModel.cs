@@ -24,11 +24,9 @@ namespace NFCombat2.ViewModels
             _logService = logService;
             OptionChosenCommand = new Command<IOption>(o=> Option(o.Content));
             InfoCommand = new Command(Info);
+            
 
         }
-
-        private bool _moveActionChosen;
-        private bool _standardActionChosen;
 
 
         private bool choosingOption = true;
@@ -99,6 +97,7 @@ namespace NFCombat2.ViewModels
             _fightService.ResolveEffects();
             var categories = _optionsService.GetMoveActions(_fightService.GetFight());
             Options = new ObservableCollection<IOption>(categories);
+            IsInfoNeeded = false;
         }
 
 
@@ -114,6 +113,7 @@ namespace NFCombat2.ViewModels
                 switch (category)
                 {
                     case "Programs":
+                        IsInfoNeeded = true;
                         options = _optionsService.GetPrograms(fight);
                         break;
                     case "Shoot":
@@ -121,6 +121,7 @@ namespace NFCombat2.ViewModels
                         break;
                     case "Items":
                         options = _optionsService.GetItems(fight);
+                        IsInfoNeeded = true;
                         break;
                     case "Move":
                         break;

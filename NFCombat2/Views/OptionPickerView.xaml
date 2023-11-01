@@ -5,36 +5,6 @@
              xmlns:Helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.OptionPickerView">
     <VerticalStackLayout>
-        
-        <!--<VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingCategory}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-
-                    <Button Margin="5"
-                                
-                                Text="{Binding Label}"
-                            Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
-                            CommandParameter="{Binding}"     
-                        />
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-            
-            
-        </VerticalStackLayout>
-
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <Button Margin="5"
-                        
-                        Text="{Binding Label}"
-                    Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
-                    CommandParameter="{Binding}"       
-                />
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </VerticalStackLayout>-->
-
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
@@ -47,8 +17,8 @@
             Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
             CommandParameter="{Binding}"       
         />
-                        <Button Text="Info" Opacity="50" IsVisible="{Binding IsInfoNeeded}"
-                                Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.Info}"
+                        <ImageButton Margin="0,5,0,0" VerticalOptions="Center" HeightRequest="30" WidthRequest="30" Source="info.png" Opacity="50" IsVisible="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.IsInfoNeeded}"
+                                Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.InfoCommand}"
                                 CommandParameter="{Binding}"/>
                     </HorizontalStackLayout>
                 </DataTemplate>
