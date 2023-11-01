@@ -64,14 +64,10 @@ namespace NFCombat2.Services
 
         public void ResolveEffects()
         {
-            //foreach(var effect in _fight.Effects)
-            //{
-            //    effect.AffectFight(_fight);
-
-            //}
             while(_fight.Effects.Count > 0)
             {
                 _fight.Effects.Dequeue().AffectFight(_fight);
+
             }
         }
 

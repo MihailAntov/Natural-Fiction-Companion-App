@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Models.Items;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -67,6 +68,7 @@ namespace NFCombat2.Models.Player
         public int Pathogens { get; set; } = 0;
         public int MaxPathogens { get; set; } = 3;
         public int Speed { get; set; } = 0;
+        public Language Language { get; set; } = Language.English;
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

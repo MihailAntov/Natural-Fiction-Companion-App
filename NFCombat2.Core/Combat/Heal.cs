@@ -21,5 +21,10 @@ namespace NFCombat2.Models.Combat
                 fight.DelayedEffects.Enqueue(new Heal(_delayedDice, 0));
             }
         }
+
+        public string Log()
+        {
+            return 
+        }
     }
 }
