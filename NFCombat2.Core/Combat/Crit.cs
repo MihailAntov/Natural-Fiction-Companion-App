@@ -11,7 +11,7 @@ namespace NFCombat2.Models.Combat
         {
             _numberOfCrits = numberOfCrits;
         }
-
+        public string[] MessageArgs => new string[] { _numberOfCrits.ToString() };
         public MessageType MessageType => MessageType.CritMessage;
 
         public void AffectFight(Fight fight)

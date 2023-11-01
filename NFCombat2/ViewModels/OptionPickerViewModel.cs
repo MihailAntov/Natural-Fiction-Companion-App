@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using NFCombat2.Models.Actions;
-
+using NFCombat2.Services;
 
 namespace NFCombat2.ViewModels
 {
@@ -16,11 +16,12 @@ namespace NFCombat2.ViewModels
 
         private IOptionsService _optionsService;
         private IFightService _fightService;
-
-        public OptionPickerViewModel(IOptionsService optionsService, IFightService fightService)
+        private ILogService _logService;
+        public OptionPickerViewModel(IOptionsService optionsService, IFightService fightService, ILogService logService)
         {
             _optionsService = optionsService;
             _fightService = fightService;
+            _logService = logService;
             OptionChosenCommand = new Command<IOption>(o=> Option(o.Content));
             InfoCommand = new Command(Info);
 
@@ -29,19 +30,6 @@ namespace NFCombat2.ViewModels
         private bool _moveActionChosen;
         private bool _standardActionChosen;
 
-        //private bool choosingCategory = true;
-        //public bool ChoosingCategory
-        //{
-        //    get { return choosingCategory; }
-        //    set
-        //    {
-        //        if (choosingCategory != value)
-        //        {
-        //            choosingCategory = value;
-        //            OnPropertyChanged(nameof(ChoosingCategory));
-        //        }
-        //    }
-        //}
 
         private bool choosingOption = true;
         public bool ChoosingOption
@@ -72,20 +60,6 @@ namespace NFCombat2.ViewModels
         }
 
 
-        //private bool choosingTarget = false;
-        //public bool ChoosingTarget
-        //{
-        //    get { return choosingTarget; }
-        //    set
-        //    {
-        //        if(choosingTarget != value)
-        //        {
-        //            choosingTarget = value; 
-        //            OnPropertyChanged(nameof(ChoosingTarget));
-        //        }
-        //    }
-        //}
-
         public Command OptionChosenCommand { get; set; }
         public Command InfoCommand { get; set; }
 
@@ -93,14 +67,7 @@ namespace NFCombat2.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        //private ObservableCollection<string> categories;
-        //public ObservableCollection<string> Categories { get { return categories; }
-        //    set 
-        //    {
-        //        categories = value;
-        //        OnPropertyChanged(nameof(Categories));
-        //    }
-        //}
+     
         private ObservableCollection<IOption> options;
         public ObservableCollection<IOption> Options
         {
@@ -111,22 +78,7 @@ namespace NFCombat2.ViewModels
                 OnPropertyChanged(nameof(Options)); 
             }
         }
-        //private ObservableCollection<Enemy> targets;
-        //public ObservableCollection<Enemy> Targets
-        //{
-        //    get
-        //    {
-        //        return targets;
-        //    }
-        //    set
-        //    {
-        //        if (targets != value)
-        //        {
-        //            targets = value;
-        //            OnPropertyChanged(nameof(Targets));
-        //        }
-        //    }
-        //}
+       
         public ITarget TargetingEffect { get; set; }
 
         public async void Info(object e)
@@ -192,7 +144,9 @@ namespace NFCombat2.ViewModels
             if (e is Enemy target)
             {
                 TargetingEffect.Targets.Add(target);
+                var effect = (IAffectCombat)TargetingEffect;
                 _fightService.AddEffect((IAffectCombat)TargetingEffect);
+                _logService.Log(effect.MessageType, effect.MessageArgs);
                 CompleteTurn();
                 
             }

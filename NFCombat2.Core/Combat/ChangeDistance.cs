@@ -15,7 +15,7 @@ namespace NFCombat2.Models.Combat
         }
 
         public MessageType MessageType => MessageType.ChangeDistanceMessage;
-
+        public string[] MessageArgs => Array.Empty<string>();
         public void AffectFight(Fight fight)
         {
             _enemy.Distance -= _amount;

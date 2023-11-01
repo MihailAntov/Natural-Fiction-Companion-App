@@ -14,7 +14,7 @@ namespace NFCombat2.Models.Actions
         {
             this.fight = fight;
         }
-
+        public string[] MessageArgs => Array.Empty<string>();
         public string Label => "Get Closer";
         public string Description => $"Lower the distance to the enemy by {fight.Player.Speed}";
 

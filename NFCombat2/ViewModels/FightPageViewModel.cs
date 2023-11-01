@@ -27,7 +27,6 @@ namespace NFCombat2.ViewModels
             OptionPickerViewModel = opctionPickerViewModel;
             GetEpisodeCommand = new Command(GetEpisode);
             ExitCombatCommand = new Command(ExitCombat);
-            Messages = _logService.Messages;
         }
 
         public Command GetEpisodeCommand { get; }
@@ -62,7 +61,7 @@ namespace NFCombat2.ViewModels
         } 
 
         public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
-        public ObservableCollection<string> Messages { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Messages => _logService.Messages;
         private Player player;
         public Player Player { get { return player; } set 
             {

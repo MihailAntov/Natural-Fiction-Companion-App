@@ -4,14 +4,19 @@ using NFCombat2.Common.Enums;
 using static NFCombat2.Common.AppConstants.Messages;
 using NFCombat2.Services.Contracts;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.Specialized;
 
 namespace NFCombat2.Services
 {
     public class LogService : ILogService
     {
         private readonly IProfileService _profileService;
-        public ObservableCollection<string> Messages { get; set; } = new ObservableCollection<string>();
 
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
         
 
         public LogService(IProfileService profileService)
@@ -36,7 +41,13 @@ namespace NFCombat2.Services
         {
             Language language = _profileService.CurrentPlayer().Language;
             string structure = GetStructure(messageType, language);
-            Messages.Add(String.Format(structure, args));   
+            Messages.Add(String.Format(structure, args));
+
+
+
+
         }
+
+        
     }
 }

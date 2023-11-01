@@ -37,7 +37,7 @@ namespace NFCombat2.Models.Programs
         public int MaxRange { get; set; }
 
         public MessageType MessageType => MessageType.ProgramDamageMessage;
-
+        public string[] MessageArgs => Array.Empty<string>();   
         public void AffectFight(Fight fight)
         {
             int amount = DiceCalculator.Calculate(_numberOfDice, _flatDamage);

@@ -18,12 +18,12 @@ namespace NFCombat2.Models.Programs
             MaxRange = program.MaxRange;
         }
         public bool AreaOfEffect { get; set; }
-
+        public string[] MessageArgs => Array.Empty<string>();
         public ICollection<Enemy> Targets { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
 
-        public MessageType MessageType => throw new NotImplementedException();
+        public MessageType MessageType => MessageType.ProgramFreezeMessage;
 
         public void AffectFight(Fight fight)
         {

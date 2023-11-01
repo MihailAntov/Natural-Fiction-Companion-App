@@ -7,5 +7,6 @@ namespace NFCombat2.Models.Contracts
     {
         public void AffectFight(Fight fight);
         public MessageType MessageType { get; }
+        public string[] MessageArgs { get; }
     }
 }

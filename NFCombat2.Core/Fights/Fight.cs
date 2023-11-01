@@ -26,6 +26,8 @@ namespace NFCombat2.Models.Fights
         public bool HasBonusAction { get; set; } = false;
         public int RemainingCrits { get; set; } = 0;
 
+        public List<string> Messages { get; set; } = new List<string>();
+
 
     }
 }

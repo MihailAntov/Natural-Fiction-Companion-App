@@ -5,6 +5,7 @@ namespace NFCombat2.Models.Items
     public abstract class Weapon
     {
         public Accuracy Accuracy { get; set; }
+        public string Label { get; set; }
         public int MaxRange { get; set; }
         public int MinRange { get; set; }   
         public bool AreaOfEffect { get; set; }

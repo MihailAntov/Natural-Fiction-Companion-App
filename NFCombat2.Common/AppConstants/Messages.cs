@@ -8,27 +8,34 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<MessageType, string> EnglishMessages = new Dictionary<MessageType, string>()
         {
+            //effects
             {MessageType.BonusActionMessage, "{You can take another action this turn." },
-            {MessageType.CritMessage, "You deal double damage!" },
+            {MessageType.CritMessage, "Your next {0} shots deal double damage!" },
             {MessageType.DamageMessage, "{0} takes {1} damage." },
+            {MessageType.DamageAoeMessage, "{0} each take {1} damage." },
             {MessageType.TakeDamageMessage, "You take {0} damage." },
-            {MessageType.FreezeMessage, "{0} cannot move for another {1} turns." },
+            {MessageType.FreezeAoeMessage, "{0} enemies cannot move for {1} turns." },
+            {MessageType.FreezeMessage, "{0} cannot move for {1} turns." },
+            {MessageType.IsFrozenMessage, "{0} cannot move. ({1} turns remaining)" },
             {MessageType.HealMessage, "You restore {0} health." },
-            {MessageType.ChangeDistanceMessage, "The closest enemy is now at {0} meters." },
+            {MessageType.ChangeDistanceMessage, "You move closer to the enemy." },
+            //actions
             {MessageType.ShootMessage, "You shoot {0} with your {1}" },
             {MessageType.AttackMessage, "You attack {0} in close combat." },
             {MessageType.UseProgramMessage, "You use {0}. Your overload gauge is now at {1}." },
-            {MessageType.ProgramHealMessage, "Your program heals you." },
-            {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },
-            {MessageType.ProgramDamageMessage, "Your program damages your enemy." },
-            {MessageType.ProgramCritMessage, "Your program focuses your aim." },
-            {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
             {MessageType.UseItemWithQuantityMessage, "You use one of your {0}. You have {0} left." },
             {MessageType.UseItemMessage, "You use your {0}." },
             {MessageType.UseTechniqueMessage, "You use {}." },
             {MessageType.MoveCloserMessage, "You move in closer." },
             {MessageType.MovePassMessage, "You stay where you are." },
             {MessageType.ActionPassMessage, "You wait." },
+            //program action messages
+            {MessageType.ProgramHealMessage, "Your program heals you." },
+            {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },
+            {MessageType.ProgramDamageMessage, "Your program damages your enemy." },
+            {MessageType.ProgramCritMessage, "Your program focuses your aim." },
+            {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
+            //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer, and is now {1} meters away from you." },
             {MessageType.EnemyShootMessage, "{0} shoots with {1}" },
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },

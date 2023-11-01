@@ -41,12 +41,14 @@
                     ItemsSource="{Binding Messages}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding}"/>
+                            <TextCell Text="{Binding}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Border>
+
             
+
             <Label
             Text="{Binding TestLabel}"
             SemanticProperties.HeadingLevel="Level2"

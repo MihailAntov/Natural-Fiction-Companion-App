@@ -13,11 +13,12 @@ namespace NFCombat2.Models.Actions
         {
             _fight = fight;
         }
-
+        public string[] MessageArgs => new string[] { Target?.Name };
         public string Label => "Melee Attack";
         public string Description { get; set; }
 
         public ICollection<Enemy> Targets { get; set; }
+        public Enemy Target { get; set; }
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; } = 0;
         public int MaxRange { get; set; } = 0;

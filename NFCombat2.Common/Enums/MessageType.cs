@@ -8,8 +8,11 @@ namespace NFCombat2.Common.Enums
         BonusActionMessage,
         CritMessage,
         DamageMessage,
+        DamageAoeMessage,
         TakeDamageMessage,
         FreezeMessage,
+        FreezeAoeMessage,
+        IsFrozenMessage,
         HealMessage,
         ChangeDistanceMessage,
         //action messages

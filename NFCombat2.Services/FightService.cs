@@ -71,15 +71,16 @@ namespace NFCombat2.Services
         {
             while(_fight.Effects.Count > 0)
             {
-                _fight.Effects.Dequeue().AffectFight(_fight);
-
+                var effect = _fight.Effects.Dequeue();
+                effect.AffectFight(_fight);
+                _logService.Log(effect.MessageType, effect.MessageArgs);
             }
         }
 
         public void AddEffect(IAffectCombat effect)
         {
             effect.AffectFight(_fight);
-            _logService.Log(effect.MessageType);
+            _logService.Log(effect.MessageType, effect.MessageArgs);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items
         public abstract string Description { get; set; }
 
         public MessageType MessageType => MessageType.UseItemMessage;
+        public abstract string[] MessageArgs { get; }
 
         public abstract void AffectFight(Fight fight);
     }

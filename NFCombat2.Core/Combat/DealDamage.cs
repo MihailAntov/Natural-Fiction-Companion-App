@@ -4,7 +4,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Combat
 {
-    internal class DealDamage : IAffectCombat
+    public class DealDamage : IAffectCombat
     {
         
         private int _amount;
@@ -16,8 +16,14 @@ namespace NFCombat2.Models.Combat
 
         public ICollection<Enemy> Targets { get; set; }
 
-        public MessageType MessageType => MessageType.DamageMessage;
-
+        public MessageType MessageType => Targets.Count == 1 ? MessageType.DamageMessage : MessageType.DamageAoeMessage;
+        public string[] MessageArgs { get
+            {
+                string[] args = new string[1];
+                args[0] = Targets.Count == 1 ? Targets.FirstOrDefault().Name : Targets.Count.ToString();
+                return args;
+            } 
+        }
         public void AffectFight(Fight fight)
         {
 

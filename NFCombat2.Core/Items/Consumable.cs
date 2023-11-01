@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items
             Effect = effect;
         }
         public override string Label { get; set; }
+        public override string[] MessageArgs => new string[] { Label };
 
         public Action<Fight> Effect { get; set; }
         public override string Description { get; set; }

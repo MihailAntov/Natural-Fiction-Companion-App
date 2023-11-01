@@ -14,12 +14,15 @@ namespace NFCombat2.Models.Combat
             _dice = dice;
             _delayedDice = delayedDice;
         }
-
-        public MessageType MessageType => MessageType.ProgramHealMessage;
+        public string[] MessageArgs => new string[1];
+        public MessageType MessageType => MessageType.HealMessage;
 
         public void AffectFight(Fight fight)
         {
-            fight.Player.Health += DiceCalculator.Calculate(_dice);
+            //fight.Player.Health += DiceCalculator.Calculate(_dice);
+            int healthRestored = DiceCalculator.Calculate(_dice);
+            fight.Player.Health += healthRestored;
+            MessageArgs[0] = $"{healthRestored}";
             if(_delayedDice > 0)
             {
                 fight.DelayedEffects.Enqueue(new Heal(_delayedDice, 0));

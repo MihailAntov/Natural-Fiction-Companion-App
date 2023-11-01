@@ -8,17 +8,22 @@ namespace NFCombat2.Models.Actions
 {
     public class EnemyGetCloser : IMoveAction
     {
-        private readonly Fight fight;
-        public EnemyGetCloser(Fight fight)
+        private readonly Fight _fight;
+        private Enemy _enemy;
+        public EnemyGetCloser(Fight fight, Enemy enemy)
         {
-            this.fight = fight;
+            _fight = fight;
+            _enemy = enemy;
         }
 
         public string Label => throw new NotImplementedException();
 
+        public Enemy Enemy => _enemy;
         public string Description => throw new NotImplementedException();
 
         public MessageType MessageType => MessageType.EnemyMoveMessage;
+
+        public string[] MessageArgs => new string[] { Enemy.Name, Enemy.Distance.ToString() };
 
         public void AffectFight(Fight fight)
         {

@@ -10,15 +10,17 @@ namespace NFCombat2.Models.Actions
     public class PlayerRangedAttack : IStandardAction, ITarget
     {
         private readonly Fight fight;
+        private readonly Weapon _weapon;
         public PlayerRangedAttack(Fight fight, Weapon weapon)
         {
             this.fight = fight;
             MinRange = weapon.MinRange;
             MaxRange = weapon.MaxRange;
             AreaOfEffect = weapon.AreaOfEffect;
+            _weapon = weapon;
         }
         public Enemy Target { get; set; }
-
+        public string[] MessageArgs => new string[] { Target?.Name, Label };
         public string Label { get; set; }
         public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; }

@@ -16,8 +16,8 @@ namespace NFCombat2.Models.Programs
             _dice = dice;
             _delayedDice = delayedDice;
         }
-
-        public MessageType MessageType => MessageType.HealMessage;
+        public string[] MessageArgs => Array.Empty<string>();
+        public MessageType MessageType => MessageType.ProgramHealMessage;
 
         public void AffectFight(Fight fight)
         {

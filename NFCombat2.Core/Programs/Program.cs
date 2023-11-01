@@ -24,6 +24,8 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.UseProgramMessage;
 
+        public string[] MessageArgs => new string[] { Label };
+
         public void AffectFight(Fight fight)
         {
             foreach (var effect in Effects)
