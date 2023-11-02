@@ -5,7 +5,7 @@ namespace NFCombat2.Models.Contracts
 {
     public interface ICombatAction
     {
-        public ICombatResolution AddToCombatEffects(Fight fight);
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight);
         public MessageType MessageType { get; }
         public string[] MessageArgs { get; }
     }

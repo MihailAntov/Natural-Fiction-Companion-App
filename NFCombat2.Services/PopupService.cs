@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using NFCombat2.Services.Contracts;
 
 
@@ -10,6 +11,11 @@ namespace NFCombat2.Services
         {
             Page page = Application.Current?.MainPage ?? throw new NullReferenceException();
             page.ShowPopup(popup);
+        }
+
+        public void ShowToast(Toast toast)
+        {
+            toast.Show();
         }
     }
 }

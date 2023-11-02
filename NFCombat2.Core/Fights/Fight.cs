@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Actions;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Actions;
 
 
 using NFCombat2.Models.Contracts;
@@ -27,6 +28,8 @@ namespace NFCombat2.Models.Fights
         public int RemainingCrits { get; set; } = 0;
 
         public List<string> Messages { get; set; } = new List<string>();
+
+        public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
 
 
     }

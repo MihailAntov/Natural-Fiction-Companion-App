@@ -16,11 +16,11 @@ namespace NFCombat2.Services.Contracts
         //ICollection<string> GetCategories (Fight fight);    
         //ICollection<string> GetBonusCategories(Fight fight);
 
-        ICollection<IOption> GetPrograms(Fight fight);
-        ICollection<IOption> GetItems(Fight fight);
-        ICollection<IOption> GetTargets(Fight fight, int minRange = 0, int maxRange = 1000);
-        ICollection<IOption> GetStandardActions(Fight fight);
-        ICollection<IOption> GetMoveActions(Fight fight);
-        ICollection<IOption> GetBonusActions(Fight fight);
+        IOptionList GetPrograms(Fight fight);
+        IOptionList GetItems(Fight fight);
+        IOptionList GetTargets(Fight fight, int minRange = 0, int maxRange = 1000);
+        IOptionList GetStandardActions(Fight fight);
+        IOptionList GetMoveActions(Fight fight);
+        IOptionList GetBonusActions(Fight fight);
     }
 }

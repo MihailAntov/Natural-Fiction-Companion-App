@@ -20,12 +20,12 @@ namespace NFCombat2.Models.Programs
         public string[] MessageArgs => Array.Empty<string>();
         public MessageType MessageType => MessageType.ProgramHealMessage;
 
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(_dice);
             var heal = new Heal(amount);
             fight.Effects.Enqueue(heal);
-            return heal;
+            return new List<ICombatResolution>() { heal };
         }
 
         

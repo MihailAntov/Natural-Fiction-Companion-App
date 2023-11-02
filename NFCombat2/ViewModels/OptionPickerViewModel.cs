@@ -11,6 +11,7 @@ using NFCombat2.Services;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Popups;
 using NFCombat2.Views;
+using CommunityToolkit.Maui.Alerts;
 
 namespace NFCombat2.ViewModels
 {
@@ -89,107 +90,22 @@ namespace NFCombat2.ViewModels
             if (e is IAction action)
             {
                 string description = action.Description;
-                var viewModel = new InfoViewModel(description);
-                var info = new InfoPopUp()
-                {
-                    Content = new InfoView(viewModel)
-                };
-                _popupService.ShowPopup(info);
+                var toast = new Snackbar() { Text = description, Duration=TimeSpan.FromSeconds(3) };
+                await toast.Show();
             }
-
-
-
-
         }
 
         public async void CleanUp()
         {
             Options?.Clear();
             ChoosingOption = false;
-
-
         }
 
-        private async void CompleteTurn()
+        public async void Option(object option)
         {
-            _fightService.ResolveEffects();
-            var categories = _optionsService.GetMoveActions(_fightService.GetFight());
-            Options = new ObservableCollection<IOption>(categories);
-            IsInfoNeeded = false;
-        }
-
-
-        public async void Option(object e)
-        {
-            var fight = _fightService.GetFight();
-
-
-
-            if (e is string category)
-            {
-                ICollection<IOption> options = new List<IOption>();
-                switch (category)
-                {
-                    case "Programs":
-                        IsInfoNeeded = true;
-                        options = _optionsService.GetPrograms(fight);
-                        break;
-                    case "Shoot":
-                    case "Attack":
-                        break;
-                    case "Items":
-                        options = _optionsService.GetItems(fight);
-                        IsInfoNeeded = true;
-                        break;
-                    case "Move":
-                        break;
-                }
-                Options = new ObservableCollection<IOption>(options);
-                return;
-
-            }
-
-            if (e is ITarget targetingEffect && !targetingEffect.AreaOfEffect)
-            {
-
-                TargetingEffect = targetingEffect;
-                var targets = _optionsService.GetTargets(fight, targetingEffect.MinRange, targetingEffect.MaxRange);
-                Options = new ObservableCollection<IOption>(targets);
-                return;
-
-
-            }
-
-            if (e is Enemy target)
-            {
-                TargetingEffect.Targets.Add(target);
-                var effect = (ICombatAction)TargetingEffect;
-                _fightService.AddEffect((ICombatAction)TargetingEffect);
-                _logService.Log(effect.MessageType, effect.MessageArgs);
-                CompleteTurn();
-
-            }
-
-
-            if (e is ICombatAction combatEffect)
-            {
-                _fightService.AddEffect(combatEffect);
-                CompleteTurn();
-
-            }
-
-            _fightService.ResolveEffects();
-
-
-            if (fight.HasBonusAction)
-            {
-                Options = new ObservableCollection<IOption>(_optionsService.GetBonusActions(fight));
-                fight.HasBonusAction = false;
-                return;
-            }
-
-
-
+            var newOptions = _fightService.ProcessChoice(option);
+            IsInfoNeeded = newOptions.IsInfoNeeded;
+            Options = new ObservableCollection<IOption>(newOptions.Options);
         }
 
 

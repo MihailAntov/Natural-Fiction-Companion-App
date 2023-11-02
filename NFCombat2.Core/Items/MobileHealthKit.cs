@@ -18,12 +18,12 @@ namespace NFCombat2.Models.Items
         public override string[] MessageArgs => new string[] { Label };
         public override string Description { get; set; } = "Heals you for two dice worth of health.";
 
-        public override ICombatResolution AddToCombatEffects(Fight fight)
+        public override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             int amount = DiceRoller.DiceCalculator.Calculate(2);
             var heal = new Heal(amount);
             fight.Effects.Enqueue(heal);
-            return heal;
+            return new List<ICombatResolution>() { heal };
         }
     }
 }

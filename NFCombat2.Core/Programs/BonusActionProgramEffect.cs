@@ -9,11 +9,11 @@ namespace NFCombat2.Models.Programs
     {
         public MessageType MessageType => MessageType.ProgramBonusActionmessage;
         public string[] MessageArgs => Array.Empty<string>();
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var bonus = new BonusAction();
             fight.Effects.Enqueue(bonus);
-            return bonus;
+            return new List<ICombatResolution>() { bonus };
 
         }
 

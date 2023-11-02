@@ -87,13 +87,14 @@ namespace NFCombat2.ViewModels
             fight = await _fightService.GetFightByEpisodeNumber(episode);
             Player = fight.Player;
             TestLabel = fight.GetType().Name;
+            //TODO make test label show the current option / round
 
             Enemies.Clear();
             foreach (var enemy in fight.Enemies)
             {
                 Enemies.Add(enemy);
             }
-            OptionPickerViewModel.Options = new ObservableCollection<IOption>(_optionsService.GetMoveActions(fight));
+            OptionPickerViewModel.Options = new ObservableCollection<IOption>(_optionsService.GetMoveActions(fight).Options);
             OptionPickerViewModel.ChoosingOption = true;
             NotInCombat = false;
         }
@@ -105,6 +106,7 @@ namespace NFCombat2.ViewModels
             Enemies.Clear();
             OptionPickerViewModel.CleanUp();
             _logService.Messages.Clear();
+            OptionPickerViewModel.IsInfoNeeded = false;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

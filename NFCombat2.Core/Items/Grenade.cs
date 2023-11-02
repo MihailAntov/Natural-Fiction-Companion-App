@@ -18,13 +18,13 @@ namespace NFCombat2.Models.Items
 
         public override string[] MessageArgs => new string[] { Label };
 
-        public override ICombatResolution AddToCombatEffects(Fight fight)
+        public override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(2);
             var targets = fight.Enemies.Where(e => e.Distance <= 10).ToList();
             ICombatResolution damage = new DealDamage(amount, targets);
             fight.Effects.Enqueue(damage);
-            return damage;
+            return new List<ICombatResolution>() { damage };
         }
     }
 }

@@ -9,7 +9,7 @@ namespace NFCombat2.Common.AppConstants
         public static Dictionary<MessageType, string> EnglishMessages = new Dictionary<MessageType, string>()
         {
             //effects
-            {MessageType.BonusActionMessage, "{You can take another action this turn." },
+            {MessageType.BonusActionMessage, "You can take another action this turn." },
             {MessageType.CritMessage, "Your next {0} shots deal double damage!" },
             {MessageType.DamageMessage, "{0} takes {1} damage." },
             {MessageType.DamageAoeMessage, "{0} enemies each take {1} damage." },

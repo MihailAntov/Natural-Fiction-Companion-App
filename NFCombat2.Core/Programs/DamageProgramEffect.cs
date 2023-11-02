@@ -38,7 +38,7 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.ProgramDamageMessage;
         public string[] MessageArgs => Array.Empty<string>();   
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             int amount = DiceCalculator.Calculate(_numberOfDice, _flatDamage);
 
@@ -52,7 +52,7 @@ namespace NFCombat2.Models.Programs
                 fight.DelayedEffects.Enqueue(new DealDamage(delayedAmount, Targets));
             }
 
-            return damage;
+            return new List<ICombatResolution>() { damage };
         }
 
         

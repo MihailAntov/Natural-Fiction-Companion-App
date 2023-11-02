@@ -22,7 +22,7 @@ namespace NFCombat2.Models.Actions
         public string[] MessageArgs => new string[] { _weapon.Label};
         public MessageType MessageType => MessageType.EnemyShootMessage;
 
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();
         }

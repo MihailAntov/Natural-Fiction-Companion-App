@@ -12,7 +12,7 @@ namespace NFCombat2.Models.Items
         
         public override string Description { get; set; }
 
-        public abstract override ICombatResolution AddToCombatEffects(Fight fight);
+        public abstract override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight);
 
     }
 }

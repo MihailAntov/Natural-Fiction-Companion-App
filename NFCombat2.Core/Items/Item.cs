@@ -12,6 +12,6 @@ namespace NFCombat2.Models.Items
         public MessageType MessageType => MessageType.UseItemMessage;
         public abstract string[] MessageArgs { get; }
 
-        public abstract ICombatResolution AddToCombatEffects(Fight fight);
+        public abstract IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight);
     }
 }

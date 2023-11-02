@@ -30,7 +30,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.ShootMessage;
 
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             if(fight.Enemies.Any())
             {

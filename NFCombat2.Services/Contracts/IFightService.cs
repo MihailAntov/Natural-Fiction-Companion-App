@@ -11,5 +11,9 @@ namespace NFCombat2.Services.Contracts
 
         void AddEffect(ICombatAction effect);
         void ResolveEffects();
+
+        IOptionList ProcessChoice(object option);
+
+        ITarget CurrentTargetingEffect { get; set; }
     }
 }

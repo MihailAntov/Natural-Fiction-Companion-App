@@ -20,7 +20,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.MoveCloserMessage;
 
-        public ICombatResolution AddToCombatEffects(Fight fight)
+        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             foreach(var enemy in fight.Enemies)
             {
@@ -30,7 +30,7 @@ namespace NFCombat2.Models.Actions
                     enemy.Distance = 0;
                 }
             }
-            return null;
+            return new List<ICombatResolution>();
         }
     }
 }
