@@ -14,5 +14,7 @@ namespace NFCombat2.Models.Items
         public int Distance { get; set; }
 
         public int Weight { get; set; }
+        public int Cooldown { get; set; }
+        public int CooldownPerShot { get; set; } = 1;
     }
 }

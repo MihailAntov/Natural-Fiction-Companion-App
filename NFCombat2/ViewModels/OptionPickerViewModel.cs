@@ -18,16 +18,13 @@ namespace NFCombat2.ViewModels
     public class OptionPickerViewModel : INotifyPropertyChanged
     {
 
-        private IOptionsService _optionsService;
+        
         private IFightService _fightService;
-        private ILogService _logService;
-        private IPopupService _popupService;
-        public OptionPickerViewModel(IOptionsService optionsService, IFightService fightService, ILogService logService, IPopupService popupService)
+        
+        public OptionPickerViewModel(IFightService fightService)
         {
-            _optionsService = optionsService;
             _fightService = fightService;
-            _logService = logService;
-            _popupService = popupService;
+            
             OptionChosenCommand = new Command<IOption>(o => Option(o.Content));
             InfoCommand = new Command<IOption>(o => Info(o.Content));
 
@@ -103,6 +100,7 @@ namespace NFCombat2.ViewModels
 
         public async void Option(object option)
         {
+
             var newOptions = _fightService.ProcessChoice(option);
             IsInfoNeeded = newOptions.IsInfoNeeded;
             Options = new ObservableCollection<IOption>(newOptions.Options);

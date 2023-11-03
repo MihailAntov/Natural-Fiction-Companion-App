@@ -51,7 +51,8 @@ namespace NFCombat2.Services
             enemies.Add(targetDummy);
 
             var hacker = new Hacker() {Name = "Istvan" };
-            hacker.Weapons.Add(new Weapon() { MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            hacker.Weapons.Add(new Weapon() { Label="Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            hacker.Weapons.Add(new Weapon() { Label="Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new MobileHealthKit());
             hacker.Consumables.Add(new Grenade());
             Fight fight;
@@ -137,15 +138,25 @@ namespace NFCombat2.Services
                         result = _optionsService.GetPrograms(_fight);
                         break;
                     case "Shoot":
+                        result = _optionsService.GetWeapons(_fight);
+                        break;
+                        //TODO figure out shooting with main hand and off hand
                     case "Attack":
-                    case "Wait":
+                        //TODO handle melee combat
+                    case "Stay":
+                        var stay = new PlayerMovePass(_fight);
+                        AddEffect(stay);
+                        return AfterOption();
+                    case "Do nothing":
+                        var doNothing = new PlayerActionPass(_fight);
+                        AddEffect(doNothing);
                         return AfterOption();
                     case "Items":
                         result = _optionsService.GetItems(_fight);
                         break;
                     case "Move":
-                        var effect = new PlayerGetCloser(_fight);
-                        AddEffect(effect);
+                        var move = new PlayerGetCloser(_fight);
+                        AddEffect(move);
                         return AfterOption();
                 }
                 return result;
@@ -163,11 +174,25 @@ namespace NFCombat2.Services
 
             }
 
+            if(option is Weapon weapon)
+            {
+                CurrentTargetingEffect = new PlayerRangedAttack(_fight, weapon);
+                var targets = _optionsService.GetTargets(_fight, weapon.MinRange, weapon.MaxRange);
+                return targets;
+                //todo handle cooldown in turn resolution phase
+            }
+
             if (option is Enemy target)
             {
                 CurrentTargetingEffect.Targets.Add(target);
                 var effect = (ICombatAction)CurrentTargetingEffect;
                 AddEffect(effect);
+
+                if(CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
+                {
+                    return _optionsService.GetWeapons(_fight);
+                }
+
                 return AfterOption();
 
             }

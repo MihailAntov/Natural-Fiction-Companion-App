@@ -39,7 +39,7 @@ namespace NFCombat2.Services
                 objects.Add("Attack");
             }
 
-            objects.Add("Wait");
+            objects.Add("Do nothing");
 
 
             var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
@@ -84,12 +84,21 @@ namespace NFCombat2.Services
                 objects.Add("Items");
             }
 
+            objects.Add("Stay");
+
             var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
             return new OptionList(result, false);
         }
 
 
-
+        public IOptionList GetWeapons(Fight fight)
+        {
+            var weapons = fight.Player.Weapons
+                .Where(w => w.Cooldown == 0 && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.MaxRange))
+                .Select(w => new Option(w.Label, w))
+                .ToList<IOption>();
+            return new OptionList(weapons, true);
+        }
 
         public IOptionList GetPrograms(Fight fight)
         {
@@ -121,14 +130,19 @@ namespace NFCombat2.Services
             return new OptionList(result, false);
         }
 
-        private bool CanShoot(Fight fight)
+        public bool CanShoot(Fight fight)
         {
             if (CanAttack(fight))
             {
                 return false;
             }
 
-            return fight.Player.Weapons.Any(w=> fight.Enemies.Any(e=> e.Distance >= w.MinRange && e.Distance <= w.MaxRange));
+            if (!GetWeapons(fight).Options.Any())
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool CanAttack(Fight fight)
@@ -154,6 +168,8 @@ namespace NFCombat2.Services
             }
             return false;
         }
+
+       
 
 
 
