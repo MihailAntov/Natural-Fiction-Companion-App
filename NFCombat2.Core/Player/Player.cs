@@ -67,7 +67,19 @@ namespace NFCombat2.Models.Player
         public int MaxIonization { get; set; } = 3;
         public int Pathogens { get; set; } = 0;
         public int MaxPathogens { get; set; } = 3;
-        public int Speed { get; set; } = 0;
+        private int speed = 3;
+        public int Speed
+        {
+            get { return speed; }
+            set
+            {
+                if(speed != value)
+                {
+                    speed = value;
+                    OnPropertyChanged(nameof(Speed));
+                }
+            }
+        }
         public Language Language { get; set; } = Language.English;
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

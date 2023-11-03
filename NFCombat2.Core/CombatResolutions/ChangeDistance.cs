@@ -8,17 +8,19 @@ namespace NFCombat2.Models.CombatResolutions
     {
         private int _amount;
         private Enemy _enemy;
+   
         public ChangeDistance(int amount, Enemy enemy)
         {
             _amount = amount;
             _enemy = enemy;
+           
         }
 
         public MessageType MessageType => MessageType.ChangeDistanceMessage;
-        public string[] MessageArgs => Array.Empty<string>();
+        public string[] MessageArgs => new string[] { _enemy.Name, _enemy.Distance.ToString() };
         public void Resolve(Fight fight)
         {
-            _enemy.Distance -= _amount;
+            _enemy.Distance += _amount;
         }
     }
 }

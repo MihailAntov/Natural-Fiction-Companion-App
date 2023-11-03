@@ -2,7 +2,7 @@
 
 namespace NFCombat2.Models.Items
 {
-    public abstract class Weapon
+    public class Weapon
     {
         public Accuracy Accuracy { get; set; }
         public string Label { get; set; }

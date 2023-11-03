@@ -5,6 +5,7 @@ using NFCombat2.Services.Contracts;
 using NFCombat2.Models.Contracts;
 using System.Collections.ObjectModel;
 using NFCombat2.Models.Actions;
+using NFCombat2.Models.Items;
 using NFCombat2.Common.Enums;
 using System.ComponentModel;
 
@@ -36,7 +37,7 @@ namespace NFCombat2.Services
             {
                 Name = "Target Dummy",
                 Health = 10,
-                Range = 5,
+                Distance = 10,
                 Speed = 2
             };
 
@@ -44,13 +45,15 @@ namespace NFCombat2.Services
             {
                 Name = "Target Dummy Test Long Text",
                 Health = 10,
-                Range = 5,
+                Distance = 15,
                 Speed = 2
             };
             enemies.Add(targetDummy);
 
             var hacker = new Hacker() {Name = "Istvan" };
-
+            hacker.Weapons.Add(new Weapon() { MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            hacker.Consumables.Add(new MobileHealthKit());
+            hacker.Consumables.Add(new Grenade());
             Fight fight;
             
             switch (episodeNumber)
@@ -88,7 +91,7 @@ namespace NFCombat2.Services
                 case TurnPhase.Bonus:
                     if (!_fight.HasBonusAction)
                     {
-                        AfterOption();
+                        return AfterOption();
                     }
                     return _optionsService.GetBonusActions(_fight);
                 case TurnPhase.EnemyMove:
@@ -135,7 +138,8 @@ namespace NFCombat2.Services
                         break;
                     case "Shoot":
                     case "Attack":
-                        break;
+                    case "Wait":
+                        return AfterOption();
                     case "Items":
                         result = _optionsService.GetItems(_fight);
                         break;

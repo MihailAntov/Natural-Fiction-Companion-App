@@ -32,7 +32,24 @@ namespace NFCombat2.Models.Fights
         }
         public int DamageDice { get; set; }
         public int FlatDamage { get; set; }
-        public int Distance { get; set; }
+        private int distance;
+        public int Distance
+        {
+            get { return distance; }    
+            set
+            {
+                if(value < 0)
+                {
+                    value = 0;
+                }
+
+                if(distance != value)
+                {
+                    distance = value;
+                    OnPropertyChanged(nameof(Distance));
+                }
+            }
+        }
         public int Speed { get; set; }
         public int RemainingFrozenTurns { get; set; } = 0;
 

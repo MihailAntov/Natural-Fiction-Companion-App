@@ -18,7 +18,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.FreezeMessage, "{0} cannot move for {1} turns." },
             {MessageType.IsFrozenMessage, "{0} cannot move. ({1} turns remaining)" },
             {MessageType.HealMessage, "You restore {0} health." },
-            {MessageType.ChangeDistanceMessage, "You move closer to the enemy." },
+            {MessageType.ChangeDistanceMessage, "{0} is now at {1} meters." },
             //actions
             {MessageType.ShootMessage, "You shoot {0} with your {1}" },
             {MessageType.AttackMessage, "You attack {0} in close combat." },

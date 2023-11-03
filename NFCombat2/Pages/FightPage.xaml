@@ -28,10 +28,16 @@
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell 
-                            Text="{Binding Name}"
-                            Detail="{Binding Health}"
-                        />
+                        <TextCell Text="{Binding Name}"
+                            
+                        >
+                            <TextCell.Detail>
+                                <MultiBinding StringFormat="Hp:{0}  Distance:{1}">
+                                    <Binding Path="Health"/>
+                                    <Binding Path="Distance"/>
+                                </MultiBinding>
+                            </TextCell.Detail> 
+                        </TextCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>    
             </ListView>
