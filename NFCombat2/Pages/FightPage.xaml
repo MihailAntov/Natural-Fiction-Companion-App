@@ -55,12 +55,7 @@
 
             
 
-            <Label
-            Text="{Binding TestLabel}"
-            SemanticProperties.HeadingLevel="Level2"
-            SemanticProperties.Description=""
-            FontSize="18"
-            HorizontalOptions="Center" />
+            
 
             <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
 

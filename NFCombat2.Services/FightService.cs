@@ -23,7 +23,21 @@ namespace NFCombat2.Services
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
+        public IOptionList PreviousOptions { 
+            get 
+            {                
+                optionHistory.Pop();
+                return optionHistory.Peek();
+            }
+            set
+            {
+                
+                optionHistory.Push(value);
+            }
+        }
 
+        private Stack<IOptionList> optionHistory = new Stack<IOptionList>();
+        private IOptionList optionBuffer;
         public Fight GetFight()
         {
             return _fight;
@@ -82,19 +96,26 @@ namespace NFCombat2.Services
 
         public IOptionList AfterOption()
         {
+            optionHistory.Clear();
             ResolveEffects();
             switch(++_fight.TurnPhase)
             {
                 case TurnPhase.Move:
-                    return _optionsService.GetMoveActions(_fight);
+                    var moves = _optionsService.GetMoveActions(_fight);
+                    PreviousOptions = moves;
+                    return moves;
                 case TurnPhase.Action:
-                    return _optionsService.GetStandardActions(_fight);
+                    var actions = _optionsService.GetStandardActions(_fight);
+                    PreviousOptions = actions;
+                    return actions;
                 case TurnPhase.Bonus:
                     if (!_fight.HasBonusAction)
                     {
                         return AfterOption();
                     }
-                    return _optionsService.GetBonusActions(_fight);
+                    var bonusACtions = _optionsService.GetBonusActions(_fight);
+                    PreviousOptions = bonusACtions;
+                    return bonusACtions;
                 case TurnPhase.EnemyMove:
                     //TODO call enemy combat logic
                     _fight.TurnPhase = TurnPhase.None;
@@ -138,7 +159,7 @@ namespace NFCombat2.Services
                         result = _optionsService.GetPrograms(_fight);
                         break;
                     case "Shoot":
-                        result = _optionsService.GetWeapons(_fight);
+                        result = _optionsService.GetWeapons(_fight, false);
                         break;
                         //TODO figure out shooting with main hand and off hand
                     case "Attack":
@@ -159,6 +180,7 @@ namespace NFCombat2.Services
                         AddEffect(move);
                         return AfterOption();
                 }
+                PreviousOptions = result;
                 return result;
 
             }
@@ -178,6 +200,7 @@ namespace NFCombat2.Services
             {
                 CurrentTargetingEffect = new PlayerRangedAttack(_fight, weapon);
                 var targets = _optionsService.GetTargets(_fight, weapon.MinRange, weapon.MaxRange);
+                PreviousOptions = targets;
                 return targets;
                 //todo handle cooldown in turn resolution phase
             }
@@ -190,7 +213,8 @@ namespace NFCombat2.Services
 
                 if(CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
                 {
-                    return _optionsService.GetWeapons(_fight);
+                    
+                    return _optionsService.GetWeapons(_fight, true);
                 }
 
                 return AfterOption();

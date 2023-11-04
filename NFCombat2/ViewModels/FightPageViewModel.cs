@@ -32,19 +32,7 @@ namespace NFCombat2.ViewModels
         public Command GetEpisodeCommand { get; }
         public Command ExitCombatCommand { get; }
         public ListView MessageBoard { get; set; }
-        private string testLabel;
-        public string TestLabel
-        {
-            get { return testLabel; }
-            set
-            {
-                if(testLabel != value)
-                {
-                    testLabel = value;
-                    OnPropertyChanged(nameof(TestLabel));
-                }
-            }
-        }
+        
         public string EpisodeNumber { get; set; }
 
         private bool notInCombat = true;
@@ -86,7 +74,7 @@ namespace NFCombat2.ViewModels
             
             fight = await _fightService.GetFightByEpisodeNumber(episode);
             Player = fight.Player;
-            TestLabel = fight.GetType().Name;
+            
             //TODO make test label show the current option / round
 
             Enemies.Clear();
@@ -94,7 +82,10 @@ namespace NFCombat2.ViewModels
             {
                 Enemies.Add(enemy);
             }
-            OptionPickerViewModel.Options = new ObservableCollection<IOption>(_optionsService.GetMoveActions(fight).Options);
+            var initialOptionList = _optionsService.GetMoveActions(fight);
+            _fightService.PreviousOptions = initialOptionList;
+            OptionPickerViewModel.Options = new ObservableCollection<IOption>(initialOptionList.Options);
+            OptionPickerViewModel.MenuLabel = initialOptionList.Label;
             OptionPickerViewModel.ChoosingOption = true;
             NotInCombat = false;
         }

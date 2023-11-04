@@ -62,6 +62,7 @@
 	  <None Remove="Resources\Images\hospital.png" />
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\inventions.png" />
+	  <None Remove="Resources\Images\previous.png" />
 	</ItemGroup>
 
 	<ItemGroup>

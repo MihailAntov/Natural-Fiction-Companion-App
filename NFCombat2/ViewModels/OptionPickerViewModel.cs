@@ -27,6 +27,7 @@ namespace NFCombat2.ViewModels
             
             OptionChosenCommand = new Command<IOption>(o => Option(o.Content));
             InfoCommand = new Command<IOption>(o => Info(o.Content));
+            BackCommand = new Command(Back);
 
 
         }
@@ -60,9 +61,24 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        private bool canGoBack = false;
+        public bool CanGoBack
+        {
+            get { return canGoBack; }
+            set
+            {
+                if (canGoBack != value)
+                {
+                    canGoBack = value;
+                    OnPropertyChanged(nameof(CanGoBack));
+                }
+            }
+        }
+
 
         public Command OptionChosenCommand { get; set; }
         public Command InfoCommand { get; set; }
+        public Command BackCommand { get; set; }
 
         public ObservableCollection<IAction> Actions { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -77,6 +93,21 @@ namespace NFCombat2.ViewModels
             {
                 options = value;
                 OnPropertyChanged(nameof(Options));
+            }
+        }
+        private string menulabel;
+        public string MenuLabel { 
+            get 
+            {
+                return menulabel;
+            }
+            set
+            {
+                if(menulabel != value)
+                {
+                    menulabel = value;
+                    OnPropertyChanged(nameof(MenuLabel));
+                }
             }
         }
 
@@ -102,8 +133,25 @@ namespace NFCombat2.ViewModels
         {
 
             var newOptions = _fightService.ProcessChoice(option);
+            MenuLabel = newOptions.Label;
             IsInfoNeeded = newOptions.IsInfoNeeded;
+            CanGoBack = newOptions.CanGoBack;
             Options = new ObservableCollection<IOption>(newOptions.Options);
+        }
+
+        public async void Back()
+        {
+            var previousOptions = _fightService.PreviousOptions;
+            IsInfoNeeded = previousOptions.IsInfoNeeded;
+            MenuLabel = previousOptions.Label;
+            CanGoBack = previousOptions.CanGoBack;
+            //Options = new ObservableCollection<IOption>(previousOptions.Options);
+            Options.Clear();
+            foreach(var  option in previousOptions.Options)
+            {
+                Options.Add(option);
+            }
+            
         }
 
 

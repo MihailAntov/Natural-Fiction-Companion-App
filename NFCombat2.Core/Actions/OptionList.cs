@@ -11,13 +11,17 @@ namespace NFCombat2.Models.Actions
             
         }
 
-        public OptionList(ICollection<IOption> options, bool isInfoNeeded)
+        public OptionList(ICollection<IOption> options, bool isInfoNeeded, bool canGoBack)
         {
             Options = options;
             IsInfoNeeded = isInfoNeeded;
+            CanGoBack = canGoBack;
+
         }
         public ICollection<IOption> Options { get; set; } = new HashSet<IOption>();
         public bool IsInfoNeeded { get; set; } = false;
+        public bool CanGoBack { get; set; }
+        public string Label { get; set; }
 
     }
 }

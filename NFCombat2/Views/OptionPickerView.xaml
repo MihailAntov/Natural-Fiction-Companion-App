@@ -6,6 +6,12 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.OptionPickerView">
     <VerticalStackLayout>
+        <Label
+Text="{Binding MenuLabel}"
+SemanticProperties.HeadingLevel="Level2"
+SemanticProperties.Description=""
+FontSize="18"
+HorizontalOptions="Center" />
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
@@ -27,9 +33,11 @@
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </HorizontalStackLayout>
+                    
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
+        <ImageButton HorizontalOptions="Start" HeightRequest="30" WidthRequest="30" Source="previous.png" Command="{Binding BackCommand}" IsVisible="{Binding CanGoBack}"/>
 
 
 

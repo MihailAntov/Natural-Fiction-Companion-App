@@ -15,5 +15,6 @@ namespace NFCombat2.Services.Contracts
         IOptionList ProcessChoice(object option);
 
         ITarget CurrentTargetingEffect { get; set; }
+        IOptionList PreviousOptions { get; set; }
     }
 }
