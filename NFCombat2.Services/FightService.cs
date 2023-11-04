@@ -74,7 +74,7 @@ namespace NFCombat2.Services
             switch (episodeNumber)
             {
                 case 0:
-                    fight = new RegularFight(enemies, hacker);
+                    fight = new Fight(enemies, hacker);
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
@@ -92,6 +92,18 @@ namespace NFCombat2.Services
             }
             _fight = fight;
             return fight;
+        }
+
+        private void EnemyAction()
+        {
+            var enemyActions = _fight.EnemyActions();
+
+            foreach(var action in enemyActions)
+            {
+                AddEffect(action);
+            }
+            ResolveEffects();
+
         }
 
         public IOptionList AfterOption()
@@ -138,11 +150,18 @@ namespace NFCombat2.Services
 
         public void AddEffect(ICombatAction effect)
         {
-            _logService.Log(effect.MessageType, effect.MessageArgs);
+            if(effect.MessageType != MessageType.None)
+            {
+                _logService.Log(effect.MessageType, effect.MessageArgs);
+            }
+
             var resolutions = effect.AddToCombatEffects(_fight);
             foreach(var resolution in resolutions)
             {
-                _logService.Log(resolution.MessageType, resolution.MessageArgs);
+                if(resolution.MessageType != MessageType.None)
+                {
+                    _logService.Log(resolution.MessageType, resolution.MessageArgs);
+                }
             }
         }
 

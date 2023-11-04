@@ -4,6 +4,7 @@ namespace NFCombat2.Common.Enums
 {
     public enum MessageType
     {
+        None,
         //combat effect messages
         BonusActionMessage,
         CritMessage,
@@ -34,6 +35,10 @@ namespace NFCombat2.Common.Enums
         EnemyMoveMessage,
         EnemyShootMessage,
         EnemyAttackMessage,
-        EnemyDefeatedMessage
+        EnemyDefeatedMessage,
+        EnemyDamageMessage,
+        EnemyChangeDistanceMessage,
+        
+        
     }
 }

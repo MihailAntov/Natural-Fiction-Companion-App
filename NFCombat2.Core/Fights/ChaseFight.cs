@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Player;
+﻿using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Player;
 
 namespace NFCombat2.Models.Fights
 {
@@ -8,6 +9,9 @@ namespace NFCombat2.Models.Fights
         {
         }
 
-        
+        public override IList<IAction> EnemyActions()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

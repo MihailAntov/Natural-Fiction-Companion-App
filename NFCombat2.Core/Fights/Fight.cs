@@ -8,7 +8,7 @@ using NFCombat2.Models.Player;
 
 namespace NFCombat2.Models.Fights
 {
-    public abstract class Fight
+    public class Fight
     {
         public Fight(IList<Enemy> enemies, Player.Player player)
         {
@@ -30,6 +30,30 @@ namespace NFCombat2.Models.Fights
         public List<string> Messages { get; set; } = new List<string>();
 
         public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
+
+        public virtual IList<ICombatAction> EnemyActions()
+        {
+            var actions = new List<ICombatAction>();
+            foreach (var enemy in Enemies)
+            {
+                if (enemy.Range < enemy.Distance)
+                {
+                    actions.Add(new EnemyGetCloser(this, enemy));
+                }
+
+                if (enemy.Range >= enemy.Distance)
+                {
+                    actions.Add(new EnemyRangedAttack(this, enemy));
+                }
+                else if (enemy.Distance == 0)
+                {
+                    actions.Add(new EnemyMeleeAttack(this, enemy));
+                }
+            }
+
+            return actions;
+        }
+
 
 
     }

@@ -1,12 +1,13 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Actions
 {
-    public class EnemyGetCloser : IMoveAction
+    public class EnemyGetCloser : ICombatAction
     {
         private readonly Fight _fight;
         private Enemy _enemy;
@@ -16,26 +17,19 @@ namespace NFCombat2.Models.Actions
             _enemy = enemy;
         }
 
-        public string Label => throw new NotImplementedException();
-
         public Enemy Enemy => _enemy;
-        public string Description => throw new NotImplementedException();
 
-        public MessageType MessageType => MessageType.EnemyMoveMessage;
+        public MessageType MessageType => MessageType.None;
 
-        public string[] MessageArgs => new string[] { Enemy.Name, Enemy.Distance.ToString() };
+        public string[] MessageArgs => Array.Empty<string>();
 
         public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            foreach(var enemy in fight.Enemies)
+            var resolutions = new List<ICombatResolution>() 
             {
-                enemy.Distance -= enemy.Speed;
-                if (enemy.Distance < 0)
-                {
-                    enemy.Distance = 0;
-                }
-            }
-            return null;
+                new EnemyChangeDistance(-_enemy.Speed,_enemy) 
+            };
+            return resolutions;
         }
     }
 }
