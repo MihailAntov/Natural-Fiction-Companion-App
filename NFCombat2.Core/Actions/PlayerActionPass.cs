@@ -18,7 +18,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.ActionPassMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>();
 

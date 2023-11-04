@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace NFCombat2.Common.Enums
 {
-    internal class FightType
+    public enum FightType
     {
+        Regular = 0,
+        Chase = 1,
+        Escape = 2,
+        Solo = 3,
+        Timed = 4,
+        Constrained = 5
     }
 }

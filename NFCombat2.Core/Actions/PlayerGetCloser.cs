@@ -21,15 +21,15 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.MoveCloserMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            var resolutions = new List<ICombatResolution>();
+            
             foreach(var enemy in fight.Enemies)
             {
                 var resolution = new ChangeDistance(-fight.Player.Speed, enemy);
                 fight.Effects.Enqueue(resolution);
             }
-            return resolutions;
+            return new List<ICombatResolution>();
         }
     }
 }

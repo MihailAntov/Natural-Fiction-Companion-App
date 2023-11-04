@@ -87,6 +87,7 @@ namespace NFCombat2.ViewModels
             OptionPickerViewModel.Options = new ObservableCollection<IOption>(initialOptionList.Options);
             OptionPickerViewModel.MenuLabel = initialOptionList.Label;
             OptionPickerViewModel.ChoosingOption = true;
+            
             NotInCombat = false;
         }
 

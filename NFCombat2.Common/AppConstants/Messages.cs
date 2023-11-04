@@ -40,7 +40,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.EnemyShootMessage, "{0} shoots with {1}" },
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },
             {MessageType.EnemyDamageMessage, "{0} deals {1} damage to you." },
-            {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {0} meters away from you." },
+            {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {1} meters away from you." },
             {MessageType.EnemyDefeatedMessage, "{0} is defeated!" }
         };
 

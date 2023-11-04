@@ -23,6 +23,7 @@ namespace NFCombat2.Services.Contracts
         IOptionList GetMoveActions(Fight fight);
         IOptionList GetBonusActions(Fight fight);
         IOptionList GetWeapons(Fight fight, bool alreadyShot);
+        IOptionList GetEndTurn();
         bool CanShoot(Fight fight);
     }
 }

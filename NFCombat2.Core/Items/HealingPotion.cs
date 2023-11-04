@@ -18,7 +18,7 @@ namespace NFCombat2.Models.Items
 
         public override string[] MessageArgs => throw new NotImplementedException();
 
-        public override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();
         }

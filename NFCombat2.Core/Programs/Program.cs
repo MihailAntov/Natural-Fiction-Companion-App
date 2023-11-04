@@ -30,7 +30,7 @@ namespace NFCombat2.Models.Programs
 
         public string[] MessageArgs => new string[] { Label, (Cost + _caster.Overload).ToString() };
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>();
             foreach (var effect in Effects)

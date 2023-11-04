@@ -2,14 +2,14 @@
 using NFCombat2.Models.Player;
 namespace NFCombat2.Models.Fights
 {
-    public class VirtualFight : Fight
+    public class ConstrainedFight : Fight
     {
-        public VirtualFight(IList<Enemy> enemies, Player.Player player) : base(enemies, player)
+        public ConstrainedFight(IList<Enemy> enemies, Player.Player player) : base(enemies, player)
         {
 
         }
 
-        public override IList<IAction> EnemyActions()
+        public override IList<ICombatAction> EnemyActions()
         {
             throw new NotImplementedException();
         }

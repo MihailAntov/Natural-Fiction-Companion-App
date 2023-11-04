@@ -19,7 +19,7 @@ namespace NFCombat2.Models.Actions
         public string[] MessageArgs => new string[] { _enemy.Name };
         public MessageType MessageType => MessageType.EnemyAttackMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();
         }

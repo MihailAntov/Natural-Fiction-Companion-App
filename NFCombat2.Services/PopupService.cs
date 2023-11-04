@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Services.Contracts;
 
@@ -13,8 +14,9 @@ namespace NFCombat2.Services
             page.ShowPopup(popup);
         }
 
-        public void ShowToast(Toast toast)
+        public void ShowToast(string message)
         {
+            IToast toast = Toast.Make(message, ToastDuration.Short);
             toast.Show();
         }
     }

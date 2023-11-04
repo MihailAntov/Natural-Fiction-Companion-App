@@ -1,6 +1,6 @@
 ﻿
 
-namespace NFCombat2.Models.DiceRoller
+namespace NFCombat2.Common.Helpers
 {
     public static class DiceCalculator
     {

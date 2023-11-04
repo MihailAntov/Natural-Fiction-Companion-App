@@ -28,6 +28,7 @@ namespace NFCombat2.Models.Fights
         public int RemainingCrits { get; set; } = 0;
 
         public List<string> Messages { get; set; } = new List<string>();
+        public int Turn { get; set; } = 1;
 
         public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
 

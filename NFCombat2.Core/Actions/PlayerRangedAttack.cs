@@ -31,7 +31,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.ShootMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>() { new DealDamage(3, Targets) };
             

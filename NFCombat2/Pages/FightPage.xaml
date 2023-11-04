@@ -42,7 +42,7 @@
                 </ListView.ItemTemplate>    
             </ListView>
 
-            <Border MaximumHeightRequest="150" MinimumHeightRequest="150" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
+            <Border Padding="5" MaximumHeightRequest="150" MinimumHeightRequest="150" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
                 <CollectionView ItemsUpdatingScrollMode="KeepLastItemInView"
                     ItemsSource="{Binding Messages}">
                     <CollectionView.ItemTemplate>

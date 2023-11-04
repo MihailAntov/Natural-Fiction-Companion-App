@@ -1,6 +1,5 @@
 ﻿
 
-using Intents;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -12,14 +11,17 @@ namespace NFCombat2.Models.CombatResolutions
         
         private Enemy _enemy;
         private int _amount;
+        private string[] _messageArgs = new string[2];
         public EnemyChangeDistance(int amount, Enemy enemy)
         {
             _enemy = enemy;
             _amount = amount;
+            _messageArgs[0] = enemy.Name;
+            _messageArgs[1] = Math.Max(enemy.Distance + _amount, 0).ToString();
         }
         public MessageType MessageType => MessageType.EnemyChangeDistanceMessage;
 
-        public string[] MessageArgs => new string[2] { _enemy.Name , string.Empty};
+        public string[] MessageArgs => _messageArgs;
 
         public void Resolve(Fight fight)
         {

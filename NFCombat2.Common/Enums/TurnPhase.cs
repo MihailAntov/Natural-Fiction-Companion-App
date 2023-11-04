@@ -8,7 +8,8 @@ namespace NFCombat2.Common.Enums
         Move = 1,
         Action = 2,
         Bonus = 3,
-        EnemyMove = 4,
-        EnemyAction = 5
+        EndTurn = 4,
+        EnemyMove = 5,
+        EnemyAction = 6
     }
 }

@@ -4,7 +4,7 @@ using NFCombat2.Models.Actions;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using NFCombat2.Models.DiceRoller;
+using NFCombat2.Common.Helpers;
 using NFCombat2;
 using NFCombat2.Common.Enums;
 
@@ -38,7 +38,7 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.ProgramDamageMessage;
         public string[] MessageArgs => Array.Empty<string>();   
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             int amount = DiceCalculator.Calculate(_numberOfDice, _flatDamage);
 

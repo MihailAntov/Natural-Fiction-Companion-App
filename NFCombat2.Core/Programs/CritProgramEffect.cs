@@ -17,7 +17,7 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.ProgramCritMessage;
         public string[] MessageArgs =>Array.Empty<string>();
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //fight.RemainingCrits += _numberOfCrits;
             var crit = new Crit(_numberOfCrits);

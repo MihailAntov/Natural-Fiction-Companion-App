@@ -9,6 +9,7 @@ namespace NFCombat2.Services
     public class ProfileService : IProfileService
     {
         private ProfileRepository repo;
+        private Player _player;
         public ProfileService(ProfileRepository repository)
         {
             repo = repository;
@@ -16,10 +17,11 @@ namespace NFCombat2.Services
 
         public Player CurrentPlayer()
         {
-            return repo.GetAllProfiles().Select(p=> new Player
+            if(_player == null)
             {
-                Name = p.Name
-            }).First();
+                _player = GetAll().FirstOrDefault();
+            }
+            return _player;
         }
 
         public List<Player> GetAll()

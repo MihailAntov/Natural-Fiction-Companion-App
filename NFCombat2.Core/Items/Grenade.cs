@@ -1,4 +1,4 @@
-﻿using NFCombat2.Models.DiceRoller;
+﻿using NFCombat2.Common.Helpers;
 
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -18,7 +18,7 @@ namespace NFCombat2.Models.Items
 
         public override string[] MessageArgs => new string[] { Label };
 
-        public override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(2);
             var targets = fight.Enemies.Where(e => e.Distance <= 10).ToList();

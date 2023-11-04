@@ -134,6 +134,12 @@ namespace NFCombat2.Services
             var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
             return new OptionList(result, false,true) { Label = "Choose which enemy to shoot" };
         }
+        public IOptionList GetEndTurn()
+        {
+            var option = new Option("End turn", "End turn");
+            var result = new OptionList() { Label = "End turn", CanGoBack = false, IsInfoNeeded = false, Options = new List<IOption> { option } };
+            return result;
+        }
 
         public bool CanShoot(Fight fight)
         {
@@ -173,13 +179,6 @@ namespace NFCombat2.Services
             }
             return false;
         }
-
-       
-
-
-
-
-
 
     }
 }

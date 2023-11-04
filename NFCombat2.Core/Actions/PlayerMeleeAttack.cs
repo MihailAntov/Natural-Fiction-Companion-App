@@ -6,10 +6,10 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Actions
 {
-    public class MeleeAttack : IStandardAction, ITarget
+    public class PlayerMeleeAttack : IStandardAction, ITarget
     {
         private readonly Fight _fight;
-        public MeleeAttack(Fight fight)
+        public PlayerMeleeAttack(Fight fight)
         {
             _fight = fight;
         }
@@ -25,7 +25,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.AttackMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             return null;
         }

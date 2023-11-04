@@ -4,9 +4,9 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using static NFCombat2.Models.DiceRoller.DiceCalculator;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.DiceRoller;
+using NFCombat2.Common.Helpers;
 
 namespace NFCombat2.Models.Actions
 {
@@ -24,7 +24,7 @@ namespace NFCombat2.Models.Actions
         public string[] MessageArgs => new string[] { _enemy.Name};
         public MessageType MessageType => MessageType.EnemyShootMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var damage = DiceCalculator.Calculate(_enemy.DamageDice, _enemy.FlatDamage);
             var resolutions = new List<ICombatResolution>()

@@ -37,11 +37,11 @@ namespace NFCombat2.Services
             }
         }
 
-        public void Log(MessageType messageType, params string[] args)
+        public async void Log(MessageType messageType, params string[] args)
         {
             Language language = _profileService.CurrentPlayer().Language;
             string structure = GetStructure(messageType, language);
-            Messages.Add(String.Format(structure, args));
+            Messages.Add(String.Format($"  {structure}", args));
 
 
 

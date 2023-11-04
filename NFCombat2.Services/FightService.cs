@@ -8,6 +8,7 @@ using NFCombat2.Models.Actions;
 using NFCombat2.Models.Items;
 using NFCombat2.Common.Enums;
 using System.ComponentModel;
+using CommunityToolkit.Maui.Alerts;
 
 namespace NFCombat2.Services
 {
@@ -16,10 +17,12 @@ namespace NFCombat2.Services
         private Fight _fight;
         private readonly ILogService _logService;
         private readonly IOptionsService _optionsService;
-        public FightService(ILogService logService, IOptionsService optionsService)
+        private readonly IPopupService _popupService;
+        public FightService(ILogService logService, IOptionsService optionsService, IPopupService popupService)
         {
             _logService = logService;
             _optionsService = optionsService;
+            _popupService = popupService;
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
@@ -87,7 +90,7 @@ namespace NFCombat2.Services
                     fight = new TimedFight(enemies, hacker);
                     break;
                 default:
-                    fight = new VirtualFight(enemies, hacker);
+                    fight = new ConstrainedFight(enemies, hacker);
                     break;
             }
             _fight = fight;
@@ -103,6 +106,10 @@ namespace NFCombat2.Services
                 AddEffect(action);
             }
             ResolveEffects();
+            _fight.Turn++;
+            string turnAnnouncement = $"Round {_fight.Turn} beginning.";
+            _popupService.ShowToast(turnAnnouncement);
+            //display toast for turn end ?
 
         }
 
@@ -128,8 +135,11 @@ namespace NFCombat2.Services
                     var bonusACtions = _optionsService.GetBonusActions(_fight);
                     PreviousOptions = bonusACtions;
                     return bonusACtions;
+                case TurnPhase.EndTurn:
+                    var endTurn = _optionsService.GetEndTurn();
+                    return endTurn;
                 case TurnPhase.EnemyMove:
-                    //TODO call enemy combat logic
+                    EnemyAction();
                     _fight.TurnPhase = TurnPhase.None;
                     return AfterOption();
                 
@@ -148,21 +158,25 @@ namespace NFCombat2.Services
             }
         }
 
-        public void AddEffect(ICombatAction effect)
+        public async void AddEffect(ICombatAction effect)
         {
             if(effect.MessageType != MessageType.None)
             {
                 _logService.Log(effect.MessageType, effect.MessageArgs);
+                await Task.Delay(200);
             }
 
             var resolutions = effect.AddToCombatEffects(_fight);
-            foreach(var resolution in resolutions)
+            
+            foreach (var resolution in resolutions)
             {
-                if(resolution.MessageType != MessageType.None)
+                if (resolution.MessageType != MessageType.None)
                 {
                     _logService.Log(resolution.MessageType, resolution.MessageArgs);
+                    await Task.Delay(200);
                 }
             }
+            //TODO fix delay
         }
 
         public IOptionList ProcessChoice(object option)
@@ -197,6 +211,8 @@ namespace NFCombat2.Services
                     case "Move":
                         var move = new PlayerGetCloser(_fight);
                         AddEffect(move);
+                        return AfterOption();
+                    case "End turn":
                         return AfterOption();
                 }
                 PreviousOptions = result;

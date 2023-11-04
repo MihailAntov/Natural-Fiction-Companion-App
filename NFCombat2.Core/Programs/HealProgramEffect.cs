@@ -4,7 +4,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using NFCombat2.Models.DiceRoller;
+using NFCombat2.Common.Helpers;
 
 namespace NFCombat2.Models.Programs
 {
@@ -20,7 +20,7 @@ namespace NFCombat2.Models.Programs
         public string[] MessageArgs => Array.Empty<string>();
         public MessageType MessageType => MessageType.ProgramHealMessage;
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(_dice);
             var heal = new Heal(amount);

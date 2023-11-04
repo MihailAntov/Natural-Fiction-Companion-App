@@ -23,7 +23,7 @@ namespace NFCombat2.Models.Actions
 
         public string[] MessageArgs => Array.Empty<string>();
 
-        public IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>() 
             {

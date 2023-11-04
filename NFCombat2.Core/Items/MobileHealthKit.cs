@@ -3,6 +3,7 @@
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Common.Helpers;
 
 namespace NFCombat2.Models.Items
 {
@@ -18,9 +19,9 @@ namespace NFCombat2.Models.Items
         public override string[] MessageArgs => new string[] { Label };
         public override string Description { get; set; } = "Heals you for two dice worth of health.";
 
-        public override IEnumerable<ICombatResolution> AddToCombatEffects(Fight fight)
+        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            int amount = DiceRoller.DiceCalculator.Calculate(2);
+            int amount = DiceCalculator.Calculate(2);
             var heal = new Heal(amount);
             fight.Effects.Enqueue(heal);
             return new List<ICombatResolution>() { heal };
