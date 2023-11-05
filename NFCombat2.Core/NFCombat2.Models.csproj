@@ -21,4 +21,8 @@
 	  <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DiceRoller\" />
+	</ItemGroup>
+
 </Project>

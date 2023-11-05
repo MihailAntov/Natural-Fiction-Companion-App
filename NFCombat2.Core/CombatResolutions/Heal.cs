@@ -1,25 +1,26 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
-using NFCombat2.Models.DiceRoller;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.CombatResolutions
 {
     public class Heal : ICombatResolution
     {
-        private int _amount;
-        public Heal(int amount)
+        private DiceRollResult _roll;
+        public Heal(DiceRollResult roll)
         {
-            _amount = amount;
+            _roll = roll;
         }
-        public string[] MessageArgs => new string[1] {_amount.ToString()};
+        public string[] MessageArgs => new string[1] {Amount.ToString()};
+        public int Amount => _roll.FlatAmount + _roll.Dice.Select(d=>d.DiceValue).Sum();
         public MessageType MessageType => MessageType.HealMessage;
 
         public void Resolve(Fight fight)
         {
             //fight.Player.Health += DiceCalculator.Calculate(_dice);
 
-            fight.Player.Health += _amount;
+            fight.Player.Health += Amount;
             
 
         }

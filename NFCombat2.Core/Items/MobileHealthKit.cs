@@ -21,8 +21,8 @@ namespace NFCombat2.Models.Items
 
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            int amount = DiceCalculator.Calculate(2);
-            var heal = new Heal(amount);
+            DiceRollResult roll = DiceCalculator.Calculate(2);
+            var heal = new Heal(roll);
             fight.Effects.Enqueue(heal);
             return new List<ICombatResolution>() { heal };
         }

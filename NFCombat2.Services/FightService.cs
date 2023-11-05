@@ -9,6 +9,7 @@ using NFCombat2.Models.Items;
 using NFCombat2.Common.Enums;
 using System.ComponentModel;
 using CommunityToolkit.Maui.Alerts;
+using NFCombat2.Common.Helpers;
 
 namespace NFCombat2.Services
 {
@@ -68,10 +69,14 @@ namespace NFCombat2.Services
             enemies.Add(targetDummy);
 
             var hacker = new Hacker() {Name = "Istvan" };
+            var specOps = new SpecOps() { Name = "Hackerman" };
             hacker.Weapons.Add(new Weapon() { Label="Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             hacker.Weapons.Add(new Weapon() { Label="Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new MobileHealthKit());
             hacker.Consumables.Add(new Grenade());
+            specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            specOps.Consumables.Add(new MobileHealthKit());
+            specOps.Consumables.Add(new Grenade());
             Fight fight;
             
             switch (episodeNumber)
@@ -81,7 +86,7 @@ namespace NFCombat2.Services
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
-                    fight = new ChaseFight(enemies, hacker);
+                    fight = new ChaseFight(enemies, specOps);
                     break;
                 case 2:
                     fight = new SoloFight(enemies, hacker);
@@ -156,17 +161,28 @@ namespace NFCombat2.Services
                 effect.Resolve(_fight);
                 
             }
+            foreach(var weapon in _fight.Player.Weapons)
+            {
+                if (weapon.Cooldown > 0) 
+                {
+                    weapon.Cooldown--;
+                }
+            }
         }
 
+        
         public async void AddEffect(ICombatAction effect)
         {
+            
+            
+            var resolutions = effect.AddToCombatEffects(_fight);
             if(effect.MessageType != MessageType.None)
             {
                 _logService.Log(effect.MessageType, effect.MessageArgs);
                 await Task.Delay(200);
             }
+            
 
-            var resolutions = effect.AddToCombatEffects(_fight);
             
             foreach (var resolution in resolutions)
             {
@@ -179,10 +195,12 @@ namespace NFCombat2.Services
             //TODO fix delay
         }
 
+        
+
         public IOptionList ProcessChoice(object option)
         {
             IOptionList result = new OptionList();
-            
+
             if (option is string category)
             {
                 switch (category)
@@ -231,6 +249,12 @@ namespace NFCombat2.Services
 
             }
 
+            if(option is Dice dice)
+            {
+                dice.Roll();
+                return AfterOption();
+            }
+
             if(option is Weapon weapon)
             {
                 CurrentTargetingEffect = new PlayerRangedAttack(_fight, weapon);
@@ -244,11 +268,12 @@ namespace NFCombat2.Services
             {
                 CurrentTargetingEffect.Targets.Add(target);
                 var effect = (ICombatAction)CurrentTargetingEffect;
+
+
                 AddEffect(effect);
 
                 if(CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
                 {
-                    
                     return _optionsService.GetWeapons(_fight, true);
                 }
 

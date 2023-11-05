@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -11,34 +12,40 @@ namespace NFCombat2.Models.Actions
     public class PlayerRangedAttack : IStandardAction, ITarget
     {
         private readonly Fight fight;
-        private readonly Weapon _weapon;
         public PlayerRangedAttack(Fight fight, Weapon weapon)
         {
             this.fight = fight;
             MinRange = weapon.MinRange;
             MaxRange = weapon.MaxRange;
             AreaOfEffect = weapon.AreaOfEffect;
-            _weapon = weapon;
+            Weapon = weapon;
+            AttackRoll = DiceCalculator.RollSingle();
+            DamageRoll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
         }
-        public Enemy Target { get; set; }
-        public string[] MessageArgs => new string[] { Target?.Name, Label };
+        public string Target { get 
+            {
+                return Targets.Count > 1 ? Targets.Count.ToString() : Targets.FirstOrDefault().Name;
+            } 
+        }
+        public Weapon Weapon { get; }
+        public string[] MessageArgs => new string[] { Target, Weapon.Label };
         public string Label { get; set; }
         public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
+        public Dice AttackRoll { get; set; }
+        public DiceRollResult DamageRoll { get; set; }
 
         public MessageType MessageType => MessageType.ShootMessage;
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            var resolutions = new List<ICombatResolution>() { new DealDamage(3, Targets) };
-            
-            _weapon.Cooldown += _weapon.CooldownPerShot;
+            //DiceRollResult roll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
+            var resolutions = new List<ICombatResolution>() { new DealDamage(DamageRoll, Targets) };
+            Weapon.Cooldown += Weapon.CooldownPerShot;
             return resolutions;
-            
-
         }
     }
 }

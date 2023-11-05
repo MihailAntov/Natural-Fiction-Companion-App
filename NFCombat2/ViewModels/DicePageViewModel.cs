@@ -1,6 +1,4 @@
-﻿
-
-using NFCombat2.Models.DiceRoller;
+﻿using NFCombat2.Helpers;
 using NFCombat2.Services.Contracts;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -18,7 +16,7 @@ namespace NFCombat2.ViewModels
             
             for (int i = 0; i < 10; i++)
             {
-                var nextDice = new Models.DiceRoller.Dice(6,$"dice{i}");
+                var nextDice = new Dice(6,$"dice{i}");
                 DiceCollection.Add(nextDice);
             }
         }

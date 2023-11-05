@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
@@ -10,10 +11,10 @@ namespace NFCombat2.Models.CombatResolutions
     {
         private string _enemyName;
         private int _damage;
-        public EnemyDealDamage(int amount, Enemy enemy)
+        public EnemyDealDamage(DiceRollResult roll, Enemy enemy)
         {
             _enemyName = enemy.Name;
-            _damage = amount;
+            _damage = roll.FlatAmount + roll.Dice.Select(d=>d.DiceValue).Sum();
         }
         public MessageType MessageType => MessageType.EnemyDamageMessage;
 

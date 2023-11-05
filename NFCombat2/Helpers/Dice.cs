@@ -1,9 +1,7 @@
-﻿
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NFCombat2.Models.DiceRoller
+namespace NFCombat2.Helpers
 {
     public class Dice : INotifyPropertyChanged
     {
@@ -29,10 +27,13 @@ namespace NFCombat2.Models.DiceRoller
         }
         public int MaxValue { get; set; }
 
-        private string fileName;
-        public string FileName { get { return fileName; } set 
+        private string fileName = null!;
+        public string FileName
+        {
+            get { return fileName; }
+            set
             {
-                if(fileName != value)
+                if (fileName != value)
                 {
                     fileName = value;
                     OnPropertyChanged(nameof(FileName));
@@ -56,7 +57,12 @@ namespace NFCombat2.Models.DiceRoller
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int Roll() => DiceValue = (int)random.Next(1, MaxValue + 1);
+        public void Roll()
+        {
+            DiceValue = random.Next(1, MaxValue + 1);
+            FileName = $"dice{DiceValue}";
+        }
+
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
