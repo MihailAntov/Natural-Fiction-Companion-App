@@ -170,7 +170,16 @@ namespace NFCombat2.Services
             }
         }
 
-        
+        private void HandleRolls(ICombatAction effect)
+        {
+            if(effect is IHaveAttackRoll attack)
+            {
+                var roll = attack.ShowAttackRoll();
+                _popupService.ShowPopup(roll);
+            }
+
+            AddEffect(effect);
+        }
         public async void AddEffect(ICombatAction effect)
         {
             

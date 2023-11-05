@@ -1,5 +1,7 @@
 ﻿
 
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
@@ -9,7 +11,7 @@ using NFCombat2.Models.Items;
 
 namespace NFCombat2.Models.Actions
 {
-    public class PlayerRangedAttack : IStandardAction, ITarget
+    public class PlayerRangedAttack : IStandardAction, ITarget, IHaveRolls, IHaveAttackRoll
     {
         private readonly Fight fight;
         public PlayerRangedAttack(Fight fight, Weapon weapon)
@@ -43,9 +45,35 @@ namespace NFCombat2.Models.Actions
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //DiceRollResult roll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
+
             var resolutions = new List<ICombatResolution>() { new DealDamage(DamageRoll, Targets) };
             Weapon.Cooldown += Weapon.CooldownPerShot;
             return resolutions;
+        }
+
+        public Popup ShowAttackRoll()
+        {
+            Popup roll = new Popup()
+            {
+                Content = new VerticalStackLayout()
+                {
+                    Children =
+                    {
+                        new Label
+                        {
+                            Text = "test test"
+                        }
+                    }
+                }
+            };
+
+            return roll;
+            
+        }
+
+        public Popup ShowRolls()
+        {
+            throw new NotImplementedException();
         }
     }
 }

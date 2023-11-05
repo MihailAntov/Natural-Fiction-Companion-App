@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NFCombat2.Helpers
+namespace NFCombat2.Common.Helpers
 {
     public class Dice : INotifyPropertyChanged
     {
