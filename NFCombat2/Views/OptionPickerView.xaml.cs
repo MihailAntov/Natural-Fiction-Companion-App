@@ -1,5 +1,5 @@
 using NFCombat2.Models.Contracts;
-using NFCombat2.Services.Contracts;
+using NFCombat2.Contracts;
 using NFCombat2.ViewModels;
 
 namespace NFCombat2.Views;

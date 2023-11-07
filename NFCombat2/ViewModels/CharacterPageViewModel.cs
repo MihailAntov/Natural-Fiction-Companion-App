@@ -1,4 +1,4 @@
-﻿using NFCombat2.Services.Contracts;
+﻿using NFCombat2.Contracts;
 
 
 using System.ComponentModel;

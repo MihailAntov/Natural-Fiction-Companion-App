@@ -10,4 +10,8 @@ public partial class DiceResultView : Popup
 		InitializeComponent();
 		BindingContext = viewModel;
 	}
+
+    
+
+    async void OnOkButtonClicked(object sender, EventArgs e) => await CloseAsync(false);
 }

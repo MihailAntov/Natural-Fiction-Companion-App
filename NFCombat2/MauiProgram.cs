@@ -1,6 +1,6 @@
 ﻿using NFCombat2.Services;
 using Microsoft.Extensions.DependencyInjection;
-using NFCombat2.Services.Contracts;
+using NFCombat2.Contracts;
 using NFCombat2.Pages;
 using NFCombat2.Data;
 using NFCombat2.Views;

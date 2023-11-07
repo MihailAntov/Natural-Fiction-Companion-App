@@ -63,6 +63,7 @@
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\inventions.png" />
 	  <None Remove="Resources\Images\previous.png" />
+	  <None Remove="Resources\Images\sync.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,10 +73,6 @@
 	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.6" />
 	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.6" />
 	  <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" Version="2.1.6" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\NFCombat2.Services\NFCombat2.Services.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,6 +104,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Extensions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
+	  <ProjectReference Include="..\NFCombat2.Data\NFCombat2.Data.csproj" />
+	  <ProjectReference Include="..\NFCombat2.Models\NFCombat2.Models.csproj" />
 	</ItemGroup>
 
 </Project>

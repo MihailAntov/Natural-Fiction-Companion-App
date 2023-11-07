@@ -1,10 +1,30 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Name="DiceResult"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="NFCombat2.Views.DiceResultView">
 
-    <VerticalStackLayout>
-        <Label Text="This is a very important message!" />
-    </VerticalStackLayout>
+  
+        <StackLayout Padding="50">
+            <FlexLayout BindableLayout.ItemsSource="{Binding Dice}" Direction="Row"  Wrap="Wrap"  >
+                <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                        <VerticalStackLayout FlexLayout.Basis="150">
+                        <Image Source="{Binding FileName}"/>
+                            <Button Text="Reroll"
+                            Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.Reroll}"
+                            CommandParameter="{Binding}"/>
+
+                        </VerticalStackLayout>
+                
+            </DataTemplate>
+            </BindableLayout.ItemTemplate>
+
+        </FlexLayout>
+            <Button Text="Ok" Command="{Binding ConfirmCommand}"/>
+        </StackLayout>
+    
+
+    
 
 </toolkit:Popup>

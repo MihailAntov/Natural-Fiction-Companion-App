@@ -1,5 +1,5 @@
 ﻿using NFCombat2.Models.Fights;
-using NFCombat2.Services.Contracts;
+using NFCombat2.Contracts;
 using System.Collections.ObjectModel;
 using NFCombat2.Models.Contracts;
 using System.ComponentModel;

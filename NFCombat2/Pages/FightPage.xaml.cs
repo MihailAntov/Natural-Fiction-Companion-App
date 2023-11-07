@@ -1,6 +1,6 @@
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
-using NFCombat2.Services.Contracts;
+using NFCombat2.Contracts;
 using NFCombat2.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

@@ -1,5 +1,5 @@
 ﻿using NFCombat2.Common.Helpers;
-using NFCombat2.Services.Contracts;
+using NFCombat2.Contracts;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
