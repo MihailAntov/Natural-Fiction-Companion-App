@@ -174,8 +174,13 @@ namespace NFCombat2.Services
         {
             if(effect is IHaveAttackRoll attack)
             {
-                var roll = attack.ShowAttackRoll();
-                _popupService.ShowPopup(roll);
+                
+                _popupService.ShowDiceAttackRollPopup(attack);
+            }
+
+            if(effect is IHaveRolls rollEffect)
+            {
+                //_popupService.ShowDiceRollsPopup(rollEffect);
             }
 
             AddEffect(effect);
@@ -279,9 +284,10 @@ namespace NFCombat2.Services
                 var effect = (ICombatAction)CurrentTargetingEffect;
 
 
-                AddEffect(effect);
+                //AddEffect(effect);
+                HandleRolls(effect);
 
-                if(CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
+                if (CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
                 {
                     return _optionsService.GetWeapons(_fight, true);
                 }
@@ -293,7 +299,8 @@ namespace NFCombat2.Services
 
             if (option is ICombatAction combatEffect)
             {
-                AddEffect(combatEffect);
+                HandleRolls(combatEffect);
+                //AddEffect(combatEffect);
                 return AfterOption();
 
             }

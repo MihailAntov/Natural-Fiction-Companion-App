@@ -9,7 +9,6 @@ using System.Windows.Input;
 using NFCombat2.Models.Actions;
 using NFCombat2.Services;
 using CommunityToolkit.Maui.Views;
-using NFCombat2.Popups;
 using NFCombat2.Views;
 using CommunityToolkit.Maui.Alerts;
 

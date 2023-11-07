@@ -22,10 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="DiceRoller\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 	</ItemGroup>
 

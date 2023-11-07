@@ -8,6 +8,7 @@ using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items;
+using NFCombat2.Models.PopUps;
 
 namespace NFCombat2.Models.Actions
 {
@@ -21,8 +22,8 @@ namespace NFCombat2.Models.Actions
             MaxRange = weapon.MaxRange;
             AreaOfEffect = weapon.AreaOfEffect;
             Weapon = weapon;
-            AttackRoll = DiceCalculator.RollSingle();
-            DamageRoll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
+            AttackRollResult = DiceCalculator.Calculate(1).Dice.FirstOrDefault();
+            RollsResult = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
         }
         public string Target { get 
             {
@@ -37,8 +38,8 @@ namespace NFCombat2.Models.Actions
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
-        public Dice AttackRoll { get; set; }
-        public DiceRollResult DamageRoll { get; set; }
+        public Dice AttackRollResult { get; set; }
+        public DiceRollResult RollsResult { get; set; }
 
         public MessageType MessageType => MessageType.ShootMessage;
 
@@ -46,7 +47,7 @@ namespace NFCombat2.Models.Actions
         {
             //DiceRollResult roll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
 
-            var resolutions = new List<ICombatResolution>() { new DealDamage(DamageRoll, Targets) };
+            var resolutions = new List<ICombatResolution>() { new DealDamage(RollsResult, Targets) };
             Weapon.Cooldown += Weapon.CooldownPerShot;
             return resolutions;
         }
@@ -73,7 +74,11 @@ namespace NFCombat2.Models.Actions
 
         public Popup ShowRolls()
         {
-            throw new NotImplementedException();
+            var popup = new DiceRollPopup(RollsResult)
+            {
+
+            };
+            return popup;
         }
     }
 }

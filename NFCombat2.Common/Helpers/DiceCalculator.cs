@@ -15,11 +15,11 @@
             return result;
         }
 
-        public static Dice RollSingle(int sides = 6)
-        {
-            var dice = new Dice(sides, "dice1");
-            dice.Roll();
-            return dice;
-        }
+        //public static Dice RollSingle(int sides = 6)
+        //{
+        //    var dice = new Dice(sides, "dice1");
+        //    dice.Roll();
+        //    return dice;
+        //}
     }
 }

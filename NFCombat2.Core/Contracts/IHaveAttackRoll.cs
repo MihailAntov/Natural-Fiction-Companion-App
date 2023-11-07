@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
+using NFCombat2.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace NFCombat2.Models.Contracts
 {
     public interface IHaveAttackRoll
     {
-        Popup ShowAttackRoll();
+        Dice AttackRollResult { get; set; }
     }
 }
