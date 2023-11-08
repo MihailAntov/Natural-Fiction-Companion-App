@@ -31,7 +31,7 @@ namespace NFCombat2.Models.CombatResolutions
             }
         }
 
-        public void Resolve(Fight fight)
+        public async Task Resolve(Fight fight)
         {
             foreach (var enemy in Targets)
             {

@@ -17,8 +17,8 @@ namespace NFCombat2.Models.CombatResolutions
 
         public ICollection<Enemy> Targets { get; set; }
         public int Amount => _roll.FlatAmount + _roll.Dice.Select(d=> d.DiceValue).Sum();
-        public MessageType MessageType => Targets.Count == 1 ? MessageType.DamageMessage : MessageType.DamageAoeMessage;
-        public string[] MessageArgs
+        public virtual MessageType MessageType => Targets.Count == 1 ? MessageType.DamageMessage : MessageType.DamageAoeMessage;
+        public virtual string[] MessageArgs
         {
             get
             {
@@ -28,7 +28,7 @@ namespace NFCombat2.Models.CombatResolutions
                 return args;
             }
         }
-        public void Resolve(Fight fight)
+        public virtual async Task Resolve(Fight fight)
         {
 
             foreach (var target in Targets)

@@ -21,7 +21,7 @@
         </Picker>
         <Label Text="Profile Name"/>
         <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
-        <Button Text="Add Profile" Clicked="RegisterProfile"/>
+        <Button Text="Add Profile" Command="{Binding RegisterCommand}"/>
         <Button Text="View All Profiles" Clicked="GetAllProfiles"/>
         
             <Stepper Minimum="0" Maximum="5" WidthRequest="90"  />

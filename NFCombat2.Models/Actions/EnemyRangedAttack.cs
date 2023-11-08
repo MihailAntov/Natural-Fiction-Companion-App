@@ -13,12 +13,14 @@ namespace NFCombat2.Models.Actions
     {
         private readonly Fight fight;
         private readonly Enemy _enemy;
+        private Accuracy _accuracy;
         public EnemyRangedAttack(Fight fight, Enemy enemy)
         {
             this.fight = fight;
             _enemy = enemy;
             AttackRollResult = DiceCalculator.Calculate(1).Dice.FirstOrDefault();
             RollsResult = DiceCalculator.Calculate(enemy.DamageDice, enemy.FlatDamage);
+            _accuracy = _enemy.Accuracy;
         }
 
 
@@ -27,6 +29,25 @@ namespace NFCombat2.Models.Actions
 
         public DiceRollResult RollsResult { get; set; }
         public Dice AttackRollResult { get; set; }
+        public Accuracy Accuracy { get { return _accuracy; }  set { _accuracy = value; } }
+
+        public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
+        {
+            var resolutions = new List<ICombatResolution>()
+            {
+                new EnemyCrit(RollsResult ,_enemy)
+            };
+            return resolutions;
+        }
+
+        public IList<ICombatResolution> AddMissToCombatResolutions(Fight fight)
+        {
+            var resolutions = new List<ICombatResolution>()
+            {
+                new EnemyMiss(_enemy)
+            };
+            return resolutions;
+        }
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

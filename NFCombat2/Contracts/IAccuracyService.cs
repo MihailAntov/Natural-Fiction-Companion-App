@@ -8,7 +8,7 @@ namespace NFCombat2.Contracts
 {
     public interface IAccuracyService
     {
-        public int Hits(IHaveAttackRoll combatAction, Fight fight, Accuracy accuracy);
+        public AttackResult Hits(IHaveAttackRoll combatAction, Fight fight);
 
     }
 }

@@ -21,6 +21,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IProfileService, ProfileService>();
 		builder.Services.AddSingleton<ILogService, LogService>();
 		builder.Services.AddSingleton<IPopupService, PopupService>();
+		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
 
 		
 		builder.Services.AddSingleton<CharacterPage>();

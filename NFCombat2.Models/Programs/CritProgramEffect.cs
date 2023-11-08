@@ -20,7 +20,7 @@ namespace NFCombat2.Models.Programs
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //fight.RemainingCrits += _numberOfCrits;
-            var crit = new Crit(_numberOfCrits);
+            var crit = new GuaranteedCrits(_numberOfCrits);
             fight.Effects.Enqueue(crit);
             return new List<ICombatResolution>() { crit };
         }

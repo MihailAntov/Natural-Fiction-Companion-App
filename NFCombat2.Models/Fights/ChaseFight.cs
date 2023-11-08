@@ -11,7 +11,7 @@ namespace NFCombat2.Models.Fights
 
         public override IList<ICombatAction> EnemyActions()
         {
-            throw new NotImplementedException();
+            return base.EnemyActions();
         }
     }
 }

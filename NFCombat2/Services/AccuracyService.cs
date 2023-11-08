@@ -11,25 +11,15 @@ namespace NFCombat2.Services
 {
     public class AccuracyService : IAccuracyService
     {
-        public int Hits(IHaveAttackRoll combatAction, Fight fight, Accuracy accuracy)
+        public AttackResult Hits(IHaveAttackRoll combatAction, Fight fight)
         {
-            
+            var diceResult = combatAction.AttackRollResult.DiceValue;
 
-            if(fight.Player is SpecOps specOps)
-            {
-                if(specOps.Techniques.Any(s=> s is Feint))
-                {
-                    if(combatAction.AttackRollResult.DiceValue > 1)
-                    {
-                        combatAction.AttackRollResult.DiceValue--;
-                        //todo check if zero result is possible
-                    }
-                }
-            }
+            
 
             int hitsAt = 0;
             int critsAt = 0;
-            switch(accuracy)
+            switch(combatAction.Accuracy)
             {
                 case Accuracy.S:
                     hitsAt = 2;
@@ -57,9 +47,9 @@ namespace NFCombat2.Services
                     break;
             }
 
-            if(combatAction.AttackRollResult.DiceValue >= critsAt) { return 2; }
-            if(combatAction.AttackRollResult.DiceValue >= hitsAt) { return 1; }
-            return 0;
+            if(diceResult >= critsAt) { return AttackResult.Crit; }
+            if(diceResult >= hitsAt) { return AttackResult.Hit; }
+            return AttackResult.Miss;
         }
     }
 }

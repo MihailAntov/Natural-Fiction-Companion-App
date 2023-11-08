@@ -9,20 +9,21 @@ namespace NFCombat2.Models.CombatResolutions
 {
     public class EnemyDealDamage : ICombatResolution
     {
-        private string _enemyName;
-        private int _damage;
+        protected string _enemyName;
+        public int Damage { get; set; }
         public EnemyDealDamage(DiceRollResult roll, Enemy enemy)
         {
             _enemyName = enemy.Name;
-            _damage = roll.FlatAmount + roll.Dice.Select(d=>d.DiceValue).Sum();
+            Damage = roll.FlatAmount + roll.Dice.Select(d=>d.DiceValue).Sum();
         }
-        public MessageType MessageType => MessageType.EnemyDamageMessage;
+        public virtual MessageType MessageType => MessageType.EnemyDamageMessage;
 
-        public string[] MessageArgs => new string[2] { _enemyName, _damage.ToString() };
+        public virtual string[] MessageArgs => new string[2] { _enemyName, Damage.ToString() };
 
-        public void Resolve(Fight fight)
+        public virtual async Task Resolve(Fight fight)
         {
-            fight.Player.Health -= _damage;
+            fight.Player.Health -= Damage;
+            
         }
     }
 }

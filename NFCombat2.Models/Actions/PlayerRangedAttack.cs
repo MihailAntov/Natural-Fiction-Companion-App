@@ -15,6 +15,7 @@ namespace NFCombat2.Models.Actions
     public class PlayerRangedAttack : IStandardAction, ITarget, IHaveRolls, IHaveAttackRoll
     {
         private readonly Fight fight;
+        private Accuracy _accuracy;
         public PlayerRangedAttack(Fight fight, Weapon weapon)
         {
             this.fight = fight;
@@ -24,6 +25,7 @@ namespace NFCombat2.Models.Actions
             Weapon = weapon;
             AttackRollResult = DiceCalculator.Calculate(1).Dice.FirstOrDefault();
             RollsResult = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
+            _accuracy = weapon.Accuracy;
         }
         public string Target { get 
             {
@@ -38,10 +40,25 @@ namespace NFCombat2.Models.Actions
         public bool AreaOfEffect { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
+        public Accuracy Accuracy { get { return _accuracy;  } set {  _accuracy = value; } }
         public Dice AttackRollResult { get; set; }
         public DiceRollResult RollsResult { get; set; }
 
         public MessageType MessageType => MessageType.ShootMessage;
+
+        public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
+        {
+            var resolutions = new List<ICombatResolution>() { new Crit(RollsResult, Targets) };
+            Weapon.Cooldown += Weapon.CooldownPerShot;
+            return resolutions;
+        }
+
+        public IList<ICombatResolution> AddMissToCombatResolutions(Fight fight)
+        {
+            var resolutions = new List<ICombatResolution>() { new Miss() };
+            Weapon.Cooldown += Weapon.CooldownPerShot;
+            return resolutions;
+        }
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

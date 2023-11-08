@@ -10,8 +10,10 @@ namespace NFCombat2.Common.AppConstants
         {
             //effects
             {MessageType.BonusActionMessage, "You can take another action this turn." },
-            {MessageType.CritMessage, "Your next {0} shots deal double damage!" },
+            {MessageType.GuaranteedCritsMessage, "Your next {0} shots deal double damage!" },
             {MessageType.DamageMessage, "{0} takes {1} damage." },
+            {MessageType.CritMessage, "You deal double damage! {0} takes {1} damage." },
+            {MessageType.MissMessage, "You miss!" },
             {MessageType.DamageAoeMessage, "{0} enemies each take {1} damage." },
             {MessageType.TakeDamageMessage, "You take {0} damage." },
             {MessageType.FreezeAoeMessage, "{0} enemies cannot move for {1} turns." },
@@ -41,7 +43,9 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },
             {MessageType.EnemyDamageMessage, "{0} deals {1} damage to you." },
             {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {1} meters away from you." },
-            {MessageType.EnemyDefeatedMessage, "{0} is defeated!" }
+            {MessageType.EnemyDefeatedMessage, "{0} is defeated!" },
+            {MessageType.EnemyMissMessage, "{0} misses!" },
+            {MessageType.EnemyCritMessage, "{0} deals double damage! You lose {1} life." }
         };
 
         public static Dictionary<MessageType, string> BulgarianMessages = new Dictionary<MessageType, string>()

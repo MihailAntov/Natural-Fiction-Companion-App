@@ -1,16 +1,19 @@
-﻿using NFCombat2.Common.Enums;
+﻿
+
+using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.CombatResolutions
 {
-    public class BonusAction : ICombatResolution
+    public class Miss : ICombatResolution
     {
-        public MessageType MessageType => MessageType.BonusActionMessage;
+        public MessageType MessageType => MessageType.MissMessage;
+
         public string[] MessageArgs => Array.Empty<string>();
+
         public Task Resolve(Fight fight)
         {
-            fight.HasBonusAction = true;
             return Task.CompletedTask;
         }
     }

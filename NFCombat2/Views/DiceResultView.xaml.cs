@@ -1,4 +1,3 @@
-using Android.Telecom;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.ViewModels;
 

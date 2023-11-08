@@ -5,7 +5,7 @@ namespace NFCombat2.Models.Contracts
 {
     public interface ICombatResolution
     {
-        public void Resolve(Fight fight);
+        public Task Resolve(Fight fight);
         public MessageType MessageType { get; }
         public string[] MessageArgs { get; }
     }

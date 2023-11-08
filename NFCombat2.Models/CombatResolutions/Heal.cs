@@ -16,7 +16,7 @@ namespace NFCombat2.Models.CombatResolutions
         public int Amount => _roll.FlatAmount + _roll.Dice.Select(d=>d.DiceValue).Sum();
         public MessageType MessageType => MessageType.HealMessage;
 
-        public void Resolve(Fight fight)
+        public async Task Resolve(Fight fight)
         {
             //fight.Player.Health += DiceCalculator.Calculate(_dice);
 

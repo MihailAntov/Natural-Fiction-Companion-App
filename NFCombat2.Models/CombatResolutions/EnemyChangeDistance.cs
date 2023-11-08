@@ -23,7 +23,7 @@ namespace NFCombat2.Models.CombatResolutions
 
         public string[] MessageArgs => _messageArgs;
 
-        public void Resolve(Fight fight)
+        public async Task Resolve(Fight fight)
         {
             _enemy.Distance += _amount;
             MessageArgs[1] = _enemy.Distance.ToString();

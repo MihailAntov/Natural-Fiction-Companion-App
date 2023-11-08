@@ -19,11 +19,13 @@ namespace NFCombat2.Services
         private readonly ILogService _logService;
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
-        public FightService(ILogService logService, IOptionsService optionsService, IPopupService popupService)
+        private readonly IAccuracyService _accuracyService;
+        public FightService(ILogService logService, IOptionsService optionsService, IPopupService popupService, IAccuracyService accuracyService)
         {
             _logService = logService;
             _optionsService = optionsService;
             _popupService = popupService;
+            _accuracyService = accuracyService;
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
@@ -50,6 +52,7 @@ namespace NFCombat2.Services
 
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
+
             var enemies = new List<Enemy>();
 
             var targetDummy = new Enemy()
@@ -60,7 +63,7 @@ namespace NFCombat2.Services
                 Speed = 2,
                 Range = 10,
                 DamageDice = 1
-                
+
             };
 
             var targetDummy2 = new Enemy()
@@ -74,17 +77,17 @@ namespace NFCombat2.Services
             };
             enemies.Add(targetDummy);
 
-            var hacker = new Hacker() {Name = "Istvan" };
+            var hacker = new Hacker() { Name = "Istvan" };
             var specOps = new SpecOps() { Name = "Hackerman" };
-            hacker.Weapons.Add(new Weapon() { Label="Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
-            hacker.Weapons.Add(new Weapon() { Label="Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
+            hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new MobileHealthKit());
             hacker.Consumables.Add(new Grenade());
             specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             specOps.Consumables.Add(new MobileHealthKit());
             specOps.Consumables.Add(new Grenade());
             Fight fight;
-            
+
             switch (episodeNumber)
             {
                 case 0:
@@ -105,14 +108,12 @@ namespace NFCombat2.Services
                     break;
             }
             _fight = fight;
-            return fight;
+            return _fight;
         }
 
         private async Task EnemyAction()
         {
             var enemyActions = _fight.EnemyActions();
-            
-            
             foreach(var action in enemyActions)
             {
                 await HandleRolls(action);
@@ -123,6 +124,22 @@ namespace NFCombat2.Services
             _popupService.ShowToast(turnAnnouncement);
             //display toast for turn end ?
 
+        }
+
+        private async Task ModifyAction(ICombatAction action)
+        {
+            foreach (IModifyAction modifier in _fight.Player.ActionModifiers)
+            {
+                await modifier.Modify(action);
+            }
+        }
+
+        private async Task ModifyResolution(ICombatResolution resolution)
+        {
+            foreach (IModifyResolution modifier in _fight.Player.ResolutionModifiers)
+            {
+                await modifier.Modify(resolution);
+            }
         }
 
         public async Task<IOptionList> AfterOption()
@@ -165,7 +182,7 @@ namespace NFCombat2.Services
             while(_fight.Effects.Count > 0)
             {
                 var effect = _fight.Effects.Dequeue();
-                effect.Resolve(_fight);
+                await effect.Resolve(_fight);
                 
             }
 
@@ -192,21 +209,48 @@ namespace NFCombat2.Services
                 var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect);
                 await taskCompletion.Task;
             }
-
+            await ModifyAction(effect);
             await AddEffect(effect);
         }
         public async Task AddEffect(ICombatAction effect)
         {
-            
-            
-            var resolutions = effect.AddToCombatEffects(_fight);
-            if(effect.MessageType != MessageType.None)
+            IList<ICombatResolution> resolutions = new List<ICombatResolution>();
+            if(effect is IHaveAttackRoll attack)
+            {
+                var result = _accuracyService.Hits(attack, _fight);
+                switch (result)
+                {
+                    case AttackResult.Miss:
+                        resolutions = attack.AddMissToCombatResolutions(_fight);
+                        break;
+                    case AttackResult.Hit:
+                        resolutions = attack.AddCritToCombatResolutions(_fight);
+                        break;
+                    case AttackResult.Crit:
+                        resolutions = attack.AddCritToCombatResolutions(_fight);
+                        break;
+                }
+
+
+            }
+            else
+            {
+                resolutions = effect.AddToCombatEffects(_fight);
+            }
+
+            foreach (var resolution in resolutions)
+            {
+                await ModifyResolution(resolution);
+
+            }
+
+            if (effect.MessageType != MessageType.None)
             {
                 await _logService.Log(effect.MessageType, effect.MessageArgs);
             }
-            
 
-            
+
+
             foreach (var resolution in resolutions)
             {
                 if (resolution.MessageType != MessageType.None)
@@ -215,7 +259,7 @@ namespace NFCombat2.Services
                 }
             }
 
-            
+
         }
 
         

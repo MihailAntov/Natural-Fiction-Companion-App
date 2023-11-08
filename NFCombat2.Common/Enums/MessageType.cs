@@ -7,8 +7,10 @@ namespace NFCombat2.Common.Enums
         None,
         //combat effect messages
         BonusActionMessage,
-        CritMessage,
+        GuaranteedCritsMessage,
         DamageMessage,
+        CritMessage,
+        MissMessage,
         DamageAoeMessage,
         TakeDamageMessage,
         FreezeMessage,
@@ -38,6 +40,8 @@ namespace NFCombat2.Common.Enums
         EnemyDefeatedMessage,
         EnemyDamageMessage,
         EnemyChangeDistanceMessage,
+        EnemyCritMessage,
+        EnemyMissMessage
         
         
     }

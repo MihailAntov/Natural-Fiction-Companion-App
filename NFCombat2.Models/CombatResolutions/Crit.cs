@@ -1,22 +1,41 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NFCombat2.Models.CombatResolutions
 {
-    public class Crit : ICombatResolution
+    public class Crit : DealDamage
     {
-        private int _numberOfCrits;
-        public Crit(int numberOfCrits)
-        {
-            _numberOfCrits = numberOfCrits;
-        }
-        public string[] MessageArgs => new string[] { _numberOfCrits.ToString() };
-        public MessageType MessageType => MessageType.CritMessage;
 
-        public void Resolve(Fight fight)
+        public Crit(DiceRollResult roll, ICollection<Enemy> targets) : base(roll, targets) { }
+        
+
+        public override MessageType MessageType => MessageType.CritMessage;
+
+        public override string[] MessageArgs
         {
-            fight.RemainingCrits += _numberOfCrits;
+            get
+            {
+                string[] args = new string[2];
+                args[0] = Targets.Count == 1 ? Targets.FirstOrDefault().Name : Targets.Count.ToString();
+                args[1] = (Amount * 2).ToString();
+                return args;
+            }
+        }
+
+        public override Task Resolve(Fight fight)
+        {
+            foreach (var target in Targets)
+            {
+                target.Health -= Amount * 2;
+            }
+            return Task.CompletedTask;
         }
     }
 }

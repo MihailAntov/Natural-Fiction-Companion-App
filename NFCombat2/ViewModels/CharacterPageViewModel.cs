@@ -12,10 +12,11 @@ namespace NFCombat2.ViewModels
 
         private IProfileService _profileService;
         
-
+        public Command RegisterCommand { get; set; }
         public CharacterPageViewModel(IProfileService profileService) : base()
         {
             _profileService = profileService;
+            RegisterCommand = new Command(RegisterProfile);
         }
 
         private string _characterName;

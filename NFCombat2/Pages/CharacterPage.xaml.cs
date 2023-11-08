@@ -23,9 +23,13 @@ public partial class CharacterPage : ContentPage
 
 	public async void RegisterProfile(object sender, EventArgs e)
 	{
+		if(BindingContext is CharacterPageViewModel viewModel)
+		{
+
 		string name = ProfileName.Text;
-		//_profileService.Save(name);
+		
 		await DisplayAlert("Successfully Added", $"{name}", "Okay");
+		}
 	}
 
     public async void GetAllProfiles(object sender, EventArgs e)

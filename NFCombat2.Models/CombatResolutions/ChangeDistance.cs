@@ -18,7 +18,7 @@ namespace NFCombat2.Models.CombatResolutions
 
         public MessageType MessageType => MessageType.ChangeDistanceMessage;
         public string[] MessageArgs => new string[] { _enemy.Name, _enemy.Distance.ToString() };
-        public void Resolve(Fight fight)
+        public async Task Resolve(Fight fight)
         {
             _enemy.Distance += _amount;
         }
