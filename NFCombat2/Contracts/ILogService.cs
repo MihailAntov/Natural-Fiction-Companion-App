@@ -7,10 +7,10 @@ using System.ComponentModel;
 
 namespace NFCombat2.Contracts
 {
-    public interface ILogService : INotifyCollectionChanged
+    public interface ILogService 
     {
-        void Log(MessageType messageType, params string[] args);
-        public ObservableCollection<string> Messages { get; }
+        Task Log(MessageType messageType, params string[] args);
+        ObservableCollection<string> Messages { get; }
         
     }
 }

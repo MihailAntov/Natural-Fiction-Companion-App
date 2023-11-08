@@ -2,13 +2,31 @@
 
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
+using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Fights;
+using NFCombat2.Models.Player;
+using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Services
 {
     public class AccuracyService : IAccuracyService
     {
-        public int Hits(Accuracy accuracy, int roll)
+        public int Hits(IHaveAttackRoll combatAction, Fight fight, Accuracy accuracy)
         {
+            
+
+            if(fight.Player is SpecOps specOps)
+            {
+                if(specOps.Techniques.Any(s=> s is Feint))
+                {
+                    if(combatAction.AttackRollResult.DiceValue > 1)
+                    {
+                        combatAction.AttackRollResult.DiceValue--;
+                        //todo check if zero result is possible
+                    }
+                }
+            }
+
             int hitsAt = 0;
             int critsAt = 0;
             switch(accuracy)
@@ -39,8 +57,8 @@ namespace NFCombat2.Services
                     break;
             }
 
-            if(roll >= critsAt) { return 2; }
-            if(roll >= hitsAt) { return 1; }
+            if(combatAction.AttackRollResult.DiceValue >= critsAt) { return 2; }
+            if(combatAction.AttackRollResult.DiceValue >= hitsAt) { return 1; }
             return 0;
         }
     }

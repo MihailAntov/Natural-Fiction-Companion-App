@@ -37,7 +37,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
             //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer." }, // not used currently
-            {MessageType.EnemyShootMessage, "{0} shoots with {1}" },
+            {MessageType.EnemyShootMessage, "{0} shoots at you." },
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },
             {MessageType.EnemyDamageMessage, "{0} deals {1} damage to you." },
             {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {1} meters away from you." },

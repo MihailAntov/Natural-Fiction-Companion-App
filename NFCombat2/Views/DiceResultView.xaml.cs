@@ -1,3 +1,4 @@
+using Android.Telecom;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.ViewModels;
 
@@ -9,6 +10,8 @@ public partial class DiceResultView : Popup
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+		CanBeDismissedByTappingOutsideOfPopup = false;
+		
 	}
 
     

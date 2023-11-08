@@ -19,7 +19,7 @@ namespace NFCombat2.Models.Actions
 
         public Enemy Enemy => _enemy;
 
-        public MessageType MessageType => MessageType.None;
+        public MessageType MessageType => MessageType.EnemyMoveMessage;
 
         public string[] MessageArgs => Array.Empty<string>();
 

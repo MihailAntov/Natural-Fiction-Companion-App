@@ -52,33 +52,6 @@ namespace NFCombat2.Models.Actions
             return resolutions;
         }
 
-        public Popup ShowAttackRoll()
-        {
-            Popup roll = new Popup()
-            {
-                Content = new VerticalStackLayout()
-                {
-                    Children =
-                    {
-                        new Label
-                        {
-                            Text = "test test"
-                        }
-                    }
-                }
-            };
-
-            return roll;
-            
-        }
-
-        public Popup ShowRolls()
-        {
-            var popup = new DiceRollPopup(RollsResult)
-            {
-
-            };
-            return popup;
-        }
+        
     }
 }

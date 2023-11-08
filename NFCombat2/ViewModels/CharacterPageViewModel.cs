@@ -36,7 +36,7 @@ namespace NFCombat2.ViewModels
 
         public async void ChangedClass()
         {
-            string name = _profileService.GetAll().FirstOrDefault()?.Name;
+            string name = (await _profileService.GetAll()).FirstOrDefault()?.Name;
         }
 
         public string ProfileName { get; set; }
@@ -51,7 +51,7 @@ namespace NFCombat2.ViewModels
 
         public async void GetAllProfiles()
         {
-            var profiles = _profileService.GetAll();
+            var profiles = await _profileService.GetAll();
             string result = string.Join(",", profiles.Select(x => $"{x.Name}, HP:{x.Health}"));
             //await DisplayAlert("profiles", result, "Okay");
         }

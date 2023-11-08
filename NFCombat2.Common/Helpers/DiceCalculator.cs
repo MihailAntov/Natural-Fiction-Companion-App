@@ -8,7 +8,7 @@
             var result = new DiceRollResult() { FlatAmount = flatDamage };
             for (int i = 0; i < dice; i++)
             {
-                var nextDice = new Dice(sides, "dice1");
+                var nextDice = new Dice(sides);
                 nextDice.Roll();
                 result.Dice.Add(nextDice);
             }

@@ -15,16 +15,16 @@ namespace NFCombat2.Services
             repo = repository;
         }
 
-        public Player CurrentPlayer()
+        public async Task<Player> CurrentPlayer()
         {
             if(_player == null)
             {
-                _player = GetAll().FirstOrDefault();
+                _player = (await GetAll()).FirstOrDefault();
             }
             return _player;
         }
 
-        public List<Player> GetAll()
+        public async Task<List<Player>> GetAll()
         {
             return repo.GetAllProfiles()
                 .Select(p => new Player()
@@ -35,7 +35,7 @@ namespace NFCombat2.Services
                 }).ToList();
         }
 
-        public void Save(string name)
+        public async Task Save(string name)
         {
             repo.AddNewProfile(name);
         }

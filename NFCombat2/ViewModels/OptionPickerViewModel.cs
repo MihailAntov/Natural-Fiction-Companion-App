@@ -131,7 +131,7 @@ namespace NFCombat2.ViewModels
         public async void Option(object option)
         {
 
-            var newOptions = _fightService.ProcessChoice(option);
+            var newOptions = await _fightService.ProcessChoice(option);
             MenuLabel = newOptions.Label;
             IsInfoNeeded = newOptions.IsInfoNeeded;
             CanGoBack = newOptions.CanGoBack;

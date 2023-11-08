@@ -5,10 +5,9 @@ namespace NFCombat2.Common.Helpers
 {
     public class Dice : INotifyPropertyChanged
     {
-        public Dice(int maxValue, string fileName)
+        public Dice(int maxValue)
         {
             MaxValue = maxValue;
-            FileName = fileName;
             random = new Random();
         }
         private int diceValue = 0;
@@ -22,23 +21,15 @@ namespace NFCombat2.Common.Helpers
                 {
                     diceValue = value;
                     OnPropertyChanged(nameof(DiceValue));
+                    OnPropertyChanged(nameof(FileName));
                 }
             }
         }
         public int MaxValue { get; set; }
 
-        private string fileName = null!;
         public string FileName
         {
-            get { return fileName; }
-            set
-            {
-                if (fileName != value)
-                {
-                    fileName = value;
-                    OnPropertyChanged(nameof(FileName));
-                }
-            }
+            get { return $"dice{DiceValue}"; }     
         }
         private bool isVisible;
         public bool IsVisible
@@ -55,12 +46,12 @@ namespace NFCombat2.Common.Helpers
         }
         private Random random;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void Roll()
         {
             DiceValue = random.Next(1, MaxValue + 1);
-            FileName = $"dice{DiceValue}";
+           
         }
 
 

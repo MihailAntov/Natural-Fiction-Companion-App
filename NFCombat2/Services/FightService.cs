@@ -54,18 +54,23 @@ namespace NFCombat2.Services
 
             var targetDummy = new Enemy()
             {
-                Name = "Target Dummy",
+                Name = "Enemy 1",
                 Health = 10,
                 Distance = 10,
-                Speed = 2
+                Speed = 2,
+                Range = 10,
+                DamageDice = 1
+                
             };
 
             var targetDummy2 = new Enemy()
             {
-                Name = "Target Dummy Test Long Text",
+                Name = "Enemy 2",
                 Health = 10,
                 Distance = 15,
-                Speed = 2
+                Speed = 2,
+                Range = 15,
+                DamageDice = 2
             };
             enemies.Add(targetDummy);
 
@@ -103,15 +108,16 @@ namespace NFCombat2.Services
             return fight;
         }
 
-        private void EnemyAction()
+        private async Task EnemyAction()
         {
             var enemyActions = _fight.EnemyActions();
-
+            
+            
             foreach(var action in enemyActions)
             {
-                AddEffect(action);
+                await HandleRolls(action);
             }
-            ResolveEffects();
+            await ResolveEffects();
             _fight.Turn++;
             string turnAnnouncement = $"Round {_fight.Turn} beginning.";
             _popupService.ShowToast(turnAnnouncement);
@@ -119,10 +125,10 @@ namespace NFCombat2.Services
 
         }
 
-        public IOptionList AfterOption()
+        public async Task<IOptionList> AfterOption()
         {
             optionHistory.Clear();
-            ResolveEffects();
+            await ResolveEffects();
             switch(++_fight.TurnPhase)
             {
                 case TurnPhase.Move:
@@ -136,7 +142,7 @@ namespace NFCombat2.Services
                 case TurnPhase.Bonus:
                     if (!_fight.HasBonusAction)
                     {
-                        return AfterOption();
+                        return await AfterOption();
                     }
                     var bonusACtions = _optionsService.GetBonusActions(_fight);
                     PreviousOptions = bonusACtions;
@@ -145,16 +151,16 @@ namespace NFCombat2.Services
                     var endTurn = _optionsService.GetEndTurn();
                     return endTurn;
                 case TurnPhase.EnemyMove:
-                    EnemyAction();
+                    await EnemyAction();
                     _fight.TurnPhase = TurnPhase.None;
-                    return AfterOption();
+                    return await AfterOption();
                 
                 default:
                     throw new InvalidEnumArgumentException(nameof(TurnPhase));
             }
         }
 
-        public void ResolveEffects()
+        public async Task ResolveEffects()
         {
             while(_fight.Effects.Count > 0)
             {
@@ -162,6 +168,7 @@ namespace NFCombat2.Services
                 effect.Resolve(_fight);
                 
             }
+
             foreach(var weapon in _fight.Player.Weapons)
             {
                 if (weapon.Cooldown > 0) 
@@ -171,32 +178,31 @@ namespace NFCombat2.Services
             }
         }
 
-        private async void HandleRolls(ICombatAction effect)
+        private async Task HandleRolls(ICombatAction effect)
         {
             if(effect is IHaveAttackRoll attack)
             {
 
                 var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack);
-                await Task.WhenAll(taskCompletion.Task);
+                await taskCompletion.Task;
             }
 
             if(effect is IHaveRolls rollEffect)
             {
                 var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect);
-                await Task.WhenAll(taskCompletion.Task);
+                await taskCompletion.Task;
             }
 
-            AddEffect(effect);
+            await AddEffect(effect);
         }
-        public async void AddEffect(ICombatAction effect)
+        public async Task AddEffect(ICombatAction effect)
         {
             
             
             var resolutions = effect.AddToCombatEffects(_fight);
             if(effect.MessageType != MessageType.None)
             {
-                _logService.Log(effect.MessageType, effect.MessageArgs);
-                await Task.Delay(200);
+                await _logService.Log(effect.MessageType, effect.MessageArgs);
             }
             
 
@@ -205,16 +211,16 @@ namespace NFCombat2.Services
             {
                 if (resolution.MessageType != MessageType.None)
                 {
-                    _logService.Log(resolution.MessageType, resolution.MessageArgs);
-                    await Task.Delay(200);
+                    await _logService.Log(resolution.MessageType, resolution.MessageArgs);
                 }
             }
-            //TODO fix delay
+
+            
         }
 
         
 
-        public IOptionList ProcessChoice(object option)
+        public async Task<IOptionList> ProcessChoice(object option)
         {
             IOptionList result = new OptionList();
 
@@ -234,21 +240,21 @@ namespace NFCombat2.Services
                         //TODO handle melee combat
                     case "Stay":
                         var stay = new PlayerMovePass(_fight);
-                        AddEffect(stay);
-                        return AfterOption();
+                        await AddEffect(stay);
+                        return await AfterOption();
                     case "Do nothing":
                         var doNothing = new PlayerActionPass(_fight);
-                        AddEffect(doNothing);
-                        return AfterOption();
+                        await AddEffect(doNothing);
+                        return await AfterOption();
                     case "Items":
                         result = _optionsService.GetItems(_fight);
                         break;
                     case "Move":
                         var move = new PlayerGetCloser(_fight);
-                        AddEffect(move);
-                        return AfterOption();
+                        await AddEffect(move);
+                        return await AfterOption();
                     case "End turn":
-                        return AfterOption();
+                        return await AfterOption();
                 }
                 PreviousOptions = result;
                 return result;
@@ -269,7 +275,7 @@ namespace NFCombat2.Services
             if(option is Dice dice)
             {
                 dice.Roll();
-                return AfterOption();
+                return await AfterOption();
             }
 
             if(option is Weapon weapon)
@@ -285,26 +291,23 @@ namespace NFCombat2.Services
             {
                 CurrentTargetingEffect.Targets.Add(target);
                 var effect = (ICombatAction)CurrentTargetingEffect;
-
-
-                //AddEffect(effect);
-                HandleRolls(effect);
+                await HandleRolls(effect);
 
                 if (CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
                 {
                     return _optionsService.GetWeapons(_fight, true);
                 }
 
-                return AfterOption();
+                return await AfterOption();
 
             }
 
 
             if (option is ICombatAction combatEffect)
             {
-                HandleRolls(combatEffect);
+                await HandleRolls(combatEffect);
                 //AddEffect(combatEffect);
-                return AfterOption();
+                return await AfterOption();
 
             }
 

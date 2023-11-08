@@ -16,7 +16,7 @@ namespace NFCombat2.ViewModels
             
             for (int i = 0; i < 10; i++)
             {
-                var nextDice = new Dice(6,$"dice{i}");
+                var nextDice = new Dice(6);
                 DiceCollection.Add(nextDice);
             }
         }
@@ -75,7 +75,6 @@ namespace NFCombat2.ViewModels
             {
                 var currentDice = DiceCollection[i];
                 currentDice.Roll();
-                currentDice.FileName = $"dice{currentDice.DiceValue}";
                 currentDice.IsVisible = true;
                 OnPropertyChanged(nameof(currentDice.IsVisible));
                 OnPropertyChanged(nameof(DiceCollection));

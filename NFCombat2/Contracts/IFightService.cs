@@ -9,10 +9,10 @@ namespace NFCombat2.Contracts
         Task<Fight> GetFightByEpisodeNumber(int episodeNumber);
         Fight GetFight();
 
-        void AddEffect(ICombatAction effect);
-        void ResolveEffects();
+        Task AddEffect(ICombatAction effect);
+        Task ResolveEffects();
 
-        IOptionList ProcessChoice(object option);
+        Task<IOptionList> ProcessChoice(object option);
 
         ITarget CurrentTargetingEffect { get; set; }
         IOptionList PreviousOptions { get; set; }

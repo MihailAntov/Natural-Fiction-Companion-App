@@ -14,8 +14,6 @@ namespace NFCombat2.Services
     {
         private readonly IProfileService _profileService;
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
         public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
         
 
@@ -37,9 +35,9 @@ namespace NFCombat2.Services
             }
         }
 
-        public async void Log(MessageType messageType, params string[] args)
+        public async Task Log(MessageType messageType, params string[] args)
         {
-            Language language = _profileService.CurrentPlayer().Language;
+            Language language = (await _profileService.CurrentPlayer()).Language;
             string structure = GetStructure(messageType, language);
             Messages.Add(String.Format($"  {structure}", args));
 
