@@ -10,8 +10,7 @@ public partial class DiceResultView : Popup
 		InitializeComponent();
 		BindingContext = viewModel;
 		CanBeDismissedByTappingOutsideOfPopup = false;
-		
-	}
+    }
 
     
 

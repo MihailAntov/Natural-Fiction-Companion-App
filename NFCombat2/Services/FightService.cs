@@ -214,6 +214,7 @@ namespace NFCombat2.Services
         }
         public async Task AddEffect(ICombatAction effect)
         {
+            //TODO fix register functionality to debug on local device
             IList<ICombatResolution> resolutions = new List<ICombatResolution>();
             if(effect is IHaveAttackRoll attack)
             {

@@ -1,6 +1,6 @@
 ﻿using NFCombat2.Contracts;
-
-
+using NFCombat2.Models.Player;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -12,19 +12,22 @@ namespace NFCombat2.ViewModels
 
         private IProfileService _profileService;
         
-        public Command RegisterCommand { get; set; }
-        public CharacterPageViewModel(IProfileService profileService) : base()
+        public Command RegisterCommand { get;  set; }
+        public CharacterPageViewModel(IProfileService profileService)
         {
             _profileService = profileService;
-            RegisterCommand = new Command(RegisterProfile);
+            RegisterCommand = new Command<string>(async (name) => await RegisterProfile(name));
+            
+            
         }
 
         private string _characterName;
         public string CharacterName
         {
-            get { 
+            get
+            {
                 return _characterName;
-            } 
+            }
             set
             {
                 if (_characterName != value)
@@ -35,31 +38,41 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        public ObservableCollection<Player> Profiles => new ObservableCollection<Player>(GetAllProfiles());
+
         public async void ChangedClass()
         {
-            string name = (await _profileService.GetAll()).FirstOrDefault()?.Name;
+            //string name = (await _profileService.GetAll()).FirstOrDefault()?.Name;
         }
 
         public string ProfileName { get; set; }
 
 
-        public async void RegisterProfile()
+        public async Task<bool> RegisterProfile(string name)
         {
-            string name = ProfileName;
-            _profileService.Save(name);
+            
+            return await _profileService.Save(name);
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");
         }
 
-        public async void GetAllProfiles()
+        public IList<Player> GetAllProfiles()
         {
-            var profiles = await _profileService.GetAll();
-            string result = string.Join(",", profiles.Select(x => $"{x.Name}, HP:{x.Health}"));
-            //await DisplayAlert("profiles", result, "Okay");
+            var profiles =  _profileService.GetAll();
+            return profiles;
         }
 
-        public async void SwitchToProfile(int profileId)
+        public async void ProcessChoice(object sender)
         {
+            if(sender is Picker picker)
+            {
+                await SwitchToProfile((Player)picker.SelectedItem);
+            }
 
+            
+        }
+        public async Task SwitchToProfile(Player player)
+        {
+            await _profileService.SwitchActiveProfile(player);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

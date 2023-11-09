@@ -16,6 +16,7 @@ namespace NFCombat2.Services
             var task = new TaskCompletionSource<bool>();
             var viewModel = new DiceResultViewModel(effect, task);
             var popup = new DiceResultView(viewModel);
+            
             ShowPopup(popup);
             await task.Task;
             await popup.CloseAsync();
@@ -27,6 +28,7 @@ namespace NFCombat2.Services
             var task = new TaskCompletionSource<bool>();
             var viewModel = new DiceResultViewModel(effect, task);
             var popup = new DiceResultView(viewModel);
+            
             ShowPopup(popup);
             await task.Task;
             await popup.CloseAsync();

@@ -15,16 +15,16 @@ namespace NFCombat2.Services
             repo = repository;
         }
 
-        public async Task<Player> CurrentPlayer()
+        public Player CurrentPlayer()
         {
             if(_player == null)
             {
-                _player = (await GetAll()).FirstOrDefault();
+                _player =  GetAll().FirstOrDefault();
             }
             return _player;
         }
 
-        public async Task<List<Player>> GetAll()
+        public IList<Player> GetAll()
         {
             return repo.GetAllProfiles()
                 .Select(p => new Player()
@@ -33,11 +33,21 @@ namespace NFCombat2.Services
                     MaxHealth = p.MaxHealth,
                     Health = p.Health
                 }).ToList();
+
+            
         }
 
-        public async Task Save(string name)
+        public async Task<bool> Save(string name)
         {
-            repo.AddNewProfile(name);
+            return await repo.AddNewProfile(name);
+        }
+
+        public async Task SwitchActiveProfile(Player player)
+        {
+            await Task.Run(() =>
+            {
+                _player = player;
+            });
         }
     }
 }

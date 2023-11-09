@@ -5,8 +5,9 @@ namespace NFCombat2.Contracts
 {
     public interface IProfileService
     {
-        public Task Save(string name);
-        public Task<List<Player>> GetAll();
-        public Task<Player> CurrentPlayer();
+        public Task<bool> Save(string name);
+        public IList<Player> GetAll();
+        public Player CurrentPlayer();
+        public Task SwitchActiveProfile(Player player); 
     }
 }

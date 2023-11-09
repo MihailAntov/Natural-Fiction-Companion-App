@@ -21,21 +21,16 @@ public partial class CharacterPage : ContentPage
 		}
     }
 
-	public async void RegisterProfile(object sender, EventArgs e)
+	public async void ChangedProfile(object sender, EventArgs e)
 	{
-		if(BindingContext is CharacterPageViewModel viewModel)
-		{
-
-		string name = ProfileName.Text;
-		
-		await DisplayAlert("Successfully Added", $"{name}", "Okay");
-		}
-	}
-
-    public async void GetAllProfiles(object sender, EventArgs e)
-    {
-		//var profiles = _profileService.GetAll();
-		//string result = string.Join(",", profiles.Select(x => $"{x.Name}, HP:{x.Health}"));
-		//await DisplayAlert("profiles", result, "Okay");
+        if (BindingContext is CharacterPageViewModel viewModel)
+        {
+			viewModel.ProcessChoice(sender);
+            
+        }
     }
+
+	
+
+    
 }

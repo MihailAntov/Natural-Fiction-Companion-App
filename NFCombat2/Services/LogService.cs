@@ -7,19 +7,21 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
+using NFCombat2.Models.Player;
 
 namespace NFCombat2.Services
 {
     public class LogService : ILogService
     {
         private readonly IProfileService _profileService;
-
+        private Player _player;
         public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
         
 
         public LogService(IProfileService profileService)
         {
             _profileService = profileService;
+            _player = profileService.CurrentPlayer();
         }
 
         private string GetStructure(MessageType type, Language language)
@@ -36,14 +38,9 @@ namespace NFCombat2.Services
         }
 
         public async Task Log(MessageType messageType, params string[] args)
-        {
-            Language language = (await _profileService.CurrentPlayer()).Language;
-            string structure = GetStructure(messageType, language);
+        { 
+            string structure = GetStructure(messageType, _player.Language);
             Messages.Add(String.Format($"  {structure}", args));
-
-
-
-
         }
 
         

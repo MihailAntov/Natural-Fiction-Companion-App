@@ -5,7 +5,14 @@
              Title="Character">
     <VerticalStackLayout>
 
-        <Label FontSize="Large" Text="{Binding CharacterName}"/>
+        <Picker x:Name="Profile"
+        Title="Choose a profile"
+        SelectedIndexChanged="ChangedProfile"
+        ItemsSource="{Binding Profiles}"
+        ItemDisplayBinding="{Binding Name}">
+        </Picker>
+        
+        
         <Picker x:Name="Class"
         Title="Select a class"
                 SelectedIndexChanged="ChangedClass">
@@ -19,10 +26,12 @@
             </Picker.ItemsSource>
             
         </Picker>
+
+        
         <Label Text="Profile Name"/>
         <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
-        <Button Text="Add Profile" Command="{Binding RegisterCommand}"/>
-        <Button Text="View All Profiles" Clicked="GetAllProfiles"/>
+        <Button Text="Add Profile" Command="{Binding RegisterCommand}" CommandParameter="{Binding Source={x:Reference ProfileName}, Path=Text}"/>
+        <!--<Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>-->
         
             <Stepper Minimum="0" Maximum="5" WidthRequest="90"  />
         
