@@ -23,8 +23,8 @@ namespace NFCombat2.Models.Actions
             MaxRange = weapon.MaxRange;
             AreaOfEffect = weapon.AreaOfEffect;
             Weapon = weapon;
-            AttackRollResult = DiceCalculator.Calculate(1).Dice.FirstOrDefault();
-            RollsResult = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
+            AttackRollResult = DiceCalculator.Calculate(1,AttackDiceMessage).Dice.FirstOrDefault();
+            RollsResult = DiceCalculator.Calculate(Weapon.DamageDice,DiceMessage, Weapon.FlatDamage);
             _accuracy = weapon.Accuracy;
         }
         public string Target { get 
@@ -45,6 +45,9 @@ namespace NFCombat2.Models.Actions
         public DiceRollResult RollsResult { get; set; }
 
         public MessageType MessageType => MessageType.ShootMessage;
+
+        public string AttackDiceMessage => $"Your attack:";
+        public string DiceMessage => $"Your damage:";
 
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {

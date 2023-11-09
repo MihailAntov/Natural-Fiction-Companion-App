@@ -10,11 +10,13 @@ namespace NFCombat2.ViewModels
     {
 
         public ICollection<Dice> Dice { get; set; }
+        public string Message { get; set; } 
         public Command ConfirmCommand { get; set; }
         private TaskCompletionSource<bool> _taskCompletionSource;
         public DiceResultViewModel(IHaveAttackRoll effect, TaskCompletionSource<bool> task)
         {
             Dice = new List<Dice>() { effect.AttackRollResult };
+            Message = effect.AttackDiceMessage;
             ConfirmCommand = new Command(ConfirmRolls);
             _taskCompletionSource = task;
         }
@@ -22,6 +24,7 @@ namespace NFCombat2.ViewModels
         public DiceResultViewModel(IHaveRolls effect, TaskCompletionSource<bool> task)
         {
             Dice = effect.RollsResult.Dice;
+            Message = effect.DiceMessage;
             ConfirmCommand = new Command(ConfirmRolls);
             _taskCompletionSource = task;
         }

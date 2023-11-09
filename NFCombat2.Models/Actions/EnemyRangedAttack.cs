@@ -18,8 +18,8 @@ namespace NFCombat2.Models.Actions
         {
             this.fight = fight;
             _enemy = enemy;
-            AttackRollResult = DiceCalculator.Calculate(1).Dice.FirstOrDefault();
-            RollsResult = DiceCalculator.Calculate(enemy.DamageDice, enemy.FlatDamage);
+            AttackRollResult = DiceCalculator.Calculate(1, AttackDiceMessage).Dice.FirstOrDefault();
+            RollsResult = DiceCalculator.Calculate(enemy.DamageDice, DiceMessage, enemy.FlatDamage);
             _accuracy = _enemy.Accuracy;
         }
 
@@ -30,6 +30,9 @@ namespace NFCombat2.Models.Actions
         public DiceRollResult RollsResult { get; set; }
         public Dice AttackRollResult { get; set; }
         public Accuracy Accuracy { get { return _accuracy; }  set { _accuracy = value; } }
+
+        public string AttackDiceMessage => $"{MessageArgs[0]}'s attack:";
+        public string DiceMessage => $"{MessageArgs[0]}'s damage:";
 
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {

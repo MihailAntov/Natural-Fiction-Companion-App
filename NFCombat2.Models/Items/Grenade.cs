@@ -22,6 +22,8 @@ namespace NFCombat2.Models.Items
 
         public DiceRollResult RollsResult { get; set; }
 
+        public string DiceMessage => "Your grenade's damage:";
+
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(2);

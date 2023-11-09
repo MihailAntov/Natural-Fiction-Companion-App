@@ -40,7 +40,7 @@ namespace NFCombat2.Models.Programs
         public string[] MessageArgs => Array.Empty<string>();   
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            DiceRollResult roll = DiceCalculator.Calculate(_numberOfDice, _flatDamage);
+            DiceRollResult roll = DiceCalculator.Calculate(_numberOfDice,null, _flatDamage);
 
             var damage = new DealDamage(roll, Targets);
 
@@ -48,7 +48,7 @@ namespace NFCombat2.Models.Programs
                 
             if(_delayedDuration > 0)
             {
-                DiceRollResult delayedRoll = DiceCalculator.Calculate(_delayedNumberOfDice, _delayedFlatDamage);
+                DiceRollResult delayedRoll = DiceCalculator.Calculate(_delayedNumberOfDice,null, _delayedFlatDamage);
                 fight.DelayedEffects.Enqueue(new DealDamage(delayedRoll, Targets));
             }
 

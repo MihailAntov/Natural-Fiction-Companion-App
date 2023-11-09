@@ -8,5 +8,6 @@ namespace NFCombat2.Models.Contracts
     public interface IHaveRolls
     {
         DiceRollResult RollsResult { get; set; }
+        public string DiceMessage { get;  }
     }
 }

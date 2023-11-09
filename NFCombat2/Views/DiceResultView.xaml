@@ -5,12 +5,12 @@
                x:Class="NFCombat2.Views.DiceResultView">
 
   
-        <StackLayout Margin="0,0,100,0" Padding="50" HeightRequest="400" WidthRequest="400" VerticalOptions="EndAndExpand">
+        <!--<StackLayout Padding="50" HeightRequest="400" WidthRequest="400" VerticalOptions="EndAndExpand">
             <FlexLayout BindableLayout.ItemsSource="{Binding Dice}" Direction="Row"  Wrap="Wrap"  >
                 <BindableLayout.ItemTemplate>
                 <DataTemplate>
                         <StackLayout FlexLayout.Basis="25%">
-                        <Image Source="{Binding FileName}"/>
+                            <Image Source="{Binding FileName}"/>
                             <Button Text="Reroll"
                             Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.Reroll}"
                             CommandParameter="{Binding}"/>
@@ -21,10 +21,29 @@
             </BindableLayout.ItemTemplate>
 
         </FlexLayout>
-            <Button Text="Ok" Command="{Binding ConfirmCommand}"/>
-        </StackLayout>
-    
+            <Button Text="Ok" Margin="0,25,0,0" Command="{Binding ConfirmCommand}"/>
+        </StackLayout>-->
 
-    
+    <StackLayout Padding="20" VerticalOptions="End" >
+        <Label Text="{Binding Message}"/>
+        <!-- Dice collection display -->
+        <CollectionView ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="5">
+                        <Image Source="{Binding FileName}" WidthRequest="50" HeightRequest="50" />
+                        <Button Text="Reroll" Command="{Binding RerollCommand}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Confirm button -->
+        <Button Text="Confirm" HorizontalOptions="Center" VerticalOptions="End" Margin="0,20,0,0" Command="{Binding ConfirmCommand}" />
+    </StackLayout>
+
+
+
+
 
 </toolkit:Popup>
