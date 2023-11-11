@@ -24,14 +24,18 @@
             <Button Text="Ok" Margin="0,25,0,0" Command="{Binding ConfirmCommand}"/>
         </StackLayout>-->
 
-    <StackLayout Padding="20" VerticalOptions="End" >
-        <Label Text="{Binding Message}"/>
+    <StackLayout BackgroundColor="Black" Padding="20" VerticalOptions="End" >
+        <Label HorizontalOptions="Center" Text="{Binding Message}"/>
         <!-- Dice collection display -->
-        <CollectionView ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
+        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Margin="5">
-                        <Image Source="{Binding FileName}" WidthRequest="50" HeightRequest="50" />
+                        <Image Source="{Binding FileName}" WidthRequest="50" HeightRequest="50" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Gold" />
+                            </Image.Behaviors>
+                        </Image>
                         <Button Text="Reroll" Command="{Binding RerollCommand}" />
                     </StackLayout>
                 </DataTemplate>

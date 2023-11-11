@@ -2,15 +2,15 @@
 
 using NFCombat2.Models.Player;
 using NFCombat2.Contracts;
-using NFCombat2.Data;
+using NFCombat2.Data.Entities.Repositories;
 
 namespace NFCombat2.Services
 {
-    public class ProfileService : IProfileService
+    public class PlayerService : IPlayerService
     {
-        private ProfileRepository repo;
+        private PlayerRepository repo;
         private Player _player;
-        public ProfileService(ProfileRepository repository)
+        public PlayerService(PlayerRepository repository)
         {
             repo = repository;
         }

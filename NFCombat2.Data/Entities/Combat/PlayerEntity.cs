@@ -1,12 +1,11 @@
 ﻿using SQLite;
 
 using NFCombat2.Common.Enums;
-using NFCombat2.Data.Models.Items;
 
-namespace NFCombat2.Data.Models
+namespace NFCombat2.Data.Entities.Combat
 {
     [Table("Profiles")]
-    public class Profile
+    public class PlayerEntity
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -14,7 +13,7 @@ namespace NFCombat2.Data.Models
 
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
-        public int ClassId { get; set; } = 0;
+        public PlayerClass Class { get; set;} = PlayerClass.None;
         public int Trauma { get; set; } = 0;
         public int MaxTrauma { get; set; } = 3;
         public int Ionization { get; set; } = 0;

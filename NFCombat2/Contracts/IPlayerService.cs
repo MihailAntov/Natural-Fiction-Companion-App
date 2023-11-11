@@ -3,7 +3,7 @@
 
 namespace NFCombat2.Contracts
 {
-    public interface IProfileService
+    public interface IPlayerService
     {
         public Task<bool> Save(string name);
         public IList<Player> GetAll();

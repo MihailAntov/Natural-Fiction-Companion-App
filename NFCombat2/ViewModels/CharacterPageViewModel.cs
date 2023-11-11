@@ -10,10 +10,10 @@ namespace NFCombat2.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private IProfileService _profileService;
+        private IPlayerService _profileService;
         
         public Command RegisterCommand { get;  set; }
-        public CharacterPageViewModel(IProfileService profileService)
+        public CharacterPageViewModel(IPlayerService profileService)
         {
             _profileService = profileService;
             RegisterCommand = new Command<string>(async (name) => await RegisterProfile(name));

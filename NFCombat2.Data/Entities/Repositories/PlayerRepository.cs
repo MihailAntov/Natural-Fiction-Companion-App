@@ -1,39 +1,45 @@
-﻿
-
-using NFCombat2.Data.Models;
-using NFCombat2.Data.Models.Items;
+﻿using NFCombat2.Data.Entities.Combat;
 using SQLite;
 using System;
 using System.Reflection.Metadata;
 
-namespace NFCombat2.Data
+namespace NFCombat2.Data.Entities.Repositories
 {
-    public class ProfileRepository
+    public class PlayerRepository
     {
         string _dbPath;
         private SQLiteConnection connection = null!;
         public string StatusMessage { get; set; } = string.Empty;
         private void Init()
         {
-            if(connection != null)
+            if (connection != null)
             {
                 return;
             }
             connection = new SQLiteConnection(_dbPath);
             
-            connection.CreateTable<Profile>();
-            
+            connection.CreateTable<PlayerEntity>();
+
+            if(connection.Table<PlayerEntity>() != null)
+            {
+                if(connection.Table<PlayerEntity>().Count() > 0) 
+                {
+
+                }
+            }
+
         }
-        public ProfileRepository(string dbPath)
+        public PlayerRepository(string dbPath)
         {
             _dbPath = dbPath;
-            Init();    
+            Init();
         }
 
         public async Task<bool> AddNewProfile(string name)
         {
             int result = 0;
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 try
                 {
                     Init();
@@ -42,7 +48,7 @@ namespace NFCombat2.Data
                     if (string.IsNullOrEmpty(name))
                         throw new Exception("Valid name required");
 
-                    result = connection.Insert(new Profile { Name = name });
+                    result = connection.Insert(new PlayerEntity { Name = name });
 
                     StatusMessage = string.Format("{0} record(s) added (Name: {1})", result, name);
                 }
@@ -51,24 +57,24 @@ namespace NFCombat2.Data
                     StatusMessage = string.Format("Failed to add {0}. Error: {1}", name, ex.Message);
                 }
             });
-            
+
             return result == 1;
         }
 
-        public List<Profile> GetAllProfiles()
+        public List<PlayerEntity> GetAllProfiles()
         {
             Init();
-            List<Profile> profiles = new List<Profile>();
-            
-                try
-                {
-                    profiles = connection.Table<Profile>().ToList();
-                }
-                catch (Exception ex)
-                {
-                    StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
-                }
-           
+            List<PlayerEntity> profiles = new List<PlayerEntity>();
+
+            try
+            {
+                profiles = connection.Table<PlayerEntity>().ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
+            }
+
 
             return profiles;
         }

@@ -10,6 +10,7 @@ using NFCombat2.Common.Enums;
 using System.ComponentModel;
 using CommunityToolkit.Maui.Alerts;
 using NFCombat2.Common.Helpers;
+using NFCombat2.Data.Entities.Repositories;
 
 namespace NFCombat2.Services
 {
@@ -20,12 +21,19 @@ namespace NFCombat2.Services
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
         private readonly IAccuracyService _accuracyService;
-        public FightService(ILogService logService, IOptionsService optionsService, IPopupService popupService, IAccuracyService accuracyService)
+        private readonly FightRepository _fightRepository;
+        public FightService(
+            ILogService logService, 
+            IOptionsService optionsService, 
+            IPopupService popupService, 
+            IAccuracyService accuracyService, 
+            FightRepository fightRepository)
         {
             _logService = logService;
             _optionsService = optionsService;
             _popupService = popupService;
             _accuracyService = accuracyService;
+            _fightRepository = fightRepository;
         }
 
         public ITarget CurrentTargetingEffect {get; set;}

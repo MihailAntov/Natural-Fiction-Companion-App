@@ -6,7 +6,7 @@ namespace NFCombat2.Pages;
 
 public partial class CharacterPage : ContentPage
 {
-	public CharacterPage(IProfileService profileService)
+	public CharacterPage(IPlayerService profileService)
 	{
 		InitializeComponent();
 		BindingContext = new CharacterPageViewModel(profileService);

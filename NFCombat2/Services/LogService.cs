@@ -13,12 +13,12 @@ namespace NFCombat2.Services
 {
     public class LogService : ILogService
     {
-        private readonly IProfileService _profileService;
+        private readonly IPlayerService _profileService;
         private Player _player;
         public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
         
 
-        public LogService(IProfileService profileService)
+        public LogService(IPlayerService profileService)
         {
             _profileService = profileService;
             _player = profileService.CurrentPlayer();

@@ -14,7 +14,7 @@ namespace NFCombat2.ViewModels
         {
             DiceCollection = new List<Dice>();
             
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 25; i++)
             {
                 var nextDice = new Dice(6);
                 DiceCollection.Add(nextDice);
@@ -27,7 +27,7 @@ namespace NFCombat2.ViewModels
             get { return numberOfDice; }
             set
             {
-                if (numberOfDice != value && value > 0 && value <= 10)
+                if (numberOfDice != value && value > 0 && value <= 25)
                 {
                     numberOfDice = value;
                     OnPropertyChanged(nameof(NumberOfDice));
@@ -64,7 +64,7 @@ namespace NFCombat2.ViewModels
 
         public void Roll()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 25; i++)
             {
                 DiceCollection[i].IsVisible = false;
             }

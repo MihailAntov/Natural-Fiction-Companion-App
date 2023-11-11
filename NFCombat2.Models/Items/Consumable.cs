@@ -12,6 +12,8 @@ namespace NFCombat2.Models.Items
         
         public override string Description { get; set; }
 
+        public int Quantity { get; set; }
+
         public abstract override IList<ICombatResolution> AddToCombatEffects(Fight fight);
 
     }

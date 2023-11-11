@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using NFCombat2.Contracts;
 using NFCombat2.Pages;
-using NFCombat2.Data;
 using NFCombat2.Views;
 using NFCombat2.ViewModels;
 using CommunityToolkit.Maui;
 using Microsoft.Maui.LifecycleEvents;
+using NFCombat2.Data.Entities.Repositories;
 
 namespace NFCombat2;
 
@@ -18,7 +18,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder.Services.AddSingleton<IOptionsService, OptionsService>();
 		builder.Services.AddSingleton<IFightService, FightService>();
-		builder.Services.AddSingleton<IProfileService, ProfileService>();
+		builder.Services.AddSingleton<IPlayerService, PlayerService>();
 		builder.Services.AddSingleton<ILogService, LogService>();
 		builder.Services.AddSingleton<IPopupService, PopupService>();
 		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
@@ -27,12 +27,16 @@ public static class MauiProgram
 		builder.Services.AddSingleton<CharacterPage>();
 		builder.Services.AddSingleton<FightPage>();
 		builder.Services.AddSingleton<OptionPickerView>();
+		builder.Services.AddSingleton<InventoryPage>();
 
+		builder.Services.AddSingleton<InventoryPageViewModel>();
 		builder.Services.AddSingleton<FightPageViewModel>();
 		builder.Services.AddSingleton<OptionPickerViewModel>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
-        builder.Services.AddSingleton<ProfileRepository>(s => ActivatorUtilities.CreateInstance<ProfileRepository>(s, dbPath));
+        builder.Services.AddSingleton<PlayerRepository>(s => ActivatorUtilities.CreateInstance<PlayerRepository>(s, dbPath));
+        builder.Services.AddSingleton<FightRepository>(s => ActivatorUtilities.CreateInstance<FightRepository>(s, dbPath));
+        builder.Services.AddSingleton<ItemRepository>(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, dbPath));
 
         builder
 			.UseMauiApp<App>()

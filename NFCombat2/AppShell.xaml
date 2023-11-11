@@ -15,16 +15,15 @@
         <Tab Title="Character" Icon="character.png">
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />
         </Tab>
+        <Tab Title="Log" Icon="notes.png">
+            <ShellContent ContentTemplate="{DataTemplate local:LogPage}" />
+        </Tab>
         <Tab Title="Combat Simulator" Icon="fight.png">
             <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />
         </Tab>
 
         <Tab Title="Equipment" Icon="inventory.png">
             <ShellContent ContentTemplate="{DataTemplate local:InventoryPage}" />
-        </Tab>
-
-        <Tab Title="Inventions" Icon="inventions.png">
-            <ShellContent ContentTemplate="{DataTemplate local:InventionsPage}" />
         </Tab>
 
         <Tab Title="Dice Roller" Icon="dice.png">

@@ -6,4 +6,6 @@ public partial class InventionsPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	
 }
