@@ -3,6 +3,10 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
+
+using NFCombat2.Models.Items.Consumables;
+using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items.Weapons;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 

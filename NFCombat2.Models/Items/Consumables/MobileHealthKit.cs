@@ -1,23 +1,22 @@
 ﻿
 
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using NFCombat2.Common.Helpers;
 
-namespace NFCombat2.Models.Items
+namespace NFCombat2.Models.Items.Consumables
 {
     public class MobileHealthKit : Consumable
     {
         public MobileHealthKit()
         {
             Label = "Health Kit";
+            Description = "Heals you for two dice worth of health.";
         }
 
-        public override string Label { get; set; }
 
         public override string[] MessageArgs => new string[] { Label };
-        public override string Description { get; set; } = "Heals you for two dice worth of health.";
 
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

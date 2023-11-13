@@ -1,4 +1,4 @@
-﻿namespace NFCombat2.Models.Items
+﻿namespace NFCombat2.Models.Items.Equipments
 {
     public abstract class Equipment : Item
     {

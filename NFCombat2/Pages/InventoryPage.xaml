@@ -8,7 +8,11 @@
             Text="Items go here"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-
+        <StackLayout>
+            <Label Text="{Binding HpValue}"/>
+            <Slider  Minimum="0" Maximum="30" Value="{Binding HpValue}"/>
+            <Stepper Minimum="0" Maximum="30"/>
+        </StackLayout>
         <!--<Entry Placeholder="Enter item name" TextChanged="{Binding TextChanged}"/>-->
 
 

@@ -1,6 +1,6 @@
 ﻿namespace NFCombat2.Models.Items
 {
-    public class Part
+    public class Part : Item
     {
 
     }

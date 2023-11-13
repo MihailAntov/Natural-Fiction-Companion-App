@@ -6,15 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NFCombat2.Models.Items
+namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    public class SaltPotion : Consumable
+    internal class ActiveEquipment : CombatItem
     {
-        public SaltPotion()
+        public ActiveEquipment()
         {
+            
         }
-
-        public override string Label { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override string[] MessageArgs => throw new NotImplementedException();
 

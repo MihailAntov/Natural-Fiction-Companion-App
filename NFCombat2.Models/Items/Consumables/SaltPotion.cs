@@ -1,16 +1,16 @@
-﻿
-
-using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Items
-{
-    public class RocketPole : CombatItem
-    {
-        public RocketPole()
-        {
-        }
 
+namespace NFCombat2.Models.Items.Consumables
+{
+    public class SaltPotion : Consumable
+    {
+        public SaltPotion()
+        {
+            Label = "Salt Potion";
+            Description = "Does what a salt potion does.";
+        }
 
         public override string[] MessageArgs => throw new NotImplementedException();
 

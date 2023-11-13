@@ -7,7 +7,7 @@ using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
-using NFCombat2.Models.Items;
+using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.PopUps;
 
 namespace NFCombat2.Models.Actions

@@ -1,16 +1,16 @@
 ﻿using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Items
+
+namespace NFCombat2.Models.Items.Consumables
 {
-    public class Wrench : Consumable
+    public class StrengthPotion : Consumable
     {
-        public Wrench()
+        public StrengthPotion()
         {
-
+            Label = "Strength Potion";
+            Description = "Does what a strength potion does.";
         }
-
-        public override string Label { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override string[] MessageArgs => throw new NotImplementedException();
 

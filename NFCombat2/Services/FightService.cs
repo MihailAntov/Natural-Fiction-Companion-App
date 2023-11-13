@@ -5,12 +5,15 @@ using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using System.Collections.ObjectModel;
 using NFCombat2.Models.Actions;
-using NFCombat2.Models.Items;
 using NFCombat2.Common.Enums;
 using System.ComponentModel;
 using CommunityToolkit.Maui.Alerts;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Data.Entities.Repositories;
+using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Models.Items.Consumables;
+using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Services
 {
@@ -91,9 +94,11 @@ namespace NFCombat2.Services
             hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new MobileHealthKit());
             hacker.Consumables.Add(new Grenade());
-            specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
             specOps.Consumables.Add(new MobileHealthKit());
             specOps.Consumables.Add(new Grenade());
+            specOps.Equipment.Add(new TacticalGlasses());
+            specOps.Techniques.Add(new Feint());
             Fight fight;
 
             switch (episodeNumber)
@@ -226,24 +231,33 @@ namespace NFCombat2.Services
             IList<ICombatResolution> resolutions = new List<ICombatResolution>();
             if(effect is IHaveAttackRoll attack)
             {
-                var result = _accuracyService.Hits(attack, _fight);
-                switch (result)
+                //if attack, check for remaining crits from program effects 
+                if(_fight.RemainingCrits > 0)
                 {
-                    case AttackResult.Miss:
-                        resolutions = attack.AddMissToCombatResolutions(_fight);
-                        break;
-                    case AttackResult.Hit:
-                        resolutions = attack.AddCritToCombatResolutions(_fight);
-                        break;
-                    case AttackResult.Crit:
-                        resolutions = attack.AddCritToCombatResolutions(_fight);
-                        break;
+                    resolutions = attack.AddCritToCombatResolutions(_fight);
+                    _fight.RemainingCrits--;
                 }
-
-
+                //otherwise proceed to roll for attack
+                else
+                {
+                    var result = _accuracyService.Hits(attack, _fight);
+                    switch (result)
+                    {
+                        case AttackResult.Miss:
+                            resolutions = attack.AddMissToCombatResolutions(_fight);
+                            break;
+                        case AttackResult.Hit:
+                            resolutions = attack.AddCritToCombatResolutions(_fight);
+                            break;
+                        case AttackResult.Crit:
+                            resolutions = attack.AddCritToCombatResolutions(_fight);
+                            break;
+                    }
+                }
             }
             else
             {
+                //if not an attack, process effect
                 resolutions = effect.AddToCombatEffects(_fight);
             }
 

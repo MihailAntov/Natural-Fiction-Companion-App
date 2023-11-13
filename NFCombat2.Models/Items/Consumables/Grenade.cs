@@ -3,9 +3,9 @@
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.CombatResolutions;
-using CommunityToolkit.Maui.Views;
 
-namespace NFCombat2.Models.Items
+
+namespace NFCombat2.Models.Items.Consumables
 {
     public class Grenade : Consumable, IHaveRolls
     {
@@ -13,10 +13,8 @@ namespace NFCombat2.Models.Items
         {
             Label = "Grenade";
             RollsResult = DiceCalculator.Calculate(2);
+            Description = "Deals two dice worth of damage to each opponent within 10 meters.";
         }
-
-        public override string Label { get; set; }
-        public override string Description { get; set; } = "Deals two dice worth of damage to each opponent within 10 meters.";
 
         public override string[] MessageArgs => new string[] { Label };
 
@@ -33,6 +31,6 @@ namespace NFCombat2.Models.Items
             return new List<ICombatResolution>() { damage };
         }
 
-        
+
     }
 }

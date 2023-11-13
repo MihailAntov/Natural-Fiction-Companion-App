@@ -1,14 +1,15 @@
-﻿
+﻿using NFCombat2.Models.Contracts;
 
-using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
-namespace NFCombat2.Models.Items
+
+namespace NFCombat2.Models.Items.Consumables
 {
-    public class RocketPole : CombatItem
+    public class Wrench : Consumable
     {
-        public RocketPole()
+        public Wrench()
         {
+            Label = "Wrench";
         }
 
 

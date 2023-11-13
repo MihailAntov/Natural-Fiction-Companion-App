@@ -24,6 +24,7 @@ namespace NFCombat2.Contracts
         IOptionList GetBonusActions(Fight fight);
         IOptionList GetWeapons(Fight fight, bool alreadyShot);
         IOptionList GetEndTurn();
+
         bool CanShoot(Fight fight);
     }
 }
