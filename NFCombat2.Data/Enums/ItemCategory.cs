@@ -4,9 +4,10 @@ namespace NFCombat2.Data.Enums
 {
     public enum ItemCategory
     {
-        Consumable = 0,
-        Weapon = 1,
-        Equipment = 2
+        None = 0,
+        Consumable = 1,
+        Weapon = 2,
+        Equipment = 3
         
     }
 }

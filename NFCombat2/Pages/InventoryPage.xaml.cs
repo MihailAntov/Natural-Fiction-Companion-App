@@ -10,8 +10,4 @@ public partial class InventoryPage : ContentPage
 		BindingContext = viewModel;
 	}
 
-    public async void TextChanged(object sender, TextChangedEventArgs e)
-    {
-
-    }
 }

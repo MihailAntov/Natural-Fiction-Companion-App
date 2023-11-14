@@ -10,33 +10,52 @@ namespace NFCombat2.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private IPlayerService _profileService;
-        
+        private IPlayerService _playerService;
+        private Player _player;
         public Command RegisterCommand { get;  set; }
-        public CharacterPageViewModel(IPlayerService profileService)
+        public CharacterPageViewModel(IPlayerService playerService)
         {
-            _profileService = profileService;
+            _playerService = playerService;
+            _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             RegisterCommand = new Command<string>(async (name) => await RegisterProfile(name));
-            
+            Player = _playerService.CurrentPlayer;
             
         }
 
-        private string _characterName;
-        public string CharacterName
+        private double _hpValue;
+
+        public double HpValue
+        {
+            get { return _hpValue; }
+            set
+            {
+
+                if (_hpValue != Math.Round(value, 0))
+                {
+                    _hpValue = Math.Round(value, 0);
+                    OnPropertyChanged(nameof(HpValue));
+                }
+
+            }
+        }
+
+        public Player Player
         {
             get
             {
-                return _characterName;
+                return _player;
             }
             set
             {
-                if (_characterName != value)
+                if(_player != value) 
                 {
-                    _characterName = value;
-                    OnPropertyChanged(nameof(CharacterName));
+                    _player = value;
+                    OnPropertyChanged(nameof(Player));
+                    OnPropertyChanged(nameof(_playerService.CurrentPlayer));
                 }
             }
         }
+        
 
         public ObservableCollection<Player> Profiles => new ObservableCollection<Player>(GetAllProfiles());
 
@@ -45,19 +64,18 @@ namespace NFCombat2.ViewModels
             //string name = (await _profileService.GetAll()).FirstOrDefault()?.Name;
         }
 
-        public string ProfileName { get; set; }
 
 
         public async Task<bool> RegisterProfile(string name)
         {
             
-            return await _profileService.Save(name);
+            return await _playerService.Save(name);
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");
         }
 
         public IList<Player> GetAllProfiles()
         {
-            var profiles =  _profileService.GetAll();
+            var profiles = _playerService.GetAll();
             return profiles;
         }
 
@@ -72,10 +90,20 @@ namespace NFCombat2.ViewModels
         }
         public async Task SwitchToProfile(Player player)
         {
-            await _profileService.SwitchActiveProfile(player);
+            await _playerService.SwitchActiveProfile(player);
+            
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_playerService.CurrentPlayer))
+            {
+                Player = _playerService.CurrentPlayer;
+            }
+        }
+
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using NFCombat2.Models.Items;
 
 namespace NFCombat2.Contracts
 {
-    internal interface IItemService
+    public interface IItemService
     {
+        ICollection<Item> GetAllItems();
+
     }
 }

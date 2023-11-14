@@ -21,7 +21,7 @@ namespace NFCombat2.Services
         public LogService(IPlayerService profileService)
         {
             _profileService = profileService;
-            _player = profileService.CurrentPlayer();
+            _player = profileService.CurrentPlayer;
         }
 
         private string GetStructure(MessageType type, Language language)

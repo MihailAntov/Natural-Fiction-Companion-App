@@ -94,7 +94,7 @@ namespace NFCombat2.Services
         public IOptionList GetWeapons(Fight fight, bool alreadyShot)
         {
             var weapons = fight.Player.Weapons
-                .Where(w => w.Cooldown == 0 && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.MaxRange))
+                .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.MaxRange))
                 .Select(w => new Option(w.Label, w))
                 .ToList<IOption>();
             var options =  new OptionList(weapons, true, !alreadyShot) { Label = "Choose a weapon to shoot with" };

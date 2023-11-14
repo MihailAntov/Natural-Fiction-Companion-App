@@ -3,6 +3,7 @@
 using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Player;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,50 +12,40 @@ namespace NFCombat2.ViewModels
 {
     public class InventoryPageViewModel : INotifyPropertyChanged
     {
-        private readonly IPlayerService _profileService;
+        private readonly IPlayerService _playerService;
         private readonly IOptionsService _optionsService;
-        private readonly ItemRepository _itemRepository;
-
-        public InventoryPageViewModel(IPlayerService profileService, IOptionsService optionsService, ItemRepository itemRepository)
-        {
-            _profileService = profileService;
-            _optionsService = optionsService;
-            _itemRepository = itemRepository;
-            Equipment = new ObservableCollection<Equipment>(_profileService.CurrentPlayer().Equipment);
-            
-        }
-
-        public ObservableCollection<Equipment> Equipment { get; set; }
-        private double _hpValue;
+        private readonly IItemService _itemService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double HpValue { get { return _hpValue; } set 
-            {
-                
-              if (_hpValue != Math.Round(value, 0))
-                {
-                    _hpValue = Math.Round(value, 0);
-                    OnPropertyChanged(nameof(HpValue));
-                }
-                
-            }
-        }
-
-        public void TextChanged(string input)
+        public InventoryPageViewModel(IPlayerService playerService, IOptionsService optionsService, IItemService itemService)
         {
-            var items = _profileService
-                .CurrentPlayer()
-                .Equipment
-                .Where(e => e.Name.StartsWith(input))
-                .ToList();
-
+            _playerService = playerService;
+            _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
+            Player = _playerService.CurrentPlayer;
+            _optionsService = optionsService;
+            Equipment = new ObservableCollection<Equipment>(Player.Equipment);
+            _itemService = itemService;
             
         }
+        public Player Player { get; set; }
+        public ObservableCollection<Equipment> Equipment { get; set; }
 
-       
-
+        public int InventorySlots  => Player.InventorySlots;
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_playerService.CurrentPlayer))
+            {
+                Player = _playerService.CurrentPlayer;
+                Equipment.Clear();
+                foreach(var item in Player.Equipment)
+                {
+                    Equipment.Add(item);
+                }
+            }
+        }
     }
 }

@@ -5,26 +5,11 @@ using SQLite;
 
 namespace NFCombat2.Data.Entities.Repositories
 {
-    public class ItemRepository
+    public class ItemRepository : Repository<ItemEntity>
     {
-        string _dbPath;
-        private SQLiteConnection connection = null!;
-        public string StatusMessage { get; set; } = string.Empty;
-        private void Init()
+        public ItemRepository(string dbPath) : base(dbPath)
         {
-            if (connection != null)
-            {
-                return;
-            }
-            connection = new SQLiteConnection(_dbPath);
 
-            connection.CreateTable<ItemEntity>();
-
-        }
-        public ItemRepository(string dbPath)
-        {
-            _dbPath = dbPath;
-            Init();
         }
     }
 }

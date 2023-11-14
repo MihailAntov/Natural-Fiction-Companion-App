@@ -3,6 +3,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.CombatResolutions
 {
@@ -15,6 +16,11 @@ namespace NFCombat2.Models.CombatResolutions
         public override string[] MessageArgs => new string[2] { _enemyName, (Damage * 2).ToString() };
         public override Task Resolve(Fight fight)
         {
+            if (fight.Player.Equipment.Any(e=> e is Helmet))
+            {
+                fight.Player.Health -= Damage;
+                return Task.CompletedTask;
+            }
             fight.Player.Health -= Damage * 2;
             return Task.CompletedTask;
         }

@@ -58,7 +58,18 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
-        public int MaxHealth { get; set; } = 30;
+        public int BaseMaxHealth { get; set; } = 30;
+        public int MaxHealth
+        {
+            get
+            {
+                return BaseMaxHealth + Equipment.Where(e=> e is IModifyPlayer).Select(e=> (e as IModifyPlayer).BonusHealth).Sum();
+            }
+            
+        }
+
+        public bool HasExtraBag => Equipment.Where(e=> e is IModifyPlayer && (e as IModifyPlayer).HasBonusBag).Any();
+        public int InventorySlots => HasExtraBag ? 13 : 10;
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }
         public int MaxWeaponWeight { get; set; } = 1;
         public IList<Weapon> Weapons { get; set; } = new List<Weapon>();

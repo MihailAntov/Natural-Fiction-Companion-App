@@ -3,10 +3,13 @@
 using NFCombat2.Models.Player;
 using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
+using NFCombat2.Models.Items.Equipments;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.Services
 {
-    public class PlayerService : IPlayerService
+    public class PlayerService : IPlayerService, INotifyPropertyChanged
     {
         private PlayerRepository repo;
         private Player _player;
@@ -15,13 +18,27 @@ namespace NFCombat2.Services
             repo = repository;
         }
 
-        public Player CurrentPlayer()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Player CurrentPlayer
         {
-            if(_player == null)
+            get
             {
-                _player =  GetAll().FirstOrDefault();
+
+                if(_player == null)
+                {
+                    _player =  GetAll().FirstOrDefault();
+                }
+                return _player;
             }
-            return _player;
+            set
+            {
+                if(_player != value)
+                {
+                    _player = value;
+                    OnPropertyChanged(nameof(CurrentPlayer));
+                }
+            }
         }
 
         public IList<Player> GetAll()
@@ -30,7 +47,7 @@ namespace NFCombat2.Services
                 .Select(p => new Player()
                 {
                     Name = p.Name,
-                    MaxHealth = p.MaxHealth,
+                    BaseMaxHealth = p.MaxHealth,
                     Health = p.Health
                 }).ToList();
 
@@ -46,8 +63,12 @@ namespace NFCombat2.Services
         {
             await Task.Run(() =>
             {
-                _player = player;
+                CurrentPlayer = player;
             });
         }
+
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
     }
 }

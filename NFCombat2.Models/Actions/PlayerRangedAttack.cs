@@ -52,14 +52,14 @@ namespace NFCombat2.Models.Actions
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {
             var resolutions = new List<ICombatResolution>() { new Crit(RollsResult, Targets) };
-            Weapon.Cooldown += Weapon.CooldownPerShot;
+            Weapon.RemainingCooldown += Weapon.CooldownPerShot;
             return resolutions;
         }
 
         public IList<ICombatResolution> AddMissToCombatResolutions(Fight fight)
         {
             var resolutions = new List<ICombatResolution>() { new Miss() };
-            Weapon.Cooldown += Weapon.CooldownPerShot;
+            Weapon.RemainingCooldown += Weapon.CooldownPerShot;
             return resolutions;
         }
 
@@ -68,7 +68,7 @@ namespace NFCombat2.Models.Actions
             //DiceRollResult roll = DiceCalculator.Calculate(Weapon.DamageDice, Weapon.FlatDamage);
 
             var resolutions = new List<ICombatResolution>() { new DealDamage(RollsResult, Targets) };
-            Weapon.Cooldown += Weapon.CooldownPerShot;
+            Weapon.RemainingCooldown += Weapon.CooldownPerShot;
             return resolutions;
         }
 

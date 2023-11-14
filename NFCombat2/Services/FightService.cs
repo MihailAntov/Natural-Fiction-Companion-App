@@ -25,18 +25,21 @@ namespace NFCombat2.Services
         private readonly IPopupService _popupService;
         private readonly IAccuracyService _accuracyService;
         private readonly FightRepository _fightRepository;
+        private readonly IPlayerService _playerService;
         public FightService(
             ILogService logService, 
             IOptionsService optionsService, 
             IPopupService popupService, 
             IAccuracyService accuracyService, 
-            FightRepository fightRepository)
+            FightRepository fightRepository,
+            IPlayerService playerService)
         {
             _logService = logService;
             _optionsService = optionsService;
             _popupService = popupService;
             _accuracyService = accuracyService;
             _fightRepository = fightRepository;
+            _playerService = playerService;
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
@@ -104,7 +107,8 @@ namespace NFCombat2.Services
             switch (episodeNumber)
             {
                 case 0:
-                    fight = new Fight(enemies, hacker);
+                    //fight = new Fight(enemies, hacker);
+                    fight = new Fight(enemies, _playerService.CurrentPlayer);
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
@@ -201,9 +205,9 @@ namespace NFCombat2.Services
 
             foreach(var weapon in _fight.Player.Weapons)
             {
-                if (weapon.Cooldown > 0) 
+                if (weapon.RemainingCooldown > 0) 
                 {
-                    weapon.Cooldown--;
+                    weapon.RemainingCooldown -= weapon.ShotsPerTurn;
                 }
             }
         }

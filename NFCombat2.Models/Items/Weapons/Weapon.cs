@@ -15,8 +15,9 @@ namespace NFCombat2.Models.Items.Weapons
         public int Distance { get; set; }
 
         public int Weight { get; set; }
-        public int Cooldown { get; set; }
+        public int RemainingCooldown { get; set; }
         public int CooldownPerShot { get; set; } = 1;
+        public int ShotsPerTurn { get; set; } = 1;
         public ICollection<WeaponModification> Modifications { get; set; } = new HashSet<WeaponModification>();
     }
 }

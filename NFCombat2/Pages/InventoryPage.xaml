@@ -3,18 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.InventoryPage"
              Title="Inventory">
-    <VerticalStackLayout>
-        <Label 
-            Text="Items go here"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <StackLayout>
-            <Label Text="{Binding HpValue}"/>
-            <Slider  Minimum="0" Maximum="30" Value="{Binding HpValue}"/>
-            <Stepper Minimum="0" Maximum="30"/>
-        </StackLayout>
-        <!--<Entry Placeholder="Enter item name" TextChanged="{Binding TextChanged}"/>-->
-
-
-    </VerticalStackLayout>
+    <ListView ItemsSource="{Binding Equipment}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <TextCell>
+                    <TextCell.Text>
+                        
+                        <MultiBinding StringFormat="Hp:{0}  Distance:{1}">
+                            <Binding Path="Health"/>
+                            <Binding Path="Distance"/>
+                        </MultiBinding>
+                    </TextCell.Text>
+                </TextCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>

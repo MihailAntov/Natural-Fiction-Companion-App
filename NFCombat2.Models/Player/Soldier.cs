@@ -6,7 +6,7 @@ namespace NFCombat2.Models.Player
     {
         public Soldier()
         {
-            MaxHealth = 50;
+            BaseMaxHealth = 50;
             Health = 50;
             MaxIonization = 4;
             MaxPathogens = 4;

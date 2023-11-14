@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="Character"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.CharacterPage"
              Title="Character">
@@ -11,8 +12,12 @@
         ItemsSource="{Binding Profiles}"
         ItemDisplayBinding="{Binding Name}">
         </Picker>
+
+        <!--<Label Text="{Binding Source={x:Reference Character}, Path=BindingContext.Player.Name}"/>-->
+        <Label Text="{Binding Player.Name}"/>
         
-        
+
+
         <Picker x:Name="Class"
         Title="Select a class"
                 SelectedIndexChanged="ChangedClass">
@@ -34,7 +39,16 @@
         <!--<Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>-->
         
             <Stepper Minimum="0" Maximum="5" WidthRequest="90"  />
-        
-        
+        <Label 
+Text="Items go here"
+VerticalOptions="Center" 
+HorizontalOptions="Center" />
+        <StackLayout>
+            <Label Text="{Binding HpValue}"/>
+            <Slider  Minimum="0" Maximum="30" Value="{Binding HpValue}"/>
+            <Stepper Minimum="0" Maximum="30"/>
+        </StackLayout>
+
     </VerticalStackLayout>
+
 </ContentPage>
