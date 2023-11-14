@@ -8,6 +8,7 @@ namespace NFCombat2.Models.Items.Consumables
     {
         public HealingPotion()
         {
+            Name = "Healing Potion";
         }
 
 

@@ -3,7 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.InventoryPage"
              Title="Inventory">
-    <ListView ItemsSource="{Binding Equipment}">
+    <VerticalStackLayout>
+
+        <Picker x:Name="Items"
+    Title="Choose an item"
+    SelectedIndexChanged="ChooseItem"
+    ItemsSource="{Binding Items}"
+    ItemDisplayBinding="{Binding Name}">
+        </Picker>
+
+
+        <ListView ItemsSource="{Binding Equipment}">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <TextCell>
@@ -18,4 +28,5 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+    </VerticalStackLayout>
 </ContentPage>

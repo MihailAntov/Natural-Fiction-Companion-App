@@ -12,6 +12,7 @@ namespace NFCombat2.Models.Items.Consumables
         public MobileHealthKit()
         {
             Label = "Health Kit";
+            Name = "Health Kit";
             Description = "Heals you for two dice worth of health.";
         }
 

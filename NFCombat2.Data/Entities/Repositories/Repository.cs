@@ -55,5 +55,10 @@ namespace NFCombat2.Data.Entities.Repositories
             return await connection.GetAsync<T>(id);
         }
 
+        public async Task<ICollection<T>> GetAll()
+        {
+            return await connection.Table<T>().ToListAsync();
+        }
+
     }
 }

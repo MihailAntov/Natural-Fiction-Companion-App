@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.Consumables
         public Wrench()
         {
             Label = "Wrench";
+            Name = "Wrench";
         }
 
 

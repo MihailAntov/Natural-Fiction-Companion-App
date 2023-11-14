@@ -12,6 +12,7 @@ namespace NFCombat2.Models.Items.Consumables
         public Grenade()
         {
             Label = "Grenade";
+            Name = "Grenade";
             RollsResult = DiceCalculator.Calculate(2);
             Description = "Deals two dice worth of damage to each opponent within 10 meters.";
         }

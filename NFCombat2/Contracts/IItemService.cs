@@ -6,7 +6,7 @@ namespace NFCombat2.Contracts
 {
     public interface IItemService
     {
-        ICollection<Item> GetAllItems();
+        Task<ICollection<Item>> GetAllItems();
 
     }
 }

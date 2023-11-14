@@ -9,6 +9,7 @@ namespace NFCombat2.Models.Items.Consumables
         public StrengthPotion()
         {
             Label = "Strength Potion";
+            Name = "Strength potion";
             Description = "Does what a strength potion does.";
         }
 
