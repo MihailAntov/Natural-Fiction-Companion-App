@@ -6,6 +6,12 @@ using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Items.Equipments;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using NFCombat2.Models.Items;
+using NFCombat2.Models.Items.Consumables;
+using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
+using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Services
 {
@@ -70,5 +76,39 @@ namespace NFCombat2.Services
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+        public void AddToPlayer(IAddable option)
+        {
+            if(option is Equipment equipment)
+            {
+                CurrentPlayer.Equipment.Add(equipment);
+                return;
+            }
+
+            if(option is Consumable consumable)
+            {
+                CurrentPlayer.Consumables.Add(consumable);
+                return;
+            }
+
+            if(option is Item item)
+            {
+                CurrentPlayer.Trinkets.Add(item);
+                return;
+            }
+
+            
+        }
+
+        public void AddWeaponToPlayer(Weapon weapon, Hand hand)
+        {
+            if(weapon.Weight > CurrentPlayer.MaxWeaponWeight)
+            {
+                CurrentPlayer.Weapons.Clear();
+                CurrentPlayer.Weapons.Add(weapon);
+                return;
+            }
+
+            CurrentPlayer.Weapons[(int)hand] = weapon;
+        }
     }
 }

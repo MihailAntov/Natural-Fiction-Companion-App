@@ -10,12 +10,6 @@ public partial class InventoryPage : ContentPage
 		BindingContext = viewModel;
 	}
 
-	public async void ChooseItem(object sender, EventArgs e)
-	{
-		if(BindingContext is InventoryPageViewModel viewModel)
-		{
-			viewModel.ChooseItem(sender);
-		}
-	}
+	
 
 }

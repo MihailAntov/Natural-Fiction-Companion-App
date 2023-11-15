@@ -1,7 +1,10 @@
 ﻿using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Consumables;
+using NFCombat2.Models.Items.Equipments;
+using System.Reflection;
 
 namespace NFCombat2.Services
 {
@@ -12,40 +15,42 @@ namespace NFCombat2.Services
         {
             _repository = repository;
         }
-        public async Task<ICollection<Item>> GetAllItems()
+
+        public Task<ICollection<IAddable>> GetAllEquipment()
+        {
+            return GetAllByCategory(Data.Enums.ItemCategory.Equipment);
+        }
+
+        public Task<ICollection<IAddable>> GetAllItems()
+        {
+            return GetAllByCategory(Data.Enums.ItemCategory.Item);
+        }
+
+        public Task<ICollection<IAddable>> GetAllWeapons()
+        {
+            return GetAllByCategory(Data.Enums.ItemCategory.Weapon);
+        }
+
+        private async Task<ICollection<IAddable>> GetAllByCategory(Data.Enums.ItemCategory category)
         {
             
-            var entities = await _repository.GetAll();
+            var entities = await _repository.GetCategory(Data.Enums.ItemCategory.Item);
 
-            var result = new List<Item>();
+            var result = new List<IAddable>();
             foreach (var entity in entities)
             {
-                Item item;
-                switch(entity.Type)
-                {
-                    case Data.Enums.ItemType.Grenade:
-                        item = new Grenade();
-                        break;
-                    case Data.Enums.ItemType.HealingPotion:
-                        item = new HealingPotion();
-                        break;
-                    case Data.Enums.ItemType.MobileHealthKit:
-                        item = new MobileHealthKit();
-                        break;
-                    case Data.Enums.ItemType.SaltPotion:
-                        item = new SaltPotion();
-                        break;
-                    case Data.Enums.ItemType.StrengthPotion:
-                        item = new StrengthPotion();
-                        break;
-                    case Data.Enums.ItemType.Wrench:
-                    default:
-                        item = new Wrench();
-                        break;
-                }
+                IAddable item = ItemConverter(entity.Type);
+                
                 result.Add(item);
             }
             return result;
         }
+
+        private IAddable ItemConverter(Data.Enums.ItemType type)
+        {
+            var item = Activator.CreateInstance(Assembly.GetCallingAssembly().FullName, type.ToString());
+            return (IAddable)item.Unwrap();
+        }
+        
     }
 }

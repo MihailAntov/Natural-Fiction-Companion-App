@@ -5,24 +5,7 @@
                x:Class="NFCombat2.Views.DiceResultView">
 
   
-        <!--<StackLayout Padding="50" HeightRequest="400" WidthRequest="400" VerticalOptions="EndAndExpand">
-            <FlexLayout BindableLayout.ItemsSource="{Binding Dice}" Direction="Row"  Wrap="Wrap"  >
-                <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                        <StackLayout FlexLayout.Basis="25%">
-                            <Image Source="{Binding FileName}"/>
-                            <Button Text="Reroll"
-                            Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.Reroll}"
-                            CommandParameter="{Binding}"/>
-
-                        </StackLayout>
-                
-            </DataTemplate>
-            </BindableLayout.ItemTemplate>
-
-        </FlexLayout>
-            <Button Text="Ok" Margin="0,25,0,0" Command="{Binding ConfirmCommand}"/>
-        </StackLayout>-->
+        
 
     <StackLayout BackgroundColor="Black" Padding="20" VerticalOptions="End" >
         <Label HorizontalOptions="Center" Text="{Binding Message}"/>

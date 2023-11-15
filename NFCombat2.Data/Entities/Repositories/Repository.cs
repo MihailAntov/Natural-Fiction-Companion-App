@@ -13,7 +13,7 @@ namespace NFCombat2.Data.Entities.Repositories
     public abstract class Repository<T> where T : new()
     {
         string _dbPath;
-        private SQLiteAsyncConnection connection = null!;
+        protected SQLiteAsyncConnection connection = null!;
         public string StatusMessage { get; set; } = string.Empty;
 
         public Repository(string dbPath)

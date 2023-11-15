@@ -1,9 +1,10 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.Items.Weapons
 {
-    public class Weapon
+    public class Weapon : IAddable
     {
         public Accuracy Accuracy { get; set; }
         public string Label { get; set; }
@@ -19,5 +20,7 @@ namespace NFCombat2.Models.Items.Weapons
         public int CooldownPerShot { get; set; } = 1;
         public int ShotsPerTurn { get; set; } = 1;
         public ICollection<WeaponModification> Modifications { get; set; } = new HashSet<WeaponModification>();
+
+        public string Name { get; set; }
     }
 }

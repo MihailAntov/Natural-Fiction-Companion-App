@@ -2,15 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.InventoryPage"
+             xmlns:views="clr-namespace:NFCombat2.Views"
              Title="Inventory">
     <VerticalStackLayout>
 
-        <Picker x:Name="Items"
-    Title="Choose an item"
-    SelectedIndexChanged="ChooseItem"
-    ItemsSource="{Binding Items}"
-    ItemDisplayBinding="{Binding Name}">
-        </Picker>
+        <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item"/>
+        <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment"/>
+        <Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>
+
 
 
         <ListView ItemsSource="{Binding Equipment}">
@@ -19,9 +18,9 @@
                 <TextCell>
                     <TextCell.Text>
                         
-                        <MultiBinding StringFormat="Hp:{0}  Distance:{1}">
-                            <Binding Path="Health"/>
-                            <Binding Path="Distance"/>
+                        <MultiBinding StringFormat="{}{0}  ({1})">
+                            <Binding Path="Name"/>
+                            <Binding Path="Quantity"/>
                         </MultiBinding>
                     </TextCell.Text>
                 </TextCell>

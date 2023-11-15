@@ -4,6 +4,8 @@ namespace NFCombat2.Models.SpecOps
 {
     public class Feint : Technique, IModifyAction
     {
+        public override string Name => "Feint";
+
         public Task Modify(ICombatAction action)
         {
             if(action is IHaveAttackRoll attack)

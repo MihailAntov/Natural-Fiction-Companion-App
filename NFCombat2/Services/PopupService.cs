@@ -11,6 +11,10 @@ namespace NFCombat2.Services
 {
     public class PopupService : IPopupService
     {
+        public PopupService()
+        {
+            
+        }
         public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect)
         {
             var task = new TaskCompletionSource<bool>();
@@ -29,6 +33,17 @@ namespace NFCombat2.Services
             var viewModel = new DiceResultViewModel(effect, task);
             var popup = new DiceResultView(viewModel);
             
+            ShowPopup(popup);
+            await task.Task;
+            await popup.CloseAsync();
+            return task;
+        }
+
+        public async Task<TaskCompletionSource<bool>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> options)
+        {
+            var task = new TaskCompletionSource<bool>();
+            var viewModel = new EntryWithSuggestionsViewModel(playerService, options);
+            var popup = new EntryWithSuggestions(viewModel);
             ShowPopup(popup);
             await task.Task;
             await popup.CloseAsync();

@@ -34,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<InventoryPageViewModel>();
 		builder.Services.AddSingleton<FightPageViewModel>();
 		builder.Services.AddSingleton<OptionPickerViewModel>();
+		builder.Services.AddSingleton<EntryWithSuggestionsViewModel>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<PlayerRepository>(s => ActivatorUtilities.CreateInstance<PlayerRepository>(s, dbPath));

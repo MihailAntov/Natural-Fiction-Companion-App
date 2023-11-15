@@ -3,6 +3,7 @@
 using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Repositories;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Player;
@@ -15,48 +16,68 @@ namespace NFCombat2.ViewModels
     public class InventoryPageViewModel : INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
-        private readonly IOptionsService _optionsService;
         private readonly IItemService _itemService;
+        private readonly IPopupService _popupService;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public InventoryPageViewModel(IPlayerService playerService, IOptionsService optionsService, IItemService itemService)
+        public Command<string> AddToPlayerCommand;
+        public InventoryPageViewModel(IPlayerService playerService, IItemService itemService, IPopupService popupService)
         {
             _playerService = playerService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
-            _optionsService = optionsService;
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
             _itemService = itemService;
-            LoadItemsAsync();
-            
+            AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
+            _popupService = popupService;
+
         }
         public Player Player { get; set; }
         public ObservableCollection<Equipment> Equipment { get; set; }
+        private List<Item> _allItems = new List<Item>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+        public async Task AddToPlayer(string type)
+        {
+            ICollection<IAddable> options = new List<IAddable>();
+            switch (type)
+            {
+                case "item":
+                    options = await LoadItemsAsync();
+                    break;
+                case "weapon":
+                    options = await LoadItemsAsync();
+                    break;
+                case "equipment":
+                    options = await LoadItemsAsync();
+                    break;
+            }
+
+            var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            await taskCompletion.Task;
+        }
+
+        private async Task<ICollection<IAddable>> LoadItemsAsync()
+        {
+            return await _itemService.GetAllItems();
+        }
+        private async Task<ICollection<IAddable>> LoadWeaponsAsync()
+        {
+            return await _itemService.GetAllWeapons();
+        }
+        private async Task<ICollection<IAddable>> LoadEquipmentAsync()
+        {
+            return await _itemService.GetAllEquipment();
+        }
 
         public int InventorySlots  => Player.InventorySlots;
 
-        private async void LoadItemsAsync()
-        {
-            if (!Items.Any())
-            {
+       
 
-                var items = await _itemService.GetAllItems();
-                foreach(var item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-        }
+        
 
-        public void ChooseItem(object i)
-        {
-            if(i is Picker picker)
-            {
-                ((Item)picker.SelectedItem).Description = "blargl";
-            }
-        }
+        
+
+
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 

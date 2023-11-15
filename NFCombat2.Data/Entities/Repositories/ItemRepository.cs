@@ -1,6 +1,7 @@
 ﻿
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
+using NFCombat2.Data.Enums;
 using SQLite;
 
 namespace NFCombat2.Data.Entities.Repositories
@@ -11,5 +12,11 @@ namespace NFCombat2.Data.Entities.Repositories
         {
 
         }
+
+        public async Task<IList<ItemEntity>> GetCategory(ItemCategory category)
+        {
+            return await connection.Table<ItemEntity>().Where(i=> i.Category == category).ToListAsync();
+        }
+
     }
 }
