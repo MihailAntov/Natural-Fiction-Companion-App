@@ -6,8 +6,13 @@ namespace NFCombat2.Models.Items.Weapons
     public class Weapon
     {
         public Accuracy Accuracy { get; set; }
+        public int BonusAccuracy {get; set;}
+        public Accuracy EffectiveAccuracy => Accuracy + BonusAccuracy;
         public string Label { get; set; }
         public int MaxRange { get; set; }
+        public int EffectiveMaxRange => MaxRange + BonusMaxRange;
+        //TODO change variable from maxRange to effectiveMaxRange in optionService - GetTargets() and wherever else is needed
+        public int BonusMaxRange { get; set; }
         public int MinRange { get; set; }
         public bool AreaOfEffect { get; set; }
         public int DamageDice { get; set; }

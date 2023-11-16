@@ -4,6 +4,8 @@ namespace NFCombat2.Common.Enums
 {
     public enum Accuracy
     {
+        
+        
         S = 0,
         A = 1,
         B = 2,
