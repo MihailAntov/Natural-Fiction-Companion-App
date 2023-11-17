@@ -14,8 +14,8 @@ namespace NFCombat2.Models.CombatResolutions
     {
 
         public Crit(DiceRollResult roll, ICollection<Enemy> targets) : base(roll, targets) { }
-        
 
+        public int CritMultiplier { get; set; } = 2;
         public override MessageType MessageType => MessageType.CritMessage;
 
         public override string[] MessageArgs
@@ -24,7 +24,7 @@ namespace NFCombat2.Models.CombatResolutions
             {
                 string[] args = new string[2];
                 args[0] = Targets.Count == 1 ? Targets.FirstOrDefault().Name : Targets.Count.ToString();
-                args[1] = (Amount * 2).ToString();
+                args[1] = (Amount * CritMultiplier).ToString();
                 return args;
             }
         }
@@ -33,7 +33,7 @@ namespace NFCombat2.Models.CombatResolutions
         {
             foreach (var target in Targets)
             {
-                target.Health -= Amount * 2;
+                target.Health -= Amount * CritMultiplier;
             }
             return Task.CompletedTask;
         }
