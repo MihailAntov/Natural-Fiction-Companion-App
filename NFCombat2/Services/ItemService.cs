@@ -39,17 +39,18 @@ namespace NFCombat2.Services
             var result = new List<IAddable>();
             foreach (var entity in entities)
             {
-                IAddable item = ItemConverter(entity.Type);
+                IAddable item = ItemConverter(entity.Type, category);
                 
                 result.Add(item);
             }
             return result;
         }
 
-        private IAddable ItemConverter(Data.Enums.ItemType type)
+        private IAddable ItemConverter(Data.Enums.ItemType type, Data.Enums.ItemCategory category)
         {
-            var item = Activator.CreateInstance(Assembly.GetCallingAssembly().FullName, type.ToString());
-            return (IAddable)item.Unwrap();
+            string typeName = type.ToString();
+            var item = Activator.CreateInstance( typeName);
+            return (IAddable)item;
         }
         
     }

@@ -3,8 +3,6 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
-
-using NFCombat2.Models.Items.Consumables;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Weapons;
 using System.ComponentModel;
@@ -74,7 +72,7 @@ namespace NFCombat2.Models.Player
         public int MaxWeaponWeight { get; set; } = 1;
         public IList<Weapon> Weapons { get; set; } = new List<Weapon>();
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
-        public IList<Consumable> Consumables { get; set; } = new List<Consumable>();
+        public IList<IConsumable> Consumables { get; set; } = new List<IConsumable>();
         public IList<Item> Trinkets { get; set; } = new List<Item>();
 
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();

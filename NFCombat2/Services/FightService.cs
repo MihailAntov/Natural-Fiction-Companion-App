@@ -96,10 +96,10 @@ namespace NFCombat2.Services
             hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new MobileHealthKit());
-            hacker.Consumables.Add(new Grenade());
+            hacker.Consumables.Add(new HandGrenade());
             specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
             specOps.Consumables.Add(new MobileHealthKit());
-            specOps.Consumables.Add(new Grenade());
+            specOps.Consumables.Add(new HandGrenade());
             specOps.Equipment.Add(new TacticalGlasses());
             specOps.Techniques.Add(new Feint());
             Fight fight;

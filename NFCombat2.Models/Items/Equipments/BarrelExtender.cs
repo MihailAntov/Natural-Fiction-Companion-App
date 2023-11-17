@@ -1,10 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
-using NFCombat2.Models.Items.Weapons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NFCombat2.Models.Items.Weapons;
+
 
 namespace NFCombat2.Models.Items.Equipments
 {

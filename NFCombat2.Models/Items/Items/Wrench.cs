@@ -1,14 +1,16 @@
 ﻿using NFCombat2.Models.Contracts;
+
 using NFCombat2.Models.Fights;
 
-
-namespace NFCombat2.Models.Items.Consumables
+namespace NFCombat2.Models.Items.Items
 {
-    public class HealingPotion : Consumable
+    public class Wrench : CombatActiveItem
     {
-        public HealingPotion()
+        public Wrench()
         {
-            Name = "Healing Potion";
+            Label = "Wrench";
+            Name = "Wrench";
+            IsConsumable = true;
         }
 
 

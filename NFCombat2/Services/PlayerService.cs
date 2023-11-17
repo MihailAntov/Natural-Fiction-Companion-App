@@ -7,7 +7,6 @@ using NFCombat2.Models.Items.Equipments;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Models.Items;
-using NFCombat2.Models.Items.Consumables;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
@@ -84,7 +83,7 @@ namespace NFCombat2.Services
                 return;
             }
 
-            if(option is Consumable consumable)
+            if(option is IConsumable consumable)
             {
                 CurrentPlayer.Consumables.Add(consumable);
                 return;

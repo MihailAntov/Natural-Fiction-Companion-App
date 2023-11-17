@@ -31,6 +31,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<OptionPickerView>();
 		builder.Services.AddSingleton<InventoryPage>();
 
+
 		builder.Services.AddSingleton<InventoryPageViewModel>();
 		builder.Services.AddSingleton<FightPageViewModel>();
 		builder.Services.AddSingleton<OptionPickerViewModel>();

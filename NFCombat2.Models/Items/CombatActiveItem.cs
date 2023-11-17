@@ -4,7 +4,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Items
 {
-    public abstract class CombatItem : Item, IMoveAction
+    public abstract class CombatActiveItem : Item, IMoveAction
     {
         public string Label { get; set; }
 

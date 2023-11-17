@@ -23,12 +23,13 @@ namespace NFCombat2.Models.Actions
             _accuracy = _enemy.Accuracy;
         }
 
-
+        public bool IsAccuracyReduced { get; set; } = false;
         public string[] MessageArgs => new string[] { _enemy.Name};
         public MessageType MessageType => MessageType.EnemyShootMessage;
 
         public DiceRollResult RollsResult { get; set; }
         public Dice AttackRollResult { get; set; }
+        public Accuracy BaseAccuracy { get; set; }
         public Accuracy Accuracy { get { return _accuracy; }  set { _accuracy = value; } }
 
         public string AttackDiceMessage => $"{MessageArgs[0]}'s attack:";

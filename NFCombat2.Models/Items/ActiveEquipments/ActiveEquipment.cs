@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    internal class ActiveEquipment : CombatItem
+    internal class ActiveEquipment : CombatActiveItem
     {
         public ActiveEquipment()
         {

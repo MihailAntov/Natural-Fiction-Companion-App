@@ -20,7 +20,7 @@ namespace NFCombat2.ViewModels
         private readonly IPopupService _popupService;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public Command<string> AddToPlayerCommand;
+        public Command AddToPlayerCommand { get; set; }
         public InventoryPageViewModel(IPlayerService playerService, IItemService itemService, IPopupService popupService)
         {
             _playerService = playerService;
@@ -34,7 +34,6 @@ namespace NFCombat2.ViewModels
         }
         public Player Player { get; set; }
         public ObservableCollection<Equipment> Equipment { get; set; }
-        private List<Item> _allItems = new List<Item>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public async Task AddToPlayer(string type)
         {

@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Models.Items.Equipments
@@ -14,7 +15,7 @@ namespace NFCombat2.Models.Items.Equipments
 
         public Task Modify(ICombatAction action)
         {
-            if(action is IHaveAttackRoll attack)
+            if(action is PlayerRangedAttack attack)
             {
                 if(attack.Accuracy > 0)
                 {
