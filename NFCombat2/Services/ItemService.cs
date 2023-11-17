@@ -34,7 +34,7 @@ namespace NFCombat2.Services
         private async Task<ICollection<IAddable>> GetAllByCategory(Data.Enums.ItemCategory category)
         {
             
-            var entities = await _repository.GetCategory(Data.Enums.ItemCategory.Item);
+            var entities = await _repository.GetCategory(category);
 
             var result = new List<IAddable>();
             foreach (var entity in entities)

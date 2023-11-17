@@ -2,6 +2,7 @@
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Enums;
+using NFCombat2.Data.Extensions;
 using SQLite;
 
 namespace NFCombat2.Data.Entities.Repositories
@@ -10,7 +11,7 @@ namespace NFCombat2.Data.Entities.Repositories
     {
         public ItemRepository(string dbPath) : base(dbPath)
         {
-
+            
         }
 
         public async Task<IList<ItemEntity>> GetCategory(ItemCategory category)

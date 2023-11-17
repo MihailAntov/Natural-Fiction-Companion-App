@@ -6,12 +6,13 @@
     <VerticalStackLayout WidthRequest="400" HeightRequest="400">
 
         <Entry Placeholder="Enter item name" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
-        <ListView ItemsSource="{Binding Items}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">
+        <ListView ItemsSource="{Binding Options}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Name}"></TextCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
         </VerticalStackLayout>
 </toolkit:Popup>

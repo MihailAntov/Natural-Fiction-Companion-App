@@ -11,6 +11,9 @@ namespace NFCombat2.Data.Enums
         GrenadeLauncher,
         Helmet,
         TacticalGlasses,
+        SackOfAcorns,
+        RottingFruit,
+        SelfRepairFoam
 
 
     }
