@@ -10,7 +10,7 @@ namespace NFCombat2.Models.Contracts
         Dice AttackRollResult { get; set; }
         IList<ICombatResolution> AddMissToCombatResolutions(Fight fight);
         IList<ICombatResolution> AddCritToCombatResolutions(Fight fight);
-        public Accuracy Accuracy { get; set; }
+        public Accuracy Accuracy { get; }
         public string AttackDiceMessage { get; }
     }
 }

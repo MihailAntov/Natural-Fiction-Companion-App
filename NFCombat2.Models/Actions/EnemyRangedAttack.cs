@@ -30,7 +30,9 @@ namespace NFCombat2.Models.Actions
         public DiceRollResult RollsResult { get; set; }
         public Dice AttackRollResult { get; set; }
         public Accuracy BaseAccuracy { get; set; }
-        public Accuracy Accuracy { get { return _accuracy; }  set { _accuracy = value; } }
+        public Accuracy Accuracy => IsAccuracyReduced ? (BaseAccuracy < Accuracy.E ? BaseAccuracy + 1: BaseAccuracy) : BaseAccuracy;
+          
+        
 
         public string AttackDiceMessage => $"{MessageArgs[0]}'s attack:";
         public string DiceMessage => $"{MessageArgs[0]}'s damage:";

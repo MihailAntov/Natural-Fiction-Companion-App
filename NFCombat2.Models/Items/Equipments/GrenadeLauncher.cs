@@ -12,6 +12,7 @@ namespace NFCombat2.Models.Items.Equipments
         public GrenadeLauncher()
         {
             BonusDamageDice = 1;
+            Name = "Grenade Launcher";
         }
 
         protected override void AddModification(Weapon weapon)

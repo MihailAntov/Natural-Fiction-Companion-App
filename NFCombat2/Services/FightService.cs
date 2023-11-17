@@ -11,7 +11,7 @@ using CommunityToolkit.Maui.Alerts;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Items.Weapons;
-using NFCombat2.Models.Items.Consumables;
+using NFCombat2.Models.Items.ActiveEquipments;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.SpecOps;
 
@@ -95,10 +95,8 @@ namespace NFCombat2.Services
             var specOps = new SpecOps() { Name = "Hackerman" };
             hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
-            hacker.Consumables.Add(new MobileHealthKit());
             hacker.Consumables.Add(new HandGrenade());
             specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
-            specOps.Consumables.Add(new MobileHealthKit());
             specOps.Consumables.Add(new HandGrenade());
             specOps.Equipment.Add(new TacticalGlasses());
             specOps.Techniques.Add(new Feint());

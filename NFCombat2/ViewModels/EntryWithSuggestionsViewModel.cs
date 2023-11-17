@@ -30,6 +30,7 @@ namespace NFCombat2.ViewModels
         public ObservableCollection<IAddable> Options { get; set; } = new ObservableCollection<IAddable>();
 
         private bool _areSuggestionsVisible = false;
+        
         public bool AreSuggestionsVisible
         {
             get { return _areSuggestionsVisible; }
@@ -63,7 +64,7 @@ namespace NFCombat2.ViewModels
         {
             if (i is Entry entry)
             {
-                var filtered = _allOptions.Where(i => i.Name.ToLower().Contains(entry.Text.ToLower()));
+                var filtered = _allOptions.Where(i => i.Name.ToLower().Contains(entry.Text.ToLower())).ToList();
                 Options.Clear();
                 foreach (var item in filtered)
                 {
@@ -74,12 +75,12 @@ namespace NFCombat2.ViewModels
                 if (entry.Text.Length > 2)
                 {
                     AreSuggestionsVisible = true;
-                    OnPropertyChanged(nameof(Options));
+                    //OnPropertyChanged(nameof(Options));
                 }
                 else
                 {
                     AreSuggestionsVisible = false;
-                    OnPropertyChanged(nameof(Options));
+                    //OnPropertyChanged(nameof(Options));
                 }
             }
         }

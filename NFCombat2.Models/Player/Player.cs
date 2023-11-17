@@ -72,7 +72,7 @@ namespace NFCombat2.Models.Player
         public int MaxWeaponWeight { get; set; } = 1;
         public IList<Weapon> Weapons { get; set; } = new List<Weapon>();
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
-        public IList<IConsumable> Consumables { get; set; } = new List<IConsumable>();
+        public IList<CombatActiveItem> Consumables { get; set; } = new List<CombatActiveItem>();
         public IList<Item> Trinkets { get; set; } = new List<Item>();
 
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();

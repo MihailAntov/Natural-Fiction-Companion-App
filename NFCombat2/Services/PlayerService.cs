@@ -77,15 +77,15 @@ namespace NFCombat2.Services
 
         public void AddToPlayer(IAddable option)
         {
+            if(option is Weapon weapon)
+            {
+                AddWeaponToPlayer(weapon, Hand.MainHand);
+                return;
+            }
+            
             if(option is Equipment equipment)
             {
                 CurrentPlayer.Equipment.Add(equipment);
-                return;
-            }
-
-            if(option is IConsumable consumable)
-            {
-                CurrentPlayer.Consumables.Add(consumable);
                 return;
             }
 

@@ -4,11 +4,8 @@ namespace NFCombat2.Data.Enums
 {
     public enum ItemType
     {
-        Grenade,
-        HealingPotion,
-        MobileHealthKit,
-        StrengthPotion,
-        SaltPotion,
+        HandGrenade,
+        AutomatedMedKit,
         Wrench,
         Bundle,
         GrenadeLauncher,

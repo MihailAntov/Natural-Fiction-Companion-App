@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Models.Items.Equipments
@@ -8,7 +9,11 @@ namespace NFCombat2.Models.Items.Equipments
     {
         public Task Modify(ICombatAction action)
         {
-            throw new NotImplementedException();
+            if(action is EnemyRangedAttack attack)
+            {
+                attack.IsAccuracyReduced = true;
+            }
+            return Task.CompletedTask;
         }
     }
 }

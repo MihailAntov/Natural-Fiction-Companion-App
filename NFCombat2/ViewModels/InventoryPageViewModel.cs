@@ -6,6 +6,7 @@ using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Player;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -33,7 +34,8 @@ namespace NFCombat2.ViewModels
 
         }
         public Player Player { get; set; }
-        public ObservableCollection<Equipment> Equipment { get; set; }
+        public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
+        public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public async Task AddToPlayer(string type)
         {
@@ -44,10 +46,10 @@ namespace NFCombat2.ViewModels
                     options = await LoadItemsAsync();
                     break;
                 case "weapon":
-                    options = await LoadItemsAsync();
+                    options = await LoadWeaponsAsync();
                     break;
                 case "equipment":
-                    options = await LoadItemsAsync();
+                    options = await LoadEquipmentAsync();
                     break;
             }
 

@@ -1,10 +1,10 @@
 ﻿using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Contracts;
-using NFCombat2.Models.Items;
-using NFCombat2.Models.Items.Consumables;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items;
 using System.Reflection;
+using NFCombat2.Models.Items.ActiveEquipments;
 
 namespace NFCombat2.Services
 {
@@ -49,8 +49,23 @@ namespace NFCombat2.Services
         private IAddable ItemConverter(Data.Enums.ItemType type, Data.Enums.ItemCategory category)
         {
             string typeName = type.ToString();
-            var item = Activator.CreateInstance( typeName);
-            return (IAddable)item;
+            string[] itemLocations = new string[] { "Equipments", "Items", "Weapons", "ActiveEquipments" };
+            
+            
+            foreach(var itemLocation in itemLocations)
+            {
+                string fullTypeName = $"NFCombat2.Models.Items.{itemLocation}.{typeName}, NFCombat2.Models";
+                Type itemType = Type.GetType(fullTypeName);
+                if(itemType != null)
+                {
+                    var item = Activator.CreateInstance(itemType);
+                    return (Item)item;
+                }
+            }
+
+            var item2 = Activator.CreateInstance(typeof(GrenadeLauncher));
+            return (Item)item2;
+            
         }
         
     }
