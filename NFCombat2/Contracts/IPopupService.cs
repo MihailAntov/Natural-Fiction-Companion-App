@@ -10,6 +10,6 @@ namespace NFCombat2.Contracts
         void ShowToast(string text);
         Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect);
         Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect);
-        Task<TaskCompletionSource<bool>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
+        Task<TaskCompletionSource<IAddable>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
     }
 }

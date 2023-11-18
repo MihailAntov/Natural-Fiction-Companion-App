@@ -35,7 +35,7 @@ namespace NFCombat2.ViewModels
         }
         public Player Player { get; set; }
         public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
-        public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
+        public ObservableCollection<Equipment> Equipment { get; set; }
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public async Task AddToPlayer(string type)
         {
@@ -54,7 +54,8 @@ namespace NFCombat2.ViewModels
             }
 
             var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
-            await taskCompletion.Task;
+            var added = await taskCompletion.Task;
+            AddToObservalbeCollection(added);
         }
 
         private async Task<ICollection<IAddable>> LoadItemsAsync()
@@ -69,6 +70,25 @@ namespace NFCombat2.ViewModels
         {
             return await _itemService.GetAllEquipment();
         }
+
+        public void AddToObservalbeCollection(IAddable added)
+        {
+            if(added is Weapon weapon)
+            {
+                Weapons.Add(weapon);
+                return;
+            }
+
+            if(added is Equipment equipment)
+            {
+                Equipment.Add(equipment);
+                return;
+            }
+
+            Items.Add((Item)added);
+        }
+
+        
 
         public int InventorySlots  => Player.InventorySlots;
 

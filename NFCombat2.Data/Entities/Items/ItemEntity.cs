@@ -12,5 +12,6 @@ namespace NFCombat2.Data.Entities.Items
         public string Description { get; set; } = string.Empty;
         public ItemType Type { get; set; }
         public ItemCategory Category { get; set; }
+        public bool IsCraftOnly { get; set;} = false;
     }
 }

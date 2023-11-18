@@ -39,9 +39,9 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> options)
+        public async Task<TaskCompletionSource<IAddable>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> options)
         {
-            var task = new TaskCompletionSource<bool>();
+            var task = new TaskCompletionSource<IAddable>();
             var viewModel = new EntryWithSuggestionsViewModel(playerService, options, task);
             var popup = new EntryWithSuggestions(viewModel);
             ShowPopup(popup);

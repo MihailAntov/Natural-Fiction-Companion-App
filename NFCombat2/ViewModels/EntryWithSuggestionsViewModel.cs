@@ -16,11 +16,11 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private TaskCompletionSource<bool> _taskCompletionSource;
+        private TaskCompletionSource<IAddable> _taskCompletionSource;
         public EntryWithSuggestionsViewModel(
             IPlayerService playerService,
             ICollection<IAddable> allOptions,
-            TaskCompletionSource<bool> taskCompletionSource
+            TaskCompletionSource<IAddable> taskCompletionSource
             )
         {
             _allOptions = allOptions;
@@ -55,8 +55,8 @@ namespace NFCombat2.ViewModels
             if(option is IAddable entry)
             {
                 _playerService.AddToPlayer(entry);
+                _taskCompletionSource.SetResult(entry);
             }
-            _taskCompletionSource.SetResult(true);
             AreSuggestionsVisible = false;
             SearchCriteria = string.Empty;
             
