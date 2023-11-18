@@ -1,5 +1,5 @@
 ﻿
-using NFCombat2.Data.Enums;
+using NFCombat2.Common.Enums;
 using SQLite;
 
 namespace NFCombat2.Data.Entities.Items
@@ -8,8 +8,8 @@ namespace NFCombat2.Data.Entities.Items
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        //public string Name { get; set; } = string.Empty;
+        //public string Description { get; set; } = string.Empty;
         public ItemType Type { get; set; }
         public ItemCategory Category { get; set; }
         public bool IsCraftOnly { get; set;} = false;

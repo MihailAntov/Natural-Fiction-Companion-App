@@ -1,7 +1,7 @@
 ﻿
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
-using NFCombat2.Data.Enums;
+using NFCombat2.Common.Enums;
 using NFCombat2.Data.Extensions;
 using SQLite;
 

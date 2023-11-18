@@ -1,6 +1,6 @@
 ﻿
 
-namespace NFCombat2.Data.Enums
+namespace NFCombat2.Common.Enums
 {
     public enum ItemType
     {
@@ -43,8 +43,14 @@ namespace NFCombat2.Data.Enums
         PotassiumIodideTablets,
         Wrench,
         AromaticSaltSolution,
+        PortableEnvoronmentalSuit,
         
         //weapon
+        PlasmaRapier,
+        QuantumMagnumParadox,
+        Knife,
+        Flamethrower,
+        ConfiscatedRifle,
         SemiautomaticPistol,
         RailGun,
         TrainingRifle,
@@ -63,7 +69,7 @@ namespace NFCombat2.Data.Enums
         DoubleBarrelShotgun,
         WrenchWeapon,
         JaggedDagger,
-        Flamethrower,
+        Torch,
         Chain,
         SteelBar,
         SteelPlate,
@@ -77,7 +83,19 @@ namespace NFCombat2.Data.Enums
         BoltActionCarbine,
         SniperRifle,
         Magnum,
-        SawnOffShotgun
+        SawnOffShotgun,
+
+        //generic items
+        CopperDiadem,
+        Rope,
+        AutomaticSaw,
+        FoodCapsules,
+        GrapheneRod,
+        AluminiumCanister,
+        CrystalNecklace,
+        FuelCanister,
+        MagnetDiscs,
+        IceSpark
 
     }
 }
