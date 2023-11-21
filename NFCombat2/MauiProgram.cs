@@ -8,6 +8,8 @@ using CommunityToolkit.Maui;
 using Microsoft.Maui.LifecycleEvents;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Data.Extensions;
+using AutoMapper;
+using NFCombat2.Data.Profiles;
 
 namespace NFCombat2;
 
@@ -36,15 +38,19 @@ public static class MauiProgram
 		builder.Services.AddSingleton<FightPageViewModel>();
 		builder.Services.AddSingleton<OptionPickerViewModel>();
 		builder.Services.AddSingleton<EntryWithSuggestionsViewModel>();
+		builder.Services.AddSingleton<AddingProfileViewModel>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<PlayerRepository>(s => ActivatorUtilities.CreateInstance<PlayerRepository>(s, dbPath));
         builder.Services.AddSingleton<FightRepository>(s => ActivatorUtilities.CreateInstance<FightRepository>(s, dbPath));
         builder.Services.AddSingleton<ItemRepository>(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, dbPath));
+        builder.Services.AddSingleton<SettingsRepository>(s => ActivatorUtilities.CreateInstance<SettingsRepository>(s, dbPath));
+		builder.Services.AddAutoMapper(typeof(PlayerProfile));
 
         builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -52,7 +58,7 @@ public static class MauiProgram
 			});
 
 		SeedData();
-
+		
 		return builder.Build();
 	}
 
@@ -66,4 +72,9 @@ public static class MauiProgram
 
         // Add additional seeding logic for other repositories if needed
     }
+
+	private static void ConfigureAutomapper()
+	{
+
+	}
 }

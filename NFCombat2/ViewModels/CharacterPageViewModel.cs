@@ -1,5 +1,7 @@
-﻿using NFCombat2.Contracts;
+﻿using CommunityToolkit.Maui.Views;
+using NFCombat2.Contracts;
 using NFCombat2.Models.Player;
+using NFCombat2.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -11,15 +13,17 @@ namespace NFCombat2.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private IPlayerService _playerService;
+        private IPopupService _popupService;
         private Player _player;
-        public Command RegisterCommand { get;  set; }
-        public CharacterPageViewModel(IPlayerService playerService)
+        public Command AddNewProfileCommand { get; set; }
+        public int SelectedIndex { get; }
+        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService)
         {
             _playerService = playerService;
+            _popupService = popupService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
-            RegisterCommand = new Command<string>(async (name) => await RegisterProfile(name));
+            AddNewProfileCommand = new Command(async ()=> await AddProfile());
             Player = _playerService.CurrentPlayer;
-            
         }
 
         private double _hpValue;
@@ -56,26 +60,26 @@ namespace NFCombat2.ViewModels
             }
         }
         
+        
 
         public ObservableCollection<Player> Profiles => new ObservableCollection<Player>(GetAllProfiles());
-
-        public async void ChangedClass()
-        {
-            //string name = (await _profileService.GetAll()).FirstOrDefault()?.Name;
-        }
-
-
-
-        public async Task<bool> RegisterProfile(string name)
+        public async Task CreateNewProfile(Popup popup)
         {
             
-            return await _playerService.Save(name);
-            //await DisplayAlert("Successfully Added", $"{name}", "Okay");
         }
+
+        public async Task AddProfile()
+        {
+            await _popupService.ShowAddProfilePopup();
+            OnPropertyChanged(nameof(Profiles));
+        }
+
+        
 
         public IList<Player> GetAllProfiles()
         {
-            var profiles = _playerService.GetAll();
+            var profiles = Task<Player>.Run(()=> 
+                 _playerService.GetAll()).Result;
             return profiles;
         }
 

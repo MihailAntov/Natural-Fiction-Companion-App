@@ -42,14 +42,17 @@ namespace NFCombat2.Models.Fights
                     actions.Add(new EnemyGetCloser(this, enemy));
                 }
 
-                if (enemy.Range >= enemy.Distance)
-                {
-                    actions.Add(new EnemyRangedAttack(this, enemy));
-                }
-                else if (enemy.Distance == 0)
+
+                if (enemy.Distance == 0)
                 {
                     actions.Add(new EnemyMeleeAttack(this, enemy));
                 }
+                else if (enemy.Range >= enemy.Distance)
+                {
+                    actions.Add(new EnemyRangedAttack(this, enemy));
+                }
+
+                
             }
 
             return actions;

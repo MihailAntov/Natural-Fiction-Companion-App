@@ -11,30 +11,38 @@ using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.SpecOps;
+using AutoMapper;
 
 namespace NFCombat2.Services
 {
     public class PlayerService : IPlayerService, INotifyPropertyChanged
     {
-        private PlayerRepository repo;
+        private PlayerRepository _repository;
+        private SettingsRepository _settings;
+        private IMapper _mapper;
         private Player _player;
-        public PlayerService(PlayerRepository repository)
+        public PlayerService(PlayerRepository repository, SettingsRepository settings, IMapper mapper)
         {
-            repo = repository;
+            _repository = repository;
+            _settings = settings;
+            _mapper = mapper;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        
 
         public Player CurrentPlayer
         {
             get
             {
-
                 if(_player == null)
                 {
-                    _player =  GetAll().FirstOrDefault();
+                    _player = Task<Player>.Run(()=> _repository.GetAllProfiles()).Result.FirstOrDefault(); 
                 }
+
                 return _player;
+                
             }
             set
             {
@@ -46,29 +54,31 @@ namespace NFCombat2.Services
             }
         }
 
-        public IList<Player> GetAll()
+        public async Task<IList<Player>> GetAll()
         {
-            return repo.GetAllProfiles()
-                .Select(p => new Player()
-                {
-                    Name = p.Name,
-                    BaseMaxHealth = p.MaxHealth,
-                    Health = p.Health
-                }).ToList();
+            return await _repository.GetAllProfiles();
 
             
         }
 
+        public async Task<Player> GetById(int id)
+        {
+            var player = await _repository.GetById(id);
+            return player;
+        }
+
         public async Task<bool> Save(string name)
         {
-            return await repo.AddNewProfile(name);
+            return await _repository.AddNewProfile(name);
         }
 
         public async Task SwitchActiveProfile(Player player)
         {
-            await Task.Run(() =>
+            CurrentPlayer = player;
+            await Task.Run(async () =>
             {
-                CurrentPlayer = player;
+               await _settings.UpdateCurrentPlayer(player.Id);
+
             });
         }
 

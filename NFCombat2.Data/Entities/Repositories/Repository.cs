@@ -28,6 +28,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 return;
             }
             connection = new SQLiteAsyncConnection(_dbPath);
+            connection.CreateTableAsync<T>();
         }
 
         public async Task Insert(T item)
@@ -42,7 +43,8 @@ namespace NFCombat2.Data.Entities.Repositories
 
         public async Task<int> DeleteAll()
         {
-            return await connection.DeleteAllAsync<T>();
+            return await connection.DropTableAsync<T>();
+            
         }
 
         public async Task Update(T item)

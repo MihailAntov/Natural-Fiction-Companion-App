@@ -11,5 +11,6 @@ namespace NFCombat2.Models.Items
         public string Description { get; set; }
         public int Quantity { get; set; } = 1;
         public bool IsConsumable { get; set; } = false;
+        public int Durability { get; set; } = 100;
     }
 }

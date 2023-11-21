@@ -7,6 +7,7 @@ using NFCombat2.Models.Items;
 using NFCombat2.Models.Player;
 using NFCombat2.Models.Programs;
 using NFCombat2.Contracts;
+using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Services
 {
@@ -27,66 +28,78 @@ namespace NFCombat2.Services
 
         public IOptionList GetStandardActions(Fight fight)
         {
-            var objects = new List<string>();
+            //var objects = new List<string>();
+            var objects = new List<OptionType>();
 
             if (CanShoot(fight))
             {
-                objects.Add("Shoot");
+                //objects.Add("Shoot");
+                objects.Add(OptionType.Shoot);
             }
 
             if(CanAttack(fight))
             {
-                objects.Add("Attack");
+                //objects.Add("Attack");
+                objects.Add(OptionType.Attack);
             }
 
-            objects.Add("Do nothing");
+            //objects.Add("Do nothing");
+            objects.Add(OptionType.DoNothing);
 
-
-            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            //TODO : involve converter service to get name of option
+            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = "Choose standard action" };
         }
 
         public IOptionList GetBonusActions(Fight fight)
         {
-            var objects = new List<string>();
+            var objects = new List<OptionType>();
 
             if (CanShoot(fight))
             {
-                objects.Add("Shoot");
+                //objects.Add("Shoot");
+                objects.Add(OptionType.Shoot);
             }
 
             if (CanAttack(fight))
             {
-                objects.Add("Attack");
+                //objects.Add("Attack");
+                objects.Add(OptionType.Attack);
             }
 
             if (CanUseProgram(fight))
             {
-                objects.Add("Program");
+                //objects.Add("Program");
+                objects.Add(OptionType.Program);
             }
 
-
-            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            //TODO: involve converter service to get name of option
+            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = "Choose bonus to use" };
         }
 
         public IOptionList GetMoveActions(Fight fight)
         {
-            var objects = new List<string>();
+            var objects = new List<OptionType>();
+            //var objects = new List<string>();
 
             if (CanMove(fight))
             {
-                objects.Add("Move");
+                objects.Add(OptionType.Move);
+                //objects.Add("Move");
             }
 
             if (HasItems(fight))
             {
-                objects.Add("Items");
+                objects.Add(OptionType.Item);
+                //objects.Add("Items");
             }
 
-            objects.Add("Stay");
+            objects.Add(OptionType.Stay);
+            //objects.Add("Stay");
 
-            var result = objects.Select(o => new Option(o, o)).ToList<IOption>();
+            //TODO : involve converter service to get name of option
+            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = "Choose move action" };
         }
 
@@ -94,13 +107,13 @@ namespace NFCombat2.Services
         public IOptionList GetWeapons(Fight fight, bool alreadyShot)
         {
             var weapons = fight.Player.Weapons
-                .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.MaxRange))
+                .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.EffectiveMaxRange))
                 .Select(w => new Option(w.Label, w))
                 .ToList<IOption>();
             var options =  new OptionList(weapons, true, !alreadyShot) { Label = "Choose a weapon to shoot with" };
             if(alreadyShot)
             {
-                options.Options.Add(new Option("Done",new PlayerActionPass(fight)));
+                options.Options.Add(new Option(OptionType.Done.ToString(),new PlayerActionPass(fight)));
             }
             return options;
         }
@@ -130,13 +143,15 @@ namespace NFCombat2.Services
             var objects = fight.Enemies
                 .Where(e => e.Distance >= minRange && e.Distance <= maxRange)
                 .ToList();
+            string label = maxRange == 0 ? "Choose which enemy to attack" : "Choose which enemy to shoot";
 
             var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
-            return new OptionList(result, false,true) { Label = "Choose which enemy to shoot" };
+            return new OptionList(result, false,true) { Label = label };
         }
         public IOptionList GetEndTurn()
         {
-            var option = new Option("End turn", "End turn");
+
+            var option = new Option("End turn", OptionType.EndTurn);
             var result = new OptionList() { Label = "End turn", CanGoBack = false, IsInfoNeeded = false, Options = new List<IOption> { option } };
             return result;
         }

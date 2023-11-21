@@ -8,7 +8,7 @@
         
 
     <StackLayout BackgroundColor="Black" Padding="20" VerticalOptions="End" >
-        <Label HorizontalOptions="Center" Text="{Binding Message}"/>
+        <Label HorizontalOptions="Center" Text="{Binding Message}" TextColor="Gold"/>
         <!-- Dice collection display -->
         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
             <CollectionView.ItemTemplate>
@@ -19,7 +19,7 @@
                                 <toolkit:IconTintColorBehavior TintColor="Gold" />
                             </Image.Behaviors>
                         </Image>
-                        <Button Text="Reroll" Command="{Binding RerollCommand}" />
+                        <Button Text="Reroll" Command="{Binding RerollCommand}" IsVisible="{Binding Source={x:Reference DiceResult}, Path=BindingContext.CanReroll}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

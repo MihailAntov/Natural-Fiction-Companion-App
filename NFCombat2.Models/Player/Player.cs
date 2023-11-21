@@ -13,7 +13,7 @@ namespace NFCombat2.Models.Player
     public class Player : INotifyPropertyChanged
     {
         
-
+        public int Id { get; set; }
         private string name;
         public string Name
         {
@@ -52,10 +52,13 @@ namespace NFCombat2.Models.Player
                 if(value != health)
                 {
                     value = health;
+                    HealthHasChanged = true;
                     OnPropertyChanged(nameof(Health));
                 }
             }
         }
+
+        public bool HealthHasChanged { get; set; } = false;
         public int BaseMaxHealth { get; set; } = 30;
         public int MaxHealth
         {

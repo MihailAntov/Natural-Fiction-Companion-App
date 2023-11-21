@@ -20,7 +20,7 @@ namespace NFCombat2.Models.Actions
         {
             this.fight = fight;
             MinRange = weapon.MinRange;
-            MaxRange = weapon.MaxRange;
+            MaxRange = weapon.EffectiveMaxRange;
             AreaOfEffect = weapon.AreaOfEffect;
             Weapon = weapon;
             AttackRollResult = DiceCalculator.Calculate(1,AttackDiceMessage).Dice.FirstOrDefault();

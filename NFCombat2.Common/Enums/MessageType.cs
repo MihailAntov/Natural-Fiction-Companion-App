@@ -18,6 +18,7 @@ namespace NFCombat2.Common.Enums
         IsFrozenMessage,
         HealMessage,
         ChangeDistanceMessage,
+        Draw,
         //action messages
         ShootMessage,
         AttackMessage,

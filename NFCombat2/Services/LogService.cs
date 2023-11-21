@@ -13,15 +13,15 @@ namespace NFCombat2.Services
 {
     public class LogService : ILogService
     {
-        private readonly IPlayerService _profileService;
-        private Player _player;
+        private readonly IPlayerService _playerService;
+       
         public ObservableCollection<string> Messages { get; } = new ObservableCollection<string>();
         
 
-        public LogService(IPlayerService profileService)
+        public LogService(IPlayerService playerService)
         {
-            _profileService = profileService;
-            _player = profileService.CurrentPlayer;
+            _playerService = playerService;
+            
         }
 
         private string GetStructure(MessageType type, Language language)
@@ -38,8 +38,9 @@ namespace NFCombat2.Services
         }
 
         public async Task Log(MessageType messageType, params string[] args)
-        { 
-            string structure = GetStructure(messageType, _player.Language);
+        {
+            Language language = _playerService.CurrentPlayer.Language;
+            string structure = GetStructure(messageType, language);
             Messages.Add(String.Format($"  {structure}", args));
         }
 

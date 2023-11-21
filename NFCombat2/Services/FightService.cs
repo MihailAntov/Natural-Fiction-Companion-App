@@ -93,10 +93,11 @@ namespace NFCombat2.Services
 
             var hacker = new Hacker() { Name = "Istvan" };
             var specOps = new SpecOps() { Name = "Hackerman" };
-            hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
-            hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
+            hacker.Weapons.Add(new PlasmaRapier());
+            //hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            //hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new HandGrenade());
-            specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
+            //specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
             specOps.Consumables.Add(new HandGrenade());
             specOps.Equipment.Add(new TacticalGlasses());
             specOps.Techniques.Add(new Feint());
@@ -137,7 +138,7 @@ namespace NFCombat2.Services
             _fight.Turn++;
             string turnAnnouncement = $"Round {_fight.Turn} beginning.";
             _popupService.ShowToast(turnAnnouncement);
-            //display toast for turn end ?
+            
 
         }
 
@@ -224,6 +225,14 @@ namespace NFCombat2.Services
                 var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect);
                 await taskCompletion.Task;
             }
+
+            if(effect is IHaveOpposedRolls meleeCombat)
+            {
+                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat);
+                await attackCompletion.Task;
+                
+            }
+
             await ModifyAction(effect);
             await AddEffect(effect);
         }
@@ -293,36 +302,36 @@ namespace NFCombat2.Services
         {
             IOptionList result = new OptionList();
 
-            if (option is string category)
+            if (option is OptionType category)
             {
                 switch (category)
                 {
-                    case "Programs":
+                    case OptionType.Program:
 
                         result = _optionsService.GetPrograms(_fight);
                         break;
-                    case "Shoot":
+                    case OptionType.Shoot:
                         result = _optionsService.GetWeapons(_fight, false);
                         break;
-                        //TODO figure out shooting with main hand and off hand
-                    case "Attack":
-                        //TODO handle melee combat
-                    case "Stay":
+                    case OptionType.Attack:
+                        result = _optionsService.GetTargets(_fight, 0, 0);
+                        break;
+                    case OptionType.Stay:
                         var stay = new PlayerMovePass(_fight);
                         await AddEffect(stay);
                         return await AfterOption();
-                    case "Do nothing":
+                    case OptionType.DoNothing:
                         var doNothing = new PlayerActionPass(_fight);
                         await AddEffect(doNothing);
                         return await AfterOption();
-                    case "Items":
+                    case OptionType.Item:
                         result = _optionsService.GetItems(_fight);
                         break;
-                    case "Move":
+                    case OptionType.Move:
                         var move = new PlayerGetCloser(_fight);
                         await AddEffect(move);
                         return await AfterOption();
-                    case "End turn":
+                    case OptionType.EndTurn:
                         return await AfterOption();
                 }
                 PreviousOptions = result;
@@ -350,7 +359,7 @@ namespace NFCombat2.Services
             if(option is Weapon weapon)
             {
                 CurrentTargetingEffect = new PlayerRangedAttack(_fight, weapon);
-                var targets = _optionsService.GetTargets(_fight, weapon.MinRange, weapon.MaxRange);
+                var targets = _optionsService.GetTargets(_fight, weapon.MinRange, weapon.EffectiveMaxRange);
                 PreviousOptions = targets;
                 return targets;
                 //todo handle cooldown in turn resolution phase
@@ -358,6 +367,15 @@ namespace NFCombat2.Services
 
             if (option is Enemy target)
             {
+                if(target.Distance == 0)
+                {
+                    var meleeAttack = new PlayerMeleeAttack(_fight, target);
+                    await HandleRolls(meleeAttack);
+                    return await AfterOption();
+                    
+                }
+
+
                 CurrentTargetingEffect.Targets.Add(target);
                 var effect = (ICombatAction)CurrentTargetingEffect;
                 await HandleRolls(effect);

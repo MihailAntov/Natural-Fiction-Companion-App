@@ -6,20 +6,14 @@ namespace NFCombat2.Pages;
 
 public partial class CharacterPage : ContentPage
 {
-	public CharacterPage(IPlayerService profileService)
+	public CharacterPage(IPlayerService profileService, IPopupService popupSerivce)
 	{
 		InitializeComponent();
-		BindingContext = new CharacterPageViewModel(profileService);
+		BindingContext = new CharacterPageViewModel(profileService, popupSerivce);
 	}
 	
 
-	public async void ChangedClass(object sender, EventArgs e)
-	{
-        if(BindingContext is CharacterPageViewModel viewModel)
-		{
-			viewModel.ChangedClass();
-		}
-    }
+	
 
 	public async void ChangedProfile(object sender, EventArgs e)
 	{
