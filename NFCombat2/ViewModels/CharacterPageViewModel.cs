@@ -66,6 +66,7 @@ namespace NFCombat2.ViewModels
                 {
                     _player = value;
                     OnPropertyChanged(nameof(Player));                    
+                    OnPropertyChanged(nameof(Player.Health));                    
                 }
             }
         }

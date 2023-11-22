@@ -25,9 +25,7 @@ public partial class CharacterPage : ContentPage
 				{
 					viewModel.ProcessChoice(picker.SelectedItem);
 				}
-
-			}
-            
+			}      
         }
     }
 

@@ -49,9 +49,9 @@ namespace NFCombat2.Models.Player
                     value = 0;
                 }
 
-                if(value != health)
+                if(health != value)
                 {
-                    value = health;
+                    health = value;
                     HealthHasChanged = true;
                     OnPropertyChanged(nameof(Health));
                 }

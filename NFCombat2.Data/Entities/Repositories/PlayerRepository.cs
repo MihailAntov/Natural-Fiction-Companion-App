@@ -80,9 +80,16 @@ namespace NFCombat2.Data.Entities.Repositories
 
             try
             {
-                profiles = (await connection.Table<PlayerEntity>().ToListAsync())
-                    .Select(_mapper.Map<Player>)
-                    .ToList();
+                
+                //profiles = (await connection.Table<PlayerEntity>().ToListAsync())
+                //    .Select(_mapper.Map<Player>)
+                //    .ToList();
+
+                var entities = await connection.Table<PlayerEntity>().ToListAsync();
+                foreach(var entity in entities)
+                {
+                    profiles.Add(entity.)
+                }
                     
             }
             catch (Exception ex)

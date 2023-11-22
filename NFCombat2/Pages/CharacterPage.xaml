@@ -15,15 +15,23 @@
         </Picker>
         <Button Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
 
-        <!--<Label Text="{Binding Source={x:Reference Character}, Path=BindingContext.Player.Name}"/>-->
         <Label Text="{Binding Player.Name}"/>
 
-        <StackLayout BindableLayout.ItemsSource="{Binding Player}">
-            <Image Source=""/>
-            <Label Text="{Binding Health}"/>
-            <Slider  Minimum="0" Maximum="30" Value="{Binding Health}"/>
-            <Stepper Minimum="0" Maximum="99"/>
-        </StackLayout>
+        <Grid BindableLayout.ItemsSource="{Binding Player}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="75"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="healthcare"/>
+            <Label Grid.Column="1" Text="{Binding Player.Health}"/>
+            <Slider Grid.Column="2"  Minimum="0" Maximum="30" Value="{Binding Player.Health, Mode=TwoWay}"/>
+            <Stepper Grid.Column="3" Minimum="0" Maximum="99"/>
+        </Grid>
 
         <StackLayout>
             <Label Text="{Binding TraumaValue}"/>
