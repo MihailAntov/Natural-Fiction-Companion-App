@@ -15,8 +15,8 @@ namespace NFCombat2.ViewModels
         private IPlayerService _playerService;
         private IPopupService _popupService;
         private Player _player;
+        
         public Command AddNewProfileCommand { get; set; }
-        public int SelectedIndex { get; }
         public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService)
         {
             _playerService = playerService;
@@ -24,6 +24,7 @@ namespace NFCombat2.ViewModels
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             Player = _playerService.CurrentPlayer;
+            SelectedItem = _playerService.CurrentPlayer;
         }
 
         private double _hpValue;
@@ -42,6 +43,16 @@ namespace NFCombat2.ViewModels
 
             }
         }
+        private Player _selectedItem { get; set; }
+        public Player SelectedItem { get { return _selectedItem; } set 
+            {
+                if(_selectedItem != value) 
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
 
         public Player Player
         {
@@ -54,8 +65,7 @@ namespace NFCombat2.ViewModels
                 if(_player != value) 
                 {
                     _player = value;
-                    OnPropertyChanged(nameof(Player));
-                    OnPropertyChanged(nameof(_playerService.CurrentPlayer));
+                    OnPropertyChanged(nameof(Player));                    
                 }
             }
         }
@@ -63,15 +73,16 @@ namespace NFCombat2.ViewModels
         
 
         public ObservableCollection<Player> Profiles => new ObservableCollection<Player>(GetAllProfiles());
-        public async Task CreateNewProfile(Popup popup)
-        {
-            
-        }
 
         public async Task AddProfile()
         {
-            await _popupService.ShowAddProfilePopup();
+            var taskCompletionSource = await _popupService.ShowAddProfilePopup();
+            var player = await taskCompletionSource.Task;
+            await SwitchToProfile(player);
+
             OnPropertyChanged(nameof(Profiles));
+            
+            
         }
 
         
@@ -83,11 +94,12 @@ namespace NFCombat2.ViewModels
             return profiles;
         }
 
-        public async void ProcessChoice(object sender)
+        public async void ProcessChoice(object newItem)
         {
-            if(sender is Picker picker)
+            
+            if(newItem is Player player)
             {
-                await SwitchToProfile((Player)picker.SelectedItem);
+                await SwitchToProfile(player);
             }
 
             
@@ -95,6 +107,8 @@ namespace NFCombat2.ViewModels
         public async Task SwitchToProfile(Player player)
         {
             await _playerService.SwitchActiveProfile(player);
+            OnPropertyChanged(nameof(Profiles));
+            SelectedItem = player;
             
         }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Models.Player;
 using SQLite;
@@ -38,30 +39,32 @@ namespace NFCombat2.Data.Entities.Repositories
             _mapper = mapper;
         }
 
-        public async Task<bool> AddNewProfile(string name)
+        public async Task<Player?> AddNewProfile(Player player)
         {
             int result = 0;
+            await Init();
             await Task.Run(async () =>
             {
                 try
                 {
-                    await Init();
+                    
 
                     // basic validation to ensure a name was entered
-                    if (string.IsNullOrEmpty(name))
+                    if (string.IsNullOrEmpty(player.Name))
                         throw new Exception("Valid name required");
+                    
+                    
+                    result = await connection.InsertAsync(new PlayerEntity { Name = player.Name, Class = player.Class });
 
-                    result = await connection.InsertAsync(new PlayerEntity { Name = name });
-
-                    StatusMessage = string.Format("{0} record(s) added (Name: {1})", result, name);
+                    StatusMessage = string.Format("{0} record(s) added (Name: {1})", result, player.Name);
                 }
                 catch (Exception ex)
                 {
-                    StatusMessage = string.Format("Failed to add {0}. Error: {1}", name, ex.Message);
+                    StatusMessage = string.Format("Failed to add {0}. Error: {1}", player.Name, ex.Message);
                 }
             });
 
-            return result == 1;
+            return result == 1 ? player : null;
         }
 
         public async Task UpdateProfile(PlayerEntity player)

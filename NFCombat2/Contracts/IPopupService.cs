@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Player;
 
 namespace NFCombat2.Contracts
 {
@@ -12,7 +13,7 @@ namespace NFCombat2.Contracts
         Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect);
         Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect);
         Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect);
-        Task<TaskCompletionSource<bool>> ShowAddProfilePopup();
+        Task<TaskCompletionSource<Player>> ShowAddProfilePopup();
         Task<TaskCompletionSource<IAddable>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
     }
 }

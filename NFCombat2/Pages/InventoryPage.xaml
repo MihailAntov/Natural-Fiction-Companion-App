@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.InventoryPage"
              xmlns:views="clr-namespace:NFCombat2.Views"
-             Title="Inventory">
+             Title="{Binding Title}">
     <VerticalStackLayout>
 
+        
         <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item"/>
         <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment"/>
         <Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>

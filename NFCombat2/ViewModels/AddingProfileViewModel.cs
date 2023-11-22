@@ -1,6 +1,8 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
+using NFCombat2.Models.Player;
 using System.Xml.Linq;
 
 namespace NFCombat2.ViewModels
@@ -9,19 +11,22 @@ namespace NFCombat2.ViewModels
     {
         public Command RegisterCommand { get; set; }
         private readonly IPlayerService _playerService;
-        private TaskCompletionSource<bool> _taskCompletionSource;
+        private TaskCompletionSource<Player> _taskCompletionSource;
 
-        public AddingProfileViewModel(IPlayerService playerService, TaskCompletionSource<bool> taskCompletionSource)
+        public AddingProfileViewModel(IPlayerService playerService, TaskCompletionSource<Player> taskCompletionSource)
         {
-            RegisterCommand = new Command<string>(async (name) => await RegisterProfile(name));
+            RegisterCommand = new Command<Player>(async (player) => await RegisterProfile(player));
             _playerService = playerService;
             _taskCompletionSource = taskCompletionSource;
+            PlayerClasses = playerService.GetClassOptions();
         }
 
-        public async Task RegisterProfile(string name)
+        public List<PlayerClass> PlayerClasses { get; set; }
+        public async Task RegisterProfile(Player player)
         {
+            var result = await _playerService.Save(player);
+            _taskCompletionSource.SetResult(result);
 
-            _taskCompletionSource.SetResult(await _playerService.Save(name));
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");
         }
 

@@ -89,10 +89,11 @@ namespace NFCombat2.Services
             toast.Show();
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowAddProfilePopup()
+        public async Task<TaskCompletionSource<Player>> ShowAddProfilePopup()
         {
-            TaskCompletionSource<bool> task = new TaskCompletionSource<bool>();
+            TaskCompletionSource<Player> task = new TaskCompletionSource<Player>();
             var viewmodel = new AddingProfileViewModel(_playerService, task);
+
             var popup = new AddingProfileView(viewmodel);
             ShowPopup(popup);
             await task.Task;

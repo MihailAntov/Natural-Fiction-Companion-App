@@ -19,7 +19,16 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
         private readonly IItemService _itemService;
         private readonly IPopupService _popupService;
-
+        private string _title;
+        public string Title { get { return _title; } set 
+            {
+                if(_title != value)
+                {
+                    _title = value;
+                    OnPropertyChanged(nameof(Title));
+                }
+            } 
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
         public InventoryPageViewModel(IPlayerService playerService, IItemService itemService, IPopupService popupService)
@@ -31,6 +40,7 @@ namespace NFCombat2.ViewModels
             _itemService = itemService;
             AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
             _popupService = popupService;
+            Title = $"{Player.Name}'s inventory";
 
         }
         public Player Player { get; set; }
@@ -107,6 +117,7 @@ namespace NFCombat2.ViewModels
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
             {
                 Player = _playerService.CurrentPlayer;
+                Title = $"{Player.Name}'s inventory";
                 Equipment.Clear();
                 foreach(var item in Player.Equipment)
                 {

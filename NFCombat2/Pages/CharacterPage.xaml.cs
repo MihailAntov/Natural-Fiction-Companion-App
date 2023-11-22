@@ -19,7 +19,14 @@ public partial class CharacterPage : ContentPage
 	{
         if (BindingContext is CharacterPageViewModel viewModel)
         {
-			viewModel.ProcessChoice(sender);
+			if(sender is Picker picker)
+			{
+				if(picker.SelectedItem != null)
+				{
+					viewModel.ProcessChoice(picker.SelectedItem);
+				}
+
+			}
             
         }
     }

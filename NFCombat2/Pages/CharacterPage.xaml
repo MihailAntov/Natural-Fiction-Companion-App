@@ -8,7 +8,7 @@
 
         <Picker x:Name="Profile"
         Title="Choose a profile"
-                SelectedIndex="{Binding SelectedIndex}"
+        SelectedItem="{Binding SelectedItem}"
         SelectedIndexChanged="ChangedProfile"
         ItemsSource="{Binding Profiles}"
         ItemDisplayBinding="{Binding Name}">
@@ -18,18 +18,25 @@
         <!--<Label Text="{Binding Source={x:Reference Character}, Path=BindingContext.Player.Name}"/>-->
         <Label Text="{Binding Player.Name}"/>
 
+        <StackLayout BindableLayout.ItemsSource="{Binding Player}">
+            <Image Source=""/>
+            <Label Text="{Binding Health}"/>
+            <Slider  Minimum="0" Maximum="30" Value="{Binding Health}"/>
+            <Stepper Minimum="0" Maximum="99"/>
+        </StackLayout>
 
-
-        <Stepper Minimum="0" Maximum="5" WidthRequest="90"  />
-        <Label 
-Text="Items go here"
-VerticalOptions="Center" 
-HorizontalOptions="Center" />
         <StackLayout>
-            <Label Text="{Binding HpValue}"/>
-            <Slider  Minimum="0" Maximum="30" Value="{Binding HpValue}"/>
+            <Label Text="{Binding TraumaValue}"/>
+            <Slider  Minimum="0" Maximum="30" Value="{Binding TraumaValue}"/>
             <Stepper Minimum="0" Maximum="30"/>
         </StackLayout>
+
+        <StackLayout>
+            <Label Text="{Binding PathogenValue}"/>
+            <Slider  Minimum="0" Maximum="30" Value="{Binding PathogenValue}"/>
+            <Stepper Minimum="0" Maximum="30"/>
+        </StackLayout>
+
 
     </VerticalStackLayout>
 

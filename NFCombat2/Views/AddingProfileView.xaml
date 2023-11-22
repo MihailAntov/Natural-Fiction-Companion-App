@@ -2,27 +2,37 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.AddingProfileView">
     <VerticalStackLayout>
-        
-        
-        <Picker x:Name="Class"
+
+
+        <Picker x:Name="PlayerClass"
                 Title="Select a class"
-                SelectedIndexChanged="ChangedClass">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Войник</x:String>
-                    <x:String>Инженер</x:String>
-                    <x:String>Хакер</x:String>
-                    <x:String>Специален Отряд</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
+                ItemsSource="{Binding PlayerClasses}"
+                SelectedIndexChanged="ChangedClass"
+                ItemDisplayBinding="{Binding}">
         </Picker>
 
 
-        <Label Text="Profile Name"/>
+        <Label Text="Player Name"/>
+        <Entry x:Name="PlayerName" Placeholder="Enter Name" Text=""/>
+        <Button Text="Add Profile" Command="{Binding RegisterCommand}" >
+            <Button.CommandParameter>
+                <MultiBinding Converter="{helpers:PlayerConverter}">
+                    <MultiBinding.Bindings>
+                        <Binding Path="Text" Source="{x:Reference PlayerName}"/>
+                        <Binding Path="SelectedItem" Source="{x:Reference PlayerClass}"/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+
+        <!--<Label Text="Profile Name"/>
         <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
         <Button Text="Add Profile" Command="{Binding RegisterCommand}" CommandParameter="{Binding Source={x:Reference ProfileName}, Path=Text}"/>
+        <Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>-->
+
         <Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>
     </VerticalStackLayout>
 </toolkit:Popup>

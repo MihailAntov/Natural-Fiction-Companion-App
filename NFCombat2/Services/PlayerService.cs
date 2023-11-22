@@ -26,6 +26,7 @@ namespace NFCombat2.Services
             _repository = repository;
             _settings = settings;
             _mapper = mapper;
+            CurrentPlayer = Task<Player>.Run(() => _repository.GetAllProfiles()).Result.FirstOrDefault();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,9 +68,15 @@ namespace NFCombat2.Services
             return player;
         }
 
-        public async Task<bool> Save(string name)
+        public async Task<Player> Save(Player player)
         {
-            return await _repository.AddNewProfile(name);
+            var success = await _repository.AddNewProfile(player);
+            if(success == null)
+            {
+                throw new InvalidDataException();
+            }
+            
+            return success;
         }
 
         public async Task SwitchActiveProfile(Player player)
@@ -80,6 +87,7 @@ namespace NFCombat2.Services
                await _settings.UpdateCurrentPlayer(player.Id);
 
             });
+            
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
@@ -118,6 +126,17 @@ namespace NFCombat2.Services
             }
 
             CurrentPlayer.Weapons[(int)hand] = weapon;
+        }
+
+        public List<PlayerClass> GetClassOptions()
+        {
+            var list = new List<PlayerClass>();
+            list.Add(PlayerClass.None);
+            list.Add(PlayerClass.Hacker);
+            list.Add(PlayerClass.Engineer);
+            list.Add(PlayerClass.Soldier);
+            list.Add(PlayerClass.SpecOps);
+            return list;
         }
     }
 }

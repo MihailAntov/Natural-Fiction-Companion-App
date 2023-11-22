@@ -80,7 +80,7 @@ namespace NFCombat2.Models.Player
 
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers => Equipment.OfType<IModifyResolution>().ToList();
-
+        public PlayerClass Class { get; set; } = PlayerClass.None;
         public IList<Part> Parts { get; set; } = new List<Part>();
         public int Trauma { get; set; } = 0;
         public int MaxTrauma { get; set; } = 3;
