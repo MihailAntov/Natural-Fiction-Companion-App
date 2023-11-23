@@ -8,12 +8,16 @@ namespace NFCombat2.Contracts
 {
     public interface IPlayerService
     {
-        public Task<Player> Save(Player player);
-        public Task<IList<Player>> GetAll();
+        public Task<Player> UpdatePlayer(Player player);
+        public Task<IList<Player>> GetAllPlayers();
         public Player CurrentPlayer { get; set; }
-        public Task SwitchActiveProfile(Player player);
+        public Task SwitchActivePlayer(Player player);
         public event PropertyChangedEventHandler PropertyChanged;
-        public Task AddToPlayer(IAddable item);
+        public Task AddItemToPlayer(IAddable item);
         public List<PlayerClass> GetClassOptions();
+
+        Task<ICollection<IAddable>> GetAllItems();
+        Task<ICollection<IAddable>> GetAllWeapons();
+        Task<ICollection<IAddable>> GetAllEquipment();
     }
 }

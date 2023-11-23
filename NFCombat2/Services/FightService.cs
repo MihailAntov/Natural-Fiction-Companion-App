@@ -46,6 +46,7 @@ namespace NFCombat2.Services
             if (!_fightRepository.Seeded)
             {
                 _seederService = seederService;
+                
                 _seederService.SeedFights();
             }
         }

@@ -36,39 +36,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         
 
-        public async Task InsertRange<ItemEntity>(IEnumerable<ItemEntity> items)
-        {
-            Init();
-            await connection.InsertAllAsync(items);
-        }
-
-        public async Task<int> DeleteAll()
-        {
-            Init();
-            return await connection.DropTableAsync<ItemEntity>();
-
-        }
-        public async Task<ItemEntity> Get(int id)
-        {
-            Init();
-            return await connection.GetAsync<ItemEntity>(id);
-        }
-
-        public async Task<IEnumerable<ItemEntity>> GetCategory(ItemCategory category)
-        {
-            Init();
-            return await connection
-                .Table<ItemEntity>()
-                .Where(i => i.Category == category)
-                .ToListAsync();
-
-        }
-
-        public async Task<ICollection<ItemEntity>> GetAll()
-        {
-            Init();
-            return await connection.Table<ItemEntity>().ToListAsync();
-        }
+        
 
     }
 }

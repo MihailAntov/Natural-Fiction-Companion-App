@@ -21,14 +21,23 @@ namespace NFCombat2.Services
         private SettingsRepository _settings;
         private IMapper _mapper;
         private Player _player;
-        public PlayerService(PlayerRepository repository, SettingsRepository settings, IMapper mapper)
+        private ISeederService _seederService;
+        public PlayerService(PlayerRepository repository,
+            SettingsRepository settings,
+            IMapper mapper,
+            ISeederService seederService)
         {
             _repository = repository;
             _settings = settings;
             _mapper = mapper;
             GetDefaultPlayer();
+            if (!repository.Seeded)
+            {
             
-            
+                _seederService = seederService;
+                _seederService.SeedItems();
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -57,33 +66,33 @@ namespace NFCombat2.Services
             }
         }
 
-        public async Task<IList<Player>> GetAll()
+        public async Task<IList<Player>> GetAllPlayers()
         {
             
-            return await _repository.GetAllProfiles();
+            var players =  await _repository.GetAllProfiles();
+            return players;
         }
 
         public async void GetDefaultPlayer()
         {
             int currentPlayerId = await _settings.CurrentPlayerId();
             
-            Player player = await GetById(currentPlayerId);
+            Player player = await GetPlayerById(currentPlayerId);
             if(player == null)
             {
-                player = (await GetAll()).FirstOrDefault();
+                player = (await GetAllPlayers()).FirstOrDefault();
             }
-
             CurrentPlayer = player;
             
         }
 
-        public async Task<Player> GetById(int id)
+        public async Task<Player> GetPlayerById(int id)
         {
-            var player = await _repository.GetById(id);
+            var player = await _repository.GetPlayerById(id);
             return player;
         }
 
-        public async Task<Player> Save(Player player)
+        public async Task<Player> UpdatePlayer(Player player)
         {
             var success = await _repository.AddNewProfile(player);
             if(success == null)
@@ -94,9 +103,9 @@ namespace NFCombat2.Services
             return success;
         }
 
-        public async Task SwitchActiveProfile(Player player)
+        public async Task SwitchActivePlayer(Player player)
         {
-            CurrentPlayer = player;
+            CurrentPlayer = await GetPlayerById(player.Id);
             await Task.Run(async () =>
             {
                await _settings.UpdateCurrentPlayer(player.Id);
@@ -108,7 +117,7 @@ namespace NFCombat2.Services
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        public async Task AddToPlayer(IAddable option)
+        public async Task AddItemToPlayer(IAddable option)
         {
             if(option is Weapon weapon)
             {
@@ -120,6 +129,7 @@ namespace NFCombat2.Services
             if(option is Equipment equipment)
             {
                 CurrentPlayer.Equipment.Add(equipment);
+                await _repository.UpdatePlayer(_player);
                 return;
             }
 
@@ -155,5 +165,30 @@ namespace NFCombat2.Services
             list.Add(PlayerClass.SpecOps);
             return list;
         }
+
+        public Task<ICollection<IAddable>> GetAllEquipment()
+        {
+            return GetAllItemsByCategory(ItemCategory.Equipment);
+        }
+
+        public Task<ICollection<IAddable>> GetAllItems()
+        {
+            return GetAllItemsByCategory(ItemCategory.Item);
+        }
+
+        public Task<ICollection<IAddable>> GetAllWeapons()
+        {
+            return GetAllItemsByCategory(ItemCategory.Weapon);
+        }
+
+        private async Task<ICollection<IAddable>> GetAllItemsByCategory(ItemCategory category)
+        {
+
+            var entities = await _repository.GetItemsByCategory(category);
+
+            return entities;
+        }
+
+        
     }
 }

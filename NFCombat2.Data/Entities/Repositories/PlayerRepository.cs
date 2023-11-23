@@ -1,6 +1,11 @@
 ﻿using AutoMapper;
 using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
+using NFCombat2.Data.Entities.Items;
+using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Items;
+using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Player;
 using SQLite;
 using System;
@@ -14,6 +19,7 @@ namespace NFCombat2.Data.Entities.Repositories
         private SQLiteAsyncConnection connection = null!;
         private IMapper _mapper;
         public string StatusMessage { get; set; } = string.Empty;
+        public bool Seeded { get; set; } = false;
         private async Task Init()
         {
             if (connection != null)
@@ -23,13 +29,16 @@ namespace NFCombat2.Data.Entities.Repositories
             connection = new SQLiteAsyncConnection(_dbPath);
             
             await connection.CreateTableAsync<PlayerEntity>();
-            //await connection.CreateTableAsync<PlayersItemsEntity>();
+            await connection.CreateTableAsync<PlayersItemsEntity>();
+            await connection.CreateTableAsync<ItemEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
             {
                 if(await connection.Table<PlayerEntity>().CountAsync() > 0) 
                 {
+                    Seeded = true;
                     //await connection.DropTableAsync<PlayerEntity>();
+                    //await connection.DropTableAsync<PlayersItemsEntity>();
                     //TODO remove this, only used to clear db for testing
                 }
             }
@@ -39,6 +48,7 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             _dbPath = dbPath;
             _mapper = mapper;
+            Init();
         }
 
         public async Task<Player?> AddNewProfile(Player player)
@@ -82,19 +92,18 @@ namespace NFCombat2.Data.Entities.Repositories
             
             foreach(var item in player.Items)
             {
-                PlayersItemsEntity mappingEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = 1 };
+                PlayersItemsEntity playersItems = null!;
                 try
                 {
-                    var exists = await connection.GetAsync<PlayersItemsEntity>(new { mappingEntity.PlayerId, mappingEntity.ItemId});
+                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps=>  ps.PlayerId == player.Id && ps.ItemId == item.Id);
                 }
                 catch
                 {
-                    await connection.InsertOrReplaceAsync(mappingEntity);
+                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id});
                     continue;
                 }
-                mappingEntity.Quantity++;
-                await connection.UpdateAsync(mappingEntity);
-
+                playersItems.Quantity++;
+                await connection.UpdateAsync(playersItems);
             }
 
             await UpdateEntity(entity);
@@ -103,14 +112,38 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task<List<Player>> GetAllProfiles()
         {
             await Init();
-            List<Player> profiles = new List<Player>();
+            List<Player> players = new List<Player>();
 
             try
             {
 
-                profiles = (await connection.Table<PlayerEntity>().ToListAsync())
+                players = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .ToList();
+                foreach(var player in players)
+                {
+                    var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+                    foreach(var playersItemsEntity in playersItemsEntities)
+                    {
+                        var allitems = await connection.Table<ItemEntity>().ToListAsync();
+                        var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
+                        var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+                        var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
+                        switch (entity.Category)
+                        {
+                            case ItemCategory.Item:
+                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
+                                break;
+                            case ItemCategory.Weapon:
+                                player.Weapons.Add((Weapon)ItemConverter(entity.Type, entity.Category));
+                                break;
+                            case ItemCategory.Equipment:
+                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));
+                                break;
+                        }
+                    }
+                }
+                
 
 
 
@@ -119,12 +152,12 @@ namespace NFCombat2.Data.Entities.Repositories
             {
                 StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
             }
+            
 
-
-            return profiles;
+            return players;
         }
 
-        public async Task<Player?> GetById(int id)
+        public async Task<Player?> GetPlayerById(int id)
         {
            await Init();
             try
@@ -132,7 +165,31 @@ namespace NFCombat2.Data.Entities.Repositories
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .FirstOrDefault(p => p.Id == id);
-                return player;
+                var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+                if (player != null)
+                {
+                    foreach (var playersItemsEntity in playersItemsEntities)
+                    {
+                        var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
+                        switch (entity.Category)
+                        {
+                            case ItemCategory.Item:
+                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
+                                break;
+                            case ItemCategory.Weapon:
+                                player.Weapons.Add((Weapon)ItemConverter(entity.Type, entity.Category));
+                                break;
+                            case ItemCategory.Equipment:
+                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));
+                                break;
+                        }
+
+                        
+                }
+                    return player;
+                }
+                
+                
             }
             catch(Exception ex)
             {
@@ -142,6 +199,88 @@ namespace NFCombat2.Data.Entities.Repositories
             return null;
         }
 
-        
+        public async Task InsertRange<ItemEntity>(IEnumerable<ItemEntity> items)
+        {
+            await Init();
+            await connection.InsertAllAsync(items);
+        }
+
+        public async Task<int> DeleteAllItems()
+        {
+            await Init();
+            int result = 0;
+            result +=  await connection.DropTableAsync<ItemEntity>();
+            await connection.CreateTableAsync<ItemEntity>();
+            result += await connection.DropTableAsync<PlayersItemsEntity>();
+            await connection.CreateTableAsync<PlayersItemsEntity>();
+            return result;
+
+        }
+        public async Task<IAddable> GetItemById(int id)
+        {
+            await Init();
+            var entity =  await connection.GetAsync<ItemEntity>(id);
+            return ItemConverter(entity.Type, entity.Category);
+        }
+
+        public async Task<ICollection<IAddable>> GetItemsByCategory(ItemCategory category)
+        {
+            await Init();
+            var entities = await connection.Table<ItemEntity>().Where(i=> i.Category == category).ToListAsync();
+            List<IAddable> items = new List<IAddable>();
+            foreach (var entity in entities)
+            {
+                var item = ItemConverter(entity.Type, entity.Category);
+                if (entity.Id.HasValue)
+                {
+                    item.Id = entity.Id.Value;
+                }
+
+                items.Add(item);
+                //TODO : figure out a way to transfer id
+            }
+            return items;
+
+        }
+
+        public async Task<ICollection<IAddable>> GetAllItems()
+        {
+            await Init();
+            var entities = await connection.Table<ItemEntity>().ToListAsync();
+            List<IAddable> items = new List<IAddable>();
+            foreach(var entity in entities)
+            {
+                items.Add(ItemConverter(entity.Type, entity.Category));
+            }
+            return items;
+        }
+
+        private IAddable ItemConverter(ItemType type, ItemCategory category)
+        {
+            
+            
+            string typeName = type.ToString();
+            string[] itemLocations = new string[] { "Equipments", "Items", "ActiveEquipments", "Weapons" };
+
+
+            foreach (var itemLocation in itemLocations)
+            {
+                string fullTypeName = $"NFCombat2.Models.Items.{itemLocation}.{typeName}, NFCombat2.Models";
+                Type itemType = Type.GetType(fullTypeName);
+                if (itemType != null)
+                {
+                    var item = Activator.CreateInstance(itemType);
+
+                    return (Item)item;
+                }
+            }
+
+            var item2 = Activator.CreateInstance(typeof(GrenadeLauncher));
+            return (Item)item2;
+        }
+
+
+
+
     }
 }

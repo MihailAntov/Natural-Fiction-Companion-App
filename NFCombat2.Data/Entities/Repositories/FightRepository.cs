@@ -32,6 +32,8 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             if (connection != null)
             {
+                await connection.CreateTableAsync<FightEntity>();
+                await connection.CreateTableAsync<EnemyEntity>();
                 return;
             }
             connection = new SQLiteAsyncConnection(_dbPath);

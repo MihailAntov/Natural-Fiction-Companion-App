@@ -8,20 +8,20 @@ namespace NFCombat2.Services
     public class SeederService : ISeederService
     {
         private FightRepository _fightRepository;
-        private ItemRepository _itemRepository;
-        public SeederService(FightRepository fightRepository, ItemRepository itemRepository)
+        private PlayerRepository _playerRepository;
+        public SeederService(FightRepository fightRepository, PlayerRepository playerRepository)
         {
             _fightRepository = fightRepository;
-            _itemRepository = itemRepository;
+            _playerRepository = playerRepository;
         }
         public void SeedFights()
         {
-            ItemRepositorySeeder.SeedRepository(_itemRepository);
+            FightRepositorySeeder.SeedRepository(_fightRepository);
         }
 
         public void SeedItems()
         {
-            FightRepositorySeeder.SeedRepository(_fightRepository);
+            ItemRepositorySeeder.SeedRepository(_playerRepository);
         }
     }
 }

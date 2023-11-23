@@ -6,5 +6,6 @@ namespace NFCombat2.Models.Contracts
     {
         string Name { get; }
         bool IsInvention { get; set; }
+        public int Id { get; set; }
     }
 }

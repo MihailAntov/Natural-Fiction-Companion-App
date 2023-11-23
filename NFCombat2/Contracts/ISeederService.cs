@@ -6,5 +6,6 @@ namespace NFCombat2.Contracts
     {
         public void SeedItems();
         public void SeedFights();
+
     }
 }

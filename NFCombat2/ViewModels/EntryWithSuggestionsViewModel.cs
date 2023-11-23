@@ -54,7 +54,7 @@ namespace NFCombat2.ViewModels
         {
             if(option is IAddable entry)
             {
-                await _playerService.AddToPlayer(entry);
+                await _playerService.AddItemToPlayer(entry);
                 _taskCompletionSource.SetResult(entry);
             }
             AreSuggestionsVisible = false;

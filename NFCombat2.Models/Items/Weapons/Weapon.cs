@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Items.Weapons
     public abstract class Weapon : IAddable
     {
         public abstract Accuracy Accuracy { get; set; }
+        public int Id { get; set; }
         public int BonusAccuracy {get; set;}
         public Accuracy EffectiveAccuracy => Accuracy + BonusAccuracy;
         public abstract string Label { get; set; }

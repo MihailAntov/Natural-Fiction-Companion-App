@@ -24,7 +24,7 @@ namespace NFCombat2.ViewModels
         public List<PlayerClass> PlayerClasses { get; set; }
         public async Task RegisterProfile(Player player)
         {
-            var result = await _playerService.Save(player);
+            var result = await _playerService.UpdatePlayer(player);
             _taskCompletionSource.SetResult(result);
 
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");

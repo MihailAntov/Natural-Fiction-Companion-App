@@ -25,6 +25,8 @@ namespace NFCombat2.ViewModels
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             Player = _playerService.CurrentPlayer;
             SelectedItem = _playerService.CurrentPlayer;
+            LoadPlayersAsync();
+            
         }
 
         private double _hpValue;
@@ -87,7 +89,7 @@ namespace NFCombat2.ViewModels
         
         
 
-        public ObservableCollection<Player> Profiles => new ObservableCollection<Player>(GetAllProfiles());
+        public ObservableCollection<Player> Profiles {get; set;}
 
         public async Task AddProfile()
         {
@@ -102,11 +104,11 @@ namespace NFCombat2.ViewModels
 
         
 
-        public IList<Player> GetAllProfiles()
+        public async void LoadPlayersAsync()
         {
-            var profiles = Task<Player>.Run(()=> 
-                 _playerService.GetAll()).Result;
-            return profiles;
+            var players = await _playerService.GetAllPlayers();
+            Profiles = new ObservableCollection<Player>(players);
+            
         }
 
         public async void ProcessChoice(object newItem)
@@ -121,7 +123,7 @@ namespace NFCombat2.ViewModels
         }
         public async Task SwitchToProfile(Player player)
         {
-            await _playerService.SwitchActiveProfile(player);
+            await _playerService.SwitchActivePlayer(player);
             OnPropertyChanged(nameof(Profiles));
             SelectedItem = player;
             

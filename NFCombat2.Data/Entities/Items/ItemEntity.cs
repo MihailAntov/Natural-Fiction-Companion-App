@@ -7,7 +7,7 @@ namespace NFCombat2.Data.Entities.Items
     public class ItemEntity
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         
         public ItemType Type { get; set; }
         public ItemCategory Category { get; set; }

@@ -17,7 +17,6 @@ namespace NFCombat2.ViewModels
     public class InventoryPageViewModel : INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
-        private readonly IItemService _itemService;
         private readonly IPopupService _popupService;
         private string _title;
         public string Title { get { return _title; } set 
@@ -31,13 +30,12 @@ namespace NFCombat2.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
-        public InventoryPageViewModel(IPlayerService playerService, IItemService itemService, IPopupService popupService)
+        public InventoryPageViewModel(IPlayerService playerService, IPopupService popupService)
         {
             _playerService = playerService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
-            _itemService = itemService;
             AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
             _popupService = popupService;
             Title = $"{Player.Name}'s inventory";
@@ -70,15 +68,15 @@ namespace NFCombat2.ViewModels
 
         private async Task<ICollection<IAddable>> LoadItemsAsync()
         {
-            return await _itemService.GetAllItems();
+            return await _playerService.GetAllItems();
         }
         private async Task<ICollection<IAddable>> LoadWeaponsAsync()
         {
-            return await _itemService.GetAllWeapons();
+            return await _playerService.GetAllWeapons();
         }
         private async Task<ICollection<IAddable>> LoadEquipmentAsync()
         {
-            return await _itemService.GetAllEquipment();
+            return await _playerService.GetAllEquipment();
         }
 
         public void AddToObservalbeCollection(IAddable added)

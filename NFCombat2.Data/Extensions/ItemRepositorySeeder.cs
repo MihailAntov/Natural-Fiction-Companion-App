@@ -7,9 +7,10 @@ namespace NFCombat2.Data.Extensions
 {
     public static class ItemRepositorySeeder
     {
-        public static async void SeedRepository(ItemRepository repository)
+        public static async void SeedRepository(PlayerRepository repository)
         {
-            await repository.DeleteAll();
+            await repository.DeleteAllItems();
+
             var items = new List<ItemEntity>()
             {
                 //equipments
