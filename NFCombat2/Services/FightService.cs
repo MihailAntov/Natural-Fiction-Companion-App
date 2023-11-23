@@ -20,19 +20,22 @@ namespace NFCombat2.Services
     public class FightService : IFightService
     {
         private Fight _fight;
+        
         private readonly ILogService _logService;
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
         private readonly IAccuracyService _accuracyService;
         private readonly FightRepository _fightRepository;
         private readonly IPlayerService _playerService;
+        private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
             IOptionsService optionsService, 
             IPopupService popupService, 
             IAccuracyService accuracyService, 
             FightRepository fightRepository,
-            IPlayerService playerService)
+            IPlayerService playerService,
+            ISeederService seederService)
         {
             _logService = logService;
             _optionsService = optionsService;
@@ -40,6 +43,11 @@ namespace NFCombat2.Services
             _accuracyService = accuracyService;
             _fightRepository = fightRepository;
             _playerService = playerService;
+            if (!_fightRepository.Seeded)
+            {
+                _seederService = seederService;
+                _seederService.SeedFights();
+            }
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
@@ -91,8 +99,8 @@ namespace NFCombat2.Services
             };
             enemies.Add(targetDummy);
 
-            var hacker = new Hacker() { Name = "Istvan" };
-            var specOps = new SpecOps() { Name = "Hackerman" };
+            var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
+            var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
             hacker.Weapons.Add(new PlasmaRapier());
             //hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             //hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
@@ -107,22 +115,28 @@ namespace NFCombat2.Services
             {
                 case 0:
                     //fight = new Fight(enemies, hacker);
-                    fight = new Fight(enemies, _playerService.CurrentPlayer);
+                    fight = new Fight(enemies);
+                    fight.Player = _playerService.CurrentPlayer;
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
-                    fight = new ChaseFight(enemies, specOps);
+                    fight = new ChaseFight(enemies);
+                    fight.Player = specOps;
                     break;
                 case 2:
-                    fight = new SoloFight(enemies, hacker);
+                    fight = new SkillCheckFight(enemies);
+                    fight.Player = hacker;
                     break;
                 case 3:
-                    fight = new TimedFight(enemies, hacker);
+                    fight = new TimedFight(enemies);
+                    fight.Player = hacker;
                     break;
                 default:
-                    fight = new ConstrainedFight(enemies, hacker);
+                    fight = new ConstrainedFight(enemies);
+                    fight.Player = hacker;
                     break;
             }
+
             _fight = fight;
             return _fight;
         }

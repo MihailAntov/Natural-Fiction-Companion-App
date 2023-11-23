@@ -8,9 +8,6 @@ namespace NFCombat2.Data.Entities.Combat
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public FightEntity Fight { get; set; } = null!;
-
-        [ForeignKey(nameof(Fight))]
-        public int FightId { get; set; }
+        public int FightId { get; set; } 
     }
 }

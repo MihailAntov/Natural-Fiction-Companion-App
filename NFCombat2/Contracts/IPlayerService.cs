@@ -13,7 +13,7 @@ namespace NFCombat2.Contracts
         public Player CurrentPlayer { get; set; }
         public Task SwitchActiveProfile(Player player);
         public event PropertyChangedEventHandler PropertyChanged;
-        public void AddToPlayer(IAddable item);
+        public Task AddToPlayer(IAddable item);
         public List<PlayerClass> GetClassOptions();
     }
 }

@@ -23,12 +23,14 @@ namespace NFCombat2.Data.Entities.Repositories
             connection = new SQLiteAsyncConnection(_dbPath);
             
             await connection.CreateTableAsync<PlayerEntity>();
+            //await connection.CreateTableAsync<PlayersItemsEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
             {
                 if(await connection.Table<PlayerEntity>().CountAsync() > 0) 
                 {
-                    
+                    //await connection.DropTableAsync<PlayerEntity>();
+                    //TODO remove this, only used to clear db for testing
                 }
             }
 
@@ -67,10 +69,35 @@ namespace NFCombat2.Data.Entities.Repositories
             return result == 1 ? player : null;
         }
 
-        public async Task UpdateProfile(PlayerEntity player)
+        private async Task UpdateEntity(PlayerEntity player)
         {
             await Init();
             await connection.UpdateAsync(player);
+        }
+
+        public async Task UpdatePlayer(Player player)
+        {
+            await Init();
+            var entity = _mapper.Map<PlayerEntity>(player);
+            
+            foreach(var item in player.Items)
+            {
+                PlayersItemsEntity mappingEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = 1 };
+                try
+                {
+                    var exists = await connection.GetAsync<PlayersItemsEntity>(new { mappingEntity.PlayerId, mappingEntity.ItemId});
+                }
+                catch
+                {
+                    await connection.InsertOrReplaceAsync(mappingEntity);
+                    continue;
+                }
+                mappingEntity.Quantity++;
+                await connection.UpdateAsync(mappingEntity);
+
+            }
+
+            await UpdateEntity(entity);
         }
 
         public async Task<List<Player>> GetAllProfiles()
@@ -80,17 +107,13 @@ namespace NFCombat2.Data.Entities.Repositories
 
             try
             {
-                
-                //profiles = (await connection.Table<PlayerEntity>().ToListAsync())
-                //    .Select(_mapper.Map<Player>)
-                //    .ToList();
 
-                var entities = await connection.Table<PlayerEntity>().ToListAsync();
-                foreach(var entity in entities)
-                {
-                    profiles.Add(entity.)
-                }
-                    
+                profiles = (await connection.Table<PlayerEntity>().ToListAsync())
+                    .Select(_mapper.Map<Player>)
+                    .ToList();
+
+
+
             }
             catch (Exception ex)
             {
@@ -118,5 +141,7 @@ namespace NFCombat2.Data.Entities.Repositories
             }
             return null;
         }
+
+        
     }
 }

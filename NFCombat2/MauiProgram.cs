@@ -26,6 +26,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IPopupService, PopupService>();
 		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
 		builder.Services.AddSingleton<IItemService, ItemService>();
+		builder.Services.AddSingleton<ISeederService, SeederService>();
 
 		
 		builder.Services.AddSingleton<CharacterPage>();
@@ -58,21 +59,12 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		SeedData();
+	
 		
 		return builder.Build();
 	}
 
-    private static void SeedData()
-    {
-        string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
-
-        // Assuming you've registered ItemRepository in the service collection
-        var itemRepository = new ItemRepository(dbPath);
-        ItemRepositorySeeder.SeedRepository(itemRepository);
-
-        // Add additional seeding logic for other repositories if needed
-    }
+    
 
 	private static void ConfigureAutomapper()
 	{

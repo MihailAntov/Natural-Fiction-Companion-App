@@ -4,7 +4,7 @@ namespace NFCombat2.Models.Fights
 {
     public class ConstrainedFight : Fight
     {
-        public ConstrainedFight(IList<Enemy> enemies, Player.Player player) : base(enemies, player)
+        public ConstrainedFight(IList<Enemy> enemies) : base(enemies)
         {
 
         }

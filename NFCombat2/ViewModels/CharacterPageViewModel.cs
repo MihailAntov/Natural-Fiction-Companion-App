@@ -54,6 +54,20 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        private bool _hasChosenHero = false;
+        public bool HasChosenHero
+        {
+            get { return _hasChosenHero; }
+            set
+            {
+                if (_hasChosenHero != value)
+                {
+                    _hasChosenHero = value;
+                    OnPropertyChanged(nameof(HasChosenHero));
+                }
+            }
+        }
+
         public Player Player
         {
             get
@@ -120,7 +134,15 @@ namespace NFCombat2.ViewModels
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
             {
-                Player = _playerService.CurrentPlayer;
+                if(_playerService.CurrentPlayer != null)
+                {
+                    Player = _playerService.CurrentPlayer;
+                    HasChosenHero = true;
+                }
+                else
+                {
+                    HasChosenHero = false;
+                }
             }
         }
 

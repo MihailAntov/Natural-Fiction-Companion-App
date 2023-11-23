@@ -5,6 +5,7 @@ using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Models.SpecOps;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -30,6 +31,7 @@ namespace NFCombat2.Models.Player
         private int health = 30;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         public int Health
         {
@@ -76,8 +78,9 @@ namespace NFCombat2.Models.Player
         public IList<Weapon> Weapons { get; set; } = new List<Weapon>();
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
         public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
-        public IList<Item> Trinkets { get; set; } = new List<Item>();
+        public IList<Item> Items { get; set; } = new List<Item>();
 
+        public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers => Equipment.OfType<IModifyResolution>().ToList();
         public PlayerClass Class { get; set; } = PlayerClass.None;

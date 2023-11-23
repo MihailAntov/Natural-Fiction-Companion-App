@@ -2,7 +2,11 @@
 
 namespace NFCombat2.Models.Items.Items
 {
-    public class Antivenom
+    public class Antivenom : Item
     {
+        public Antivenom()
+        {
+            Name = "Antivenom";
+        }
     }
 }

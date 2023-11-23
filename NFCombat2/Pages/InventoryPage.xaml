@@ -11,7 +11,21 @@
         <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment"/>
         <Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>
 
+        <ListView ItemsSource="{Binding Weapons}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell>
+                        <TextCell.Text>
 
+                            <MultiBinding StringFormat="{}{0}  ({1})">
+                                <Binding Path="Name"/>
+                                <Binding Path="Quantity"/>
+                            </MultiBinding>
+                        </TextCell.Text>
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <ListView ItemsSource="{Binding Equipment}">
         <ListView.ItemTemplate>
@@ -28,5 +42,22 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+        <ListView ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell>
+                        <TextCell.Text>
+
+                            <MultiBinding StringFormat="{}{0}  ({1})">
+                                <Binding Path="Name"/>
+                                <Binding Path="Quantity"/>
+                            </MultiBinding>
+                        </TextCell.Text>
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        
     </VerticalStackLayout>
 </ContentPage>

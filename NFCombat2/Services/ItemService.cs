@@ -62,6 +62,7 @@ namespace NFCombat2.Services
                 if (itemType != null)
                 {
                     var item = Activator.CreateInstance(itemType);
+
                     return (Item)item;
                 }
             }

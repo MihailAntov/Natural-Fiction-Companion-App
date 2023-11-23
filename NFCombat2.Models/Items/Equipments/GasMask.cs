@@ -2,7 +2,7 @@
 
 namespace NFCombat2.Models.Items.Equipments
 {
-    public class GasMask
+    public class GasMask : Equipment
     {
     }
 }

@@ -16,7 +16,7 @@ public partial class EntryWithSuggestions : Popup
     {
         if (BindingContext is EntryWithSuggestionsViewModel viewModel)
         {
-            viewModel.ChooseOption(e.Item);
+            await viewModel.ChooseOption(e.Item);
         }
     }
 

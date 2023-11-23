@@ -1,6 +1,7 @@
 ﻿using SQLite;
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Data.Entities.Items;
 
 namespace NFCombat2.Data.Entities.Combat
 {
@@ -20,7 +21,7 @@ namespace NFCombat2.Data.Entities.Combat
         public int MaxIonization { get; set; } = 3;
         public int Pathogens { get; set; } = 0;
         public int MaxPathogens { get; set; } = 3;
-        public int Speed { get; set; } = 0;
+        public int Speed { get; set; } = 3;
 
         public int Strength { get; set; } = 0;
         public int Health { get; set; } = 30;
@@ -29,14 +30,11 @@ namespace NFCombat2.Data.Entities.Combat
         public int MaxOverload { get; set; } = 10;
 
         public int MaxWeaponWeight { get; set; } = 1;
-        //public ICollection<Weapon> Weapons { get; set; } = new HashSet<Weapon>();
-        //public ICollection<Modification> Modifications { get; set; } = new HashSet<Modification>();
-        //public ICollection<Modification> MainHandModifications { get; set; } = new HashSet<Modification>();
-        //public ICollection<Modification> OffHandModifications { get; set; } = new HashSet<Modification>();
+        [OneToMany]
+        public List<WeaponEntity> Weapons { get; set; } = new List<WeaponEntity>();
+        public List<ItemEntity> Items { get; set; } = new List<ItemEntity>();
 
-        //public ICollection<Equipment> Equipments { get; set; } = new HashSet<Equipment>();
-        //public ICollection<Consumable> Consumables { get; set; } = new HashSet<Consumable>();
-        //public ICollection<Invention> Inventions { get; set; } = new HashSet<Invention>();
+        
 
     }
 }

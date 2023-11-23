@@ -98,17 +98,7 @@ namespace NFCombat2.ViewModels
             Items.Add((Item)added);
         }
 
-        
-
         public int InventorySlots  => Player.InventorySlots;
-
-       
-
-        
-
-        
-
-
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 

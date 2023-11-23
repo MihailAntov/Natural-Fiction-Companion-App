@@ -26,7 +26,9 @@ namespace NFCombat2.Services
             _repository = repository;
             _settings = settings;
             _mapper = mapper;
-            CurrentPlayer = Task<Player>.Run(() => _repository.GetAllProfiles()).Result.FirstOrDefault();
+            GetDefaultPlayer();
+            
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,9 +41,9 @@ namespace NFCombat2.Services
             {
                 if(_player == null)
                 {
-                    _player = Task<Player>.Run(()=> _repository.GetAllProfiles()).Result.FirstOrDefault(); 
+                    GetDefaultPlayer();
+                    
                 }
-
                 return _player;
                 
             }
@@ -57,8 +59,21 @@ namespace NFCombat2.Services
 
         public async Task<IList<Player>> GetAll()
         {
+            
             return await _repository.GetAllProfiles();
+        }
 
+        public async void GetDefaultPlayer()
+        {
+            int currentPlayerId = await _settings.CurrentPlayerId();
+            
+            Player player = await GetById(currentPlayerId);
+            if(player == null)
+            {
+                player = (await GetAll()).FirstOrDefault();
+            }
+
+            CurrentPlayer = player;
             
         }
 
@@ -93,11 +108,12 @@ namespace NFCombat2.Services
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        public void AddToPlayer(IAddable option)
+        public async Task AddToPlayer(IAddable option)
         {
             if(option is Weapon weapon)
             {
                 AddWeaponToPlayer(weapon, Hand.MainHand);
+                await _repository.UpdatePlayer(_player);
                 return;
             }
             
@@ -109,7 +125,8 @@ namespace NFCombat2.Services
 
             if(option is Item item)
             {
-                CurrentPlayer.Trinkets.Add(item);
+                CurrentPlayer.Items.Add(item);
+                await _repository.UpdatePlayer(_player);
                 return;
             }
 

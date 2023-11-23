@@ -2,7 +2,11 @@
 
 namespace NFCombat2.Models.Items.Items
 {
-    public class SodiumThiosulfateSerum
+    public class SodiumThiosulfateSerum : Item
     {
+        public SodiumThiosulfateSerum()
+        {
+            Name = "TODO";
+        }
     }
 }

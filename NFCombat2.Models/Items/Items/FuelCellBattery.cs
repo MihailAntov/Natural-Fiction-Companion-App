@@ -2,7 +2,11 @@
 
 namespace NFCombat2.Models.Items.Items
 {
-    public class FuelCellBattery
+    public class FuelCellBattery : Item
     {
+        public FuelCellBattery()
+        {
+            Name = "TODO";
+        }
     }
 }

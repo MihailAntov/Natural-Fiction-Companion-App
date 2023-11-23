@@ -50,11 +50,11 @@ namespace NFCombat2.ViewModels
 
         
 
-        public void ChooseOption(object option)
+        public async Task ChooseOption(object option)
         {
             if(option is IAddable entry)
             {
-                _playerService.AddToPlayer(entry);
+                await _playerService.AddToPlayer(entry);
                 _taskCompletionSource.SetResult(entry);
             }
             AreSuggestionsVisible = false;

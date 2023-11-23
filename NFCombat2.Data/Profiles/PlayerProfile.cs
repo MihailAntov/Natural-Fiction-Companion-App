@@ -11,6 +11,7 @@ namespace NFCombat2.Data.Profiles
         public PlayerProfile()
         {
             CreateMap<PlayerEntity, Player>();
+            CreateMap<Player, PlayerEntity>();
         }
 
     }

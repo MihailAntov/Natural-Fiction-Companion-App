@@ -2,7 +2,11 @@
 
 namespace NFCombat2.Models.Items.Items
 {
-    public class BruteLeafExtract
+    public class BruteLeafExtract : Item
     {
+        public BruteLeafExtract()
+        {
+            Name = "TODO";
+        }
     }
 }

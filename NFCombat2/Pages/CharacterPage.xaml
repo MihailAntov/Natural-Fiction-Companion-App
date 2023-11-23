@@ -15,9 +15,9 @@
         </Picker>
         <Button Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
 
-        <Label Text="{Binding Player.Name}"/>
+        
 
-        <Grid BindableLayout.ItemsSource="{Binding Player}">
+        <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -27,10 +27,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="75"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="healthcare"/>
-            <Label Grid.Column="1" Text="{Binding Player.Health}"/>
-            <Slider Grid.Column="2"  Minimum="0" Maximum="30" Value="{Binding Player.Health, Mode=TwoWay}"/>
-            <Stepper Grid.Column="3" Minimum="0" Maximum="99"/>
+            <Label Text="{Binding Player.Name}"/>
+            <Image Grid.Row="0" Source="healthcare"/>
+            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Player.Health}"/>
+            <Slider Grid.Column="2" Grid.Row="1"  Minimum="0" Maximum="30" Value="{Binding Player.Health, Mode=TwoWay}"/>
+            <Stepper Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="99"/>
         </Grid>
 
         <StackLayout>

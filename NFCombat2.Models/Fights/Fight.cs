@@ -10,11 +10,12 @@ namespace NFCombat2.Models.Fights
 {
     public class Fight
     {
-        public Fight(IList<Enemy> enemies, Player.Player player)
+        public int Id { get; set; }
+        public Fight(IList<Enemy> enemies)
         {
             Enemies = enemies;
-            Player = player;
         }
+        //REMINDER : player is no longer in the constructor
 
         public Player.Player Player { get; set; }
 

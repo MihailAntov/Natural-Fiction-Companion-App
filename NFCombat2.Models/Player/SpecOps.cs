@@ -8,7 +8,7 @@ namespace NFCombat2.Models.Player
 {
     public class SpecOps : Player
     {
-        public IList<Technique> Techniques { get; set; } = new List<Technique>();
+        
         public SpecOps()
         {
             Class = PlayerClass.SpecOps;
@@ -23,10 +23,7 @@ namespace NFCombat2.Models.Player
                 {
                     result.Add(modification);
                 }
-                foreach(IModifyAction technique in Techniques)
-                {
-                    result.Add(technique);
-                }
+                
 
                 return result;
             }
