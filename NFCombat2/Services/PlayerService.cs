@@ -147,16 +147,9 @@ namespace NFCombat2.Services
         {
             if(weapon.Weight > CurrentPlayer.MaxWeaponWeight)
             {
-                CurrentPlayer.Weapons.Clear();
-                CurrentPlayer.Weapons.Add(weapon);
+                CurrentPlayer.Weapons = new Weapon[2];
                 return;
             }
-            else if(CurrentPlayer.Weapons.Count < 2)
-            {
-                
-            }
-            
-
 
             CurrentPlayer.Weapons[(int)hand] = weapon;
         }

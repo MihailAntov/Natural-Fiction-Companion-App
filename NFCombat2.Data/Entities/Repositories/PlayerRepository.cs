@@ -133,6 +133,10 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             foreach (var weapon in weapons)
             {
+                if(weapon == null)
+                {
+                    continue;
+                }
                 PlayersItemsEntity playersItems = null!;
                 try
                 {
@@ -187,7 +191,15 @@ namespace NFCombat2.Data.Entities.Repositories
                                 player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
                                 break;
                             case ItemCategory.Weapon:
-                                player.Weapons.Add((Weapon)ItemConverter(entity.Type, entity.Category));
+                                switch (playersItemsEntity.Hand)
+                                {
+                                    case Hand.MainHand:
+                                        player.Weapons[0]=(Weapon)ItemConverter(entity.Type, entity.Category);
+                                        break;
+                                    case Hand.OffHand:
+                                        player.Weapons[1]=(Weapon)ItemConverter(entity.Type, entity.Category);
+                                        break;
+                                }
                                 break;
                             case ItemCategory.Equipment:
                                 player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));
@@ -229,7 +241,15 @@ namespace NFCombat2.Data.Entities.Repositories
                                 player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
                                 break;
                             case ItemCategory.Weapon:
-                                player.Weapons.Add((Weapon)ItemConverter(entity.Type, entity.Category));
+                                switch (playersItemsEntity.Hand)
+                                {
+                                    case Hand.MainHand:
+                                        player.Weapons[0] = (Weapon)ItemConverter(entity.Type, entity.Category);
+                                        break;
+                                    case Hand.OffHand:
+                                        player.Weapons[1] = (Weapon)ItemConverter(entity.Type, entity.Category);
+                                        break;
+                                }
                                 break;
                             case ItemCategory.Equipment:
                                 player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));

@@ -75,7 +75,9 @@ namespace NFCombat2.Models.Player
         public int InventorySlots => HasExtraBag ? 13 : 10;
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }
         public int MaxWeaponWeight { get; set; } = 1;
-        public IList<Weapon> Weapons { get; set; } = new List<Weapon>();
+        public Weapon[] Weapons { get; set; } = new Weapon[2];
+        public Weapon MainHand { get; set; }
+        public Weapon OffHand { get; set;} 
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
         public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
         public IList<Item> Items { get; set; } = new List<Item>();
