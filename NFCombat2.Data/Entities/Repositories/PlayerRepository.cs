@@ -3,12 +3,15 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Factories;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Player;
 using SQLite;
 using System;
+using System.Numerics;
+using System.Reflection;
 using System.Reflection.Metadata;
 
 namespace NFCombat2.Data.Entities.Repositories
@@ -19,7 +22,7 @@ namespace NFCombat2.Data.Entities.Repositories
         private SQLiteAsyncConnection connection = null!;
         private IMapper _mapper;
         public string StatusMessage { get; set; } = string.Empty;
-        public bool Seeded { get; set; } = false;
+        public bool ShouldSeed { get; set; } = false;
         private async Task Init()
         {
             if (connection != null)
@@ -36,7 +39,7 @@ namespace NFCombat2.Data.Entities.Repositories
             {
                 if(await connection.Table<PlayerEntity>().CountAsync() > 0) 
                 {
-                    Seeded = true;
+                    
                     //await connection.DropTableAsync<PlayerEntity>();
                     //await connection.DropTableAsync<PlayersItemsEntity>();
                     //TODO remove this, only used to clear db for testing
@@ -44,10 +47,11 @@ namespace NFCombat2.Data.Entities.Repositories
             }
 
         }
-        public PlayerRepository(string dbPath, IMapper mapper)
+        public PlayerRepository(string dbPath, IMapper mapper, bool seed)
         {
             _dbPath = dbPath;
             _mapper = mapper;
+            ShouldSeed = seed;
             Init();
         }
 
@@ -85,29 +89,77 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.UpdateAsync(player);
         }
 
-        public async Task UpdatePlayer(Player player)
+        private async Task UpdateItems(IList<Item> items, Player player)
         {
-            await Init();
-            var entity = _mapper.Map<PlayerEntity>(player);
-            
-            foreach(var item in player.Items)
+            foreach (var item in items)
             {
                 PlayersItemsEntity playersItems = null!;
                 try
                 {
-                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps=>  ps.PlayerId == player.Id && ps.ItemId == item.Id);
+                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == item.Id);
                 }
                 catch
                 {
-                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id});
+                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id });
                     continue;
                 }
-                playersItems.Quantity++;
+                playersItems.Quantity = item.Quantity;
                 await connection.UpdateAsync(playersItems);
             }
+        }
 
+        private async Task UpdateEquipments(IList<Equipment> equipments, Player player)
+        {
+            foreach (var equipment in equipments)
+            {
+                PlayersItemsEntity playersItems = null!;
+                try
+                {
+                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == equipment.Id);
+                }
+                catch
+                {
+                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id });
+                    continue;
+                }
+                playersItems.Quantity = equipment.Quantity;
+                await connection.UpdateAsync(playersItems);
+            }
+        }
+
+
+
+        private async Task UpdateWeapons(IList<Weapon> weapons, Player player)
+        {
+            foreach (var weapon in weapons)
+            {
+                PlayersItemsEntity playersItems = null!;
+                try
+                {
+                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == weapon.Id);
+                }
+                catch
+                {
+                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = weapon.Id });
+                    continue;
+                }
+                playersItems.Hand = weapon.Hand;
+                playersItems.Durability = weapon.Durability;
+                await connection.UpdateAsync(playersItems);
+            }
+        }
+
+        public async Task UpdatePlayer(Player player)
+        {
+            await Init();
+            var entity = _mapper.Map<PlayerEntity>(player);
+            await UpdateItems(player.Items, player);
+            await UpdateEquipments(player.Equipment, player);
+            await UpdateWeapons(player.Weapons, player);
             await UpdateEntity(entity);
         }
+
+
 
         public async Task<List<Player>> GetAllProfiles()
         {
@@ -257,26 +309,32 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private IAddable ItemConverter(ItemType type, ItemCategory category)
         {
-            
-            
-            string typeName = type.ToString();
-            string[] itemLocations = new string[] { "Equipments", "Items", "ActiveEquipments", "Weapons" };
-
-
-            foreach (var itemLocation in itemLocations)
+            if(category == ItemCategory.Weapon)
             {
-                string fullTypeName = $"NFCombat2.Models.Items.{itemLocation}.{typeName}, NFCombat2.Models";
-                Type itemType = Type.GetType(fullTypeName);
-                if (itemType != null)
-                {
-                    var item = Activator.CreateInstance(itemType);
-
-                    return (Item)item;
-                }
+                return WeaponFactory.GetWeapon(type);
             }
+            else
+            {
+                string typeName = type.ToString();
+                string[] itemLocations = new string[] { "Equipments", "Items", "ActiveEquipments", "Weapons" };
 
-            var item2 = Activator.CreateInstance(typeof(GrenadeLauncher));
-            return (Item)item2;
+
+                foreach (var itemLocation in itemLocations)
+                {
+                    string fullTypeName = $"NFCombat2.Models.Items.{itemLocation}.{typeName}, NFCombat2.Models";
+                    Type itemType = Type.GetType(fullTypeName);
+                    if (itemType != null)
+                    {
+                        var item = Activator.CreateInstance(itemType);
+
+                        return (Item)item;
+                    }
+                }
+
+                throw new InvalidCastException(typeName);
+            }
+            
+            
         }
 
 

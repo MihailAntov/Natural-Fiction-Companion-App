@@ -43,6 +43,10 @@ namespace NFCombat2.Models.Actions
             {
                 new EnemyCrit(RollsResult ,_enemy)
             };
+            foreach (var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             return resolutions;
         }
 
@@ -52,6 +56,10 @@ namespace NFCombat2.Models.Actions
             {
                 new EnemyMiss(_enemy)
             };
+            foreach (var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             return resolutions;
         }
 
@@ -62,6 +70,12 @@ namespace NFCombat2.Models.Actions
             {
                 new EnemyDealDamage(RollsResult ,_enemy)
             };
+            
+            foreach(var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
+
             return resolutions;
         }
     }

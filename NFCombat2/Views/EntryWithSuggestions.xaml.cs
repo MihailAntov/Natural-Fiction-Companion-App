@@ -9,7 +9,7 @@ public partial class EntryWithSuggestions : Popup
 	{
 		InitializeComponent();
         BindingContext = viewModel;
-        CanBeDismissedByTappingOutsideOfPopup = false;
+        CanBeDismissedByTappingOutsideOfPopup = true;
 	}
 
     public async void ChooseItem(object sender, ItemTappedEventArgs e)
@@ -19,6 +19,8 @@ public partial class EntryWithSuggestions : Popup
             await viewModel.ChooseOption(e.Item);
         }
     }
+
+
 
     public async void EnteredText(object sender, EventArgs e)
     {

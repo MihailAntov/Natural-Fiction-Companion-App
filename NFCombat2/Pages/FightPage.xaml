@@ -23,8 +23,18 @@
                     />
 
 
-            
 
+            <VerticalStackLayout>
+                <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
+                <Label>
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}Hp:{0}">
+                            <Binding Path="Player.Health"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+
+            </VerticalStackLayout>
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

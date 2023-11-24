@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Items.Weapons;
 
 namespace NFCombat2.ViewModels
 {
@@ -52,6 +53,7 @@ namespace NFCombat2.ViewModels
 
         public async Task ChooseOption(object option)
         {
+
             if(option is IAddable entry)
             {
                 await _playerService.AddItemToPlayer(entry);
@@ -61,6 +63,8 @@ namespace NFCombat2.ViewModels
             SearchCriteria = string.Empty;
             
         }
+
+
 
         public void EnteredText(object i)
         {

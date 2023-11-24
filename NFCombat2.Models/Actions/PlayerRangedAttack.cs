@@ -52,6 +52,10 @@ namespace NFCombat2.Models.Actions
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {
             var resolutions = new List<ICombatResolution>() { new Crit(RollsResult, Targets) };
+            foreach(var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             Weapon.RemainingCooldown += Weapon.CooldownPerShot;
             return resolutions;
         }
@@ -69,6 +73,10 @@ namespace NFCombat2.Models.Actions
 
             var resolutions = new List<ICombatResolution>() { new DealDamage(RollsResult, Targets) };
             Weapon.RemainingCooldown += Weapon.CooldownPerShot;
+            foreach (var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             return resolutions;
         }
 

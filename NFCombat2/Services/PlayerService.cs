@@ -31,7 +31,7 @@ namespace NFCombat2.Services
             _settings = settings;
             _mapper = mapper;
             GetDefaultPlayer();
-            if (!repository.Seeded)
+            if (repository.ShouldSeed)
             {
             
                 _seederService = seederService;
@@ -151,6 +151,12 @@ namespace NFCombat2.Services
                 CurrentPlayer.Weapons.Add(weapon);
                 return;
             }
+            else if(CurrentPlayer.Weapons.Count < 2)
+            {
+                
+            }
+            
+
 
             CurrentPlayer.Weapons[(int)hand] = weapon;
         }

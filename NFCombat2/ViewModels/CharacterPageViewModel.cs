@@ -108,7 +108,8 @@ namespace NFCombat2.ViewModels
         {
             var players = await _playerService.GetAllPlayers();
             Profiles = new ObservableCollection<Player>(players);
-            
+            OnPropertyChanged(nameof(Profiles));
+
         }
 
         public async void ProcessChoice(object newItem)

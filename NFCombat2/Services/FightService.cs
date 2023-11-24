@@ -102,7 +102,7 @@ namespace NFCombat2.Services
 
             var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
             var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
-            hacker.Weapons.Add(new PlasmaRapier());
+            //hacker.Weapons.Add(new PlasmaRapier());
             //hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             //hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
             hacker.Consumables.Add(new HandGrenade());
@@ -253,7 +253,7 @@ namespace NFCombat2.Services
         }
         public async Task AddEffect(ICombatAction effect)
         {
-            //TODO fix register functionality to debug on local device
+            
             IList<ICombatResolution> resolutions = new List<ICombatResolution>();
             if(effect is IHaveAttackRoll attack)
             {

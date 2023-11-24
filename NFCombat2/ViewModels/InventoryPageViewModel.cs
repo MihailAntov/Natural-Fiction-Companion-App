@@ -8,6 +8,7 @@ using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Player;
+using NFCombat2.Common.Enums;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -30,18 +31,23 @@ namespace NFCombat2.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
+        public Command AddWeaponToPlayerCommand { get; set; }
         public InventoryPageViewModel(IPlayerService playerService, IPopupService popupService)
         {
             _playerService = playerService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
+            Items = new ObservableCollection<Item>(Player.Items);
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
             AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
+            AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
             _popupService = popupService;
             Title = $"{Player.Name}'s inventory";
 
         }
         public Player Player { get; set; }
+        public Weapon MainHand { get; set; }
+        public Weapon OffHand { get; set; }
         public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
         public ObservableCollection<Equipment> Equipment { get; set; }
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
@@ -64,6 +70,30 @@ namespace NFCombat2.ViewModels
             var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
             var added = await taskCompletion.Task;
             AddToObservalbeCollection(added);
+        }
+
+        public async Task AddWeaponToPlayer(string hand)
+        {
+            
+            var options = await LoadWeaponsAsync();
+            foreach(var option in options)
+            {
+                if(option is Weapon weapon)
+                weapon.Hand = hand == "main" ? Hand.MainHand : Hand.OffHand;
+            }
+
+            var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            var added = await taskCompletion.Task;
+            switch (hand)
+            {
+                case "main":
+                    MainHand = (Weapon)added;
+                    break;
+                case "off":
+                    OffHand = (Weapon)added;
+                    break;
+            }
+            
         }
 
         private async Task<ICollection<IAddable>> LoadItemsAsync()
@@ -110,6 +140,12 @@ namespace NFCombat2.ViewModels
                 foreach(var item in Player.Equipment)
                 {
                     Equipment.Add(item);
+                }
+
+                Items.Clear();
+                foreach (var item in Player.Items)
+                {
+                    Items.Add(item);
                 }
             }
         }

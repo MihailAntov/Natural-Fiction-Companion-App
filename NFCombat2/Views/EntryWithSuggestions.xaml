@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.EntryWithSuggestions">
-    <VerticalStackLayout WidthRequest="400" HeightRequest="400">
+    <VerticalStackLayout Padding="20">
 
         <Entry Placeholder="Enter item name" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
         <ListView ItemsSource="{Binding Options}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">

@@ -3,13 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.InventoryPage"
              xmlns:views="clr-namespace:NFCombat2.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="{Binding Title}">
     <VerticalStackLayout>
 
         
-        <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item"/>
+        <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
+        <Grid HeightRequest="160">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border BackgroundColor="Black" Grid.Column="2">
+                <ImageButton  Source="pistol" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Gold" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Border>
+            <Border BackgroundColor="Black" Grid.Column="4">
+                <ImageButton  Source="machinegun" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Gold" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Border>
+        </Grid>
         <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment"/>
-        <Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>
+        <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item"/>
 
         <ListView ItemsSource="{Binding Weapons}">
             <ListView.ItemTemplate>

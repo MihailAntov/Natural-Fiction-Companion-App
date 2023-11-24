@@ -1,5 +1,7 @@
 ﻿
 
+using NFCombat2.Common.Enums;
+
 namespace NFCombat2.Models.Contracts
 {
     public interface IAddable
@@ -7,5 +9,6 @@ namespace NFCombat2.Models.Contracts
         string Name { get; }
         bool IsInvention { get; set; }
         public int Id { get; set; }
+        
     }
 }
