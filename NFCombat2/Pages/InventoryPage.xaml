@@ -24,14 +24,14 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Border BackgroundColor="Black" Grid.Column="2">
-                <ImageButton  Source="pistol" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">
+                <ImageButton  Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Border>
             <Border BackgroundColor="Black" Grid.Column="4">
-                <ImageButton  Source="machinegun" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">
+                <ImageButton  Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>

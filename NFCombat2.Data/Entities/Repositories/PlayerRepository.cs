@@ -138,18 +138,24 @@ namespace NFCombat2.Data.Entities.Repositories
                     continue;
                 }
                 PlayersItemsEntity playersItems = null!;
-                try
+                
+                playersItems = await connection.Table<PlayersItemsEntity>().FirstOrDefaultAsync(pi=> pi.ItemId == weapon.Id && pi.PlayerId == player.Id && pi.Hand == weapon.Hand);
+                
+                if(playersItems == null)
                 {
-                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == weapon.Id);
-                }
-                catch
-                {
-                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = weapon.Id });
+                    
+                    var newPlayersItems = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = weapon.Id };
+                    newPlayersItems.Quantity = weapon.Quantity;
+                    newPlayersItems.Hand = weapon.Hand;
+                    newPlayersItems.Durability = weapon.Durability;
+                    await connection.InsertAsync(newPlayersItems);
+                    var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
                     continue;
                 }
                 playersItems.Hand = weapon.Hand;
                 playersItems.Durability = weapon.Durability;
                 await connection.UpdateAsync(playersItems);
+                    var allPlayersItems2 = await connection.Table<PlayersItemsEntity>().ToListAsync();
             }
         }
 
@@ -185,24 +191,35 @@ namespace NFCombat2.Data.Entities.Repositories
                         var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
                         var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
                         var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
+                        if (!entity.Id.HasValue)
+                        {
+                            throw new NullReferenceException();
+                        }
+                        int itemId = entity.Id.Value;
                         switch (entity.Category)
                         {
                             case ItemCategory.Item:
-                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
+                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
                                 break;
                             case ItemCategory.Weapon:
-                                switch (playersItemsEntity.Hand)
-                                {
-                                    case Hand.MainHand:
-                                        player.Weapons[0]=(Weapon)ItemConverter(entity.Type, entity.Category);
-                                        break;
-                                    case Hand.OffHand:
-                                        player.Weapons[1]=(Weapon)ItemConverter(entity.Type, entity.Category);
-                                        break;
-                                }
+                                //switch (playersItemsEntity.Hand)
+                                //{
+                                //    case Hand.MainHand:
+                                //        player.Weapons[0]=(Weapon)ItemConverter(entity.Type, entity.Category, itemId, Hand.MainHand);
+                                //        player.Weapons[0].Id = entity.Id ?? 0;
+                                //        player.Weapons[0].Hand = Hand.MainHand;
+                                //        break;
+                                //    case Hand.OffHand:
+                                //        player.Weapons[1]=(Weapon)ItemConverter(entity.Type, entity.Category, itemId, Hand.OffHand);
+                                //        player.Weapons[1].Id = entity.Id ?? 0;
+                                //        player.Weapons[1].Hand = Hand.OffHand;
+                                //        break;
+                                //}
+                                player.Weapons[(int)playersItemsEntity.Hand] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersItemsEntity.Hand);
+
                                 break;
                             case ItemCategory.Equipment:
-                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));
+                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
                                 break;
                         }
                     }
@@ -234,27 +251,42 @@ namespace NFCombat2.Data.Entities.Repositories
                 {
                     foreach (var playersItemsEntity in playersItemsEntities)
                     {
+                        var allitems = await connection.Table<ItemEntity>().ToListAsync();
+                        var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
+                        var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+
                         var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
+                        if (!entity.Id.HasValue)
+                        {
+                            throw new NullReferenceException();
+                        }
+                        int itemId = entity.Id.Value;
                         switch (entity.Category)
                         {
                             case ItemCategory.Item:
-                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category));
+                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
                                 break;
                             case ItemCategory.Weapon:
                                 switch (playersItemsEntity.Hand)
                                 {
                                     case Hand.MainHand:
-                                        player.Weapons[0] = (Weapon)ItemConverter(entity.Type, entity.Category);
+                                        player.Weapons[0] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId);
+                                        player.Weapons[0].Id = entity.Id ?? 0;
+                                        player.Weapons[0].Hand = Hand.MainHand;
                                         break;
                                     case Hand.OffHand:
-                                        player.Weapons[1] = (Weapon)ItemConverter(entity.Type, entity.Category);
+                                        player.Weapons[1] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId);
+                                        player.Weapons[1].Id = entity.Id ?? 0;
+                                        player.Weapons[1].Hand = Hand.OffHand;
                                         break;
                                 }
                                 break;
                             case ItemCategory.Equipment:
-                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category));
+                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
+                                
                                 break;
                         }
+
 
                         
                 }
@@ -292,7 +324,7 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             await Init();
             var entity =  await connection.GetAsync<ItemEntity>(id);
-            return ItemConverter(entity.Type, entity.Category);
+            return ItemConverter(entity.Type, entity.Category, id);
         }
 
         public async Task<ICollection<IAddable>> GetItemsByCategory(ItemCategory category)
@@ -302,11 +334,12 @@ namespace NFCombat2.Data.Entities.Repositories
             List<IAddable> items = new List<IAddable>();
             foreach (var entity in entities)
             {
-                var item = ItemConverter(entity.Type, entity.Category);
-                if (entity.Id.HasValue)
+                if (!entity.Id.HasValue)
                 {
-                    item.Id = entity.Id.Value;
+                    throw new NullReferenceException();
                 }
+                var itemId = entity.Id.Value;
+                var item = ItemConverter(entity.Type, entity.Category, itemId);
 
                 items.Add(item);
                 //TODO : figure out a way to transfer id
@@ -322,16 +355,16 @@ namespace NFCombat2.Data.Entities.Repositories
             List<IAddable> items = new List<IAddable>();
             foreach(var entity in entities)
             {
-                items.Add(ItemConverter(entity.Type, entity.Category));
+                items.Add(ItemConverter(entity.Type, entity.Category, entity.Id ?? 0));
             }
             return items;
         }
 
-        private IAddable ItemConverter(ItemType type, ItemCategory category)
+        private IAddable ItemConverter(ItemType type, ItemCategory category, int itemId, params object[] args)
         {
             if(category == ItemCategory.Weapon)
             {
-                return WeaponFactory.GetWeapon(type);
+                return WeaponFactory.GetWeapon(type, itemId, args);
             }
             else
             {
@@ -342,12 +375,17 @@ namespace NFCombat2.Data.Entities.Repositories
                 foreach (var itemLocation in itemLocations)
                 {
                     string fullTypeName = $"NFCombat2.Models.Items.{itemLocation}.{typeName}, NFCombat2.Models";
-                    Type itemType = Type.GetType(fullTypeName);
+                    Type? itemType = Type.GetType(fullTypeName);
                     if (itemType != null)
                     {
-                        var item = Activator.CreateInstance(itemType);
+                        var item = (Item?)Activator.CreateInstance(itemType);
+                        if (item == null)
+                        {
+                            throw new NullReferenceException();
 
-                        return (Item)item;
+                        }
+                        item.Id = itemId;
+                        return item;
                     }
                 }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NFCombat2.Data.Entities.Combat
 {
-    internal class PlayersItemsEntity
+    public class PlayersItemsEntity
     {
         public int PlayerId { get; set; }
         public int ItemId { get; set; }

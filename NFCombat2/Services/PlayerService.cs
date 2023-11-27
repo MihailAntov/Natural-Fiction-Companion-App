@@ -92,7 +92,7 @@ namespace NFCombat2.Services
             return player;
         }
 
-        public async Task<Player> UpdatePlayer(Player player)
+        public async Task<Player> RegisterPlayer(Player player)
         {
             var success = await _repository.AddNewProfile(player);
             if(success == null)
@@ -121,22 +121,22 @@ namespace NFCombat2.Services
         {
             if(option is Weapon weapon)
             {
-                AddWeaponToPlayer(weapon, Hand.MainHand);
-                await _repository.UpdatePlayer(_player);
+                AddWeaponToPlayer(weapon, weapon.Hand);
+                await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
             
             if(option is Equipment equipment)
             {
                 CurrentPlayer.Equipment.Add(equipment);
-                await _repository.UpdatePlayer(_player);
+                await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
 
             if(option is Item item)
             {
                 CurrentPlayer.Items.Add(item);
-                await _repository.UpdatePlayer(_player);
+                await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
 
@@ -150,6 +150,7 @@ namespace NFCombat2.Services
                 CurrentPlayer.Weapons = new Weapon[2];
                 return;
             }
+            //todo : grayed out image of other weapon, remove 2hander when 1hander is placed
 
             CurrentPlayer.Weapons[(int)hand] = weapon;
         }

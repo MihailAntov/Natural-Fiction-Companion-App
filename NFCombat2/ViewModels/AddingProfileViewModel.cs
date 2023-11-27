@@ -15,19 +15,20 @@ namespace NFCombat2.ViewModels
 
         public AddingProfileViewModel(IPlayerService playerService, TaskCompletionSource<Player> taskCompletionSource)
         {
-            RegisterCommand = new Command<Player>(async (player) => await RegisterProfile(player));
+            RegisterCommand = new Command<Player>(async (player) => await RegisterPlayer(player));
             _playerService = playerService;
             _taskCompletionSource = taskCompletionSource;
             PlayerClasses = playerService.GetClassOptions();
         }
 
         public List<PlayerClass> PlayerClasses { get; set; }
-        public async Task RegisterProfile(Player player)
+        public async Task RegisterPlayer(Player player)
         {
-            var result = await _playerService.UpdatePlayer(player);
+            var result = await _playerService.RegisterPlayer(player);
             _taskCompletionSource.SetResult(result);
 
             //await DisplayAlert("Successfully Added", $"{name}", "Okay");
+            //todo add toast
         }
 
         public async Task ChangedClass()

@@ -22,6 +22,7 @@ namespace NFCombat2.Models.Items.Weapons
         public bool IsInvention { get; set; } = false;
         public WeaponSpecial WeaponSpecial { get; set; } = WeaponSpecial.None;
         public int ExtraStrength { get; set; } = 0;
+        public string Image { get; set; } = string.Empty;
         
     }
 }

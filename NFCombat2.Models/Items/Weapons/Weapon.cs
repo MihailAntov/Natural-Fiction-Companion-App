@@ -32,5 +32,6 @@ namespace NFCombat2.Models.Items.Weapons
 
         public int Durability { get; set; } = 100;
         public int Quantity { get; set; } = 1;
+        public string Image { get; set; } = string.Empty;
     }
 }

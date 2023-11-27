@@ -61,12 +61,14 @@
 	  <None Remove="Resources\Images\dice5.png" />
 	  <None Remove="Resources\Images\dice6.png" />
 	  <None Remove="Resources\Images\energyweapon.png" />
+	  <None Remove="Resources\Images\flame.png" />
 	  <None Remove="Resources\Images\healthcare.png" />
 	  <None Remove="Resources\Images\hospital.png" />
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\inventions.png" />
 	  <None Remove="Resources\Images\knife.png" />
 	  <None Remove="Resources\Images\machinegun.png" />
+	  <None Remove="Resources\Images\none.png" />
 	  <None Remove="Resources\Images\notes.png" />
 	  <None Remove="Resources\Images\pistol.png" />
 	  <None Remove="Resources\Images\previous.png" />

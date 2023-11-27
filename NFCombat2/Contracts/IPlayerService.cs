@@ -8,7 +8,7 @@ namespace NFCombat2.Contracts
 {
     public interface IPlayerService
     {
-        public Task<Player> UpdatePlayer(Player player);
+        public Task<Player> RegisterPlayer(Player player);
         public Task<IList<Player>> GetAllPlayers();
         public Player CurrentPlayer { get; set; }
         public Task SwitchActivePlayer(Player player);

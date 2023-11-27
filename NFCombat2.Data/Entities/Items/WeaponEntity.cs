@@ -20,5 +20,6 @@ namespace NFCombat2.Data.Entities.Items
 
         public string Name { get; set; }
         public bool IsInvention { get; set; } = false;
+
     }
 }

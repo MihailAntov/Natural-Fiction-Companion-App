@@ -39,6 +39,8 @@ namespace NFCombat2.ViewModels
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
+            MainHandImage = Player.Weapons[0]?.Image ?? "none";
+            OffHandImage = Player.Weapons[1]?.Image ?? "none";
             AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
             AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
             _popupService = popupService;
@@ -46,8 +48,34 @@ namespace NFCombat2.ViewModels
 
         }
         public Player Player { get; set; }
-        public Weapon MainHand { get; set; }
-        public Weapon OffHand { get; set; }
+
+        private string _mainHandImage = "none";
+        public string MainHandImage
+        {
+            get { return _mainHandImage; }
+            set
+            {
+                if(_mainHandImage != value)
+                {
+                    _mainHandImage = value;
+                    OnPropertyChanged(nameof(MainHandImage));
+                }
+            }
+        }
+
+        private string _offHandImage = "none";
+        public string OffHandImage
+        {
+            get { return _offHandImage; }
+            set
+            {
+                if (_offHandImage != value)
+                {
+                    _offHandImage = value;
+                    OnPropertyChanged(nameof(OffHandImage));
+                }
+            }
+        }
         public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
         public ObservableCollection<Equipment> Equipment { get; set; }
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
@@ -59,9 +87,9 @@ namespace NFCombat2.ViewModels
                 case "item":
                     options = await LoadItemsAsync();
                     break;
-                case "weapon":
-                    options = await LoadWeaponsAsync();
-                    break;
+                //case "weapon":
+                //    options = await LoadWeaponsAsync();
+                //    break;
                 case "equipment":
                     options = await LoadEquipmentAsync();
                     break;
@@ -87,10 +115,24 @@ namespace NFCombat2.ViewModels
             switch (hand)
             {
                 case "main":
-                    MainHand = (Weapon)added;
+                    if(added is Weapon mainHand)
+                    {
+                        MainHandImage = mainHand.Image;
+                        if (_playerService.CurrentPlayer.Weapons[1] == null)
+                        {
+                            OffHandImage = "none";
+                        }
+                    }
                     break;
                 case "off":
-                    OffHand = (Weapon)added;
+                    if (added is Weapon offHand)
+                    {
+                        OffHandImage = offHand.Image;
+                        if (_playerService.CurrentPlayer.Weapons[0] == null)
+                        {
+                            MainHandImage = "none";
+                        }
+                    }
                     break;
             }
             
@@ -147,6 +189,9 @@ namespace NFCombat2.ViewModels
                 {
                     Items.Add(item);
                 }
+
+                MainHandImage = Player.Weapons[0]?.Image ?? "none";
+                OffHandImage = Player.Weapons[1]?.Image ?? "none";
             }
         }
     }

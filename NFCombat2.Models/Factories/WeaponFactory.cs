@@ -14,28 +14,38 @@ namespace NFCombat2.Models.Factories
                 ItemType.PlasmaRapier,
                 new WeaponConfig()
                 {
-                    Name = "PlasmaRapier"
+                    Name = "PlasmaRapier",
+                    Image = "knife",
+                    Weight = 1,
                 }
             },
             {
                 ItemType.QuantumMagnumParadox,
                 new WeaponConfig()
                 {
-                    Name = "QuantumMagnumParadox"
+                    Name = "QuantumMagnumParadox",
+                    Image = "pistol",
+                    Weight = 1,
                 }
             },
             {
                 ItemType.Knife,
                 new WeaponConfig()
                 {
-                    Name = "Knife"
+                    Name = "Knife",
+                    Image = "knife",
+                    Weight = 1,
                 }
             },
             {
                 ItemType.Flamethrower,
                 new WeaponConfig()
                 {
-                    Name = "Flamethrower"
+                    Name = "Flamethrower",
+                    Image = "flame",
+                    WeaponSpecial = WeaponSpecial.AreaOfEffect,
+                    AlwaysHits = true,
+                    Weight = 2
                 }
             },
             {
@@ -278,26 +288,38 @@ namespace NFCombat2.Models.Factories
             }
                     };
 
-        public static Weapon GetWeapon(ItemType type)
+        public static Weapon GetWeapon(ItemType type, int itemId, params object[] args)
         {
             var config = _weapons[type];
+            Hand hand = Hand.MainHand;
+            if(args.Length > 0)
+            {
+                hand = (Hand)args[0];
+            }
             switch (config.WeaponSpecial)
             {
                 case WeaponSpecial.Melee:
                     MeleeWeapon meleeWeapon = new MeleeWeapon();
                     meleeWeapon.ExtraStrength = config.ExtraStrength;
+                    meleeWeapon.Id = itemId;
+                    meleeWeapon.Hand = hand;
                     return meleeWeapon;
                 case WeaponSpecial.Shield:
                     Weapon shield = new EMShield();
+                    shield.Id = itemId;
+                    shield.Hand = hand;
                     return shield;
                 case WeaponSpecial.None:
                 default:
                     Weapon weapon = new Weapon()
                     {
+                        Id = itemId,
                         Name = config.Name,
                         Accuracy = config.Accuracy,
                         FlatDamage = config.FlatDamage,
-
+                        Image = config.Image,
+                        Hand = hand,
+                        Weight = config.Weight,
                     };
                     return weapon;
 
