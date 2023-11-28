@@ -10,10 +10,10 @@ namespace NFCombat2.Contracts
     {
         void ShowPopup(Popup popup);
         void ShowToast(string text);
-        Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect);
-        Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect);
-        Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect);
-        Task<TaskCompletionSource<Player>> ShowAddProfilePopup();
+        Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect, bool canReroll);
+        Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll);
+        Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, bool canReroll);
+        Task<TaskCompletionSource<Player>> ShowAddProfilePopup(IPlayerService playerService);
         Task<TaskCompletionSource<IAddable>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
     }
 }

@@ -228,22 +228,22 @@ namespace NFCombat2.Services
 
         private async Task HandleRolls(ICombatAction effect)
         {
+            bool canReroll = _playerService.CurrentPlayer.Class == PlayerClass.SpecOps;
             if(effect is IHaveAttackRoll attack)
             {
-
-                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack);
+                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveRolls rollEffect)
             {
-                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect);
+                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveOpposedRolls meleeCombat)
             {
-                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat);
+                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, canReroll);
                 await attackCompletion.Task;
                 
             }

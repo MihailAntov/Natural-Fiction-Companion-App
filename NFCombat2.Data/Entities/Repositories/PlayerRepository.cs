@@ -2,6 +2,7 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
+using NFCombat2.Data.Entities.Programs;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Factories;
 using NFCombat2.Models.Items;
@@ -33,7 +34,10 @@ namespace NFCombat2.Data.Entities.Repositories
             
             await connection.CreateTableAsync<PlayerEntity>();
             await connection.CreateTableAsync<PlayersItemsEntity>();
+            await connection.CreateTableAsync<PlayersWeaponsEntity>();
             await connection.CreateTableAsync<ItemEntity>();
+            await connection.CreateTableAsync<ProgramEntity>();
+            await connection.CreateTableAsync<PlayersProgramsEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
             {
@@ -131,31 +135,39 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateWeapons(IList<Weapon> weapons, Player player)
         {
+            //remove all weapons ?
+            var oldWeapons = await connection.Table<PlayersWeaponsEntity>().Where(pw => pw.PlayerId == player.Id).ToListAsync();
+            foreach(var weapon in oldWeapons)
+            {
+                await connection.DeleteAsync(weapon);
+            }
+
+
             foreach (var weapon in weapons)
             {
                 if(weapon == null)
                 {
                     continue;
                 }
-                PlayersItemsEntity playersItems = null!;
+                PlayersWeaponsEntity playersItems = null!;
                 
-                playersItems = await connection.Table<PlayersItemsEntity>().FirstOrDefaultAsync(pi=> pi.ItemId == weapon.Id && pi.PlayerId == player.Id && pi.Hand == weapon.Hand);
+                playersItems = await connection.Table<PlayersWeaponsEntity>().FirstOrDefaultAsync(pi=> pi.ItemId == weapon.Id && pi.PlayerId == player.Id && pi.Hand == weapon.Hand);
                 
                 if(playersItems == null)
                 {
                     
-                    var newPlayersItems = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = weapon.Id };
+                    var newPlayersItems = new PlayersWeaponsEntity() { PlayerId = player.Id, ItemId = weapon.Id };
                     newPlayersItems.Quantity = weapon.Quantity;
                     newPlayersItems.Hand = weapon.Hand;
                     newPlayersItems.Durability = weapon.Durability;
                     await connection.InsertAsync(newPlayersItems);
-                    var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+                    var allPlayersItems = await connection.Table<PlayersWeaponsEntity>().ToListAsync();
                     continue;
                 }
                 playersItems.Hand = weapon.Hand;
                 playersItems.Durability = weapon.Durability;
                 await connection.UpdateAsync(playersItems);
-                    var allPlayersItems2 = await connection.Table<PlayersItemsEntity>().ToListAsync();
+                    var allPlayersItems2 = await connection.Table<PlayersWeaponsEntity>().ToListAsync();
             }
         }
 
@@ -169,7 +181,55 @@ namespace NFCombat2.Data.Entities.Repositories
             await UpdateEntity(entity);
         }
 
+        private async Task RetrievePlayerData(Player player)
+        {
+            var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            foreach (var playersItemsEntity in playersItemsEntities)
+            {
+                var allitems = await connection.Table<ItemEntity>().ToListAsync();
+                var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
+                var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+                var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
+                if (!entity.Id.HasValue)
+                {
+                    throw new NullReferenceException();
+                }
+                int itemId = entity.Id.Value;
+                switch (entity.Category)
+                {
+                    case ItemCategory.Item:
+                        player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
+                        break;
+                    case ItemCategory.Equipment:
+                        player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
+                        break;
+                }
+            }
 
+            var playersWeaponsEntities = await connection.Table<PlayersWeaponsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            foreach (var playersWeaponsEntity in playersWeaponsEntities)
+            {
+                var allitems = await connection.Table<ItemEntity>().ToListAsync();
+                var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
+                var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+                var entity = await connection.GetAsync<ItemEntity>(playersWeaponsEntity.ItemId);
+                if (!entity.Id.HasValue)
+                {
+                    throw new NullReferenceException();
+                }
+                int itemId = entity.Id.Value;
+                switch (playersWeaponsEntity.Hand)
+                {
+                    case Hand.MainHand:
+                        player.MainHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand);
+                        break;
+                    case Hand.OffHand:
+                        player.OffHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand);
+                        break;
+                }
+                
+            }
+        }
 
         public async Task<List<Player>> GetAllProfiles()
         {
@@ -182,52 +242,10 @@ namespace NFCombat2.Data.Entities.Repositories
                 players = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .ToList();
-                foreach(var player in players)
+                foreach (var player in players)
                 {
-                    var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
-                    foreach(var playersItemsEntity in playersItemsEntities)
-                    {
-                        var allitems = await connection.Table<ItemEntity>().ToListAsync();
-                        var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
-                        var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
-                        var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
-                        if (!entity.Id.HasValue)
-                        {
-                            throw new NullReferenceException();
-                        }
-                        int itemId = entity.Id.Value;
-                        switch (entity.Category)
-                        {
-                            case ItemCategory.Item:
-                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
-                                break;
-                            case ItemCategory.Weapon:
-                                //switch (playersItemsEntity.Hand)
-                                //{
-                                //    case Hand.MainHand:
-                                //        player.Weapons[0]=(Weapon)ItemConverter(entity.Type, entity.Category, itemId, Hand.MainHand);
-                                //        player.Weapons[0].Id = entity.Id ?? 0;
-                                //        player.Weapons[0].Hand = Hand.MainHand;
-                                //        break;
-                                //    case Hand.OffHand:
-                                //        player.Weapons[1]=(Weapon)ItemConverter(entity.Type, entity.Category, itemId, Hand.OffHand);
-                                //        player.Weapons[1].Id = entity.Id ?? 0;
-                                //        player.Weapons[1].Hand = Hand.OffHand;
-                                //        break;
-                                //}
-                                player.Weapons[(int)playersItemsEntity.Hand] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersItemsEntity.Hand);
-
-                                break;
-                            case ItemCategory.Equipment:
-                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
-                                break;
-                        }
-                    }
+                    //RetrievePlayerData(player);
                 }
-                
-
-
-
             }
             catch (Exception ex)
             {
@@ -246,52 +264,12 @@ namespace NFCombat2.Data.Entities.Repositories
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .FirstOrDefault(p => p.Id == id);
-                var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
                 if (player != null)
                 {
-                    foreach (var playersItemsEntity in playersItemsEntities)
-                    {
-                        var allitems = await connection.Table<ItemEntity>().ToListAsync();
-                        var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
-                        var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
-
-                        var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
-                        if (!entity.Id.HasValue)
-                        {
-                            throw new NullReferenceException();
-                        }
-                        int itemId = entity.Id.Value;
-                        switch (entity.Category)
-                        {
-                            case ItemCategory.Item:
-                                player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
-                                break;
-                            case ItemCategory.Weapon:
-                                switch (playersItemsEntity.Hand)
-                                {
-                                    case Hand.MainHand:
-                                        player.Weapons[0] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId);
-                                        player.Weapons[0].Id = entity.Id ?? 0;
-                                        player.Weapons[0].Hand = Hand.MainHand;
-                                        break;
-                                    case Hand.OffHand:
-                                        player.Weapons[1] = (Weapon)ItemConverter(entity.Type, entity.Category, itemId);
-                                        player.Weapons[1].Id = entity.Id ?? 0;
-                                        player.Weapons[1].Hand = Hand.OffHand;
-                                        break;
-                                }
-                                break;
-                            case ItemCategory.Equipment:
-                                player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
-                                
-                                break;
-                        }
-
-
-                        
+                    await RetrievePlayerData(player);
                 }
-                    return player;
-                }
+
+                return player;
                 
                 
             }

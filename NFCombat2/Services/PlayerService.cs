@@ -12,12 +12,15 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.SpecOps;
 using AutoMapper;
+using NFCombat2.ViewModels;
+using NFCombat2.Views;
 
 namespace NFCombat2.Services
 {
     public class PlayerService : IPlayerService, INotifyPropertyChanged
     {
         private PlayerRepository _repository;
+        private IPopupService _popupService;
         private SettingsRepository _settings;
         private IMapper _mapper;
         private Player _player;
@@ -25,12 +28,14 @@ namespace NFCombat2.Services
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
             IMapper mapper,
-            ISeederService seederService)
+            ISeederService seederService,
+            IPopupService popupService)
         {
             _repository = repository;
             _settings = settings;
             _mapper = mapper;
-            GetDefaultPlayer();
+            _popupService = popupService;
+            //GetDefaultPlayer();
             if (repository.ShouldSeed)
             {
             
@@ -121,7 +126,7 @@ namespace NFCombat2.Services
         {
             if(option is Weapon weapon)
             {
-                AddWeaponToPlayer(weapon, weapon.Hand);
+                await AddWeaponToPlayer(weapon, weapon.Hand);
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
@@ -143,16 +148,54 @@ namespace NFCombat2.Services
             
         }
 
-        public void AddWeaponToPlayer(Weapon weapon, Hand hand)
-        {
-            if(weapon.Weight > CurrentPlayer.MaxWeaponWeight)
-            {
-                CurrentPlayer.Weapons = new Weapon[2];
-                return;
-            }
-            //todo : grayed out image of other weapon, remove 2hander when 1hander is placed
+        
 
-            CurrentPlayer.Weapons[(int)hand] = weapon;
+        public async Task AddWeaponToPlayer(Weapon weapon, Hand hand)
+        {
+            var otherWeapon = hand == Hand.MainHand ? CurrentPlayer.OffHand : CurrentPlayer.MainHand;
+            if(otherWeapon != null)
+            {
+                if(weapon.Weight + otherWeapon.Weight > 2 * CurrentPlayer.MaxWeaponWeight)
+                {
+                    TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+                    string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
+                    var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource);
+                    var popup = new ConfirmationPopupView(viewModel);
+                    _popupService.ShowPopup(popup);
+                    bool confirmed = await taskCompletionSource.Task;
+                    await popup.CloseAsync();
+                    if(!confirmed)
+                    {
+                        return;
+                    }
+
+                    if(hand == Hand.MainHand)
+                    {
+                        CurrentPlayer.OffHand = null;
+                        CurrentPlayer.MainHand = weapon;
+                        return;
+                    }
+                    else
+                    {
+                        CurrentPlayer.MainHand = null;
+                        CurrentPlayer.OffHand = weapon;
+                        return;
+                    }
+
+                }
+            }
+
+
+            switch (hand)
+            {
+                case Hand.MainHand:
+                    CurrentPlayer.MainHand = weapon;
+                    break;
+                case Hand.OffHand:
+                    CurrentPlayer.OffHand = weapon;
+                    break;
+            }
+            
         }
 
         public List<PlayerClass> GetClassOptions()

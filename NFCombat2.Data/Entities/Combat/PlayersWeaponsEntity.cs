@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NFCombat2.Data.Entities.Combat
 {
-    public class PlayersItemsEntity
+    public class PlayersWeaponsEntity
     {
         public int PlayerId { get; set; }
         public int ItemId { get; set; }
@@ -18,5 +18,7 @@ namespace NFCombat2.Data.Entities.Combat
 
         public int Quantity { get; set; } = 1;
         public int Durability { get; set; }
+
+        public Hand Hand { get; set; }
     }
 }

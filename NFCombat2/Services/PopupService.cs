@@ -12,15 +12,13 @@ namespace NFCombat2.Services
 {
     public class PopupService : IPopupService
     {
-        private IPlayerService _playerService;
-        public PopupService(IPlayerService playerService)
+        public PopupService()
         {
-            _playerService = playerService;
+
         }
-        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect)
+        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll)
         {
             var task = new TaskCompletionSource<bool>();
-            bool canReroll = _playerService.CurrentPlayer is SpecOps;
             var viewModel = new DiceResultViewModel(effect, task, canReroll);
             var popup = new DiceResultView(viewModel);
             
@@ -30,10 +28,9 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect)
+        public async Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, bool canReroll)
         {
             var task = new TaskCompletionSource<bool>();
-            bool canReroll = _playerService.CurrentPlayer is SpecOps;
             var viewModel = new DiceResultViewModel(effect.AttackerResult, effect.AttackerMessage, task , canReroll);
             var popup = new DiceResultView(viewModel);
 
@@ -52,10 +49,9 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect)
+        public async Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect, bool canReroll)
         {
             var task = new TaskCompletionSource<bool>();
-            bool canReroll = _playerService.CurrentPlayer is SpecOps;
             var viewModel = new DiceResultViewModel(effect, task, canReroll);
             var popup = new DiceResultView(viewModel);
             
@@ -89,10 +85,10 @@ namespace NFCombat2.Services
             toast.Show();
         }
 
-        public async Task<TaskCompletionSource<Player>> ShowAddProfilePopup()
+        public async Task<TaskCompletionSource<Player>> ShowAddProfilePopup(IPlayerService playerService)
         {
             TaskCompletionSource<Player> task = new TaskCompletionSource<Player>();
-            var viewmodel = new AddingProfileViewModel(_playerService, task);
+            var viewmodel = new AddingProfileViewModel(playerService, task);
 
             var popup = new AddingProfileView(viewmodel);
             ShowPopup(popup);

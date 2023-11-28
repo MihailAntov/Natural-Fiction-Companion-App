@@ -1,7 +1,7 @@
 ﻿using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Common.Enums;
-
+using NFCombat2.Data.Entities.Programs;
 
 namespace NFCombat2.Data.Extensions
 {
@@ -107,6 +107,27 @@ namespace NFCombat2.Data.Extensions
             };
 
             await repository.InsertRange(items);
+            var programs = new List<ProgramEntity>()
+            {
+                new ProgramEntity(){Type = ProgramType.NOptimizeNMove},
+                new ProgramEntity(){Type = ProgramType.NOptimizeNFix},
+                new ProgramEntity(){Type = ProgramType.NOptimizeNAnalyze},
+                new ProgramEntity(){Type = ProgramType.NOptimizeFix},
+                new ProgramEntity(){Type = ProgramType.NExtendNFix},
+                new ProgramEntity(){Type = ProgramType.NDirectNMove},
+                new ProgramEntity(){Type = ProgramType.NDirectNFix},
+                new ProgramEntity(){Type = ProgramType.DirectNMove},
+                new ProgramEntity(){Type = ProgramType.DirectNFix},
+                new ProgramEntity(){Type = ProgramType.DirectNAnalyze},
+                new ProgramEntity(){Type = ProgramType.DirectFix},
+                new ProgramEntity(){Type = ProgramType.ExtendNMove},
+                new ProgramEntity(){Type = ProgramType.ExtendNFix},
+                new ProgramEntity(){Type = ProgramType.OptimizeNMove},
+                new ProgramEntity(){Type = ProgramType.OptimizeNFix},
+                new ProgramEntity(){Type = ProgramType.OptimizeNAnalyze},
+                new ProgramEntity(){Type = ProgramType.OptimizeFix}
+            };
+            await repository.InsertRange(programs);
         }
     }
 }

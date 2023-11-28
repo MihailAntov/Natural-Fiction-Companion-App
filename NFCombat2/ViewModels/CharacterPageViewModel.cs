@@ -93,7 +93,7 @@ namespace NFCombat2.ViewModels
 
         public async Task AddProfile()
         {
-            var taskCompletionSource = await _popupService.ShowAddProfilePopup();
+            var taskCompletionSource = await _popupService.ShowAddProfilePopup(_playerService);
             var player = await taskCompletionSource.Task;
             await SwitchToProfile(player);
 

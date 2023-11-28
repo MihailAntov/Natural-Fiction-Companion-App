@@ -110,6 +110,9 @@
 	  <MauiXaml Update="Views\AddingProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ConfirmationPopupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\DiceResultView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

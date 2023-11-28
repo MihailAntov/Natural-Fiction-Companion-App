@@ -20,14 +20,17 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
         private readonly IPopupService _popupService;
         private string _title;
-        public string Title { get { return _title; } set 
+        public string Title
+        {
+            get { return _title; }
+            set
             {
-                if(_title != value)
+                if (_title != value)
                 {
                     _title = value;
                     OnPropertyChanged(nameof(Title));
                 }
-            } 
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
@@ -39,15 +42,48 @@ namespace NFCombat2.ViewModels
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
-            MainHandImage = Player.Weapons[0]?.Image ?? "none";
-            OffHandImage = Player.Weapons[1]?.Image ?? "none";
-            AddToPlayerCommand = new Command<string>(async (s)=> await AddToPlayer(s));
+            SetInitialValues();
+            AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
             AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
             _popupService = popupService;
-            Title = $"{Player.Name}'s inventory";
+
 
         }
         public Player Player { get; set; }
+
+        private void SetInitialValues()
+        {
+            UpdateWeaponDisplay();
+            Title = $"{Player.Name}'s inventory";
+        }
+
+        private double _mainHandTransparency = 1;
+        public double MainHandTransparency
+        {
+            get { return _mainHandTransparency; }
+            set
+            {
+                if (_mainHandTransparency != value)
+                {
+                    _mainHandTransparency = value;
+                    OnPropertyChanged(nameof(MainHandTransparency));
+                }
+            }
+        }
+
+        private double _offHandTransparency = 1;
+        public double OffHandTransparency
+        {
+            get { return _offHandTransparency; }
+            set
+            {
+                if (_offHandTransparency != value)
+                {
+                    _offHandTransparency = value;
+                    OnPropertyChanged(nameof(OffHandTransparency));
+                }
+            }
+        }
 
         private string _mainHandImage = "none";
         public string MainHandImage
@@ -55,7 +91,7 @@ namespace NFCombat2.ViewModels
             get { return _mainHandImage; }
             set
             {
-                if(_mainHandImage != value)
+                if (_mainHandImage != value)
                 {
                     _mainHandImage = value;
                     OnPropertyChanged(nameof(MainHandImage));
@@ -76,6 +112,34 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+
+        private string _mainHandName;
+        public string MainHandName
+        {
+            get { return _mainHandName; }
+            set
+            {
+                if (_mainHandName != value)
+                {
+                    _mainHandName = value;
+                    OnPropertyChanged(nameof(MainHandName));
+                }
+            }
+        }
+        private string _offHandName;
+        public string OffHandName
+        {
+            get { return _offHandName; }
+            set
+            {
+                if (_offHandName != value)
+                {
+                    _offHandName = value;
+                    OnPropertyChanged(nameof(OffHandName));
+                }
+            }
+        }
+
         public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
         public ObservableCollection<Equipment> Equipment { get; set; }
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
@@ -102,40 +166,74 @@ namespace NFCombat2.ViewModels
 
         public async Task AddWeaponToPlayer(string hand)
         {
-            
+
             var options = await LoadWeaponsAsync();
-            foreach(var option in options)
+            foreach (var option in options)
             {
-                if(option is Weapon weapon)
-                weapon.Hand = hand == "main" ? Hand.MainHand : Hand.OffHand;
+                if (option is Weapon weapon)
+                    weapon.Hand = hand == "main" ? Hand.MainHand : Hand.OffHand;
             }
 
             var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
             var added = await taskCompletion.Task;
-            switch (hand)
+            UpdateWeaponDisplay();
+
+
+        }
+
+        private void UpdateWeaponDisplay()
+        {
+            if(_playerService.CurrentPlayer.MainHand == null && _playerService.CurrentPlayer.OffHand == null)
             {
-                case "main":
-                    if(added is Weapon mainHand)
-                    {
-                        MainHandImage = mainHand.Image;
-                        if (_playerService.CurrentPlayer.Weapons[1] == null)
-                        {
-                            OffHandImage = "none";
-                        }
-                    }
-                    break;
-                case "off":
-                    if (added is Weapon offHand)
-                    {
-                        OffHandImage = offHand.Image;
-                        if (_playerService.CurrentPlayer.Weapons[0] == null)
-                        {
-                            MainHandImage = "none";
-                        }
-                    }
-                    break;
+                MainHandImage = "none";
+                OffHandImage = "none";
+                MainHandName = string.Empty;
+                OffHandName = string.Empty;
             }
-            
+
+
+            if (_playerService.CurrentPlayer.MainHand != null)
+            {
+                MainHandImage = _playerService.CurrentPlayer.MainHand.Image;
+                MainHandName = _playerService.CurrentPlayer.MainHand.Name;
+                MainHandTransparency = 1;
+                if (_playerService.CurrentPlayer.OffHand == null)
+                {
+                    OffHandName = string.Empty;
+                    if (_playerService.CurrentPlayer.MainHand.Weight > _playerService.CurrentPlayer.MaxWeaponWeight)
+                    {
+                        OffHandImage = _playerService.CurrentPlayer.MainHand.Image;
+                        OffHandTransparency = 0.5;
+                    }
+                    else
+                    {
+                        OffHandImage = "none";
+                    }
+                }
+            }
+
+            if (_playerService.CurrentPlayer.OffHand != null)
+            {
+                OffHandImage = _playerService.CurrentPlayer.OffHand.Image;
+                OffHandName = _playerService.CurrentPlayer.OffHand.Name;
+                OffHandTransparency = 1;
+                if (_playerService.CurrentPlayer.MainHand == null)
+                {
+                    MainHandName = string.Empty;
+                    if (_playerService.CurrentPlayer.OffHand.Weight > _playerService.CurrentPlayer.MaxWeaponWeight)
+                    {
+                        MainHandImage = _playerService.CurrentPlayer.OffHand.Image;
+                        MainHandTransparency = 0.5;
+                    }
+                    else
+                    {
+                        MainHandImage = "none";
+                    }
+                }
+
+
+            }
+
         }
 
         private async Task<ICollection<IAddable>> LoadItemsAsync()
@@ -153,13 +251,13 @@ namespace NFCombat2.ViewModels
 
         public void AddToObservalbeCollection(IAddable added)
         {
-            if(added is Weapon weapon)
+            if (added is Weapon weapon)
             {
                 Weapons.Add(weapon);
                 return;
             }
 
-            if(added is Equipment equipment)
+            if (added is Equipment equipment)
             {
                 Equipment.Add(equipment);
                 return;
@@ -168,7 +266,7 @@ namespace NFCombat2.ViewModels
             Items.Add((Item)added);
         }
 
-        public int InventorySlots  => Player.InventorySlots;
+        public int InventorySlots => Player.InventorySlots;
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
@@ -179,7 +277,7 @@ namespace NFCombat2.ViewModels
                 Player = _playerService.CurrentPlayer;
                 Title = $"{Player.Name}'s inventory";
                 Equipment.Clear();
-                foreach(var item in Player.Equipment)
+                foreach (var item in Player.Equipment)
                 {
                     Equipment.Add(item);
                 }
@@ -190,8 +288,7 @@ namespace NFCombat2.ViewModels
                     Items.Add(item);
                 }
 
-                MainHandImage = Player.Weapons[0]?.Image ?? "none";
-                OffHandImage = Player.Weapons[1]?.Image ?? "none";
+                UpdateWeaponDisplay();
             }
         }
     }
