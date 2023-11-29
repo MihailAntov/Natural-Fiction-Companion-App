@@ -24,11 +24,11 @@ namespace NFCombat2.Services
         private SettingsRepository _settings;
         private IMapper _mapper;
         private Player _player;
-        private ISeederService _seederService;
+        //private ISeederService _seederService;
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
             IMapper mapper,
-            ISeederService seederService,
+            /*ISeederService seederService*/
             IPopupService popupService)
         {
             _repository = repository;
@@ -36,12 +36,12 @@ namespace NFCombat2.Services
             _mapper = mapper;
             _popupService = popupService;
             //GetDefaultPlayer();
-            if (repository.ShouldSeed)
-            {
+            //if (repository.ShouldSeed)
+            //{
             
-                _seederService = seederService;
-                _seederService.SeedItems();
-            }
+            //    _seederService = seederService;
+            //    _seederService.SeedItems();
+            //}
 
         }
 
@@ -148,9 +148,33 @@ namespace NFCombat2.Services
             
         }
 
+        public async Task RemoveItemFromPlayer(IAddable option)
+        {
+            if (option is Weapon weapon)
+            {
+                await RemoveWeaponFromPlayer(weapon);
+                await _repository.UpdatePlayer(CurrentPlayer);
+                return;
+            }
+
+            if (option is Equipment equipment)
+            {
+                CurrentPlayer.Equipment.Remove(equipment);
+                await _repository.UpdatePlayer(CurrentPlayer);
+                return;
+            }
+
+            if (option is Item item)
+            {
+                CurrentPlayer.Items.Remove(item);
+                await _repository.UpdatePlayer(CurrentPlayer);
+                return;
+            }
+        }
+
         
 
-        public async Task AddWeaponToPlayer(Weapon weapon, Hand hand)
+        private async Task AddWeaponToPlayer(Weapon weapon, Hand hand)
         {
             var otherWeapon = hand == Hand.MainHand ? CurrentPlayer.OffHand : CurrentPlayer.MainHand;
             if(otherWeapon != null)
@@ -196,6 +220,20 @@ namespace NFCombat2.Services
                     break;
             }
             
+        }
+
+        private async Task RemoveWeaponFromPlayer(Weapon weapon)
+        {
+            switch(weapon.Hand)
+            {
+                case Hand.MainHand:
+                    CurrentPlayer.MainHand = null;
+                    break;
+                case Hand.OffHand:
+                    CurrentPlayer.OffHand = null;
+                    break;
+            }
+            await _repository.UpdatePlayer(CurrentPlayer);
         }
 
         public List<PlayerClass> GetClassOptions()

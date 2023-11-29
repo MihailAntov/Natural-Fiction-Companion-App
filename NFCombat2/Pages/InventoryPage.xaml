@@ -9,35 +9,58 @@
 
         
         <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
-        <Grid HeightRequest="160">
+        <Grid HeightRequest="180" Margin="20" ColumnSpacing="0">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
-            <Border BackgroundColor="Black" Grid.Column="2">
+            <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
                 <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Border>
-            <Border BackgroundColor="Black" Grid.Column="4">
+            
+            
+            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion"/>
+            <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair"/>
+            <ImageButton Grid.Row="2" Grid.Column="1" Source="cartridge"/>
+            <ImageButton Grid.Row="3" Grid.Column="1" Source="radar"/>
+            <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
+            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash"/>
+                    
+            
+            
+            <Border BackgroundColor="Black" Grid.Column="3" Grid.RowSpan="4" >
                 <ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Border>
+            <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion"/>
+            <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair"/>
+            <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets"/>
+            <ImageButton Grid.Row="3" Grid.Column="4" Source="radius"/>
+            <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
+            <ImageButton Grid.Row="5" Grid.Column="3" Source="trash"/>
         </Grid>
+        
+        
+        
         <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment"/>
         <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item"/>
 

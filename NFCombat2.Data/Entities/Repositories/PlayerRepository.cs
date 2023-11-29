@@ -3,6 +3,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Programs;
+using NFCombat2.Data.Extensions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Factories;
 using NFCombat2.Models.Items;
@@ -41,9 +42,9 @@ namespace NFCombat2.Data.Entities.Repositories
 
             if(connection.Table<PlayerEntity>() != null)
             {
-                if(await connection.Table<PlayerEntity>().CountAsync() > 0) 
+                if(await connection.Table<PlayerEntity>().CountAsync() == 0) 
                 {
-                    
+                    ItemRepositorySeeder.SeedRepository(this);
                     //await connection.DropTableAsync<PlayerEntity>();
                     //await connection.DropTableAsync<PlayersItemsEntity>();
                     //TODO remove this, only used to clear db for testing
@@ -93,9 +94,15 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.UpdateAsync(player);
         }
 
-        private async Task UpdateItems(IList<Item> items, Player player)
+        private async Task UpdateItems(Player player)
         {
-            foreach (var item in items)
+            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            foreach (var equipment in oldEquipments)
+            {
+                await connection.DeleteAsync(equipment);
+            }
+
+            foreach (var item in player.Items)
             {
                 PlayersItemsEntity playersItems = null!;
                 try
@@ -112,9 +119,14 @@ namespace NFCombat2.Data.Entities.Repositories
             }
         }
 
-        private async Task UpdateEquipments(IList<Equipment> equipments, Player player)
+        private async Task UpdateEquipments( Player player)
         {
-            foreach (var equipment in equipments)
+            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi=> pi.PlayerId == player.Id).ToListAsync();
+            foreach(var equipment in oldEquipments)
+            {
+                await connection.DeleteAsync(equipment);
+            }
+            foreach (var equipment in player.Equipment)
             {
                 PlayersItemsEntity playersItems = null!;
                 try
@@ -131,9 +143,28 @@ namespace NFCombat2.Data.Entities.Repositories
             }
         }
 
+        private async Task UpdatePrograms(Player player)
+        {
+            foreach(var program in player.Programs)
+            {
+                PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
+                    .Where(pp => pp.PlayerId == player.Id && pp.ProgramId == program.Id)
+                    .FirstOrDefaultAsync();
 
+                if(entity == null)
+                {
+                    PlayersProgramsEntity newEntity = new PlayersProgramsEntity()
+                    {
+                        PlayerId = player.Id,
+                        ProgramId = program.Id
+                    };
+                    await connection.InsertAsync(newEntity);
+                }
 
-        private async Task UpdateWeapons(IList<Weapon> weapons, Player player)
+            }
+        }
+
+        private async Task UpdateWeapons(Player player)
         {
             //remove all weapons ?
             var oldWeapons = await connection.Table<PlayersWeaponsEntity>().Where(pw => pw.PlayerId == player.Id).ToListAsync();
@@ -143,7 +174,7 @@ namespace NFCombat2.Data.Entities.Repositories
             }
 
 
-            foreach (var weapon in weapons)
+            foreach (var weapon in player.Weapons)
             {
                 if(weapon == null)
                 {
@@ -175,9 +206,10 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             await Init();
             var entity = _mapper.Map<PlayerEntity>(player);
-            await UpdateItems(player.Items, player);
-            await UpdateEquipments(player.Equipment, player);
-            await UpdateWeapons(player.Weapons, player);
+            await UpdateItems(player);
+            await UpdateEquipments(player);
+            await UpdateWeapons(player);
+            await UpdatePrograms(player);
             await UpdateEntity(entity);
         }
 
@@ -363,6 +395,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
                         }
                         item.Id = itemId;
+                        item.Name = 
                         return item;
                     }
                 }

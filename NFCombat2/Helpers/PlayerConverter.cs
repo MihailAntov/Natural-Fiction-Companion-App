@@ -18,19 +18,18 @@ namespace NFCombat2.Helpers
                 switch (playerClass)
                 {
                     case PlayerClass.None:
-                        player = new Player() { Name = name };
                         break;
                     case PlayerClass.Hacker:
-                        player = new Hacker() { Name = name };
+                        player.Class = PlayerClass.Hacker;
                         break;
                     case PlayerClass.Soldier:
-                        player = new Soldier() { Name = name };
+                        player.Class = PlayerClass.Soldier;
                         break;
                     case PlayerClass.SpecOps:
-                        player = new SpecOps() { Name = name };
+                        player.Class = PlayerClass.SpecOps;
                         break;
                     case PlayerClass.Engineer:
-                        player = new Engineer() { Name = name };
+                        player.Class = PlayerClass.Engineer;
                         break;
                 }
                 return player;

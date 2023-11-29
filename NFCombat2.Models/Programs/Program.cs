@@ -7,12 +7,13 @@ namespace NFCombat2.Models.Programs
 {
     public class Program : IStandardAction, ITarget
     {
-        private Hacker _caster;
+        private Player.Player _caster;
+        public int Id { get; set; }
         public Program(string label, string description, Player.Player caster)
         {
             Label = label;
             Description = description;
-            _caster = caster as Hacker;
+            _caster = caster;
         }
         public string Label { get; set; }
         public bool AreaOfEffect { get; set; }

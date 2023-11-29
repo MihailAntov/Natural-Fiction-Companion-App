@@ -27,15 +27,15 @@ namespace NFCombat2.Services
         private readonly IAccuracyService _accuracyService;
         private readonly FightRepository _fightRepository;
         private readonly IPlayerService _playerService;
-        private readonly ISeederService _seederService;
+        //private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
             IOptionsService optionsService, 
             IPopupService popupService, 
             IAccuracyService accuracyService, 
             FightRepository fightRepository,
-            IPlayerService playerService,
-            ISeederService seederService)
+            IPlayerService playerService
+            /*ISeederService seederService*/)
         {
             _logService = logService;
             _optionsService = optionsService;
@@ -43,12 +43,12 @@ namespace NFCombat2.Services
             _accuracyService = accuracyService;
             _fightRepository = fightRepository;
             _playerService = playerService;
-            if (!_fightRepository.Seeded)
-            {
-                _seederService = seederService;
+            //if (!_fightRepository.Seeded)
+            //{
+            //    _seederService = seederService;
                 
-                _seederService.SeedFights();
-            }
+            //    _seederService.SeedFights();
+            //}
         }
 
         public ITarget CurrentTargetingEffect {get; set;}

@@ -54,6 +54,10 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\assaultrifle.png" />
+	  <None Remove="Resources\Images\bullet.png" />
+	  <None Remove="Resources\Images\bullets.png" />
+	  <None Remove="Resources\Images\cartridge.png" />
+	  <None Remove="Resources\Images\crosshair.png" />
 	  <None Remove="Resources\Images\dice1.png" />
 	  <None Remove="Resources\Images\dice2.png" />
 	  <None Remove="Resources\Images\dice3.png" />
@@ -61,6 +65,7 @@
 	  <None Remove="Resources\Images\dice5.png" />
 	  <None Remove="Resources\Images\dice6.png" />
 	  <None Remove="Resources\Images\energyweapon.png" />
+	  <None Remove="Resources\Images\explosion.png" />
 	  <None Remove="Resources\Images\flame.png" />
 	  <None Remove="Resources\Images\healthcare.png" />
 	  <None Remove="Resources\Images\hospital.png" />
@@ -72,9 +77,12 @@
 	  <None Remove="Resources\Images\notes.png" />
 	  <None Remove="Resources\Images\pistol.png" />
 	  <None Remove="Resources\Images\previous.png" />
+	  <None Remove="Resources\Images\radar.png" />
+	  <None Remove="Resources\Images\radius.png" />
 	  <None Remove="Resources\Images\rifle.png" />
 	  <None Remove="Resources\Images\shotgun.png" />
 	  <None Remove="Resources\Images\sync.png" />
+	  <None Remove="Resources\Images\trash.png" />
 	</ItemGroup>
 
 	<ItemGroup>

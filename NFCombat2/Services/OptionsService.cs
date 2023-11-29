@@ -188,7 +188,7 @@ namespace NFCombat2.Services
 
         public bool CanUseProgram(Fight fight)
         {
-            if(fight.Player is Hacker)
+            if(fight.Player.Class == PlayerClass.Hacker)
             {
                 return true;
             }

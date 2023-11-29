@@ -14,18 +14,22 @@ namespace NFCombat2.Models.Factories
                 ItemType.PlasmaRapier,
                 new WeaponConfig()
                 {
-                    Name = "PlasmaRapier",
+                    Name = "Plasma Rapier",
                     Image = "knife",
                     Weight = 1,
+                    ExtraStrength = 7
                 }
             },
             {
                 ItemType.QuantumMagnumParadox,
                 new WeaponConfig()
                 {
-                    Name = "QuantumMagnumParadox",
+                    Name = "Quantum Magnum \"Paradox\"",
                     Image = "pistol",
                     Weight = 1,
+                    Accuracy = Accuracy.C,
+                    DamageDice = 7,
+                    FlatDamage = 7,
                 }
             },
             {

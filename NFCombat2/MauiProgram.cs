@@ -26,7 +26,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IPopupService, PopupService>();
 		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
 		builder.Services.AddSingleton<IItemService, ItemService>();
-		builder.Services.AddSingleton<ISeederService, SeederService>();
+		builder.Services.AddSingleton<INameService, NameService>();
+		//builder.Services.AddSingleton<ISeederService, SeederService>();
 
 		
 		builder.Services.AddSingleton<CharacterPage>();

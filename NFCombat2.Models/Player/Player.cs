@@ -5,6 +5,7 @@ using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Models.Programs;
 using NFCombat2.Models.SpecOps;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -98,6 +99,7 @@ namespace NFCombat2.Models.Player
         public IList<Item> Items { get; set; } = new List<Item>();
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
+        public IList<Program> Programs { get; set; } = new List<Program>();
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers => Equipment.OfType<IModifyResolution>().ToList();
         public PlayerClass Class { get; set; } = PlayerClass.None;
@@ -118,6 +120,19 @@ namespace NFCombat2.Models.Player
                 {
                     speed = value;
                     OnPropertyChanged(nameof(Speed));
+                }
+            }
+        }
+        private int _overload;
+        public int Overload
+        {
+            get { return _overload; }
+            set
+            {
+                if(_overload != value)
+                {
+                    _overload = value;
+                    OnPropertyChanged(nameof(Overload));
                 }
             }
         }
