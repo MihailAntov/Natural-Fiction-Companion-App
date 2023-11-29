@@ -1,5 +1,7 @@
-﻿using NFCombat2.Common.Enums;
+﻿using NFCombat2.Common.AppConstants;
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
+using static NFCombat2.Common.AppConstants.ItemNames;
 
 namespace NFCombat2.Services
 {
@@ -11,7 +13,14 @@ namespace NFCombat2.Services
         }
         public string ItemName(ItemType type)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return EnglishNames[type];
+            }
+            catch
+            {
+                return "not found";
+            }
         }
 
         public string Label(LabelType type)

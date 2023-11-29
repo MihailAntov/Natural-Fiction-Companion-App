@@ -8,6 +8,7 @@ namespace NFCombat2.Models.Items
     public class Item : IAddable
     {
         public int Id { get; set; }
+        public ItemType Type { get; set; }
         public bool IsInvention { get; set; } = false;
         public string Name { get; set; }
         public string Description { get; set; }

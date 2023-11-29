@@ -14,11 +14,13 @@ namespace NFCombat2.Models.Items.Equipments
         protected override void AddModification(Weapon weapon)
         {
             weapon.BonusMaxRange += BonusRange;
+            weapon.Modifications.Add(this);
         }
 
         protected override void RemoveModification(Weapon weapon)
         {
             weapon.BonusMaxRange -= BonusRange;
+            weapon.Modifications.Remove(this);
         }
     }
 }

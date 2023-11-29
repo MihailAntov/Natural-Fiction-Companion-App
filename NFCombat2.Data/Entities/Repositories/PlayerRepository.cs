@@ -129,16 +129,29 @@ namespace NFCombat2.Data.Entities.Repositories
             foreach (var equipment in player.Equipment)
             {
                 PlayersItemsEntity playersItems = null!;
+                AttachedTo attachedTo = AttachedTo.None;
+                if(equipment is WeaponModification modification)
+                {
+                    attachedTo = modification.AttachedTo;
+                }
+
+
                 try
                 {
                     playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == equipment.Id);
                 }
                 catch
                 {
-                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id });
+                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id };
+                    newPlayersItemsEntity.AttachedTo = attachedTo;
+                    
+
+                    await connection.InsertOrReplaceAsync(newPlayersItemsEntity);
                     continue;
                 }
                 playersItems.Quantity = equipment.Quantity;
+                playersItems.AttachedTo = attachedTo;
+                
                 await connection.UpdateAsync(playersItems);
             }
         }
@@ -218,22 +231,20 @@ namespace NFCombat2.Data.Entities.Repositories
             var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var playersItemsEntity in playersItemsEntities)
             {
-                var allitems = await connection.Table<ItemEntity>().ToListAsync();
-                var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
-                var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
                 var entity = await connection.GetAsync<ItemEntity>(playersItemsEntity.ItemId);
                 if (!entity.Id.HasValue)
                 {
                     throw new NullReferenceException();
                 }
                 int itemId = entity.Id.Value;
+                AttachedTo attachedTo = playersItemsEntity.AttachedTo;
                 switch (entity.Category)
                 {
                     case ItemCategory.Item:
                         player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
                         break;
                     case ItemCategory.Equipment:
-                        player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId));
+                        player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId, attachedTo));
                         break;
                 }
             }
@@ -241,9 +252,7 @@ namespace NFCombat2.Data.Entities.Repositories
             var playersWeaponsEntities = await connection.Table<PlayersWeaponsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var playersWeaponsEntity in playersWeaponsEntities)
             {
-                var allitems = await connection.Table<ItemEntity>().ToListAsync();
-                var allplayers = await connection.Table<PlayerEntity>().ToListAsync();
-                var allPlayersItems = await connection.Table<PlayersItemsEntity>().ToListAsync();
+
                 var entity = await connection.GetAsync<ItemEntity>(playersWeaponsEntity.ItemId);
                 if (!entity.Id.HasValue)
                 {
@@ -260,6 +269,17 @@ namespace NFCombat2.Data.Entities.Repositories
                         break;
                 }
                 
+            }
+
+            foreach(WeaponModification modification in player.Equipment)
+            {
+                if(modification.AttachedTo == AttachedTo.MainHand)
+                {
+                    modification.AttachToWeapon(player.MainHand);
+                }else if(modification.AttachedTo == AttachedTo.OffHand)
+                {
+                    modification.AttachToWeapon(player.OffHand);
+                }
             }
         }
 
@@ -358,17 +378,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         }
 
-        public async Task<ICollection<IAddable>> GetAllItems()
-        {
-            await Init();
-            var entities = await connection.Table<ItemEntity>().ToListAsync();
-            List<IAddable> items = new List<IAddable>();
-            foreach(var entity in entities)
-            {
-                items.Add(ItemConverter(entity.Type, entity.Category, entity.Id ?? 0));
-            }
-            return items;
-        }
+        
 
         private IAddable ItemConverter(ItemType type, ItemCategory category, int itemId, params object[] args)
         {
@@ -395,7 +405,15 @@ namespace NFCombat2.Data.Entities.Repositories
 
                         }
                         item.Id = itemId;
-                        item.Name = 
+                        item.Type = type;
+                        if(item is WeaponModification modification)
+                        {
+                            if (args[0] is AttachedTo attachedTo)
+                            {
+                                modification.AttachedTo = attachedTo;
+                            }
+                        }
+                        
                         return item;
                     }
                 }

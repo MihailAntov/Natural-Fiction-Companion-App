@@ -20,28 +20,22 @@ namespace NFCombat2.Services
     public class PlayerService : IPlayerService, INotifyPropertyChanged
     {
         private PlayerRepository _repository;
-        private IPopupService _popupService;
+        private readonly IPopupService _popupService;
         private SettingsRepository _settings;
+        private readonly INameService _nameService;
         private IMapper _mapper;
         private Player _player;
-        //private ISeederService _seederService;
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
             IMapper mapper,
-            /*ISeederService seederService*/
-            IPopupService popupService)
+            IPopupService popupService,
+            INameService nameService)
         {
             _repository = repository;
             _settings = settings;
             _mapper = mapper;
             _popupService = popupService;
-            //GetDefaultPlayer();
-            //if (repository.ShouldSeed)
-            //{
-            
-            //    _seederService = seederService;
-            //    _seederService.SeedItems();
-            //}
+            _nameService = nameService;
 
         }
 
@@ -119,6 +113,16 @@ namespace NFCombat2.Services
             
         }
 
+        public async Task AttachModificationToWeapon(IAddable option, Weapon weapon)
+        {
+            if(option is WeaponModification modification)
+            {
+                modification.UnAttachFromWeapon();
+                modification.AttachToWeapon(weapon);
+                await _repository.UpdatePlayer(CurrentPlayer);
+            }
+        }
+
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
@@ -144,8 +148,6 @@ namespace NFCombat2.Services
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
-
-            
         }
 
         public async Task RemoveItemFromPlayer(IAddable option)
@@ -266,7 +268,13 @@ namespace NFCombat2.Services
         {
 
             var entities = await _repository.GetItemsByCategory(category);
-
+            foreach(var entity in entities)
+            {
+                if(entity is Item item)
+                {
+                    entity.Name = _nameService.ItemName(item.Type);
+                }
+            }
             return entities;
         }
 
