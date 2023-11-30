@@ -8,15 +8,16 @@ using NFCombat2.Models.Player;
 using NFCombat2.Models.Programs;
 using NFCombat2.Contracts;
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Services
 {
     public class OptionsService : IOptionsService
     {
-        
-        public OptionsService()
+        private readonly IPlayerService _playerService;
+        public OptionsService(IPlayerService playerService)
         {
-           
+           _playerService = playerService;
         }
 
 
@@ -195,8 +196,32 @@ namespace NFCombat2.Services
             return false;
         }
 
-        
+        public ICollection<IModificationOption> GetModificationOptions(WeaponModification modification)
+        {
+            var player = _playerService.CurrentPlayer;
+            var result = new List<IModificationOption>();
 
-       
+            foreach(var weapon in player.Weapons.Where(w=>w.MaxRange > 0 && !w.Modifications.Any(mod=>mod.Type == modification.Type)))
+            {
+                result.Add(new ModificationOption()
+                {
+                    Image = weapon.Image,
+                    Name = weapon.Name,
+                    ToBeAttachedTo = weapon.Hand == Hand.MainHand ? AttachedTo.MainHand : AttachedTo.OffHand
+                });
+
+                if(modification.AttachedTo != AttachedTo.None)
+                {
+                    result.Add(new ModificationOption()
+                    {
+                        Image = "none",
+                        Name = "Unequip",
+                        ToBeAttachedTo = AttachedTo.None
+                    });
+                }
+            }
+
+            return result;
+        }
     }
 }

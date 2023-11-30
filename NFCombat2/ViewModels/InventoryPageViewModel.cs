@@ -12,12 +12,14 @@ using NFCombat2.Common.Enums;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using NFCombat2.Views;
 
 namespace NFCombat2.ViewModels
 {
     public class InventoryPageViewModel : INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
+        private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
         private string _title;
         public string Title
@@ -35,9 +37,10 @@ namespace NFCombat2.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
         public Command AddWeaponToPlayerCommand { get; set; }
-        public InventoryPageViewModel(IPlayerService playerService, IPopupService popupService)
+        public InventoryPageViewModel(IPlayerService playerService, IPopupService popupService, IOptionsService optionsService)
         {
             _playerService = playerService;
+            _optionsService = optionsService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
@@ -179,6 +182,25 @@ namespace NFCombat2.ViewModels
             UpdateWeaponDisplay();
 
 
+        }
+
+        public void UsedEquipment(object eventItem)
+        {
+            if (eventItem is WeaponModification modification)
+            {
+                TaskCompletionSource<bool> taskCompletionSource = new();
+                var viewModel = new WeaponModificationViewModel(modification,_optionsService, _playerService, taskCompletionSource);
+                var popup = new WeaponModificationView(viewModel, taskCom);
+                _popupService.ShowPopup(popup);
+            }
+        }
+
+        public void UsedItem(object eventItem)
+        {
+            if (eventItem is Item item)
+            {
+                item.Description = item.Description;
+            }
         }
 
         private void UpdateWeaponDisplay()

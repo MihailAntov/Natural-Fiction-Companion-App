@@ -3,8 +3,10 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Player;
 using NFCombat2.Models;
 using NFCombat2.Models.Actions;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Contracts
 {
@@ -24,6 +26,7 @@ namespace NFCombat2.Contracts
         IOptionList GetBonusActions(Fight fight);
         IOptionList GetWeapons(Fight fight, bool alreadyShot);
         IOptionList GetEndTurn();
+        ICollection<IModificationOption> GetModificationOptions(WeaponModification modification);
 
         bool CanShoot(Fight fight);
     }

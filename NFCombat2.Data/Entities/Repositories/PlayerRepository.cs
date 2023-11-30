@@ -406,7 +406,7 @@ namespace NFCombat2.Data.Entities.Repositories
                         }
                         item.Id = itemId;
                         item.Type = type;
-                        if(item is WeaponModification modification)
+                        if(item is WeaponModification modification && args.Length > 0)
                         {
                             if (args[0] is AttachedTo attachedTo)
                             {

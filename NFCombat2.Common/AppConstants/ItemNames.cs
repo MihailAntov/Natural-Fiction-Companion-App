@@ -8,7 +8,8 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<ItemType, string> EnglishNames = new Dictionary<ItemType, string>
         {
-            {ItemType.TacticalGlasses, "Tactical Glasses" }
+            {ItemType.TacticalGlasses, "Tactical Glasses" },
+            {ItemType.BarrelExtender, "Barrel Extender" }
         };
     }
 }

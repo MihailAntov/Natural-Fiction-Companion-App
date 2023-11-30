@@ -77,12 +77,33 @@ namespace NFCombat2.Services
             int currentPlayerId = await _settings.CurrentPlayerId();
             
             Player player = await GetPlayerById(currentPlayerId);
+            await UpdateNames(player);
             if(player == null)
             {
                 player = (await GetAllPlayers()).FirstOrDefault();
             }
             CurrentPlayer = player;
             
+        }
+
+        private async Task UpdateNames(Player player)
+        {
+            Task task = new Task(() =>
+            {
+
+                foreach (var item in player.Items)
+                {
+                    item.Name = _nameService.ItemName(item.Type);
+                }
+
+                foreach (var item in player.Equipment)
+                {
+                    item.Name = _nameService.ItemName(item.Type);
+                }
+            });
+            task.Start();
+            await task;
+            return;
         }
 
         public async Task<Player> GetPlayerById(int id)

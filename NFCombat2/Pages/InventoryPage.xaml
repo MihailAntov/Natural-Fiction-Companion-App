@@ -80,10 +80,10 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView ItemsSource="{Binding Equipment}">
+        <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedEquipment">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell>
+                <!--<TextCell>
                     <TextCell.Text>
                         
                         <MultiBinding StringFormat="{}{0}  ({1})">
@@ -91,11 +91,26 @@
                             <Binding Path="Quantity"/>
                         </MultiBinding>
                     </TextCell.Text>
-                </TextCell>
+                </TextCell>-->
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                                <ImageButton Grid.Column="1" Source="crosshair"/>
+                                <Label VerticalTextAlignment="Center" Grid.Column="2" Text="{Binding Quantity}"/>
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                    
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
-        <ListView ItemsSource="{Binding Items}">
+        <ListView ItemsSource="{Binding Items}" ItemTapped="TappedItem">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell>
