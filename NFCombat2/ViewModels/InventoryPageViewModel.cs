@@ -184,14 +184,16 @@ namespace NFCombat2.ViewModels
 
         }
 
-        public void UsedEquipment(object eventItem)
+        public async void UsedEquipment(object eventItem)
         {
             if (eventItem is WeaponModification modification)
             {
                 TaskCompletionSource<bool> taskCompletionSource = new();
                 var viewModel = new WeaponModificationViewModel(modification,_optionsService, _playerService, taskCompletionSource);
-                var popup = new WeaponModificationView(viewModel, taskCom);
+                var popup = new WeaponModificationView(viewModel);
                 _popupService.ShowPopup(popup);
+                var hand = await taskCompletionSource.Task;
+
             }
         }
 

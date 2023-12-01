@@ -68,7 +68,6 @@ namespace NFCombat2.Services
             var popup = new EntryWithSuggestions(viewModel);
             ShowPopup(popup);
             await task.Task;
-            await popup.CloseAsync();
             return task;
         }
 
@@ -85,16 +84,19 @@ namespace NFCombat2.Services
             toast.Show();
         }
 
-        public async Task<TaskCompletionSource<Player>> ShowAddProfilePopup(IPlayerService playerService)
+        public async Task<Player> ShowAddProfilePopup(IPlayerService playerService)
         {
             TaskCompletionSource<Player> task = new TaskCompletionSource<Player>();
             var viewmodel = new AddingProfileViewModel(playerService, task);
 
             var popup = new AddingProfileView(viewmodel);
             ShowPopup(popup);
-            await task.Task;
-            await popup.CloseAsync();
-            return task;
+            var player = await task.Task;
+            if(player != null)
+            {
+                await popup.CloseAsync();
+            }
+            return player;
         }
     }
 }

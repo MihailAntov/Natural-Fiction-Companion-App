@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.ViewModels;
 
@@ -10,4 +11,12 @@ public partial class ConfirmationPopupView : Popup
 		InitializeComponent();
 		BindingContext = viewModel;
 	}
+
+	public async void OnClosed(object sender, PopupClosedEventArgs e)
+	{
+        if (BindingContext is ConfirmationPopupViewModel viewModel)
+        {
+            viewModel.Cancel();
+        }
+    }
 }

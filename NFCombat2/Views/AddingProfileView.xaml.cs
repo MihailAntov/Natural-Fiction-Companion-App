@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.ViewModels;
 
@@ -17,6 +18,14 @@ public partial class AddingProfileView : Popup
         if (BindingContext is AddingProfileViewModel viewModel)
         {
             await viewModel.ChangedClass();
+        }
+    }
+
+    public async void OnClosed(object sender, PopupClosedEventArgs e)
+    {
+        if (BindingContext is AddingProfileViewModel viewModel)
+        {
+            viewModel.Cancel();
         }
     }
 }

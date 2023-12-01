@@ -210,15 +210,17 @@ namespace NFCombat2.Services
                     ToBeAttachedTo = weapon.Hand == Hand.MainHand ? AttachedTo.MainHand : AttachedTo.OffHand
                 });
 
-                if(modification.AttachedTo != AttachedTo.None)
+                
+            }
+
+            if (modification.AttachedTo != AttachedTo.None)
+            {
+                result.Add(new ModificationOption()
                 {
-                    result.Add(new ModificationOption()
-                    {
-                        Image = "none",
-                        Name = "Unequip",
-                        ToBeAttachedTo = AttachedTo.None
-                    });
-                }
+                    Image = "none",
+                    Name = "Unequip",
+                    ToBeAttachedTo = AttachedTo.None
+                });
             }
 
             return result;

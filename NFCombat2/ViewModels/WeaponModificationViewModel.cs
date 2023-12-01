@@ -14,6 +14,7 @@ namespace NFCombat2.ViewModels
         private readonly WeaponModification _modification;
         private readonly IPlayerService _playerService;
         private TaskCompletionSource<bool> _taskCompletionSource;
+        public Command AttachToCommand { get; set; }
         public WeaponModificationViewModel(
             WeaponModification modification, 
             IOptionsService optionsService, 
@@ -24,6 +25,7 @@ namespace NFCombat2.ViewModels
             _optionsService = optionsService;
             _playerService = playerService;
             _taskCompletionSource = taskCompletionSource;
+            AttachToCommand = new Command<AttachedTo>(AttachTo);
         }
 
         public ICollection<IModificationOption> Options => GetOptions();
@@ -39,7 +41,10 @@ namespace NFCombat2.ViewModels
             _taskCompletionSource.SetResult(true);
         }
 
+        public void Cancel()
+        {
+            _taskCompletionSource.SetResult(false);
+        }
 
-        
     }
 }

@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.ViewModels;
 
@@ -27,6 +28,14 @@ public partial class EntryWithSuggestions : Popup
         if (BindingContext is EntryWithSuggestionsViewModel viewModel)
         {
             viewModel.EnteredText(sender);
+        }
+    }
+
+    public async void OnClosed(object sender, PopupClosedEventArgs e)
+    {
+        if (BindingContext is EntryWithSuggestionsViewModel viewModel)
+        {
+            viewModel.Cancel();
         }
     }
 

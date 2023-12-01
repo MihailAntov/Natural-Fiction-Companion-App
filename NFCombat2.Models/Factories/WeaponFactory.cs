@@ -30,6 +30,7 @@ namespace NFCombat2.Models.Factories
                     Accuracy = Accuracy.C,
                     DamageDice = 7,
                     FlatDamage = 7,
+                    MaxRange = 15
                 }
             },
             {
@@ -49,7 +50,8 @@ namespace NFCombat2.Models.Factories
                     Image = "flame",
                     WeaponSpecial = WeaponSpecial.AreaOfEffect,
                     AlwaysHits = true,
-                    Weight = 2
+                    Weight = 2,
+                    MaxRange = 15
                 }
             },
             {
@@ -324,6 +326,7 @@ namespace NFCombat2.Models.Factories
                         Image = config.Image,
                         Hand = hand,
                         Weight = config.Weight,
+                        MaxRange = config.MaxRange,
                     };
                     return weapon;
 

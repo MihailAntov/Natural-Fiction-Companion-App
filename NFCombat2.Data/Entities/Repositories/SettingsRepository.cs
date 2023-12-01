@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Data.Entities.Combat;
 using SQLite;
 
 namespace NFCombat2.Data.Entities.Repositories

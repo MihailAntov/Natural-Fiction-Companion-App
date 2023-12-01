@@ -36,5 +36,10 @@ namespace NFCombat2.ViewModels
 
         }
 
+        public void Cancel()
+        {
+            _taskCompletionSource.TrySetResult(null);
+            //_taskCompletionSource.SetResult(null);
+        }
     }
 }

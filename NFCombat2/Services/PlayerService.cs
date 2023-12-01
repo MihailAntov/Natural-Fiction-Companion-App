@@ -77,11 +77,11 @@ namespace NFCombat2.Services
             int currentPlayerId = await _settings.CurrentPlayerId();
             
             Player player = await GetPlayerById(currentPlayerId);
-            await UpdateNames(player);
             if(player == null)
             {
                 player = (await GetAllPlayers()).FirstOrDefault();
             }
+            await UpdateNames(player);
             CurrentPlayer = player;
             
         }

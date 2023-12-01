@@ -91,6 +91,11 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        public void Cancel()
+        {
+            _taskCompletionSource.SetResult(null);
+        }
+
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
