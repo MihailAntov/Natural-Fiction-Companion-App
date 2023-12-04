@@ -14,6 +14,6 @@ namespace NFCombat2.Contracts
         Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll);
         Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, bool canReroll);
         Task<Player> ShowAddProfilePopup(IPlayerService playerService);
-        Task<TaskCompletionSource<IAddable>> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
+        Task<IAddable> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> effect);
     }
 }

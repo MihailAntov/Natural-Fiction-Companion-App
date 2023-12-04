@@ -93,7 +93,7 @@ namespace NFCombat2.ViewModels
 
         public void Cancel()
         {
-            _taskCompletionSource.SetResult(null);
+            _taskCompletionSource.TrySetResult(null);
         }
 
 

@@ -10,6 +10,7 @@ public partial class ConfirmationPopupView : Popup
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+		CanBeDismissedByTappingOutsideOfPopup = false;
 	}
 
 	public async void OnClosed(object sender, PopupClosedEventArgs e)

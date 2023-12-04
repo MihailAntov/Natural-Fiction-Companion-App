@@ -162,9 +162,12 @@ namespace NFCombat2.ViewModels
                     break;
             }
 
-            var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
-            var added = await taskCompletion.Task;
-            AddToObservalbeCollection(added);
+            var result = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            if(result == null)
+            {
+                return;
+            }
+            AddToObservalbeCollection(result);
         }
 
         public async Task AddWeaponToPlayer(string hand)
@@ -177,8 +180,7 @@ namespace NFCombat2.ViewModels
                     weapon.Hand = hand == "main" ? Hand.MainHand : Hand.OffHand;
             }
 
-            var taskCompletion = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
-            var added = await taskCompletion.Task;
+            var added = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
             UpdateWeaponDisplay();
 
 

@@ -295,6 +295,12 @@ namespace NFCombat2.Services
                 {
                     entity.Name = _nameService.ItemName(item.Type);
                 }
+
+                if (entity is Weapon weapon)
+                {
+
+                }
+
             }
             return entities;
         }
