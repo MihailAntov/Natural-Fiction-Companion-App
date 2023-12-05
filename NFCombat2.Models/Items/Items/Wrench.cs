@@ -9,15 +9,15 @@ namespace NFCombat2.Models.Items.Items
     {
         public Wrench()
         {
-            Name = "Wrench";
+            base.Name = "Wrench";
             IsConsumable = true;
         }
 
-        public string Label => Name;
+        public string Name => base.Name;
 
         public MessageType MessageType => MessageType.UseItemMessage;
 
-        public string[] MessageArgs => new string[] { Label };
+        public string[] MessageArgs => new string[] { Name };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

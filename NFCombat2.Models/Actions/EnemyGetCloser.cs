@@ -29,6 +29,10 @@ namespace NFCombat2.Models.Actions
             {
                 new EnemyChangeDistance(-_enemy.Speed,_enemy) 
             };
+            foreach(var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             return resolutions;
         }
     }

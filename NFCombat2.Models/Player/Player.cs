@@ -95,7 +95,12 @@ namespace NFCombat2.Models.Player
         public Weapon MainHand { get; set; }
         public Weapon OffHand { get; set; }
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
-        public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
+        //public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
+        public IList<ICombatActiveItem> Consumables => 
+            Equipment
+            .Where(e => e is ICombatActiveItem)
+            .Select(e=> (ICombatActiveItem)e)
+            .ToList();
         public IList<Item> Items { get; set; } = new List<Item>();
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
@@ -104,12 +109,89 @@ namespace NFCombat2.Models.Player
         public virtual IList<IModifyResolution> ResolutionModifiers => Equipment.OfType<IModifyResolution>().ToList();
         public PlayerClass Class { get; set; } = PlayerClass.None;
         public IList<Part> Parts { get; set; } = new List<Part>();
-        public int Trauma { get; set; } = 0;
-        public int MaxTrauma { get; set; } = 3;
-        public int Ionization { get; set; } = 0;
-        public int MaxIonization { get; set; } = 3;
-        public int Pathogens { get; set; } = 0;
-        public int MaxPathogens { get; set; } = 3;
+        private int trauma = 0;
+        public int Trauma
+        {
+            get { return trauma; }
+            set
+            {
+                if (trauma != value)
+                {
+                    trauma = value;
+                    OnPropertyChanged(nameof(Trauma));
+                }
+            }
+        }
+
+        private int maxTrauma = 3;
+        public int MaxTrauma
+        {
+            get { return maxTrauma; }
+            set
+            {
+                if (maxTrauma != value)
+                {
+                    maxTrauma = value;
+                    OnPropertyChanged(nameof(MaxTrauma));
+                }
+            }
+        }
+
+        private int ionization = 0;
+        public int Ionization
+        {
+            get { return ionization; }
+            set
+            {
+                if (ionization != value)
+                {
+                    ionization = value;
+                    OnPropertyChanged(nameof(Ionization));
+                }
+            }
+        }
+
+        private int maxIonization = 3;
+        public int MaxIonization
+        {
+            get { return maxIonization; }
+            set
+            {
+                if (maxIonization != value)
+                {
+                    maxIonization = value;
+                    OnPropertyChanged(nameof(MaxIonization));
+                }
+            }
+        }
+
+        private int pathogens = 0;
+        public int Pathogens
+        {
+            get { return pathogens; }
+            set
+            {
+                if (pathogens != value)
+                {
+                    pathogens = value;
+                    OnPropertyChanged(nameof(Pathogens));
+                }
+            }
+        }
+
+        private int maxPathogens = 3;
+        public int MaxPathogens
+        {
+            get { return maxPathogens; }
+            set
+            {
+                if (maxPathogens != value)
+                {
+                    maxPathogens = value;
+                    OnPropertyChanged(nameof(MaxPathogens));
+                }
+            }
+        }
         private int speed = 3;
         public int Speed
         {
@@ -136,6 +218,20 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
+        private int _maxOverload;
+        public int MaxOverload
+        {
+            get { return _maxOverload; }
+            set
+            {
+                if(_maxOverload != value) 
+                {
+                    _maxOverload = value;
+                    OnPropertyChanged(nameof(MaxOverload));
+                }
+            }
+        }
+
         public Language Language { get; set; } = Language.English;
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

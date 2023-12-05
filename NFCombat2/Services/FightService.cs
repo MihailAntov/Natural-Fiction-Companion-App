@@ -96,7 +96,7 @@ namespace NFCombat2.Services
                 Distance = 15,
                 Speed = 2,
                 Range = 15,
-                DamageDice = 8
+                DamageDice = 1
             };
             enemies.Add(targetDummy);
 

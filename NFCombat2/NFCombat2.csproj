@@ -55,6 +55,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\assaultrifle.png" />
 	  <None Remove="Resources\Images\baton.png" />
+	  <None Remove="Resources\Images\biohazard.png" />
 	  <None Remove="Resources\Images\blowtorch.png" />
 	  <None Remove="Resources\Images\bullet.png" />
 	  <None Remove="Resources\Images\bullets.png" />
@@ -74,9 +75,11 @@
 	  <None Remove="Resources\Images\flame.png" />
 	  <None Remove="Resources\Images\gravitymodulator.png" />
 	  <None Remove="Resources\Images\healthcare.png" />
+	  <None Remove="Resources\Images\highvoltage.png" />
 	  <None Remove="Resources\Images\hook.png" />
 	  <None Remove="Resources\Images\hospital.png" />
 	  <None Remove="Resources\Images\info.png" />
+	  <None Remove="Resources\Images\injury.png" />
 	  <None Remove="Resources\Images\inventions.png" />
 	  <None Remove="Resources\Images\knife.png" />
 	  <None Remove="Resources\Images\machinegun.png" />
@@ -86,6 +89,7 @@
 	  <None Remove="Resources\Images\plasmarapier.png" />
 	  <None Remove="Resources\Images\previous.png" />
 	  <None Remove="Resources\Images\radar.png" />
+	  <None Remove="Resources\Images\radiation.png" />
 	  <None Remove="Resources\Images\radius.png" />
 	  <None Remove="Resources\Images\revolver.png" />
 	  <None Remove="Resources\Images\rifle.png" />

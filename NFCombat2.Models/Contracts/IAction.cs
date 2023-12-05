@@ -5,7 +5,7 @@ namespace NFCombat2.Models.Contracts
     public interface IAction : ICombatAction
     {
         
-        public string Label { get; }
+        public string Name { get; }
         public string Description { get; }
     }
 }

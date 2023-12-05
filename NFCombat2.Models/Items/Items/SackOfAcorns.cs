@@ -18,7 +18,7 @@ namespace NFCombat2.Models.Items.Items
             throw new NotImplementedException();
         }
 
-        public void AffectPlayer(Player.Player player)
+        public ICombatResolution AffectPlayer(Player.Player player)
         {
             throw new NotImplementedException();
         }

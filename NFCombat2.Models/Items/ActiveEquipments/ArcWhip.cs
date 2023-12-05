@@ -3,18 +3,23 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    public class ArcWhip : ActiveEquipment
+    public class ArcWhip : Equipment
     {
-        public override string Label { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override MessageType MessageType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string[] MessageArgs { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
+        public ArcWhip()
         {
-            throw new NotImplementedException();
+            IsInvention = true;
+            IsCraftOnly = true;
         }
+        //public override MessageType MessageType => throw new NotImplementedException();
+        //public override string[] MessageArgs => throw new NotImplementedException();
+
+        //public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

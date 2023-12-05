@@ -17,11 +17,10 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             
         }
 
-        public abstract string Label { get; set; }
 
-        public abstract MessageType MessageType { get; set; }
+        public MessageType MessageType => MessageType.UseItemMessage;
 
-        public abstract string[] MessageArgs { get; set; }
+        public string[] MessageArgs => new string[] { Name };
 
         public abstract IList<ICombatResolution> AddToCombatEffects(Fight fight);
         

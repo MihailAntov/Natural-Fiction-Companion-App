@@ -111,7 +111,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 catch
                 {
-                    await connection.InsertOrReplaceAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id });
+                    await connection.InsertAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = item.Quantity });
                     continue;
                 }
                 playersItems.Quantity = item.Quantity;
@@ -121,11 +121,13 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateEquipments( Player player)
         {
-            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi=> pi.PlayerId == player.Id).ToListAsync();
-            foreach(var equipment in oldEquipments)
+            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            foreach (var equipment in oldEquipments)
             {
                 await connection.DeleteAsync(equipment);
             }
+
+
             foreach (var equipment in player.Equipment)
             {
                 PlayersItemsEntity playersItems = null!;
@@ -135,18 +137,18 @@ namespace NFCombat2.Data.Entities.Repositories
                     attachedTo = modification.AttachedTo;
                 }
 
-
+                var allPlayersItems = await  connection.Table<PlayersItemsEntity>().ToListAsync();
                 try
                 {
                     playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == equipment.Id);
                 }
                 catch
                 {
-                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id };
+                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id, Quantity = equipment.Quantity };
                     newPlayersItemsEntity.AttachedTo = attachedTo;
                     
 
-                    await connection.InsertOrReplaceAsync(newPlayersItemsEntity);
+                    await connection.InsertAsync(newPlayersItemsEntity);
                     continue;
                 }
                 playersItems.Quantity = equipment.Quantity;
@@ -179,9 +181,9 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateWeapons(Player player)
         {
-            //remove all weapons ?
+
             var oldWeapons = await connection.Table<PlayersWeaponsEntity>().Where(pw => pw.PlayerId == player.Id).ToListAsync();
-            foreach(var weapon in oldWeapons)
+            foreach (var weapon in oldWeapons)
             {
                 await connection.DeleteAsync(weapon);
             }
@@ -241,10 +243,14 @@ namespace NFCombat2.Data.Entities.Repositories
                 switch (entity.Category)
                 {
                     case ItemCategory.Item:
-                        player.Items.Add((Item)ItemConverter(entity.Type, entity.Category, itemId));
+                        var item = (Item)ItemConverter(entity.Type, entity.Category, itemId);
+                        item.Quantity = playersItemsEntity.Quantity;
+                        player.Items.Add(item);
                         break;
                     case ItemCategory.Equipment:
-                        player.Equipment.Add((Equipment)ItemConverter(entity.Type, entity.Category, itemId, attachedTo));
+                        var equipment = (Equipment)ItemConverter(entity.Type, entity.Category, itemId, attachedTo);
+                        equipment.Quantity = playersItemsEntity.Quantity;
+                        player.Equipment.Add(equipment);
                         break;
                 }
             }
@@ -271,14 +277,17 @@ namespace NFCombat2.Data.Entities.Repositories
                 
             }
 
-            foreach(WeaponModification modification in player.Equipment)
+            foreach(Equipment equipment in player.Equipment)
             {
-                if(modification.AttachedTo == AttachedTo.MainHand)
+                if(equipment is WeaponModification modification)
                 {
-                    modification.AttachToWeapon(player.MainHand);
-                }else if(modification.AttachedTo == AttachedTo.OffHand)
-                {
-                    modification.AttachToWeapon(player.OffHand);
+                    if(modification.AttachedTo == AttachedTo.MainHand)
+                    {
+                        modification.AttachToWeapon(player.MainHand);
+                    }else if(modification.AttachedTo == AttachedTo.OffHand)
+                    {
+                        modification.AttachToWeapon(player.OffHand);
+                    }
                 }
             }
         }
@@ -370,7 +379,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 var itemId = entity.Id.Value;
                 var item = ItemConverter(entity.Type, entity.Category, itemId);
-
+                
                 items.Add(item);
             }
             return items;

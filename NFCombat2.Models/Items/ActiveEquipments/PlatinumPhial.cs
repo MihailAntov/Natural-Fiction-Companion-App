@@ -1,20 +1,24 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    public class PlatinumPhial : ActiveEquipment
+    public class PlatinumPhial : Equipment, IInventoryActiveItem
     {
-        public override string Label { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override MessageType MessageType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string[] MessageArgs { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
+        public ICombatResolution AffectPlayer(Player.Player player)
         {
-            throw new NotImplementedException();
+            Quantity--;
+            if(Quantity <= 0)
+            {
+                player.Equipment.Remove(this);
+            }
+            player.MaxOverload++;
+            return new MaxOverloadIncrease(player);
         }
     }
 }

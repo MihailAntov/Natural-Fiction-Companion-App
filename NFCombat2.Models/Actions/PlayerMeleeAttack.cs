@@ -19,7 +19,7 @@ namespace NFCombat2.Models.Actions
             DefenderResult = DiceCalculator.Calculate(1, null, target.Strength);
         }
         public string[] MessageArgs => new string[] { Target?.Name };
-        public string Label => "Melee Attack";
+        public string Name => "Melee Attack";
         public string Description { get; set; }
 
         public ICollection<Enemy> Targets { get; set; }

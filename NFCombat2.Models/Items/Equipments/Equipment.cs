@@ -2,6 +2,6 @@
 {
     public abstract class Equipment : Item
     {
-
+        public bool IsCraftOnly { get; set; } = false;
     }
 }

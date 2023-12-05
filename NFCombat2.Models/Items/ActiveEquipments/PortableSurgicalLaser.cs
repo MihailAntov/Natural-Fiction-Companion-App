@@ -8,10 +8,6 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class PortableSurgicalLaser : ActiveEquipment
     {
-        public override string Label { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override MessageType MessageType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string[] MessageArgs { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();

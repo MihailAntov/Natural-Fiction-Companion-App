@@ -100,6 +100,11 @@ namespace NFCombat2.Services
                 {
                     item.Name = _nameService.ItemName(item.Type);
                 }
+
+                foreach(var weapon in player.Weapons)
+                {
+                    weapon.Name = _nameService.ItemName(weapon.ItemType);
+                }
             });
             task.Start();
             await task;
@@ -125,13 +130,14 @@ namespace NFCombat2.Services
 
         public async Task SwitchActivePlayer(Player player)
         {
-            CurrentPlayer = await GetPlayerById(player.Id);
-            await Task.Run(async () =>
-            {
-               await _settings.UpdateCurrentPlayer(player.Id);
-
-            });
+            await _repository.UpdatePlayer(CurrentPlayer);
+            var newPlayer = await GetPlayerById(player.Id);
+            await UpdateNames(newPlayer);
+            CurrentPlayer = newPlayer;
+            await _settings.UpdateCurrentPlayer(player.Id);
             
+
+
         }
 
         public async Task AttachModificationToWeapon(IAddable option, Weapon weapon)
@@ -158,6 +164,13 @@ namespace NFCombat2.Services
             
             if(option is Equipment equipment)
             {
+                var existingEquipment = CurrentPlayer.Equipment.FirstOrDefault(e=> e.Id == equipment.Id);
+                if (existingEquipment != null)
+                {
+                    existingEquipment.Quantity++;
+                    await _repository.UpdatePlayer(CurrentPlayer);
+                    return;
+                }
                 CurrentPlayer.Equipment.Add(equipment);
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
@@ -165,6 +178,13 @@ namespace NFCombat2.Services
 
             if(option is Item item)
             {
+                var existingItem = CurrentPlayer.Items.FirstOrDefault(i=> i.Id == item.Id);
+                if(existingItem != null)
+                {
+                    existingItem.Quantity++;
+                    await _repository.UpdatePlayer(CurrentPlayer);
+                    return;
+                }
                 CurrentPlayer.Items.Add(item);
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
@@ -305,6 +325,9 @@ namespace NFCombat2.Services
             return entities;
         }
 
-        
+        public async Task SavePlayer()
+        {
+            await _repository.UpdatePlayer(CurrentPlayer);
+        }
     }
 }

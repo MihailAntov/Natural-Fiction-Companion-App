@@ -16,6 +16,8 @@ namespace NFCombat2.Contracts
         public Task AddItemToPlayer(IAddable item);
         public List<PlayerClass> GetClassOptions();
 
+        public Task SavePlayer();
+
         Task<ICollection<IAddable>> GetAllItems();
         Task<ICollection<IAddable>> GetAllWeapons();
         Task<ICollection<IAddable>> GetAllEquipment();

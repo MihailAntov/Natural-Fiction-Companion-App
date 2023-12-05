@@ -34,7 +34,7 @@ namespace NFCombat2.Models.Actions
         }
         public Weapon Weapon { get; }
         public string[] MessageArgs => new string[] { Target, Weapon.Name };
-        public string Label { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
         public bool AreaOfEffect { get; set; }

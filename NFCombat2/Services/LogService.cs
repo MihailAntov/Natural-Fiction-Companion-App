@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Specialized;
 using NFCombat2.Models.Player;
+using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
 {
@@ -44,6 +45,13 @@ namespace NFCombat2.Services
             Messages.Add(String.Format($"  {structure}", args));
         }
 
-        
+        public Task<string> GetResolutionMessage(ICombatResolution resolution)
+        {
+            Language language = _playerService.CurrentPlayer.Language;
+            string structure = GetStructure(resolution.MessageType, language);
+            return Task.FromResult(String.Format($"  {structure}", resolution.MessageArgs));
+
+
+        }
     }
 }

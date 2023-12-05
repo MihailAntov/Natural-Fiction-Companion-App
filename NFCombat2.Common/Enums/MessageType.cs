@@ -42,7 +42,11 @@ namespace NFCombat2.Common.Enums
         EnemyDamageMessage,
         EnemyChangeDistanceMessage,
         EnemyCritMessage,
-        EnemyMissMessage
+        EnemyMissMessage,
+
+        //item messages
+        UseMedkit,
+        MaxOverloadIncrease
         
         
     }

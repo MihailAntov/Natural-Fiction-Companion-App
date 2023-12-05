@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.CharacterPage"
              Title="Character">
-    <VerticalStackLayout>
+    <StackLayout>
 
         <Picker x:Name="Profile"
         Title="Choose a profile"
@@ -13,40 +13,56 @@
         ItemsSource="{Binding Profiles}"
         ItemDisplayBinding="{Binding Name}">
         </Picker>
-        <Button Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
+        
 
         
 
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="75"/>
             </Grid.ColumnDefinitions>
-            <Label Text="{Binding Player.Name}"/>
-            <Image Grid.Row="0" Source="healthcare"/>
-            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Player.Health}"/>
-            <Slider Grid.Column="2" Grid.Row="1"  Minimum="0" Maximum="30" Value="{Binding Player.Health, Mode=TwoWay}"/>
-            <Stepper Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="99"/>
+            <Label Grid.Column="0" Grid.ColumnSpan="5" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
+            
+            <Image Grid.Row="1" Source="healthcare"/>
+            <Label Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
+            <Slider Grid.Column="3" Grid.Row="1"  Minimum="0" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}"/>
+            <Stepper Grid.Column="4" Grid.Row="1" Minimum="0" Maximum="99"/>
+
+            <Image Grid.Row="2" Source="highvoltage"/>
+            <Label Grid.Column="1" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}"/>
+            <Slider Grid.Column="3" Grid.Row="2"  Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}"/>
+
+            <Image Grid.Row="3" Source="injury"/>
+            <Label Grid.Column="1" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
+            <Slider Grid.Column="3" Grid.Row="3"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}"/>
+
+            <Image Grid.Row="4" Source="biohazard"/>
+            <Label Grid.Column="1" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
+            <Slider Grid.Column="3" Grid.Row="4"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}"/>
+
+            <Image Grid.Row="5" Source="radiation"/>
+            <Label Grid.Column="1" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
+            <Slider Grid.Column="3" Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}"/>
         </Grid>
+        
+        
+            <Button VerticalOptions="EndAndExpand" Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
 
-        <StackLayout>
-            <Label Text="{Binding TraumaValue}"/>
-            <Slider  Minimum="0" Maximum="30" Value="{Binding TraumaValue}"/>
-            <Stepper Minimum="0" Maximum="30"/>
-        </StackLayout>
-
-        <StackLayout>
-            <Label Text="{Binding PathogenValue}"/>
-            <Slider  Minimum="0" Maximum="30" Value="{Binding PathogenValue}"/>
-            <Stepper Minimum="0" Maximum="30"/>
-        </StackLayout>
+        
 
 
-    </VerticalStackLayout>
+    </StackLayout>
 
 </ContentPage>

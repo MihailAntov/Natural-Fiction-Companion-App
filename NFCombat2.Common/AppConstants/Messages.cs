@@ -46,7 +46,12 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {1} meters away from you." },
             {MessageType.EnemyDefeatedMessage, "{0} is defeated!" },
             {MessageType.EnemyMissMessage, "{0} misses!" },
-            {MessageType.EnemyCritMessage, "{0} deals double damage! You lose {1} life." }
+            {MessageType.EnemyCritMessage, "{0} deals double damage! You lose {1} life." },
+            {MessageType.MaxOverloadIncrease, "Your maximum overload is now {0}." },
+
+            //item messages
+            
+
         };
 
         public static Dictionary<MessageType, string> BulgarianMessages = new Dictionary<MessageType, string>()

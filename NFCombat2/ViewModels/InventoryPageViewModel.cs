@@ -21,6 +21,27 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
+        private readonly ILogService _logService;
+        
+        public InventoryPageViewModel(
+            IPlayerService playerService,
+            IPopupService popupService,
+            IOptionsService optionsService,
+            ILogService logService)
+        {
+            _playerService = playerService;
+            _optionsService = optionsService;
+            _logService = logService;
+            _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
+            Player = _playerService.CurrentPlayer;
+            Items = new ObservableCollection<Item>(Player.Items);
+            Equipment = new ObservableCollection<Equipment>(Player.Equipment);
+            SetInitialValues();
+            AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
+            AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
+            _popupService = popupService;
+        }
+
         private string _title;
         public string Title
         {
@@ -37,21 +58,6 @@ namespace NFCombat2.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
         public Command AddWeaponToPlayerCommand { get; set; }
-        public InventoryPageViewModel(IPlayerService playerService, IPopupService popupService, IOptionsService optionsService)
-        {
-            _playerService = playerService;
-            _optionsService = optionsService;
-            _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
-            Player = _playerService.CurrentPlayer;
-            Items = new ObservableCollection<Item>(Player.Items);
-            Equipment = new ObservableCollection<Equipment>(Player.Equipment);
-            SetInitialValues();
-            AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
-            AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
-            _popupService = popupService;
-
-
-        }
         public Player Player { get; set; }
 
         private void SetInitialValues()
@@ -167,6 +173,7 @@ namespace NFCombat2.ViewModels
             {
                 return;
             }
+
             AddToObservalbeCollection(result);
         }
 
@@ -195,8 +202,23 @@ namespace NFCombat2.ViewModels
                 var popup = new WeaponModificationView(viewModel);
                 _popupService.ShowPopup(popup);
                 var hand = await taskCompletionSource.Task;
-
+                return;
             }
+
+            if(eventItem is IInventoryActiveItem item)
+            {
+                var used = item.AffectPlayer(Player);
+                await _playerService.SavePlayer();
+                if(item.Quantity <= 0)
+                {
+                    Equipment.Remove((Equipment)eventItem);
+                }
+
+                string message = await _logService.GetResolutionMessage(used);
+                _popupService.ShowToast(message);   
+            }
+
+
         }
 
         public void UsedItem(object eventItem)
@@ -285,7 +307,17 @@ namespace NFCombat2.ViewModels
 
             if (added is Equipment equipment)
             {
+                if(Equipment.Any(e=>e.Id == equipment.Id))
+                {
+                    return;
+                }
+
                 Equipment.Add(equipment);
+                return;
+            }
+
+            if(Items.Any(i=> i.Id == added.Id))
+            {
                 return;
             }
 
