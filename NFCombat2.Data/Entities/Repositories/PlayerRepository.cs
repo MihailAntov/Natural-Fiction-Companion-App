@@ -372,7 +372,6 @@ namespace NFCombat2.Data.Entities.Repositories
                 var item = ItemConverter(entity.Type, entity.Category, itemId);
 
                 items.Add(item);
-                //TODO : figure out a way to transfer id
             }
             return items;
 

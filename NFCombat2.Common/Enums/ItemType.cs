@@ -43,7 +43,7 @@ namespace NFCombat2.Common.Enums
         PotassiumIodideTablets,
         Wrench,
         AromaticSaltSolution,
-        PortableEnvoronmentalSuit,
+        PortableEnvironmentalSuit,
         
         //weapon
         PlasmaRapier,
@@ -76,7 +76,7 @@ namespace NFCombat2.Common.Enums
         CalibratedRifle,
         SmallCaliberPistol,
         RocketLauncher,
-        Minigun,
+        MachineGun,
         GravityModulator,
         EMShield,
         SemiautomaticBeretta,

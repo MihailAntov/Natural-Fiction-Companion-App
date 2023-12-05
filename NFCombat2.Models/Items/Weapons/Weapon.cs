@@ -10,12 +10,13 @@ namespace NFCombat2.Models.Items.Weapons
         public int Id { get; set; }
         public int BonusAccuracy {get; set;}
         public Accuracy EffectiveAccuracy => Accuracy + BonusAccuracy;
-        public string Label { get; set; }
+        //public string Label { get; set; }
         public int MaxRange { get; set; }
         public int EffectiveMaxRange => MaxRange + BonusMaxRange;
         public int BonusMaxRange { get; set; }
         public int MinRange { get; set; }
         public bool AreaOfEffect { get; set; } = false;
+        public int CritMultiplier { get; set; } = 2;
         public int DamageDice { get; set; }
         public int FlatDamage { get; set; }
         public int Weight { get; set; }

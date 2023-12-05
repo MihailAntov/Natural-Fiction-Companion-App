@@ -273,7 +273,7 @@ namespace NFCombat2.Services
                             resolutions = attack.AddMissToCombatResolutions(_fight);
                             break;
                         case AttackResult.Hit:
-                            resolutions = attack.AddCritToCombatResolutions(_fight);
+                            resolutions = effect.AddToCombatEffects(_fight);
                             break;
                         case AttackResult.Crit:
                             resolutions = attack.AddCritToCombatResolutions(_fight);

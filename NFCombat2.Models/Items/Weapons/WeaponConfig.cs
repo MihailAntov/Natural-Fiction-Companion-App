@@ -17,6 +17,7 @@ namespace NFCombat2.Models.Items.Weapons
         public int FlatDamage { get; set; }
         public int Weight { get; set; }
         public int CooldownPerShot { get; set; } = 1;
+        public int CritMultiplier { get; set; } = 2;
         public int ShotsPerTurn { get; set; } = 1;
         public string Name { get; set; }
         public bool IsInvention { get; set; } = false;

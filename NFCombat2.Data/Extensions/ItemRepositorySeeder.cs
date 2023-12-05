@@ -51,7 +51,7 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.PotassiumIodideTablets},
                 new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.Wrench},
                 new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.AromaticSaltSolution},
-                new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.PortableEnvoronmentalSuit},
+                new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.PortableEnvironmentalSuit},
 
                 //weapons
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.PlasmaRapier},
@@ -84,7 +84,7 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.CalibratedRifle},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SmallCaliberPistol},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.RocketLauncher},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.Minigun},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.MachineGun},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.GravityModulator},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.EMShield},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SemiautomaticBeretta},

@@ -34,17 +34,14 @@ namespace NFCombat2.Services
 
             if (CanShoot(fight))
             {
-                //objects.Add("Shoot");
                 objects.Add(OptionType.Shoot);
             }
 
             if(CanAttack(fight))
             {
-                //objects.Add("Attack");
                 objects.Add(OptionType.Attack);
             }
 
-            //objects.Add("Do nothing");
             objects.Add(OptionType.DoNothing);
 
             //TODO : involve converter service to get name of option
@@ -87,17 +84,14 @@ namespace NFCombat2.Services
             if (CanMove(fight))
             {
                 objects.Add(OptionType.Move);
-                //objects.Add("Move");
             }
 
             if (HasItems(fight))
             {
                 objects.Add(OptionType.Item);
-                //objects.Add("Items");
             }
 
             objects.Add(OptionType.Stay);
-            //objects.Add("Stay");
 
             //TODO : involve converter service to get name of option
             var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
@@ -109,7 +103,7 @@ namespace NFCombat2.Services
         {
             var weapons = fight.Player.Weapons
                 .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.EffectiveMaxRange))
-                .Select(w => new Option(w.Label, w))
+                .Select(w => new Option(w.Name, w))
                 .ToList<IOption>();
             var options =  new OptionList(weapons, true, !alreadyShot) { Label = "Choose a weapon to shoot with" };
             if(alreadyShot)

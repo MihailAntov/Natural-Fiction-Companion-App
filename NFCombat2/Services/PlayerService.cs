@@ -298,7 +298,7 @@ namespace NFCombat2.Services
 
                 if (entity is Weapon weapon)
                 {
-
+                    entity.Name = _nameService.ItemName(weapon.ItemType);
                 }
 
             }

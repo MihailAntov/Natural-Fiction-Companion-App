@@ -54,10 +54,15 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\assaultrifle.png" />
+	  <None Remove="Resources\Images\baton.png" />
+	  <None Remove="Resources\Images\blowtorch.png" />
 	  <None Remove="Resources\Images\bullet.png" />
 	  <None Remove="Resources\Images\bullets.png" />
 	  <None Remove="Resources\Images\cartridge.png" />
+	  <None Remove="Resources\Images\chain.png" />
 	  <None Remove="Resources\Images\crosshair.png" />
+	  <None Remove="Resources\Images\cybersecurity.png" />
+	  <None Remove="Resources\Images\dagger.png" />
 	  <None Remove="Resources\Images\dice1.png" />
 	  <None Remove="Resources\Images\dice2.png" />
 	  <None Remove="Resources\Images\dice3.png" />
@@ -67,7 +72,9 @@
 	  <None Remove="Resources\Images\energyweapon.png" />
 	  <None Remove="Resources\Images\explosion.png" />
 	  <None Remove="Resources\Images\flame.png" />
+	  <None Remove="Resources\Images\gravitymodulator.png" />
 	  <None Remove="Resources\Images\healthcare.png" />
+	  <None Remove="Resources\Images\hook.png" />
 	  <None Remove="Resources\Images\hospital.png" />
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\inventions.png" />
@@ -76,13 +83,20 @@
 	  <None Remove="Resources\Images\none.png" />
 	  <None Remove="Resources\Images\notes.png" />
 	  <None Remove="Resources\Images\pistol.png" />
+	  <None Remove="Resources\Images\plasmarapier.png" />
 	  <None Remove="Resources\Images\previous.png" />
 	  <None Remove="Resources\Images\radar.png" />
 	  <None Remove="Resources\Images\radius.png" />
+	  <None Remove="Resources\Images\revolver.png" />
 	  <None Remove="Resources\Images\rifle.png" />
+	  <None Remove="Resources\Images\rocketlauncher.png" />
 	  <None Remove="Resources\Images\shotgun.png" />
+	  <None Remove="Resources\Images\sniper.png" />
+	  <None Remove="Resources\Images\steelbar.png" />
+	  <None Remove="Resources\Images\steelplate.png" />
 	  <None Remove="Resources\Images\sync.png" />
 	  <None Remove="Resources\Images\trash.png" />
+	  <None Remove="Resources\Images\wrench.png" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -33,7 +33,7 @@ namespace NFCombat2.Models.Actions
             } 
         }
         public Weapon Weapon { get; }
-        public string[] MessageArgs => new string[] { Target, Weapon.Label };
+        public string[] MessageArgs => new string[] { Target, Weapon.Name };
         public string Label { get; set; }
         public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
@@ -51,7 +51,7 @@ namespace NFCombat2.Models.Actions
 
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {
-            var resolutions = new List<ICombatResolution>() { new Crit(RollsResult, Targets) };
+            var resolutions = new List<ICombatResolution>() { new Crit(RollsResult, Targets) {CritMultiplier = Weapon.CritMultiplier } };
             foreach(var resolution in resolutions)
             {
                 fight.Effects.Enqueue(resolution);
