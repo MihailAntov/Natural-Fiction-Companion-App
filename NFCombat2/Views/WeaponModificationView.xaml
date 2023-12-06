@@ -15,7 +15,7 @@
                                 <toolkit:IconTintColorBehavior TintColor="Gold" />
                             </ImageButton.Behaviors>
                         </ImageButton>
-                        <Label Text="{Binding Name}"/>
+                        <Label TextColor="Gold" Text="{Binding Name}"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

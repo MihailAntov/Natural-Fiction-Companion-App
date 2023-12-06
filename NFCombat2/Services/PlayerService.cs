@@ -140,11 +140,17 @@ namespace NFCombat2.Services
 
         }
 
-        public async Task AttachModificationToWeapon(IAddable option, Weapon weapon)
+        public async Task AttachModificationToWeapon(IAddable option, AttachedTo hand)
         {
             if(option is WeaponModification modification)
             {
                 modification.UnAttachFromWeapon();
+                if(hand == AttachedTo.None)
+                {
+                    return;
+                }
+
+                Weapon weapon = hand == AttachedTo.MainHand ? CurrentPlayer.MainHand : CurrentPlayer.OffHand;
                 modification.AttachToWeapon(weapon);
                 await _repository.UpdatePlayer(CurrentPlayer);
             }

@@ -13,7 +13,7 @@ public partial class WeaponModificationView : Popup
 		BindingContext = viewModel;
 	}
 
-	public void AttachTo(object sender, EventArgs args)
+	public async void AttachTo(object sender, EventArgs args)
 	{
 		if(BindingContext is WeaponModificationViewModel viewModel)
 		{
@@ -21,7 +21,7 @@ public partial class WeaponModificationView : Popup
 			{
 				if(e.Item is ModificationOption option)
 				{
-					viewModel.AttachTo(option.ToBeAttachedTo);
+					await viewModel.AttachTo(option.ToBeAttachedTo);
 				}
 
 			}

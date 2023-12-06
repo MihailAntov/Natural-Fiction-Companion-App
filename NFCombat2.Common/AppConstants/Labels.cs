@@ -8,7 +8,8 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<LabelType, string> EnglishLabels = new Dictionary<LabelType, string>
         {
-            {LabelType.ChangeWeaponButton, "Change" }
+            {LabelType.ChangeWeaponButton, "Change" },
+            {LabelType.EquipNewWeaponButton, "Add" }
         };
     }
 }

@@ -3,6 +3,7 @@ using NFCombat2.Models.Items;
 using System.ComponentModel;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.Items.Weapons;
 
 namespace NFCombat2.Contracts
 {
@@ -14,6 +15,7 @@ namespace NFCombat2.Contracts
         public Task SwitchActivePlayer(Player player);
         public event PropertyChangedEventHandler PropertyChanged;
         public Task AddItemToPlayer(IAddable item);
+        public Task AttachModificationToWeapon(IAddable option, AttachedTo hand);
         public List<PlayerClass> GetClassOptions();
 
         public Task SavePlayer();

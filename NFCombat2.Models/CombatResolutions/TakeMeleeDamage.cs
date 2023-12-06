@@ -9,10 +9,13 @@ namespace NFCombat2.Models.CombatResolutions
     public class TakeMeleeDamage : ICombatResolution
     {
         private Player.Player _player;
-        public TakeMeleeDamage(Player.Player player, int amount)
+        public Enemy Enemy { get; private set; }
+        public Fight Fight { get; private set; }
+        public TakeMeleeDamage(Player.Player player, Enemy enemy, int amount)
         {
             Amount = amount;
             _player = player;
+            Enemy = enemy;
         }
         public int Amount { get; set; }
         public MessageType MessageType => MessageType.TakeDamageMessage;
@@ -21,6 +24,7 @@ namespace NFCombat2.Models.CombatResolutions
 
         public Task Resolve(Fight fight)
         {
+            Fight = fight;
             _player.Health -= Amount;
             return Task.CompletedTask;
         }

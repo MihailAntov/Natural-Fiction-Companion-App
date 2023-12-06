@@ -194,11 +194,11 @@ namespace NFCombat2.ViewModels
 
 
         }
-        public async void GetWeaponDetails(string hand)
+        public async void GetWeaponDetails(string handAsString)
         {
-            Weapon weapon = hand == "main" ? _playerService.CurrentPlayer.MainHand : _playerService.CurrentPlayer.OffHand;
-            string buttonName = _nameService.Label(LabelType.ChangeWeaponButton);
-            var viewModel = new WeaponDetailsPopupViewModel(weapon, this, buttonName);
+            Weapon weapon = handAsString == "main" ? _playerService.CurrentPlayer.MainHand : _playerService.CurrentPlayer.OffHand;
+            Hand hand = handAsString == "main" ? Hand.MainHand : Hand.OffHand;
+            var viewModel = new WeaponDetailsPopupViewModel(weapon, this, _nameService, hand);
             var popup = new WeaponDetailsPopupView(viewModel);
             viewModel.Self = popup;
             _popupService.ShowPopup(popup);
@@ -211,8 +211,22 @@ namespace NFCombat2.ViewModels
                 TaskCompletionSource<bool> taskCompletionSource = new();
                 var viewModel = new WeaponModificationViewModel(modification,_optionsService, _playerService, taskCompletionSource);
                 var popup = new WeaponModificationView(viewModel);
+                viewModel.Popup = popup;
                 _popupService.ShowPopup(popup);
-                var hand = await taskCompletionSource.Task;
+                var completed = await taskCompletionSource.Task;
+                if (completed)
+                {
+                    if(modification.AttachedTo == AttachedTo.None)
+                    {
+                        string message = $"Successfully unattached {modification.Name}.";
+                        _popupService.ShowToast(message);
+                    }
+                    else
+                    {
+                        string message = $"Successfully attached {modification.Name} to {modification.Weapon.Name}.";
+                        _popupService.ShowToast(message);
+                    }
+                }
                 return;
             }
 
@@ -310,11 +324,11 @@ namespace NFCombat2.ViewModels
 
         public void AddToObservalbeCollection(IAddable added)
         {
-            if (added is Weapon weapon)
-            {
-                Weapons.Add(weapon);
-                return;
-            }
+            //if (added is Weapon weapon)
+            //{
+            //    Weapons.Add(weapon);
+            //    return;
+            //}
 
             if (added is Equipment equipment)
             {

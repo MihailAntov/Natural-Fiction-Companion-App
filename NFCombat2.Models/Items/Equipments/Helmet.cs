@@ -14,13 +14,13 @@ namespace NFCombat2.Models.Items.Equipments
             Description = "Prevents critical damage.";
         }
 
-        public Task Modify(ICombatResolution resolution)
+        public Task<List<ICombatAction>> Modify(ICombatResolution resolution)
         {
             if(resolution is EnemyCrit crit)
             {
                 crit.CritMultiplier = 1;
             }
-            return Task.CompletedTask;
+            return Task.FromResult(new List<ICombatAction>());
         }
     }
 }

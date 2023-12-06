@@ -1,5 +1,5 @@
 ﻿using NFCombat2.Common.Enums;
-
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Models.Items.Weapons
@@ -11,9 +11,13 @@ namespace NFCombat2.Models.Items.Weapons
             Name = "Gravity Modulator";
             ItemType = ItemType.GravityModulator;
         }
-        public Task Modify(ICombatResolution resolution)
+        public Task<List<ICombatAction>> Modify(ICombatResolution resolution)
         {
-            throw new NotImplementedException();
+            if(resolution is EnemyDealDamage dealDamage)
+            {
+                dealDamage.Damage -= 3;
+            }
+            return Task.FromResult(new List<ICombatAction>());
         }
     }
 }

@@ -10,10 +10,13 @@ namespace NFCombat2.Models.CombatResolutions
     public class EnemyCrit : EnemyDealDamage
     {
 
-        public EnemyCrit(DiceRollResult roll, Enemy enemy) : base(roll, enemy) { }
+        public EnemyCrit(DiceRollResult roll, Enemy enemy) : base(roll, enemy) 
+        {
+            Damage = base.Damage * CritMultiplier;
+        }
         public int CritMultiplier { get; set; } = 2;
         public override MessageType MessageType => MessageType.EnemyCritMessage;
-        public override string[] MessageArgs => new string[2] { _enemyName, (Damage * CritMultiplier).ToString() };
+        public override string[] MessageArgs => new string[2] { _enemyName, Damage.ToString() };
         public override Task Resolve(Fight fight)
         {
             if (fight.Player.Equipment.Any(e=> e is Helmet))
@@ -21,7 +24,7 @@ namespace NFCombat2.Models.CombatResolutions
                 fight.Player.Health -= Damage;
                 return Task.CompletedTask;
             }
-            fight.Player.Health -= Damage * CritMultiplier;
+            fight.Player.Health -= Damage;
             return Task.CompletedTask;
         }
     }

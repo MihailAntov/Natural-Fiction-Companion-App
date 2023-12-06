@@ -1,5 +1,6 @@
 ﻿
 
+using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
@@ -14,6 +15,7 @@ namespace NFCombat2.ViewModels
         private readonly WeaponModification _modification;
         private readonly IPlayerService _playerService;
         private TaskCompletionSource<bool> _taskCompletionSource;
+        public Popup Popup { get; set; }
         public Command AttachToCommand { get; set; }
         public WeaponModificationViewModel(
             WeaponModification modification, 
@@ -25,7 +27,7 @@ namespace NFCombat2.ViewModels
             _optionsService = optionsService;
             _playerService = playerService;
             _taskCompletionSource = taskCompletionSource;
-            AttachToCommand = new Command<AttachedTo>(AttachTo);
+            AttachToCommand = new Command<AttachedTo>(async(a)=> await AttachTo(a));
         }
 
         public ICollection<IModificationOption> Options => GetOptions();
@@ -34,11 +36,11 @@ namespace NFCombat2.ViewModels
             return _optionsService.GetModificationOptions(_modification);
         }
 
-        public void AttachTo(AttachedTo toBeAttachedTo)
+        public async Task AttachTo(AttachedTo toBeAttachedTo)
         {
-
-            //todo : decide if equipping should happen here or in player service;
-            _taskCompletionSource.SetResult(true);
+            await _playerService.AttachModificationToWeapon(_modification, toBeAttachedTo);
+            _taskCompletionSource.TrySetResult(true);
+            await Popup.CloseAsync();
         }
 
         public void Cancel()

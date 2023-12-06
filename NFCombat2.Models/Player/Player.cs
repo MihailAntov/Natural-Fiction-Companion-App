@@ -126,7 +126,25 @@ namespace NFCombat2.Models.Player
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public IList<Program> Programs { get; set; } = new List<Program>();
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
-        public virtual IList<IModifyResolution> ResolutionModifiers => Equipment.OfType<IModifyResolution>().ToList();
+        public virtual IList<IModifyResolution> ResolutionModifiers
+        {
+            get
+            {
+                var result = new List<IModifyResolution>();
+                if(MainHand is IModifyResolution mainHand)
+                {
+                    result.Add(mainHand);
+                }
+                if (OffHand is IModifyResolution offHand)
+                {
+                    result.Add(offHand);
+                }
+                result.AddRange(Equipment.OfType<IModifyResolution>());
+                result.AddRange(Items.OfType<IModifyResolution>());
+                result.AddRange(Techniques.OfType<IModifyResolution>());
+                return result;
+            }
+        }
         public PlayerClass Class { get; set; } = PlayerClass.None;
         public IList<Part> Parts { get; set; } = new List<Part>();
         private int trauma = 0;

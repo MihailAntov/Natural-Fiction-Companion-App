@@ -53,6 +53,8 @@ namespace NFCombat2.Services
 
         public ITarget CurrentTargetingEffect {get; set;}
 
+        private List<ICombatAction> _delayedActions = new List<ICombatAction>();
+
         public IOptionList PreviousOptions { 
             get 
             {                
@@ -82,7 +84,7 @@ namespace NFCombat2.Services
             {
                 Name = "Enemy 1",
                 Health = 10,
-                Distance = 10,
+                Distance = 3,
                 Speed = 2,
                 Range = 10,
                 DamageDice = 1
@@ -93,7 +95,7 @@ namespace NFCombat2.Services
             {
                 Name = "Enemy 2",
                 Health = 10,
-                Distance = 15,
+                Distance = 5,
                 Speed = 2,
                 Range = 15,
                 DamageDice = 1
@@ -169,7 +171,15 @@ namespace NFCombat2.Services
         {
             foreach (IModifyResolution modifier in _fight.Player.ResolutionModifiers)
             {
-                await modifier.Modify(resolution);
+                var followup = await modifier.Modify(resolution);
+                if (followup.Any())
+                {
+                    foreach(var action in followup)
+                    {
+                        
+                        _delayedActions.Add(action);
+                    }
+                }
             }
         }
 
@@ -210,6 +220,17 @@ namespace NFCombat2.Services
 
         public async Task ResolveEffects()
         {
+            if (_delayedActions.Any())
+            {
+                foreach(var action in _delayedActions)
+                {
+                    
+                    await HandleRolls(action);
+                    
+                }
+                _delayedActions.Clear();
+            }
+
             while(_fight.Effects.Count > 0)
             {
                 var effect = _fight.Effects.Dequeue();
@@ -251,6 +272,7 @@ namespace NFCombat2.Services
             await ModifyAction(effect);
             await AddEffect(effect);
         }
+
         public async Task AddEffect(ICombatAction effect)
         {
             

@@ -29,6 +29,10 @@ public partial class InventoryPage : ContentPage
 			if(e is ItemTappedEventArgs itemTapped)
 			{
 				viewModel.UsedEquipment(itemTapped.Item);
+				if(sender is ListView listView)
+				{
+					listView.SelectedItem = null;
+				}
 			}
         }
     }

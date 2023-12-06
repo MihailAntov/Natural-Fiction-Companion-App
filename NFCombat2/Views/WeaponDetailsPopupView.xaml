@@ -6,10 +6,10 @@
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.WeaponDetailsPopupView">
     <StackLayout Padding="20" BindingContext="{Binding Weapon}">
-        
-        <Label HorizontalTextAlignment="Center" Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
-        <Label HorizontalTextAlignment="Center" Text="{Binding Description}" FontAttributes="Italic"/>
-        <Grid>
+
+        <Label  HorizontalTextAlignment="Center" Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasWeapon}"/>
+        <Label HorizontalTextAlignment="Center" Text="{Binding Description}" FontAttributes="Italic" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasWeapon}"/>
+        <Grid IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasWeapon}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="35"/>

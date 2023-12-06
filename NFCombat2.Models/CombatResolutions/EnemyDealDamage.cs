@@ -10,7 +10,17 @@ namespace NFCombat2.Models.CombatResolutions
     public class EnemyDealDamage : ICombatResolution
     {
         protected string _enemyName;
-        public int Damage { get; set; }
+        protected int _damage;
+        public int Damage { get { return _damage; }
+            set
+            {
+                _damage = value;
+                if(_damage < 0)
+                {
+                    _damage = 0;
+                }
+            }
+        }
         public EnemyDealDamage(DiceRollResult roll, Enemy enemy)
         {
             _enemyName = enemy.Name;

@@ -501,6 +501,14 @@ namespace NFCombat2.Models.Factories
                     shield.ItemType = type;
                     shield.Weight = config.Weight;
                     return shield;
+                case WeaponSpecial.SteelPlate:
+                    Weapon plate = new SteelPlate();
+                    plate.Image = config.Image;
+                    plate.Id = itemId;
+                    plate.Hand = hand;
+                    plate.ItemType = type;
+                    plate.Weight = config.Weight;
+                    return plate;
                 case WeaponSpecial.GravityModulator:
                     Weapon modulator = new GravityModulator();
                     modulator.Image = config.Image;

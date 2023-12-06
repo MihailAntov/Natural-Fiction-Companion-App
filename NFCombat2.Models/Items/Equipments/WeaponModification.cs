@@ -11,11 +11,13 @@ namespace NFCombat2.Models.Items.Equipments
         {
             if(Weapon != null)
             {
+                //unattach from weapon it was attached to until now
                 UnAttachFromWeapon();
             }
 
             Weapon = weapon;
             AddModification(weapon);
+            weapon.Modifications.Add(this);
             AttachedTo = weapon.Hand == Hand.MainHand ? AttachedTo.MainHand : AttachedTo.OffHand;
             
         }
@@ -24,6 +26,7 @@ namespace NFCombat2.Models.Items.Equipments
             if(Weapon != null)
             {
                 RemoveModification(Weapon);
+                Weapon.Modifications.Remove(this);
                 Weapon = null;
                 AttachedTo = AttachedTo.None;
             }

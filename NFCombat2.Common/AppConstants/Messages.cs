@@ -32,6 +32,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.MoveCloserMessage, "You move in closer." },
             {MessageType.MovePassMessage, "You stay where you are." },
             {MessageType.ActionPassMessage, "You wait." },
+            {MessageType.EnemyPushedBackMessage, "{0} is pushed back by your shield's force field." },
             //program action messages
             {MessageType.ProgramHealMessage, "Your program heals you." },
             {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },
@@ -43,7 +44,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.EnemyShootMessage, "{0} shoots at you." },
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },
             {MessageType.EnemyDamageMessage, "{0} deals {1} damage to you." },
-            {MessageType.EnemyChangeDistanceMessage, "{0} moves and is now {1} meters away from you." },
+            {MessageType.EnemyChangeDistanceMessage, "{0} is now {1} meters away from you." },
             {MessageType.EnemyDefeatedMessage, "{0} is defeated!" },
             {MessageType.EnemyMissMessage, "{0} misses!" },
             {MessageType.EnemyCritMessage, "{0} deals double damage! You lose {1} life." },

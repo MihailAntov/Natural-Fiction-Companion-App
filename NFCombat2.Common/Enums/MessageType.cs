@@ -34,6 +34,7 @@ namespace NFCombat2.Common.Enums
         MoveCloserMessage,
         MovePassMessage,
         ActionPassMessage,
+        EnemyPushedBackMessage,
         //enemy messages
         EnemyMoveMessage,
         EnemyShootMessage,

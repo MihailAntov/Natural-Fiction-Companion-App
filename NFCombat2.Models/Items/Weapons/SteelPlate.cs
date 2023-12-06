@@ -12,10 +12,11 @@ namespace NFCombat2.Models.Items.Weapons
             Name = "Steel Plate";
         }
 
-        public Task Modify(ICombatResolution resolution)
+        public Task<List<ICombatAction>> Modify(ICombatResolution resolution)
         {
             if (resolution is EnemyDealDamage dealDamage)
             {
+                //TODO : make the shield persists its durability. Low priority.
                 if (Durability >= dealDamage.Damage)
                 {
                     Durability -= dealDamage.Damage;
@@ -27,7 +28,7 @@ namespace NFCombat2.Models.Items.Weapons
                     Durability = 0;
                 }
             }
-            return Task.CompletedTask;
+            return Task.FromResult(new List<ICombatAction>());
         }
     }
 }
