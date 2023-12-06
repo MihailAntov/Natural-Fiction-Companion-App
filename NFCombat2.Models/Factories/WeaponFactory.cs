@@ -491,6 +491,7 @@ namespace NFCombat2.Models.Factories
                     meleeWeapon.Id = itemId;
                     meleeWeapon.Hand = hand;
                     meleeWeapon.ItemType = type;
+                    meleeWeapon.Weight = config.Weight;
                     return meleeWeapon;
                 case WeaponSpecial.EMShield:
                     Weapon shield = new EMShield();
@@ -498,6 +499,7 @@ namespace NFCombat2.Models.Factories
                     shield.Id = itemId;
                     shield.Hand = hand;
                     shield.ItemType = type;
+                    shield.Weight = config.Weight;
                     return shield;
                 case WeaponSpecial.GravityModulator:
                     Weapon modulator = new GravityModulator();
@@ -505,6 +507,8 @@ namespace NFCombat2.Models.Factories
                     modulator.Id = itemId;
                     modulator.Hand = hand;
                     modulator.ItemType = type;
+                    modulator.Weight = config.Weight;
+                    //TODO add shield and modulator stats to their configs
                     return modulator;
                 case WeaponSpecial.None:
                 default:

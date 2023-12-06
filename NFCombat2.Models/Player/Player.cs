@@ -92,8 +92,28 @@ namespace NFCombat2.Models.Player
                 return weapons;
             }
         }
-        public Weapon MainHand { get; set; }
-        public Weapon OffHand { get; set; }
+        private Weapon _mainHand;
+        public Weapon MainHand { get { return _mainHand; } 
+            set 
+            {
+                if(_mainHand != value)
+                {
+                    _mainHand = value;
+                    OnPropertyChanged(nameof(MainHand));
+                }
+            }
+        }
+        private Weapon _offHand;
+        public Weapon OffHand { get { return _offHand; } 
+            set
+            {
+                if(_offHand != value)
+                {
+                    _offHand = value;
+                    OnPropertyChanged(nameof(OffHand));
+                }
+            }
+        }
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
         //public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
         public IList<ICombatActiveItem> Consumables => 

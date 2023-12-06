@@ -22,23 +22,27 @@ namespace NFCombat2.ViewModels
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
         private readonly ILogService _logService;
+        private readonly INameService _nameService;
         
         public InventoryPageViewModel(
             IPlayerService playerService,
             IPopupService popupService,
             IOptionsService optionsService,
-            ILogService logService)
+            ILogService logService,
+            INameService nameService)
         {
             _playerService = playerService;
             _optionsService = optionsService;
             _logService = logService;
+            _nameService = nameService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
             SetInitialValues();
             AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
-            AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
+            //AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
+            GetWeaponDetailsCommand = new Command<string>(GetWeaponDetails);
             _popupService = popupService;
         }
 
@@ -57,7 +61,8 @@ namespace NFCombat2.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
-        public Command AddWeaponToPlayerCommand { get; set; }
+        //public Command AddWeaponToPlayerCommand { get; set; }
+        public Command GetWeaponDetailsCommand { get; set; }
         public Player Player { get; set; }
 
         private void SetInitialValues()
@@ -160,9 +165,6 @@ namespace NFCombat2.ViewModels
                 case "item":
                     options = await LoadItemsAsync();
                     break;
-                //case "weapon":
-                //    options = await LoadWeaponsAsync();
-                //    break;
                 case "equipment":
                     options = await LoadEquipmentAsync();
                     break;
@@ -177,20 +179,29 @@ namespace NFCombat2.ViewModels
             AddToObservalbeCollection(result);
         }
 
-        public async Task AddWeaponToPlayer(string hand)
+        public async Task AddWeaponToPlayer(Hand hand)
         {
 
             var options = await LoadWeaponsAsync();
             foreach (var option in options)
             {
                 if (option is Weapon weapon)
-                    weapon.Hand = hand == "main" ? Hand.MainHand : Hand.OffHand;
+                    weapon.Hand = hand;
             }
 
-            var added = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
             UpdateWeaponDisplay();
 
 
+        }
+        public async void GetWeaponDetails(string hand)
+        {
+            Weapon weapon = hand == "main" ? _playerService.CurrentPlayer.MainHand : _playerService.CurrentPlayer.OffHand;
+            string buttonName = _nameService.Label(LabelType.ChangeWeaponButton);
+            var viewModel = new WeaponDetailsPopupViewModel(weapon, this, buttonName);
+            var popup = new WeaponDetailsPopupView(viewModel);
+            viewModel.Self = popup;
+            _popupService.ShowPopup(popup);
         }
 
         public async void UsedEquipment(object eventItem)

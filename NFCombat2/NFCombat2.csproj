@@ -72,8 +72,10 @@
 	  <None Remove="Resources\Images\dice6.png" />
 	  <None Remove="Resources\Images\energyweapon.png" />
 	  <None Remove="Resources\Images\explosion.png" />
+	  <None Remove="Resources\Images\fist.png" />
 	  <None Remove="Resources\Images\flame.png" />
 	  <None Remove="Resources\Images\gravitymodulator.png" />
+	  <None Remove="Resources\Images\hand.png" />
 	  <None Remove="Resources\Images\healthcare.png" />
 	  <None Remove="Resources\Images\highvoltage.png" />
 	  <None Remove="Resources\Images\hook.png" />
@@ -98,6 +100,7 @@
 	  <None Remove="Resources\Images\sniper.png" />
 	  <None Remove="Resources\Images\steelbar.png" />
 	  <None Remove="Resources\Images\steelplate.png" />
+	  <None Remove="Resources\Images\swap.png" />
 	  <None Remove="Resources\Images\sync.png" />
 	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\wrench.png" />
@@ -148,7 +151,13 @@
 	  <MauiXaml Update="Views\InfoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ItemDetailsPopupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\OptionPickerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\WeaponDetailsPopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WeaponModificationView.xaml">

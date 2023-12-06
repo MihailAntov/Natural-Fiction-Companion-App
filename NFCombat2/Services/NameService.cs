@@ -2,6 +2,7 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using static NFCombat2.Common.AppConstants.ItemNames;
+using static NFCombat2.Common.AppConstants.Labels;
 
 namespace NFCombat2.Services
 {
@@ -25,7 +26,14 @@ namespace NFCombat2.Services
 
         public string Label(LabelType type)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return EnglishLabels[type];
+            }
+            catch
+            {
+                return "not found";
+            }
         }
 
         public string ProgramName(ProgramType type)

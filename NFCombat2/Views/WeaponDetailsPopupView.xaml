@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Name="WeaponDetails"
+               xmlns:helpers="clr-namespace:NFCombat2.Helpers"
+             x:Class="NFCombat2.Views.WeaponDetailsPopupView">
+    <StackLayout Padding="20" BindingContext="{Binding Weapon}">
+        
+        <Label HorizontalTextAlignment="Center" Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
+        <Label HorizontalTextAlignment="Center" Text="{Binding Description}" FontAttributes="Italic"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65"/>
+            <ColumnDefinition Width="65"/>
+            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="45"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Source="explosion" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+        <Image Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Source="fist" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged, Converter={helpers:InverseBoolConverter}}"/>
+        <Image Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Source="hand"/>
+        <Image Grid.Row="0" Grid.Column="2" VerticalOptions="Center" Source="crosshair" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+        <Image Grid.Row="0" Grid.Column="3" VerticalOptions="Center" Source="radar" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label HorizontalTextAlignment="End" VerticalTextAlignment="Center" Text="{Binding DamageDice}" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+            <Image HeightRequest="15" WidthRequest="15" Source="dice6" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasDamageDice}"/>
+            <Label HorizontalTextAlignment="Start" VerticalTextAlignment="Center" Text="{Binding FlatDamage, StringFormat='{}+{0}'}" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasFlatDamage}"/>
+        </HorizontalStackLayout>
+        <Label Grid.Row="1" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding ExtraStrength}" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged, Converter={helpers:InverseBoolConverter}}"/>
+        <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Weight}"/>
+        <Label Grid.Row="1" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Accuracy, Converter={helpers:AccuracyConverter}}" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+        <Label Grid.Row="1" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding MaxRange}" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.IsRanged}"/>
+    </Grid>
+        <Button Grid.Row="4" Grid.ColumnSpan="4" Text="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.ChangeWeaponButtonName}" Command="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.AddWeaponToPlayerCommand}"/>
+    </StackLayout>
+</toolkit:Popup>

@@ -27,7 +27,8 @@
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
-                <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">
+                <!--<ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">-->
+                <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
@@ -37,7 +38,7 @@
             
             <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion"/>
             <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair"/>
-            <ImageButton Grid.Row="2" Grid.Column="1" Source="cartridge"/>
+            <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets"/>
             <ImageButton Grid.Row="3" Grid.Column="1" Source="radar"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
             <ImageButton Grid.Row="5" Grid.Column="0" Source="trash"/>
@@ -45,7 +46,8 @@
             
             
             <Border BackgroundColor="Black" Grid.Column="3" Grid.RowSpan="4" >
-                <ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">
+                <!--<ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">-->
+                <ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="off">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
@@ -54,7 +56,7 @@
             <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion"/>
             <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair"/>
             <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets"/>
-            <ImageButton Grid.Row="3" Grid.Column="4" Source="radius"/>
+            <ImageButton Grid.Row="3" Grid.Column="4" Source="radar"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
             <ImageButton Grid.Row="5" Grid.Column="3" Source="trash"/>
         </Grid>
@@ -83,15 +85,7 @@
         <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedEquipment">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <!--<TextCell>
-                    <TextCell.Text>
-                        
-                        <MultiBinding StringFormat="{}{0}  ({1})">
-                            <Binding Path="Name"/>
-                            <Binding Path="Quantity"/>
-                        </MultiBinding>
-                    </TextCell.Text>
-                </TextCell>-->
+               
                     <ViewCell>
                         <ViewCell.View>
                             <Grid>
