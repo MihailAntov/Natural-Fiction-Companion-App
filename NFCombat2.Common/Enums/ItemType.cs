@@ -61,6 +61,7 @@ namespace NFCombat2.Common.Enums
         AutomaticPistol,
         AssaultRifle,
         Shotgun,
+        HuntingShotgun,
         PlasmaMinigun,
         ShockBaton,
         CurvedTail,

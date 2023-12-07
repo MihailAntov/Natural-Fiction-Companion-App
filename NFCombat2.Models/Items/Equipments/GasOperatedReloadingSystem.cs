@@ -13,6 +13,7 @@ namespace NFCombat2.Models.Items.Equipments
         public GasOperatedReloadingSystem()
         {
             ExtraAttacks = 1;
+            Image = "bullets";
         }
         protected override void AddModification(Weapon weapon)
         {
@@ -22,6 +23,11 @@ namespace NFCombat2.Models.Items.Equipments
         protected override void RemoveModification(Weapon weapon)
         {
             weapon.ShotsPerTurn -= ExtraAttacks;
+        }
+
+        protected override void UpdateIconFlags(Weapon weapon)
+        {
+            weapon.HasGasOperatedReloadingSystem = weapon.Modifications.OfType<GasOperatedReloadingSystem>().Any();
         }
     }
 }

@@ -197,6 +197,19 @@ namespace NFCombat2.Models.Factories
                     Accuracy = Accuracy.D,
                     MaxRange = 5,
                     DamageDice = 3,
+                    FlatDamage = 3,
+                    Weight = 2
+                }
+            },
+            {
+                ItemType.HuntingShotgun,
+                new WeaponConfig()
+                {
+                    Name = "Hunting Shotgun",
+                    Image = "shotgun",
+                    Accuracy = Accuracy.D,
+                    MaxRange = 5,
+                    DamageDice = 3,
                     Weight = 2
                 }
             },
@@ -478,9 +491,11 @@ namespace NFCombat2.Models.Factories
         {
             var config = _weapons[type];
             Hand hand = Hand.MainHand;
+            int durability = 100;
             if(args.Length > 0)
             {
                 hand = (Hand)args[0];
+                durability = (int)args[1];
             }
             switch (config.WeaponSpecial)
             {
@@ -508,6 +523,7 @@ namespace NFCombat2.Models.Factories
                     plate.Hand = hand;
                     plate.ItemType = type;
                     plate.Weight = config.Weight;
+                    plate.Durability = durability;
                     return plate;
                 case WeaponSpecial.GravityModulator:
                     Weapon modulator = new GravityModulator();
@@ -537,6 +553,7 @@ namespace NFCombat2.Models.Factories
                         AreaOfEffect = config.AreaOfEffect,
                         AlwaysHits = config.AlwaysHits,
                         CritMultiplier = config.CritMultiplier,
+                        Durability = config.Durability
                     };
                     return weapon;
 

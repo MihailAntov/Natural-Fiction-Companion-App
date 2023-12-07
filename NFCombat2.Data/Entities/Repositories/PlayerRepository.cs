@@ -268,10 +268,10 @@ namespace NFCombat2.Data.Entities.Repositories
                 switch (playersWeaponsEntity.Hand)
                 {
                     case Hand.MainHand:
-                        player.MainHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand);
+                        player.MainHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
                         break;
                     case Hand.OffHand:
-                        player.OffHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand);
+                        player.OffHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
                         break;
                 }
                 

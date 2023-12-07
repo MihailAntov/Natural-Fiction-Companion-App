@@ -8,6 +8,7 @@ namespace NFCombat2.Models.Items.Equipments
         public BarrelExtender()
         {
             BonusRange = 15;
+            Image = "radar";
         }
         public int BonusRange { get; set; }
 
@@ -21,6 +22,11 @@ namespace NFCombat2.Models.Items.Equipments
         {
             weapon.BonusMaxRange -= BonusRange;
             
+        }
+
+        protected override void UpdateIconFlags(Weapon weapon)
+        {
+            weapon.HasBarrelExtender = weapon.Modifications.OfType<BarrelExtender>().Any();
         }
     }
 }

@@ -60,6 +60,7 @@ namespace NFCombat2.Common.AppConstants
             {ItemType.AutomaticPistol, "Automatic Pistol" },
             {ItemType.AssaultRifle, "Assault Rifle" },
             {ItemType.Shotgun, "Shotgun" },
+            {ItemType.HuntingShotgun, "Hunting Shotgun" },
             {ItemType.PlasmaMinigun, "Plasma Minigun" },
             {ItemType.ShockBaton, "Shock Baton" },
             {ItemType.CurvedTail, "Curved Tail" },

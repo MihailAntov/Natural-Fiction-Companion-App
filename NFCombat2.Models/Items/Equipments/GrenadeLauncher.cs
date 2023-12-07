@@ -13,6 +13,7 @@ namespace NFCombat2.Models.Items.Equipments
         {
             BonusDamageDice = 1;
             Name = "Grenade Launcher";
+            Image = "Explosion";
         }
 
         protected override void AddModification(Weapon weapon)
@@ -23,6 +24,11 @@ namespace NFCombat2.Models.Items.Equipments
         protected override void RemoveModification(Weapon weapon)
         {
             weapon.DamageDice -= BonusDamageDice;
+        }
+
+        protected override void UpdateIconFlags(Weapon weapon)
+        {
+            weapon.HasGrenadeLauncher = weapon.Modifications.OfType<GrenadeLauncher>().Any();
         }
     }
 }

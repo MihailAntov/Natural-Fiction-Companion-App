@@ -64,7 +64,6 @@ namespace NFCombat2.ViewModels
         //public Command AddWeaponToPlayerCommand { get; set; }
         public Command GetWeaponDetailsCommand { get; set; }
         public Player Player { get; set; }
-
         private void SetInitialValues()
         {
             UpdateWeaponDisplay();
@@ -370,9 +369,11 @@ namespace NFCombat2.ViewModels
                 {
                     Items.Add(item);
                 }
-
+                OnPropertyChanged(nameof(Player));
                 UpdateWeaponDisplay();
             }
+
+            
         }
     }
 }

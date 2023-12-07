@@ -15,6 +15,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             RollsResult = DiceCalculator.Calculate(2);
             IsConsumable = true;
             Quantity = 1;
+            IsConsumable = true;
         }
         public DiceRollResult RollsResult { get; set; }
 

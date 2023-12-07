@@ -1,4 +1,5 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Actions;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 
@@ -16,17 +17,20 @@ namespace NFCombat2.Models.Items.Weapons
         {
             if (resolution is EnemyDealDamage dealDamage)
             {
-                //TODO : make the shield persists its durability. Low priority.
+            int absorbed = 0;
                 if (Durability >= dealDamage.Damage)
                 {
                     Durability -= dealDamage.Damage;
+                    absorbed += dealDamage.Damage;
                     dealDamage.Damage = 0;
                 }
                 else
                 {
+                    absorbed += Durability;
                     dealDamage.Damage -= Durability;
                     Durability = 0;
                 }
+            return Task.FromResult(new List<ICombatAction>() { new SteelPlateAbsorb(absorbed, Durability)});
             }
             return Task.FromResult(new List<ICombatAction>());
         }

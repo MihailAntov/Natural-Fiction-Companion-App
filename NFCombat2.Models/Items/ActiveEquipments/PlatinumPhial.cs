@@ -10,6 +10,11 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class PlatinumPhial : Equipment, IInventoryActiveItem
     {
+        public PlatinumPhial()
+        {
+            IsConsumable = true;
+            Quantity = 1;
+        }
         public ICombatResolution AffectPlayer(Player.Player player)
         {
             Quantity--;

@@ -8,6 +8,11 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class PortableSurgicalLaser : ActiveEquipment
     {
+        public PortableSurgicalLaser()
+        {
+            IsConsumable = true;
+            Quantity = 1;
+        }
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();

@@ -14,6 +14,7 @@ namespace NFCombat2.Models.Items.Equipments
         public LaserSight()
         {
             BonusAccuracy = 1;
+            Image = "crosshair";
         }
 
         protected override void AddModification(Weapon weapon)
@@ -24,6 +25,11 @@ namespace NFCombat2.Models.Items.Equipments
         protected override void RemoveModification(Weapon weapon)
         {
             weapon.BonusAccuracy -= BonusAccuracy;
+        }
+
+        protected override void UpdateIconFlags(Weapon weapon)
+        {
+            weapon.HasLaserSight = weapon.Modifications.OfType<LaserSight>().Any();
         }
     }
 }

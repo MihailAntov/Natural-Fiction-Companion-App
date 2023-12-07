@@ -36,10 +36,10 @@
             </Border>
             
             
-            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion"/>
-            <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair"/>
-            <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets"/>
-            <ImageButton Grid.Row="3" Grid.Column="1" Source="radar"/>
+            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion" IsVisible="{Binding Player.MainHand.HasGrenadeLauncher}"/>
+            <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair" IsVisible="{Binding Player.MainHand.HasLaserSight}"/>
+            <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets" IsVisible="{Binding Player.MainHand.HasGasOperatedReloadingSystem}"/>
+            <ImageButton Grid.Row="3" Grid.Column="1" Source="radar" IsVisible="{Binding Player.MainHand.HasBarrelExtender}"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
             <ImageButton Grid.Row="5" Grid.Column="0" Source="trash"/>
                     
@@ -53,10 +53,10 @@
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Border>
-            <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion"/>
-            <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair"/>
-            <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets"/>
-            <ImageButton Grid.Row="3" Grid.Column="4" Source="radar"/>
+            <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion" IsVisible="{Binding Player.OffHand.HasGrenadeLauncher}"/>
+            <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair" IsVisible="{Binding Player.OffHand.HasLaserSight}"/>
+            <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets" IsVisible="{Binding Player.OffHand.HasGasOperatedReloadingSystem}"/>
+            <ImageButton Grid.Row="3" Grid.Column="4" Source="radar" IsVisible="{Binding Player.OffHand.HasBarrelExtender}"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
             <ImageButton Grid.Row="5" Grid.Column="3" Source="trash"/>
         </Grid>
@@ -91,12 +91,14 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="25"/>
                                     <ColumnDefinition Width="35"/>
-                                    <ColumnDefinition Width="20"/>
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <ImageButton Grid.Column="1" Source="crosshair"/>
-                                <Label VerticalTextAlignment="Center" Grid.Column="2" Text="{Binding Quantity}"/>
+                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                <Label VerticalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>

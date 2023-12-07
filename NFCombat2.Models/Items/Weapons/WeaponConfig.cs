@@ -24,6 +24,7 @@ namespace NFCombat2.Models.Items.Weapons
         public WeaponSpecial WeaponSpecial { get; set; } = WeaponSpecial.None;
         public int ExtraStrength { get; set; } = 0;
         public string Image { get; set; } = string.Empty;
+        public int Durability { get; set; } = 100;
         
     }
 }
