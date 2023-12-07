@@ -184,16 +184,33 @@ namespace NFCombat2.Services
 
             if(option is Item item)
             {
-                var existingItem = CurrentPlayer.Items.FirstOrDefault(i=> i.Id == item.Id);
-                if(existingItem != null)
+                if(item.InExtraBag)
                 {
-                    existingItem.Quantity++;
+
+                    var existingItem = CurrentPlayer.ExtraItems.FirstOrDefault(i=> i.Id == item.Id);
+                    if(existingItem != null)
+                    {
+                        existingItem.Quantity++;
+                        await _repository.UpdatePlayer(CurrentPlayer);
+                        return;
+                    }
+                    CurrentPlayer.ExtraItems.Add(item);
                     await _repository.UpdatePlayer(CurrentPlayer);
                     return;
                 }
-                CurrentPlayer.Items.Add(item);
-                await _repository.UpdatePlayer(CurrentPlayer);
-                return;
+                else
+                {
+                    var existingItem = CurrentPlayer.Items.FirstOrDefault(i => i.Id == item.Id);
+                    if (existingItem != null)
+                    {
+                        existingItem.Quantity++;
+                        await _repository.UpdatePlayer(CurrentPlayer);
+                        return;
+                    }
+                    CurrentPlayer.Items.Add(item);
+                    await _repository.UpdatePlayer(CurrentPlayer);
+                    return;
+                }
             }
         }
 

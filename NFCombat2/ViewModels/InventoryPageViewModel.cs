@@ -39,6 +39,7 @@ namespace NFCombat2.ViewModels
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
             Equipment = new ObservableCollection<Equipment>(Player.Equipment);
+            ExtraItems = new ObservableCollection<Item>(Player.ExtraItems);
             SetInitialValues();
             AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
             //AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
@@ -152,10 +153,63 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+        private bool _browsingEquipments = true;
+        public bool BrowsingEquipments { get { return _browsingEquipments; }
+            set
+            {
+                if(_browsingEquipments != value)
+                {
+                    _browsingEquipments = value;
+                    OnPropertyChanged(nameof(BrowsingEquipments));
+                }
+            }
+        }
 
+        private bool _browsingItems = false;
+        public bool BrowsingItems
+        {
+            get { return _browsingItems; }
+            set
+            {
+                if (_browsingItems != value)
+                {
+                    _browsingItems = value;
+                    OnPropertyChanged(nameof(BrowsingItems));
+                }
+            }
+        }
+
+        private bool _browsingParts = false;
+        public bool BrowsingParts
+        {
+            get { return _browsingParts; }
+            set
+            {
+                if (_browsingParts != value)
+                {
+                    _browsingParts = value;
+                    OnPropertyChanged(nameof(BrowsingParts));
+                }
+            }
+        }
+        private bool _browsingExtraItems = false;
+        public bool BrowsingExtraItems
+        {
+            get { return _browsingExtraItems; }
+            set
+            {
+                if (_browsingExtraItems != value)
+                {
+                    _browsingExtraItems = value;
+                    OnPropertyChanged(nameof(BrowsingExtraItems));
+                }
+            }
+        }
         public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
         public ObservableCollection<Equipment> Equipment { get; set; }
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+        public ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
+        public ObservableCollection<Item> ExtraItems { get; set; } = new ObservableCollection<Item>();
         public async Task AddToPlayer(string type)
         {
             ICollection<IAddable> options = new List<IAddable>();
@@ -163,6 +217,16 @@ namespace NFCombat2.ViewModels
             {
                 case "item":
                     options = await LoadItemsAsync();
+                    break;
+                case "extraitem":
+                    options = await LoadItemsAsync();
+                    foreach(var option in options)
+                    {
+                        if(option is Item item)
+                        {
+                            item.InExtraBag = true;
+                        }
+                    }
                     break;
                 case "equipment":
                     options = await LoadEquipmentAsync();
@@ -321,13 +385,26 @@ namespace NFCombat2.ViewModels
             return await _playerService.GetAllEquipment();
         }
 
+        public void ChangeTabState(string tab, bool isChecked)
+        {
+            switch (tab)
+            {
+                case "equipment":
+                    BrowsingEquipments = isChecked;
+                    break;
+                case "items":
+                    BrowsingItems = isChecked;
+                    break;
+                case "parts":
+                    BrowsingParts = isChecked;
+                    break;
+                case "extraitems":
+                    BrowsingExtraItems = isChecked;
+                break;
+            }
+        }
         public void AddToObservalbeCollection(IAddable added)
         {
-            //if (added is Weapon weapon)
-            //{
-            //    Weapons.Add(weapon);
-            //    return;
-            //}
 
             if (added is Equipment equipment)
             {
@@ -345,7 +422,14 @@ namespace NFCombat2.ViewModels
                 return;
             }
 
-            Items.Add((Item)added);
+            Item item = (Item)added;
+            if(item.InExtraBag)
+            {
+                ExtraItems.Add(item);
+                return;
+            }
+            
+            Items.Add(item);
         }
 
         public int InventorySlots => Player.InventorySlots;
@@ -368,6 +452,12 @@ namespace NFCombat2.ViewModels
                 foreach (var item in Player.Items)
                 {
                     Items.Add(item);
+                }
+
+                ExtraItems.Clear();
+                foreach(var item in Player.ExtraItems)
+                {
+                    ExtraItems.Add(item);
                 }
                 OnPropertyChanged(nameof(Player));
                 UpdateWeaponDisplay();

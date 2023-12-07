@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    
+             >
+    <ControlTemplate x:Key="ImageRadioButtonTemplate">
+        <Border Stroke="#F3F2F1"
+            StrokeThickness="2"
+            StrokeShape="RoundRectangle 10"
+            BackgroundColor="#F3F2F1"
+            HeightRequest="60"
+            WidthRequest="60"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter Property="Stroke"
+                                    Value="#000000" />
+                                
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                    Value="#F3F2F1" />
+                                <Setter Property="Stroke"
+                                    Value="#F3F2F1" />
+                                
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <ContentPresenter Padding="5"/>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

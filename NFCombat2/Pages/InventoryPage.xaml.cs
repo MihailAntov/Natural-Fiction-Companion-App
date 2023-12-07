@@ -36,6 +36,19 @@ public partial class InventoryPage : ContentPage
 			}
         }
     }
+
+	public async void ChangedTab(object sender, CheckedChangedEventArgs e)
+	{
+		if(BindingContext is InventoryPageViewModel viewModel)
+		{
+			if (sender is RadioButton button)
+			{
+				
+				viewModel.ChangeTabState((string)button.Value, button.IsChecked);
+				
+			}
+		}
+	}
 	
 
 }

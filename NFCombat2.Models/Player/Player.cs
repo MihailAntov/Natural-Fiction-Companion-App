@@ -73,6 +73,7 @@ namespace NFCombat2.Models.Player
         }
 
         public bool HasExtraBag => Equipment.Where(e=> e is IModifyPlayer && (e as IModifyPlayer).HasBonusBag).Any();
+        public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
         public int Strength { get { return (int)Math.Round(Health / 10.0); } }
         public int MaxWeaponWeight { get; set; } = 1;
@@ -122,6 +123,7 @@ namespace NFCombat2.Models.Player
             .Select(e=> (ICombatActiveItem)e)
             .ToList();
         public IList<Item> Items { get; set; } = new List<Item>();
+        public IList<Item> ExtraItems { get; set; } = new List<Item>();
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public IList<Program> Programs { get; set; } = new List<Program>();

@@ -96,32 +96,44 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateItems(Player player)
         {
-            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
-            foreach (var equipment in oldEquipments)
+            var allItems = new List<Item>();
+            allItems.AddRange(player.Items);
+            allItems.AddRange(player.ExtraItems);
+
+            var existingItems = await connection.Table<PlayersItemsEntity>()
+                .Where(pi => pi.PlayerId == player.Id && pi.Category == ItemCategory.Item).ToListAsync();
+            var removedItems = existingItems.Where(i=> !allItems.Select(item=> item.Id).Contains(i.ItemId)).ToList();
+            foreach (var item in removedItems)
             {
-                await connection.DeleteAsync(equipment);
+                await connection.DeleteAsync(item);
             }
 
-            foreach (var item in player.Items)
+            
+            foreach (var item in allItems)
             {
                 PlayersItemsEntity playersItems = null!;
                 try
                 {
-                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == item.Id);
+                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == item.Id && ps.InExtraBag == item.InExtraBag);
                 }
                 catch
                 {
-                    await connection.InsertAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = item.Quantity });
+                    await connection.InsertAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = item.Quantity, InExtraBag = item.InExtraBag, Category = ItemCategory.Item });
                     continue;
                 }
                 playersItems.Quantity = item.Quantity;
+                playersItems.InExtraBag = item.InExtraBag;
                 await connection.UpdateAsync(playersItems);
             }
+
+           
+
+            var existingrecords = await connection.Table<PlayersItemsEntity>().ToListAsync();
         }
 
         private async Task UpdateEquipments( Player player)
         {
-            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id && pi.Category == ItemCategory.Equipment).ToListAsync();
             foreach (var equipment in oldEquipments)
             {
                 await connection.DeleteAsync(equipment);
@@ -144,7 +156,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 catch
                 {
-                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id, Quantity = equipment.Quantity };
+                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id, Quantity = equipment.Quantity, Category = ItemCategory.Equipment };
                     newPlayersItemsEntity.AttachedTo = attachedTo;
                     
 
@@ -245,6 +257,12 @@ namespace NFCombat2.Data.Entities.Repositories
                     case ItemCategory.Item:
                         var item = (Item)ItemConverter(entity.Type, entity.Category, itemId);
                         item.Quantity = playersItemsEntity.Quantity;
+                        item.InExtraBag = playersItemsEntity.InExtraBag;
+                        if (item.InExtraBag)
+                        {
+                            player.ExtraItems.Add(item);
+                            break;
+                        }
                         player.Items.Add(item);
                         break;
                     case ItemCategory.Equipment:

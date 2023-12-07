@@ -54,6 +54,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\assaultrifle.png" />
+	  <None Remove="Resources\Images\backpack.png" />
 	  <None Remove="Resources\Images\baton.png" />
 	  <None Remove="Resources\Images\biohazard.png" />
 	  <None Remove="Resources\Images\blowtorch.png" />
@@ -71,6 +72,7 @@
 	  <None Remove="Resources\Images\dice5.png" />
 	  <None Remove="Resources\Images\dice6.png" />
 	  <None Remove="Resources\Images\energyweapon.png" />
+	  <None Remove="Resources\Images\equipment.png" />
 	  <None Remove="Resources\Images\explosion.png" />
 	  <None Remove="Resources\Images\fist.png" />
 	  <None Remove="Resources\Images\flame.png" />
@@ -96,6 +98,7 @@
 	  <None Remove="Resources\Images\revolver.png" />
 	  <None Remove="Resources\Images\rifle.png" />
 	  <None Remove="Resources\Images\rocketlauncher.png" />
+	  <None Remove="Resources\Images\sack.png" />
 	  <None Remove="Resources\Images\shotgun.png" />
 	  <None Remove="Resources\Images\sniper.png" />
 	  <None Remove="Resources\Images\steelbar.png" />
@@ -134,6 +137,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LogPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\ImageRadioButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AddingProfileView.xaml">

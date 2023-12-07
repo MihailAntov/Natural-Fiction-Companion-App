@@ -19,5 +19,7 @@ namespace NFCombat2.Data.Entities.Combat
         public int Quantity { get; set; } = 1;
         public int Durability { get; set; }
         public AttachedTo AttachedTo { get; set; } = AttachedTo.None;
+        public bool InExtraBag { get; set; } = false;
+        public ItemCategory Category { get; set; }
     }
 }
