@@ -21,6 +21,10 @@ namespace NFCombat2.Models.CombatResolutions
             //fight.Player.Health += DiceCalculator.Calculate(_dice);
 
             fight.Player.Health += Amount;
+            if(fight.Player.Health > fight.Player.MaxHealth)
+            {
+                fight.Player.Health = fight.Player.MaxHealth;
+            }
             
 
         }

@@ -42,10 +42,10 @@ namespace NFCombat2.Models.Player
             }
             set
             {
-                if(value > MaxHealth)
-                {
-                    value = MaxHealth;
-                }
+                //if(value > MaxHealth)
+                //{
+                //    value = MaxHealth;
+                //}
 
                 if(value < 0)
                 {
@@ -63,9 +63,25 @@ namespace NFCombat2.Models.Player
 
         public bool HealthHasChanged { get; set; } = false;
         private int _baseMaxHealth = 30;
-        public int BaseMaxHealth { get; set; } = 30;
+        public int BaseMaxHealth { get { return _baseMaxHealth; } set 
+            {
+                if(_baseMaxHealth != value)
+                {
+                    _baseMaxHealth = value;
+                    OnPropertyChanged(nameof(MaxHealth));
+                }
+            }
+        }
         private int _bonusMaxHealth = 0;
-        public int BonusMaxHealth { get; set;} = 0;
+        public int BonusMaxHealth { get { return _bonusMaxHealth; } set 
+            {
+                if(_bonusMaxHealth != value)
+                {
+                    _bonusMaxHealth = value;
+                    OnPropertyChanged(nameof(MaxHealth));
+                }
+            }
+        }
         //todo : notifypropchanged
         public int MaxHealth
         {

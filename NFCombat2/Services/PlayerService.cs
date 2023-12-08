@@ -249,6 +249,7 @@ namespace NFCombat2.Services
                     modifier.OnRemoved(CurrentPlayer);
                 }
 
+                OnPropertyChanged(nameof(CurrentPlayer));
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }

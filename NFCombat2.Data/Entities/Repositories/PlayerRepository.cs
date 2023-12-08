@@ -357,6 +357,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .FirstOrDefault(p => p.Id == id);
+                
                 if (player != null)
                 {
                     await RetrievePlayerData(player);
