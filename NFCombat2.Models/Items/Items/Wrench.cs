@@ -11,9 +11,8 @@ namespace NFCombat2.Models.Items.Items
         {
             base.Name = "Wrench";
             IsConsumable = true;
+            IsConsumable = true;
         }
-
-        public string Name => base.Name;
 
         public MessageType MessageType => MessageType.UseItemMessage;
 

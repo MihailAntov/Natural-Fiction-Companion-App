@@ -25,7 +25,7 @@ namespace NFCombat2.Data.Entities.Combat
 
         public int Strength { get; set; } = 0;
         public int Health { get; set; } = 30;
-        public int MaxHealth { get; set; } = 30;
+        public int BaseMaxHealth { get; set; } = 30;
         public int Overload { get; set; } = 0;
         public int MaxOverload { get; set; } = 10;
 

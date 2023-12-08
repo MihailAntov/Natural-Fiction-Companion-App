@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Items.Items
         public ChargedGrapheneRod()
         {
             Name = "TODO";
+            IsConsumable = true;
         }
     }
 }

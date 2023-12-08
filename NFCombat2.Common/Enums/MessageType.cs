@@ -21,6 +21,7 @@ namespace NFCombat2.Common.Enums
         Draw,
         //action messages
         ShootMessage,
+        AoeShootMessage,
         AttackMessage,
         UseProgramMessage,
         ProgramHealMessage,

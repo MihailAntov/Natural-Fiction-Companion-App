@@ -23,7 +23,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ChangeDistanceMessage, "{0} is now at {1} meters." },
             {MessageType.Draw, "No one takes the upper hand." },
             //actions
-            {MessageType.ShootMessage, "You shoot {0} with your {1}" },
+            {MessageType.ShootMessage, "You shoot {0} with your {1}." },
+            {MessageType.AoeShootMessage, "You shoot {0} enemies with your {1}." },
             {MessageType.AttackMessage, "You attack {0} in close combat." },
             {MessageType.UseProgramMessage, "You use {0}. Your overload gauge is now at {1}." },
             {MessageType.UseItemWithQuantityMessage, "You use one of your {0}. You have {0} left." },

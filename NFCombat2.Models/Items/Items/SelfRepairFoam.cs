@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.Items
         public SelfRepairFoam()
         {
             Name = "Self Repair Foam";
+            IsConsumable = true;
         }
         public string[] MessageArgs => throw new NotImplementedException();
 

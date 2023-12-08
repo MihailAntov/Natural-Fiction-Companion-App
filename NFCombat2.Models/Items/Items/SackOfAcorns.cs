@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.Items
         public SackOfAcorns()
         {
             Name = "Sack of Acorns";
+            IsConsumable = true;
         }
         public string[] MessageArgs => throw new NotImplementedException();
 

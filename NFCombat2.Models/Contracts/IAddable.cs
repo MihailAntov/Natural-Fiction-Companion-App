@@ -8,6 +8,7 @@ namespace NFCombat2.Models.Contracts
     {
         string Name { get; set; }
         bool IsInvention { get; set; }
+        public ItemType ItemType { get; set; }
         public int Id { get; set; }
     }
 }

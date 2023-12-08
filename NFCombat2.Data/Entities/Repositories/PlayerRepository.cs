@@ -35,6 +35,7 @@ namespace NFCombat2.Data.Entities.Repositories
             
             await connection.CreateTableAsync<PlayerEntity>();
             await connection.CreateTableAsync<PlayersItemsEntity>();
+            await connection.CreateTableAsync<PlayersEquipmentsEntity>();
             await connection.CreateTableAsync<PlayersWeaponsEntity>();
             await connection.CreateTableAsync<ItemEntity>();
             await connection.CreateTableAsync<ProgramEntity>();
@@ -101,7 +102,7 @@ namespace NFCombat2.Data.Entities.Repositories
             allItems.AddRange(player.ExtraItems);
 
             var existingItems = await connection.Table<PlayersItemsEntity>()
-                .Where(pi => pi.PlayerId == player.Id && pi.Category == ItemCategory.Item).ToListAsync();
+                .Where(pi => pi.PlayerId == player.Id).ToListAsync();
             var removedItems = existingItems.Where(i=> !allItems.Select(item=> item.Id).Contains(i.ItemId)).ToList();
             foreach (var item in removedItems)
             {
@@ -118,7 +119,13 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 catch
                 {
-                    await connection.InsertAsync(new PlayersItemsEntity() { PlayerId = player.Id, ItemId = item.Id, Quantity = item.Quantity, InExtraBag = item.InExtraBag, Category = ItemCategory.Item });
+                    await connection.InsertAsync(new PlayersItemsEntity() 
+                    { 
+                        PlayerId = player.Id,
+                        ItemId = item.Id,
+                        Quantity = item.Quantity,
+                        InExtraBag = item.InExtraBag,
+                    });
                     continue;
                 }
                 playersItems.Quantity = item.Quantity;
@@ -133,7 +140,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateEquipments( Player player)
         {
-            var oldEquipments = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id && pi.Category == ItemCategory.Equipment).ToListAsync();
+            var oldEquipments = await connection.Table<PlayersEquipmentsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var equipment in oldEquipments)
             {
                 await connection.DeleteAsync(equipment);
@@ -142,31 +149,25 @@ namespace NFCombat2.Data.Entities.Repositories
 
             foreach (var equipment in player.Equipment)
             {
-                PlayersItemsEntity playersItems = null!;
                 AttachedTo attachedTo = AttachedTo.None;
                 if(equipment is WeaponModification modification)
                 {
                     attachedTo = modification.AttachedTo;
                 }
 
-                var allPlayersItems = await  connection.Table<PlayersItemsEntity>().ToListAsync();
-                try
+                var newPlayersEquipmentsEntity = new PlayersEquipmentsEntity() 
                 {
-                    playersItems = await connection.GetAsync<PlayersItemsEntity>(ps => ps.PlayerId == player.Id && ps.ItemId == equipment.Id);
-                }
-                catch
-                {
-                    var newPlayersItemsEntity = new PlayersItemsEntity() { PlayerId = player.Id, ItemId = equipment.Id, Quantity = equipment.Quantity, Category = ItemCategory.Equipment };
-                    newPlayersItemsEntity.AttachedTo = attachedTo;
+                    PlayerId = player.Id, 
+                    EquipmentId = equipment.Id, 
+                    IsConsumable = equipment.IsConsumable,
+                    Quantity = equipment.Quantity
+                };
+                newPlayersEquipmentsEntity.AttachedTo = attachedTo;
                     
 
-                    await connection.InsertAsync(newPlayersItemsEntity);
-                    continue;
-                }
-                playersItems.Quantity = equipment.Quantity;
-                playersItems.AttachedTo = attachedTo;
+                await connection.InsertAsync(newPlayersEquipmentsEntity);
+                continue;
                 
-                await connection.UpdateAsync(playersItems);
             }
         }
 
@@ -251,26 +252,19 @@ namespace NFCombat2.Data.Entities.Repositories
                     throw new NullReferenceException();
                 }
                 int itemId = entity.Id.Value;
-                AttachedTo attachedTo = playersItemsEntity.AttachedTo;
-                switch (entity.Category)
+                
+                var item = (Item)ItemConverter(entity.Type,entity.Category, itemId);
+                item.Quantity = playersItemsEntity.Quantity;
+                item.InExtraBag = playersItemsEntity.InExtraBag;
+                if (item.InExtraBag)
                 {
-                    case ItemCategory.Item:
-                        var item = (Item)ItemConverter(entity.Type, entity.Category, itemId);
-                        item.Quantity = playersItemsEntity.Quantity;
-                        item.InExtraBag = playersItemsEntity.InExtraBag;
-                        if (item.InExtraBag)
-                        {
-                            player.ExtraItems.Add(item);
-                            break;
-                        }
-                        player.Items.Add(item);
-                        break;
-                    case ItemCategory.Equipment:
-                        var equipment = (Equipment)ItemConverter(entity.Type, entity.Category, itemId, attachedTo);
-                        equipment.Quantity = playersItemsEntity.Quantity;
-                        player.Equipment.Add(equipment);
-                        break;
+                    player.ExtraItems.Add(item);
+                    break;
                 }
+                player.Items.Add(item);
+                break;
+                
+                
             }
 
             var playersWeaponsEntities = await connection.Table<PlayersWeaponsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
@@ -295,7 +289,22 @@ namespace NFCombat2.Data.Entities.Repositories
                 
             }
 
-            foreach(Equipment equipment in player.Equipment)
+            var playersEquipmentsEntitites = await connection.Table<PlayersEquipmentsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
+            foreach (var playersEquipmentsEntity in playersEquipmentsEntitites)
+            {
+                var entity = await connection.GetAsync<ItemEntity>(playersEquipmentsEntity.EquipmentId);
+                if (!entity.Id.HasValue)
+                {
+                    throw new NullReferenceException();
+                }
+                int equipmentId = entity.Id.Value;
+                
+                var equipment = (Equipment)ItemConverter(entity.Type, entity.Category, equipmentId, playersEquipmentsEntity.AttachedTo);
+                equipment.Quantity = playersEquipmentsEntity.Quantity;
+                player.Equipment.Add(equipment);
+            }
+
+            foreach (Equipment equipment in player.Equipment)
             {
                 if(equipment is WeaponModification modification)
                 {
@@ -306,6 +315,11 @@ namespace NFCombat2.Data.Entities.Repositories
                     {
                         modification.AttachToWeapon(player.OffHand);
                     }
+                }
+
+                if(equipment is IModifyPlayer playerModification)
+                {
+                    playerModification.OnAdded(player);
                 }
             }
         }
@@ -397,7 +411,9 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 var itemId = entity.Id.Value;
                 var item = ItemConverter(entity.Type, entity.Category, itemId);
-                
+                //TODO quantity
+
+
                 items.Add(item);
             }
             return items;
@@ -431,7 +447,8 @@ namespace NFCombat2.Data.Entities.Repositories
 
                         }
                         item.Id = itemId;
-                        item.Type = type;
+                        item.ItemType = type;
+                        
                         if(item is WeaponModification modification && args.Length > 0)
                         {
                             if (args[0] is AttachedTo attachedTo)

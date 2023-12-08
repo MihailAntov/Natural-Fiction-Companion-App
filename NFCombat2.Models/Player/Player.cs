@@ -62,20 +62,31 @@ namespace NFCombat2.Models.Player
         }
 
         public bool HealthHasChanged { get; set; } = false;
+        private int _baseMaxHealth = 30;
         public int BaseMaxHealth { get; set; } = 30;
+        private int _bonusMaxHealth = 0;
+        public int BonusMaxHealth { get; set;} = 0;
+        //todo : notifypropchanged
         public int MaxHealth
         {
+            //get
+            //{
+            //    return BaseMaxHealth + Equipment.Where(e=> e is IModifyPlayer).Select(e=> (e as IModifyPlayer).BonusHealth).Sum();
+            //}
             get
             {
-                return BaseMaxHealth + Equipment.Where(e=> e is IModifyPlayer).Select(e=> (e as IModifyPlayer).BonusHealth).Sum();
+                return BaseMaxHealth + BonusMaxHealth;
             }
             
         }
 
-        public bool HasExtraBag => Equipment.Where(e=> e is IModifyPlayer && (e as IModifyPlayer).HasBonusBag).Any();
+        public bool HasExtraBag { get; set; } = false;
+        //public bool HasExtraBag => Equipment.Where(e=> e is IModifyPlayer && (e as IModifyPlayer).HasBonusBag).Any();
         public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
-        public int Strength { get { return (int)Math.Round(Health / 10.0); } }
+        public int Strength => BaseStrength + Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
+        public int BaseStrength { get { return (int)Math.Round(Health / 10.0); } }
+
         public int MaxWeaponWeight { get; set; } = 1;
         public List<Weapon> Weapons
         {

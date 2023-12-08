@@ -6,6 +6,7 @@ namespace NFCombat2.Models.Items.Items
         public PotassiumIodideTablets()
         {
             Name = "TODO";
+            IsConsumable = true;
         }
     }
 }

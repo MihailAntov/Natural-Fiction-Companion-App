@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Items.Items
         public SackOfNeutralSoil()
         {
             Name = "TODO";
+            IsConsumable = true;
         }
     }
 }

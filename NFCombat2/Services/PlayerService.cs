@@ -93,12 +93,12 @@ namespace NFCombat2.Services
 
                 foreach (var item in player.Items)
                 {
-                    item.Name = _nameService.ItemName(item.Type);
+                    item.Name = _nameService.ItemName(item.ItemType);
                 }
 
                 foreach (var item in player.Equipment)
                 {
-                    item.Name = _nameService.ItemName(item.Type);
+                    item.Name = _nameService.ItemName(item.ItemType);
                 }
 
                 foreach(var weapon in player.Weapons)
@@ -170,15 +170,22 @@ namespace NFCombat2.Services
             
             if(option is Equipment equipment)
             {
-                var existingEquipment = CurrentPlayer.Equipment.FirstOrDefault(e=> e.Id == equipment.Id);
-                if (existingEquipment != null)
+                var existingEquipment = CurrentPlayer.Equipment.FirstOrDefault(e => e.Id == equipment.Id);
+                if (existingEquipment != null && existingEquipment.IsConsumable)
                 {
                     existingEquipment.Quantity++;
                     await _repository.UpdatePlayer(CurrentPlayer);
                     return;
                 }
                 CurrentPlayer.Equipment.Add(equipment);
+                if(equipment is IModifyPlayer modifier)
+                {
+                    modifier.OnAdded(CurrentPlayer);
+                }
+
                 await _repository.UpdatePlayer(CurrentPlayer);
+                OnPropertyChanged(nameof(CurrentPlayer));
+                
                 return;
             }
 
@@ -226,6 +233,22 @@ namespace NFCombat2.Services
             if (option is Equipment equipment)
             {
                 CurrentPlayer.Equipment.Remove(equipment);
+                if(CurrentPlayer.Health > CurrentPlayer.MaxHealth)
+                {
+                    CurrentPlayer.Health = CurrentPlayer.MaxHealth;
+                    OnPropertyChanged(nameof(CurrentPlayer.Health));
+                }
+
+                if (equipment is WeaponModification modification)
+                {
+                    modification.UnAttachFromWeapon();
+                }
+
+                if (equipment is IModifyPlayer modifier)
+                {
+                    modifier.OnRemoved(CurrentPlayer);
+                }
+
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
@@ -275,15 +298,24 @@ namespace NFCombat2.Services
                 }
             }
 
-
+            Weapon oldWeapon = null;
             switch (hand)
             {
                 case Hand.MainHand:
+                    oldWeapon = CurrentPlayer.MainHand;
                     CurrentPlayer.MainHand = weapon;
                     break;
                 case Hand.OffHand:
+                    oldWeapon = CurrentPlayer.OffHand;
                     CurrentPlayer.OffHand = weapon;
                     break;
+            }
+            if(oldWeapon != null)
+            {
+                foreach(var modification in oldWeapon.Modifications)
+                {
+                    modification.UnAttachFromWeapon();
+                }
             }
             
         }
@@ -336,7 +368,7 @@ namespace NFCombat2.Services
             {
                 if(entity is Item item)
                 {
-                    entity.Name = _nameService.ItemName(item.Type);
+                    entity.Name = _nameService.ItemName(item.ItemType);
                 }
 
                 if (entity is Weapon weapon)

@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.Items
         public RottingFruit()
         {
             Name = "Rotting Fruit";
+            IsConsumable = true;
         }
         public string[] MessageArgs => throw new NotImplementedException();
 

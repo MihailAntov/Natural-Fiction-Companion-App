@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Name="ItemDetails"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.ItemDetailsPopupView">
-    <Grid BindingContext="{Binding Item}">
+    <Grid Padding="20" BindingContext="{Binding Item}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
@@ -14,6 +15,6 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Text="{Binding Name}"/>
         <Label Grid.Row="1" Text="{Binding Description}"/>
-        <ImageButton Grid.Row="0" Source="hand"/>
+        <Button Grid.Row="2" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}"/>
     </Grid>
 </toolkit:Popup>

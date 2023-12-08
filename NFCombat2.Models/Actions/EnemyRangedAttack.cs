@@ -21,6 +21,7 @@ namespace NFCombat2.Models.Actions
             AttackRollResult = DiceCalculator.Calculate(1, AttackDiceMessage).Dice.FirstOrDefault();
             RollsResult = DiceCalculator.Calculate(enemy.DamageDice, DiceMessage, enemy.FlatDamage);
             _accuracy = _enemy.Accuracy;
+            AlwaysHits = enemy.AlwaysHits;
         }
 
         public bool IsAccuracyReduced { get; set; } = false;
@@ -36,6 +37,8 @@ namespace NFCombat2.Models.Actions
 
         public string AttackDiceMessage => $"{MessageArgs[0]}'s attack:";
         public string DiceMessage => $"{MessageArgs[0]}'s damage:";
+
+        public bool AlwaysHits { get; }
 
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {

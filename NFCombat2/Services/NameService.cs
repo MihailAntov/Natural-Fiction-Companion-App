@@ -24,6 +24,18 @@ namespace NFCombat2.Services
             }
         }
 
+        public string ItemDescription(ItemType type)
+        {
+            try
+            {
+                return EnglishNames[type];
+            }
+            catch
+            {
+                return "not found";
+            }
+        }
+
         public string Label(LabelType type)
         {
             try

@@ -42,6 +42,7 @@ namespace NFCombat2.ViewModels
             ExtraItems = new ObservableCollection<Item>(Player.ExtraItems);
             SetInitialValues();
             AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
+            DeleteCommand = new Command<IAddable>(async (a) => await RemoveFromPlayer(a));
             //AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
             GetWeaponDetailsCommand = new Command<string>(GetWeaponDetails);
             _popupService = popupService;
@@ -62,8 +63,8 @@ namespace NFCombat2.ViewModels
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public Command AddToPlayerCommand { get; set; }
-        //public Command AddWeaponToPlayerCommand { get; set; }
         public Command GetWeaponDetailsCommand { get; set; }
+        public Command DeleteCommand { get; set; }
         public Player Player { get; set; }
         private void SetInitialValues()
         {
@@ -205,11 +206,11 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public ObservableCollection<Weapon> Weapons { get; set; } = new ObservableCollection<Weapon>();
-        public ObservableCollection<Equipment> Equipment { get; set; }
+        public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
         public ObservableCollection<Item> ExtraItems { get; set; } = new ObservableCollection<Item>();
+        
         public async Task AddToPlayer(string type)
         {
             ICollection<IAddable> options = new List<IAddable>();
@@ -242,6 +243,41 @@ namespace NFCombat2.ViewModels
             AddToObservalbeCollection(result);
         }
 
+        public async Task RemoveFromPlayer(IAddable addable)
+        {
+            if(addable is Equipment equipment)
+            {
+                await _playerService.RemoveItemFromPlayer(addable);
+                
+
+                Player.Equipment.Remove(equipment);
+                Equipment = new ObservableCollection<Equipment>(Player.Equipment);
+                OnPropertyChanged(nameof(Player.Equipment));
+                return;
+            }
+
+            if (addable is Weapon weapon)
+            {
+                //todo
+                return;
+            }
+
+            if (addable is Item item)
+            {
+                if(item.InExtraBag)
+                {
+                    Player.ExtraItems.Remove(item);
+                    ExtraItems.Remove(item);
+                    return;
+                }
+
+                Player.Items.Remove(item);
+                Items.Remove(item);
+                return;
+
+            }
+        }
+
         public async Task AddWeaponToPlayer(Hand hand)
         {
 
@@ -263,6 +299,14 @@ namespace NFCombat2.ViewModels
             Hand hand = handAsString == "main" ? Hand.MainHand : Hand.OffHand;
             var viewModel = new WeaponDetailsPopupViewModel(weapon, this, _nameService, hand);
             var popup = new WeaponDetailsPopupView(viewModel);
+            viewModel.Self = popup;
+            _popupService.ShowPopup(popup);
+        }
+
+        public async void GetItemDetails(IAddable item)
+        {
+            var viewModel = new ItemDetailsPopupViewModel(item, this, _nameService);
+            var popup = new ItemDetailsPopupView(viewModel);
             viewModel.Self = popup;
             _popupService.ShowPopup(popup);
         }
@@ -406,30 +450,30 @@ namespace NFCombat2.ViewModels
         public void AddToObservalbeCollection(IAddable added)
         {
 
-            if (added is Equipment equipment)
-            {
-                if(Equipment.Any(e=>e.Id == equipment.Id))
-                {
-                    return;
-                }
+            //if (added is Equipment equipment)
+            //{
+            //    if(Equipment.Any(e=>e.Id == equipment.Id && e.IsConsumable))
+            //    {
+            //        return;
+            //    }
 
-                Equipment.Add(equipment);
-                return;
-            }
+            //    Equipment.Add(equipment);
+            //    return;
+            //}
 
-            if(Items.Any(i=> i.Id == added.Id))
-            {
-                return;
-            }
+            //if(Items.Any(i=> i.Id == added.Id))
+            //{
+            //    return;
+            //}
 
-            Item item = (Item)added;
-            if(item.InExtraBag)
-            {
-                ExtraItems.Add(item);
-                return;
-            }
+            //Item item = (Item)added;
+            //if(item.InExtraBag)
+            //{
+            //    ExtraItems.Add(item);
+            //    return;
+            //}
             
-            Items.Add(item);
+            //Items.Add(item);
         }
 
         public int InventorySlots => Player.InventorySlots;

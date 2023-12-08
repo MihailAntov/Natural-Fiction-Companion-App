@@ -26,14 +26,32 @@ namespace NFCombat2.Models.Actions
             AttackRollResult = DiceCalculator.Calculate(1,AttackDiceMessage).Dice.FirstOrDefault();
             RollsResult = DiceCalculator.Calculate(Weapon.DamageDice,DiceMessage, Weapon.FlatDamage);
             _accuracy = weapon.Accuracy;
+            AlwaysHits = weapon.AlwaysHits;
         }
-        public string Target { get 
+        public string TargetName { get 
             {
                 return Targets.Count > 1 ? Targets.Count.ToString() : Targets.FirstOrDefault().Name;
             } 
         }
         public Weapon Weapon { get; }
-        public string[] MessageArgs => new string[] { Target, Weapon.Name };
+        //public string[] MessageArgs => new string[] { TargetName, Weapon.Name };
+        public string[] MessageArgs
+        {
+            get
+            {
+                var result = new string[2];
+                result[1] = Weapon.Name;
+                if(Targets.Count > 1)
+                {
+                    result[0] = Targets.Count.ToString();
+                }
+                else
+                {
+                    result[0] = Targets.FirstOrDefault().Name;
+                }
+                return result;
+            }
+        }
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
@@ -44,10 +62,12 @@ namespace NFCombat2.Models.Actions
         public Dice AttackRollResult { get; set; }
         public DiceRollResult RollsResult { get; set; }
 
-        public MessageType MessageType => MessageType.ShootMessage;
+        public MessageType MessageType => Targets.Count > 1 ? MessageType.AoeShootMessage : MessageType.ShootMessage;
 
         public string AttackDiceMessage => $"Your attack:";
         public string DiceMessage => $"Your damage:";
+
+        public bool AlwaysHits { get; }
 
         public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
         {

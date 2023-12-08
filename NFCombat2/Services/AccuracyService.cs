@@ -14,7 +14,7 @@ namespace NFCombat2.Services
         public AttackResult Hits(IHaveAttackRoll combatAction, Fight fight)
         {
             var diceResult = combatAction.AttackRollResult.DiceValue;
-
+            
             
 
             int hitsAt = 0;

@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Items.Items
         public Antivenom()
         {
             Name = "Antivenom";
+            IsConsumable = true;
         }
     }
 }

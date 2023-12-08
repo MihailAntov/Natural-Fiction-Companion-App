@@ -14,5 +14,15 @@ namespace NFCombat2.Models.Items.Equipments
         }
         public int BonusHealth { get; set;}
         public bool HasBonusBag { get; set; }
+
+        public void OnAdded(Player.Player player)
+        {
+            player.HasExtraBag = true;
+        }
+
+        public void OnRemoved(Player.Player player)
+        {
+            player.HasExtraBag = false;
+        }
     }
 }

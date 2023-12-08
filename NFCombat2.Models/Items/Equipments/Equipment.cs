@@ -4,5 +4,6 @@
     {
         public bool IsCraftOnly { get; set; } = false;
         public string Image { get; set; } = string.Empty;
+
     }
 }

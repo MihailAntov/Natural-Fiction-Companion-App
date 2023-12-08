@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Items.Items
         public HerbalTincture()
         {
             Name = "TODO";
+            IsConsumable = true;
         }
     }
 }

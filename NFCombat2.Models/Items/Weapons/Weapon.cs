@@ -19,8 +19,8 @@ namespace NFCombat2.Models.Items.Weapons
         public int MinRange { get; set; }
         public bool AreaOfEffect { get; set; } = false;
         public int CritMultiplier { get; set; } = 2;
-        public int DamageDice { get; set; }
-        public int FlatDamage { get; set; }
+        public int DamageDice { get; set; } = 0;
+        public int FlatDamage { get; set; } = 0;
         public int Weight { get; set; }
         public int RemainingCooldown { get; set; } = 0;
         public int CooldownPerShot { get; set; } = 1;

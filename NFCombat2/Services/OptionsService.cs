@@ -195,7 +195,7 @@ namespace NFCombat2.Services
             var player = _playerService.CurrentPlayer;
             var result = new List<IModificationOption>();
 
-            foreach(var weapon in player.Weapons.Where(w=>w.MaxRange > 0 && !w.Modifications.Any(mod=>mod.Type == modification.Type)))
+            foreach(var weapon in player.Weapons.Where(w=>w.MaxRange > 0 && !w.Modifications.Any(mod=>mod.ItemType == modification.ItemType)))
             {
                 result.Add(new ModificationOption()
                 {

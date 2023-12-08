@@ -250,13 +250,13 @@ namespace NFCombat2.Services
         private async Task HandleRolls(ICombatAction effect)
         {
             bool canReroll = _playerService.CurrentPlayer.Class == PlayerClass.SpecOps;
-            if(effect is IHaveAttackRoll attack)
+            if(effect is IHaveAttackRoll attack && !attack.AlwaysHits)
             {
                 var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll);
                 await taskCompletion.Task;
             }
 
-            if(effect is IHaveRolls rollEffect)
+            if(effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
                 var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll);
                 await taskCompletion.Task;
@@ -288,18 +288,25 @@ namespace NFCombat2.Services
                 //otherwise proceed to roll for attack
                 else
                 {
-                    var result = _accuracyService.Hits(attack, _fight);
-                    switch (result)
+                    if (attack.AlwaysHits)
                     {
-                        case AttackResult.Miss:
-                            resolutions = attack.AddMissToCombatResolutions(_fight);
-                            break;
-                        case AttackResult.Hit:
-                            resolutions = effect.AddToCombatEffects(_fight);
-                            break;
-                        case AttackResult.Crit:
-                            resolutions = attack.AddCritToCombatResolutions(_fight);
-                            break;
+                        resolutions = effect.AddToCombatEffects(_fight);
+                    }
+                    else
+                    {
+                        var result = _accuracyService.Hits(attack, _fight);
+                        switch (result)
+                        {
+                            case AttackResult.Miss:
+                                resolutions = attack.AddMissToCombatResolutions(_fight);
+                                break;
+                            case AttackResult.Hit:
+                                resolutions = effect.AddToCombatEffects(_fight);
+                                break;
+                            case AttackResult.Crit:
+                                resolutions = attack.AddCritToCombatResolutions(_fight);
+                                break;
+                        }
                     }
                 }
             }
@@ -397,9 +404,16 @@ namespace NFCombat2.Services
             {
                 CurrentTargetingEffect = new PlayerRangedAttack(_fight, weapon);
                 var targets = _optionsService.GetTargets(_fight, weapon.MinRange, weapon.EffectiveMaxRange);
+                if (weapon.AreaOfEffect)
+                {
+                    var areaOfEffectAttack = new PlayerRangedAttack(_fight, weapon);
+                    areaOfEffectAttack.Targets = targets.Options.Select(t => (Enemy)t.Content).ToList();
+                    await HandleRolls(areaOfEffectAttack);
+                    return await AfterOption();
+                }
+
                 PreviousOptions = targets;
                 return targets;
-                //todo handle cooldown in turn resolution phase
             }
 
             if (option is Enemy target)

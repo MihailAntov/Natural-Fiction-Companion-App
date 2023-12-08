@@ -16,6 +16,7 @@ namespace NFCombat2.Contracts
         public event PropertyChangedEventHandler PropertyChanged;
         public Task AddItemToPlayer(IAddable item);
         public Task AttachModificationToWeapon(IAddable option, AttachedTo hand);
+        public Task RemoveItemFromPlayer(IAddable item);
         public List<PlayerClass> GetClassOptions();
 
         public Task SavePlayer();

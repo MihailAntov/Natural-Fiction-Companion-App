@@ -110,12 +110,16 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="25"/>
                                     <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="25"/>
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
                                 <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
                                 <ImageButton Grid.Column="2" Source="{Binding Image}"/>
-                                <Label VerticalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>

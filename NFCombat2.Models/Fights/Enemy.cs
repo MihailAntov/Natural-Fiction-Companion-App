@@ -52,6 +52,7 @@ namespace NFCombat2.Models.Fights
         }
         public int Speed { get; set; }
         public int RemainingFrozenTurns { get; set; } = 0;
+        public bool AlwaysHits { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
