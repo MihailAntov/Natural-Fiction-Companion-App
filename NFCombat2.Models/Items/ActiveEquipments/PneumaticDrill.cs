@@ -3,14 +3,16 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    public class PneumaticDrill : ActiveEquipment
+    public class PneumaticDrill : Equipment
     {
-        public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
+        public PneumaticDrill()
         {
-            throw new NotImplementedException();
+            IsInvention = true;
+            IsCraftOnly = true;
         }
     }
 }

@@ -14,8 +14,10 @@ namespace NFCombat2.Models.Fights
         public Fight(IList<Enemy> enemies)
         {
             Enemies = enemies;
+            Result = FightResult.None;
         }
-        //REMINDER : player is no longer in the constructor
+        
+        public FightResult Result { get; set; }
 
         public Player.Player Player { get; set; }
 
@@ -28,13 +30,17 @@ namespace NFCombat2.Models.Fights
         public bool HasBonusAction { get; set; } = false;
         public int RemainingCrits { get; set; } = 0;
 
-        public List<string> Messages { get; set; } = new List<string>();
         public int Turn { get; set; } = 1;
 
         public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
 
         public virtual IList<ICombatAction> EnemyActions()
         {
+            if(!Enemies.Any(e=> e.Health > 0))
+            {
+                Result = FightResult.Won;
+            }
+
             var actions = new List<ICombatAction>();
             foreach (var enemy in Enemies)
             {

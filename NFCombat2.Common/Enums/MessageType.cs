@@ -49,7 +49,9 @@ namespace NFCombat2.Common.Enums
         //item messages
         UseMedkit,
         MaxOverloadIncrease,
-        SteelPlateAbsorb
+        SteelPlateAbsorb,
+        ProtectedFromMaser,
+        NoEffect
         
         
     }

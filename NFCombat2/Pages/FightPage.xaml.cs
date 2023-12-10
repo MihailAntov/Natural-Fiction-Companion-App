@@ -36,6 +36,12 @@ public partial class FightPage : ContentPage
         }
     }
 
+    public async void HideKeyboard(object sender, EventArgs e)
+    {
+        EpisodeEntry.IsEnabled = false;
+        EpisodeEntry.IsEnabled = true;
+    }
+
 
 
 

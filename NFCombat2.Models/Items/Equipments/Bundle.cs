@@ -23,6 +23,7 @@ namespace NFCombat2.Models.Items.Equipments
         public void OnRemoved(Player.Player player)
         {
             player.HasExtraBag = false;
+            player.ExtraItems.Clear();
         }
     }
 }

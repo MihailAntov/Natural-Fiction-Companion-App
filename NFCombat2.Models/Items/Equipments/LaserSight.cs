@@ -15,6 +15,8 @@ namespace NFCombat2.Models.Items.Equipments
         {
             BonusAccuracy = 1;
             Image = "crosshair";
+            IsInvention = true;
+            IsCraftOnly = true;
         }
 
         protected override void AddModification(Weapon weapon)

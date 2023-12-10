@@ -70,6 +70,7 @@
             <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
 
             <Entry
+                x:Name="EpisodeEntry"
             IsVisible="{Binding NotInCombat}"
             Keyboard="Numeric"
             Text="{Binding EpisodeNumber}"
@@ -82,6 +83,7 @@
                 Text="Find"
                 IsVisible="{Binding NotInCombat}"
                 Command="{Binding GetEpisodeCommand}"
+                Clicked="HideKeyboard"
                 />
             
 

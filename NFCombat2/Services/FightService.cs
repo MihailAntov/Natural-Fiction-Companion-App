@@ -134,6 +134,10 @@ namespace NFCombat2.Services
                     fight = new TimedFight(enemies);
                     fight.Player = hacker;
                     break;
+                case 4:
+                    fight = new TentacleFight(enemies);
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
                 default:
                     fight = new ConstrainedFight(enemies);
                     fight.Player = hacker;
@@ -245,6 +249,30 @@ namespace NFCombat2.Services
                     weapon.RemainingCooldown -= weapon.ShotsPerTurn;
                 }
             }
+
+            if (_fight.Player.HealthHasChanged)
+            {
+                await HandleHealthLoss(_fight.Player);
+            }
+        }
+
+        private async Task HandleHealthLoss(Player player)
+        {
+            player.HealthHasChanged = false;
+            if(player.Class == PlayerClass.SpecOps)
+            {
+                await HandleTechniques(player);
+            }
+
+            if(player.Health < player.MinHealth)
+            {
+                _fight.Result = FightResult.Lost;
+            }
+        }
+
+        private async Task HandleTechniques(Player player)
+        {
+
         }
 
         private async Task HandleRolls(ICombatAction effect)

@@ -16,6 +16,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             DiceMessage = "Your automated medkit roll:";
             Quantity = 1;
             IsConsumable = true;
+            IsInvention = true;
         }
         public DiceRollResult RollsResult { get; set; }
 

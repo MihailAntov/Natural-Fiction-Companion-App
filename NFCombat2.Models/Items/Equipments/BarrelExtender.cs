@@ -9,6 +9,8 @@ namespace NFCombat2.Models.Items.Equipments
         {
             BonusRange = 15;
             Image = "radar";
+            IsInvention = true;
+            IsCraftOnly = true;
         }
         public int BonusRange { get; set; }
 

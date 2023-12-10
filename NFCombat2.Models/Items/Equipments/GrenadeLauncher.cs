@@ -14,6 +14,8 @@ namespace NFCombat2.Models.Items.Equipments
             BonusDamageDice = 1;
             Name = "Grenade Launcher";
             Image = "Explosion";
+            IsInvention = true;
+            IsCraftOnly = true;
         }
 
         protected override void AddModification(Weapon weapon)

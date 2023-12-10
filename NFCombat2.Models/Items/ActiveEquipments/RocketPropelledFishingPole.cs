@@ -8,6 +8,11 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class RocketPropelledFishingPole : ActiveEquipment
     {
+        public RocketPropelledFishingPole()
+        {
+            IsInvention = true;
+            IsCraftOnly = true;
+        }
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();

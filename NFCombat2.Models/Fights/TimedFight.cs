@@ -7,10 +7,17 @@ namespace NFCombat2.Models.Fights
         public TimedFight(IList<Enemy> enemies) : base(enemies)
         {
         }
+        public int MaxTurns { get; set; }
+        public int MinHealth { get; set; }
 
         public override IList<ICombatAction> EnemyActions()
         {
             throw new NotImplementedException();
+        }
+
+        public void CheckWinCondition()
+        {
+
         }
     }
 }

@@ -96,8 +96,19 @@ namespace NFCombat2.Models.Player
             
         }
 
-        public bool HasExtraBag { get; set; } = false;
-        //public bool HasExtraBag => Equipment.Where(e=> e is IModifyPlayer && (e as IModifyPlayer).HasBonusBag).Any();
+        public int MinHealth { get; set; } = 1;
+
+        private bool _hasExtraBag { get; set; } = false;
+        public bool HasExtraBag { get { return _hasExtraBag; } 
+            set 
+            {
+                if(_hasExtraBag != value)
+                {
+                    _hasExtraBag = value;
+                    OnPropertyChanged(nameof(HasExtraBag)); 
+                }
+            }
+        }
         public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
         public int Strength => BaseStrength + Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);

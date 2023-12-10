@@ -259,10 +259,10 @@ namespace NFCombat2.Data.Entities.Repositories
                 if (item.InExtraBag)
                 {
                     player.ExtraItems.Add(item);
-                    break;
+                    continue;
                 }
                 player.Items.Add(item);
-                break;
+                continue;
                 
                 
             }

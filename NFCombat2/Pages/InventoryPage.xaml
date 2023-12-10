@@ -34,7 +34,7 @@
                     <Image Source="wrench.png" />
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab" IsVisible="{Binding Player.HasExtraBag}">
                 <RadioButton.Content>
                     <Image Source="sack.png" />
                 </RadioButton.Content>

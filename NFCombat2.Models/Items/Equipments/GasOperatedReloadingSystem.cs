@@ -14,6 +14,7 @@ namespace NFCombat2.Models.Items.Equipments
         {
             ExtraAttacks = 1;
             Image = "bullets";
+            IsInvention = true;
         }
         protected override void AddModification(Weapon weapon)
         {
