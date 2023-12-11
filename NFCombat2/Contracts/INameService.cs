@@ -10,5 +10,6 @@ namespace NFCombat2.Contracts
         public string ItemDescription(ItemType type);
         public string ProgramName(ProgramType type);
         public string Label(LabelType type);
+        public string ModeName(ItemMode mode);
     }
 }

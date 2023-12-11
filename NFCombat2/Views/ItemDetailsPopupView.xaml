@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Name="ItemDetails"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.ItemDetailsPopupView">
     <Grid Padding="20" BindingContext="{Binding Item}">
         <Grid.RowDefinitions>
@@ -15,6 +16,6 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Text="{Binding Name}"/>
         <Label Grid.Row="1" Text="{Binding Description}"/>
-        <Button Grid.Row="2" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}"/>
+        <Button Grid.Row="2" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
     </Grid>
 </toolkit:Popup>

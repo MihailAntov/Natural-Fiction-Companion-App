@@ -52,6 +52,7 @@ namespace NFCombat2.Services
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
+        public IHaveModes CurrentModeEffect { get; set; }
 
         private List<ICombatAction> _delayedActions = new List<ICombatAction>();
 
@@ -111,6 +112,7 @@ namespace NFCombat2.Services
             //specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
             specOps.Consumables.Add(new HandGrenade());
             specOps.Equipment.Add(new TacticalGlasses());
+            specOps.Equipment.Add(new PortableSurgicalLaser());
             specOps.Techniques.Add(new Feint());
             Fight fight;
 
@@ -411,6 +413,20 @@ namespace NFCombat2.Services
 
             }
 
+            if(option is IHaveModes itemWithModes && itemWithModes.Mode == null)
+            {
+                CurrentModeEffect = itemWithModes;
+                var options = _optionsService.GetModes(itemWithModes);
+                return options;
+            }
+
+            if(option is IMode mode)
+            {
+                CurrentModeEffect.Mode = mode;
+                var effect = (ICombatAction)CurrentModeEffect;
+                return await ProcessChoice(effect);
+            }
+
             if (option is ITarget targetingEffect && !targetingEffect.AreaOfEffect)
             {
 
@@ -418,9 +434,9 @@ namespace NFCombat2.Services
                 var targets = _optionsService.GetTargets(_fight, targetingEffect.MinRange, targetingEffect.MaxRange);
                 
                 return targets;
-
-
             }
+
+            
 
             if(option is Dice dice)
             {

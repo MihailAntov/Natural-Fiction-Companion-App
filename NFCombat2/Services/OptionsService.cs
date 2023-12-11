@@ -15,9 +15,11 @@ namespace NFCombat2.Services
     public class OptionsService : IOptionsService
     {
         private readonly IPlayerService _playerService;
-        public OptionsService(IPlayerService playerService)
+        private readonly INameService _nameService;
+        public OptionsService(IPlayerService playerService, INameService nameService)
         {
            _playerService = playerService;
+            _nameService = nameService;
         }
 
 
@@ -218,6 +220,22 @@ namespace NFCombat2.Services
             }
 
             return result;
+        }
+
+        public IOptionList GetModes(IHaveModes itemWithModes)
+        {
+            List<IOption> options = new List<IOption>();
+            foreach(var mode in itemWithModes.Modes) 
+            {
+                mode.Name = _nameService.ModeName(mode.ItemMode);
+                options.Add(new Option(mode.Name, mode));
+            }
+
+            return new OptionList()
+            {
+                Label = "Choose mode",
+                Options = options
+            };
         }
     }
 }

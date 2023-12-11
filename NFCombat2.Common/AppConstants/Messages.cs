@@ -55,6 +55,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.SteelPlateAbsorb, "Your steel plate absorbed {0} damage and has {1} durability left." },
             {MessageType.ProtectedFromMaser, "The arc from your whip melts the maser's board." },
             {MessageType.NoEffect, "Your {0} had no effect." },
+            {MessageType.PoleMoveCloser, "Your distance to {0} is reduced." },
+            {MessageType.PoleMoveFurther, "Your distance to {0} is increased." }
 
         };
 

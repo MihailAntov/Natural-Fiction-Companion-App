@@ -22,6 +22,8 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 
         public string[] MessageArgs => new string[] { Name };
 
+        public bool UnavailableForRestOfCombat { get; set; }
+
         public abstract IList<ICombatResolution> AddToCombatEffects(Fight fight);
         
     }

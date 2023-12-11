@@ -3,6 +3,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using static NFCombat2.Common.AppConstants.ItemNames;
 using static NFCombat2.Common.AppConstants.Labels;
+using static NFCombat2.Common.AppConstants.ModeNames;
 
 namespace NFCombat2.Services
 {
@@ -51,6 +52,11 @@ namespace NFCombat2.Services
         public string ProgramName(ProgramType type)
         {
             throw new NotImplementedException();
+        }
+
+        public string ModeName(ItemMode mode)
+        {
+            return EnglishModes[mode];
         }
     }
 }

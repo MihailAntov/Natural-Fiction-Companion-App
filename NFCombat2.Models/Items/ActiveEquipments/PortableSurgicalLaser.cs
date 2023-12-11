@@ -1,24 +1,39 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.Models.Items.ActiveEquipments
 {
-    public class PortableSurgicalLaser : Equipment, IInventoryActiveItem
+    public class PortableSurgicalLaser : Equipment, IInventoryActiveItem, IHaveRolls
     {
         public PortableSurgicalLaser()
         {
             IsConsumable = true;
             Quantity = 1;
             IsInvention = true;
+            DiceMessage = "Your portable surgical laser roll:";
+            RollsResult = DiceCalculator.Calculate(2);
         }
+
+        public DiceRollResult RollsResult { get; set; }
+
+        public string DiceMessage {get;}
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            throw new NotImplementedException();
+            Quantity--;
+            player.Health += RollsResult.Dice.Sum(d => d.DiceValue);
+            if (Quantity <= 0)
+            {
+                player.Equipment.Remove(this);
+            }
+
+            return new Heal(RollsResult);
         }
     }
 }

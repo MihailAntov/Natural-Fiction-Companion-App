@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Views;
+using Microsoft.Maui.Controls;
 
 namespace NFCombat2.ViewModels
 {
@@ -339,6 +340,13 @@ namespace NFCombat2.ViewModels
 
             if(eventItem is IInventoryActiveItem item)
             {
+                bool canReroll = Player.Class == PlayerClass.SpecOps;
+                if(item is IHaveRolls rollsEffect)
+                {
+                    var taskCompletion = await _popupService.ShowDiceRollsPopup(rollsEffect, canReroll);
+                    await taskCompletion.Task;
+                }
+
                 var used = item.AffectPlayer(Player);
                 await _playerService.SavePlayer();
                 if(item.Quantity <= 0)

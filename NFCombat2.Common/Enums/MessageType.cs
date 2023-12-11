@@ -51,7 +51,9 @@ namespace NFCombat2.Common.Enums
         MaxOverloadIncrease,
         SteelPlateAbsorb,
         ProtectedFromMaser,
-        NoEffect
+        NoEffect,
+        PoleMoveCloser,
+        PoleMoveFurther
         
         
     }
