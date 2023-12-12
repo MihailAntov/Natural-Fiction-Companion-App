@@ -25,6 +25,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25"/>
@@ -55,8 +56,12 @@
             <Image Grid.Row="5" Source="radiation"/>
             <Label Grid.Column="1" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
             <Slider Grid.Column="3" Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}"/>
+
+            <Image Grid.Row="6" Source="fuel"/>
+            <Label Grid.Column="1" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
+            <Slider Grid.Column="3" Grid.Row="6"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}"/>
         </Grid>
-        
+            
         
             <Button VerticalOptions="EndAndExpand" Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
 

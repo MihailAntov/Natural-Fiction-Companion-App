@@ -25,7 +25,9 @@ namespace NFCombat2.Services
 
         public IOptionList GetItems(Fight fight)
         {
-            var result = fight.Player.Consumables.Select(o => new Option(o.Name, o)).ToList<IOption>();
+            var result = fight.Player.Activatables
+                .Where(a=> !a.UnavailableForRestOfCombat)
+                .Select(o => new Option(o.Name, o)).ToList<IOption>();
             return new OptionList(result, true, true) {Label = "Choose item to use" };
         }
 
@@ -180,7 +182,7 @@ namespace NFCombat2.Services
 
         public bool HasItems(Fight fight)
         {
-            return fight.Player.Consumables.Any();
+            return fight.Player.Activatables.Any();
         }
 
         public bool CanUseProgram(Fight fight)

@@ -65,7 +65,13 @@ namespace NFCombat2.Models.Fights
             return actions;
         }
 
-
+        public virtual void SetUp()
+        {
+            foreach(var activatable in Player.Activatables)
+            {
+                activatable.UnavailableForRestOfCombat = false;
+            }
+        }
 
     }
 }

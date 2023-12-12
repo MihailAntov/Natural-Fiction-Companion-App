@@ -18,6 +18,8 @@ namespace NFCombat2.Models.Items.Items
 
         public string[] MessageArgs => new string[] { Name };
 
+        public bool UnavailableForRestOfCombat { get; set; }
+
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             throw new NotImplementedException();

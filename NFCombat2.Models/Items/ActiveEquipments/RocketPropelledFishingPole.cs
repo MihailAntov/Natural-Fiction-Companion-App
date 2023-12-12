@@ -17,7 +17,6 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             MinRange = 0;
             MaxRange = 1000;
             AreaOfEffect = false;
-            OncePerCombat = true;
             Targets = new List<Enemy>();
             Modes = new List<IMode>()
             {
@@ -48,7 +47,8 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             }
             Mode = null;
             Targets.Clear();
-            AlreadyUsed = true;
+            UnavailableForRestOfCombat = true;
+            //todo : at end of combat, reset those
             return resolutions;
         }
     }

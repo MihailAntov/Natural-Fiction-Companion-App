@@ -155,11 +155,24 @@ namespace NFCombat2.Models.Player
         }
         public IList<Equipment> Equipment { get; set; } = new List<Equipment>();
         //public IList<ICombatActiveItem> Consumables { get; set; } = new List<ICombatActiveItem>();
-        public IList<ICombatActiveItem> Consumables => 
-            Equipment
-            .Where(e => e is ICombatActiveItem)
-            .Select(e=> (ICombatActiveItem)e)
-            .ToList();
+        public IList<ICombatActiveItem> Activatables
+        {
+            get
+            {
+                var result = new List<ICombatActiveItem>(); 
+                foreach(var equipment in Equipment.OfType<ICombatActiveItem>())
+                {
+                    result.Add(equipment);
+                }
+
+                foreach (var item in Items.OfType<ICombatActiveItem>())
+                {
+                    result.Add(item);
+                }
+                return result;
+            }
+        }
+
         public IList<Item> Items { get; set; } = new List<Item>();
         public IList<Item> ExtraItems { get; set; } = new List<Item>();
 
@@ -311,6 +324,32 @@ namespace NFCombat2.Models.Player
         }
 
         public Language Language { get; set; } = Language.English;
+
+        private int _fuel;
+        public int Fuel { get { return _fuel; } 
+            set 
+            {
+                if(_fuel != value)
+                {
+                    _fuel = value;
+                    OnPropertyChanged(nameof(Fuel));
+                }
+            }
+        }
+
+        //private int _maxFuel;
+        //public int MaxFuel
+        //{
+        //    get { return _maxFuel; }
+        //    set
+        //    {
+        //        if (_maxFuel != value)
+        //        {
+        //            _maxFuel = value;
+        //            OnPropertyChanged(nameof(MaxFuel));
+        //        }
+        //    }
+        //}
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

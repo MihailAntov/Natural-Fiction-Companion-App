@@ -76,6 +76,7 @@
 	  <None Remove="Resources\Images\explosion.png" />
 	  <None Remove="Resources\Images\fist.png" />
 	  <None Remove="Resources\Images\flame.png" />
+	  <None Remove="Resources\Images\fuel.png" />
 	  <None Remove="Resources\Images\gravitymodulator.png" />
 	  <None Remove="Resources\Images\hand.png" />
 	  <None Remove="Resources\Images\healthcare.png" />

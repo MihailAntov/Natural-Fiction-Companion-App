@@ -96,6 +96,11 @@ namespace NFCombat2.Services
                     item.Name = _nameService.ItemName(item.ItemType);
                 }
 
+                foreach (var item in player.ExtraItems)
+                {
+                    item.Name = _nameService.ItemName(item.ItemType);
+                }
+
                 foreach (var item in player.Equipment)
                 {
                     item.Name = _nameService.ItemName(item.ItemType);
@@ -203,6 +208,7 @@ namespace NFCombat2.Services
                     }
                     CurrentPlayer.ExtraItems.Add(item);
                     await _repository.UpdatePlayer(CurrentPlayer);
+                    OnPropertyChanged(nameof(CurrentPlayer));
                     return;
                 }
                 else
@@ -216,6 +222,7 @@ namespace NFCombat2.Services
                     }
                     CurrentPlayer.Items.Add(item);
                     await _repository.UpdatePlayer(CurrentPlayer);
+                    OnPropertyChanged(nameof(CurrentPlayer));
                     return;
                 }
             }

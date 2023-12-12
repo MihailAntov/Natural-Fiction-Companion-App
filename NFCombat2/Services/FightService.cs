@@ -108,9 +108,9 @@ namespace NFCombat2.Services
             //hacker.Weapons.Add(new PlasmaRapier());
             //hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
             //hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
-            hacker.Consumables.Add(new HandGrenade());
+            hacker.Activatables.Add(new HandGrenade());
             //specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
-            specOps.Consumables.Add(new HandGrenade());
+            specOps.Activatables.Add(new HandGrenade());
             specOps.Equipment.Add(new TacticalGlasses());
             specOps.Equipment.Add(new PortableSurgicalLaser());
             specOps.Techniques.Add(new Feint());
@@ -147,6 +147,7 @@ namespace NFCombat2.Services
             }
 
             _fight = fight;
+            fight.SetUp();
             return _fight;
         }
 

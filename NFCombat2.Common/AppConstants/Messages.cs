@@ -56,7 +56,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProtectedFromMaser, "The arc from your whip melts the maser's board." },
             {MessageType.NoEffect, "Your {0} had no effect." },
             {MessageType.PoleMoveCloser, "Your distance to {0} is reduced." },
-            {MessageType.PoleMoveFurther, "Your distance to {0} is increased." }
+            {MessageType.PoleMoveFurther, "Your distance to {0} is increased." },
+            {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." }
 
         };
 
