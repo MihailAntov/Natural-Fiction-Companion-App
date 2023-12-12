@@ -33,11 +33,11 @@ namespace NFCombat2.ViewModels
         public async Task UseItem()
         {
             await Self.CloseAsync();
-            if(Item is Equipment equipment)
-            {
-                _parentViewModel.UsedEquipment(equipment);
-                return;
-            }
+            //if(Item is Equipment equipment)
+            //{
+            //    _parentViewModel.UsedItem(equipment);
+            //    return;
+            //}
 
             _parentViewModel.UsedItem(Item);
         }

@@ -54,7 +54,10 @@ namespace NFCombat2.Common.Enums
         ProtectedFromMaser,
         NoEffect,
         PoleMoveCloser,
-        PoleMoveFurther
+        PoleMoveFurther,
+        EquippedToWeapon,
+        UnequippedFromWeapon,
+
         
         
     }

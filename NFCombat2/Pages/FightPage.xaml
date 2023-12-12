@@ -19,7 +19,7 @@
             <Button IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}"
                     Text="X"
                     HorizontalOptions="End"
-                    Command="{Binding ExitCombatCommand}"
+                    Command="{Binding CancelCombatCommand}"
                     />
 
 

@@ -133,9 +133,10 @@ namespace NFCombat2.Services
             return success;
         }
 
-        public async Task SwitchActivePlayer(Player player)
+        public async Task SwitchToPlayer(Player player)
         {
-            await _repository.UpdatePlayer(CurrentPlayer);
+            
+            
             var newPlayer = await GetPlayerById(player.Id);
             await UpdateNames(newPlayer);
             CurrentPlayer = newPlayer;

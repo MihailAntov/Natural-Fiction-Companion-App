@@ -36,6 +36,11 @@ public partial class FightPage : ContentPage
         }
     }
 
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+    }
+
     public async void HideKeyboard(object sender, EventArgs e)
     {
         EpisodeEntry.IsEnabled = false;

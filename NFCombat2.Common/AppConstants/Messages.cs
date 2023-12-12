@@ -57,7 +57,9 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.NoEffect, "Your {0} had no effect." },
             {MessageType.PoleMoveCloser, "Your distance to {0} is reduced." },
             {MessageType.PoleMoveFurther, "Your distance to {0} is increased." },
-            {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." }
+            {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." },
+            {MessageType.EquippedToWeapon, "Successfully equipped {0} to {1}." },
+            {MessageType.UnequippedFromWeapon, "Successfully unequipped {0} from {1}." }
 
         };
 

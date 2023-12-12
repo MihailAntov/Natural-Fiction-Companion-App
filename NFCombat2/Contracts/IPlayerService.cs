@@ -10,9 +10,10 @@ namespace NFCombat2.Contracts
     public interface IPlayerService
     {
         public Task<Player> RegisterPlayer(Player player);
+        public Task<Player> GetPlayerById(int id);
         public Task<IList<Player>> GetAllPlayers();
         public Player CurrentPlayer { get; set; }
-        public Task SwitchActivePlayer(Player player);
+        public Task SwitchToPlayer(Player player);
         public event PropertyChangedEventHandler PropertyChanged;
         public Task AddItemToPlayer(IAddable item);
         public Task AttachModificationToWeapon(IAddable option, AttachedTo hand);

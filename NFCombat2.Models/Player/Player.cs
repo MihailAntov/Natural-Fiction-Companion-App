@@ -169,6 +169,11 @@ namespace NFCombat2.Models.Player
                 {
                     result.Add(item);
                 }
+
+                foreach (var item in ExtraItems.OfType<ICombatActiveItem>())
+                {
+                    result.Add(item);
+                }
                 return result;
             }
         }

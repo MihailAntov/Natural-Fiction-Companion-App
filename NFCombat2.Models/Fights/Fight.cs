@@ -15,11 +15,14 @@ namespace NFCombat2.Models.Fights
         {
             Enemies = enemies;
             Result = FightResult.None;
+            Type = FightType.Regular;
+
         }
         
         public FightResult Result { get; set; }
 
         public Player.Player Player { get; set; }
+        public FightType Type { get; set; } 
 
         public IList<Enemy> Enemies { get; set; }
         
@@ -70,6 +73,14 @@ namespace NFCombat2.Models.Fights
             foreach(var activatable in Player.Activatables)
             {
                 activatable.UnavailableForRestOfCombat = false;
+            }
+        }
+
+        public virtual void CheckWinCondition()
+        {
+            if(!Enemies.Any(e=> e.Health > 0))
+            {
+                Result = FightResult.Won;
             }
         }
 

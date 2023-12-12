@@ -1,10 +1,12 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.CombatResolutions;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items.Weapons;
 using System.ComponentModel;
 
 namespace NFCombat2.Models.Items.Equipments
 {
-    public abstract class WeaponModification : Equipment, INotifyPropertyChanged
+    public abstract class WeaponModification : Equipment, INotifyPropertyChanged, IInventoryActiveItem
     {
         public Weapon Weapon { get; private set; }
         public AttachedTo AttachedTo { get; set; } = AttachedTo.None;
@@ -42,5 +44,13 @@ namespace NFCombat2.Models.Items.Equipments
         protected abstract void AddModification(Weapon weapon);
         protected abstract void RemoveModification(Weapon weapon);
 
+        public ICombatResolution AffectPlayer(Player.Player player)
+        {
+            if(Weapon == null)
+            {
+                return new UnequippedFromWeapon(this);
+            }
+            return new EquippedToWeapon(this, Weapon);
+        }
     }
 }

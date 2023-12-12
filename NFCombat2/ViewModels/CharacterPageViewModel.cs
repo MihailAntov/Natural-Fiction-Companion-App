@@ -128,7 +128,8 @@ namespace NFCombat2.ViewModels
         }
         public async Task SwitchToProfile(Player player)
         {
-            await _playerService.SwitchActivePlayer(player);
+            await _playerService.SavePlayer();
+            await _playerService.SwitchToPlayer(player);
             OnPropertyChanged(nameof(Profiles));
             SelectedItem = player;
             

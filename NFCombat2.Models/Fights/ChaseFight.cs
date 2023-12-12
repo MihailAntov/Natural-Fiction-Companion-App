@@ -7,6 +7,7 @@ namespace NFCombat2.Models.Fights
     {
         public ChaseFight(IList<Enemy> enemies) : base(enemies)
         {
+            Type = Common.Enums.FightType.Chase;
         }
 
         public override IList<ICombatAction> EnemyActions()

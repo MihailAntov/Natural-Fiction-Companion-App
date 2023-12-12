@@ -5,6 +5,7 @@ using NFCombat2.Models.Contracts;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Models.Player;
+using NFCombat2.Common.Enums;
 
 namespace NFCombat2.ViewModels
 {
@@ -18,7 +19,10 @@ namespace NFCombat2.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FightPageViewModel(IFightService fightService, IOptionsService optionsService, ILogService logService, OptionPickerViewModel opctionPickerViewModel)
+        public FightPageViewModel(IFightService fightService,
+            IOptionsService optionsService,
+            ILogService logService,
+            OptionPickerViewModel opctionPickerViewModel)
         {
             _fightService = fightService;
             _optionsService = optionsService;
@@ -26,11 +30,11 @@ namespace NFCombat2.ViewModels
 
             OptionPickerViewModel = opctionPickerViewModel;
             GetEpisodeCommand = new Command(GetEpisode);
-            ExitCombatCommand = new Command(ExitCombat);
+            CancelCombatCommand = new Command(CancelCombat);
         }
 
         public Command GetEpisodeCommand { get; }
-        public Command ExitCombatCommand { get; }
+        public Command CancelCombatCommand { get; }
         public ListView MessageBoard { get; set; }
         
         public string EpisodeNumber { get; set; }
@@ -75,7 +79,7 @@ namespace NFCombat2.ViewModels
             fight = await _fightService.GetFightByEpisodeNumber(episode);
             Player = fight.Player;
             
-            //TODO make test label show the current option / round
+            
 
             Enemies.Clear();
             foreach (var enemy in fight.Enemies)
@@ -89,11 +93,19 @@ namespace NFCombat2.ViewModels
             OptionPickerViewModel.ChoosingOption = true;
             
             NotInCombat = false;
+
         }
 
-        public async void ExitCombat()
+        public async void CancelCombat()
         {
             NotInCombat = true;
+            _fightService.RejectFightResults();
+            CombatCleanup();
+        }
+
+        private async void CombatCleanup()
+        {
+            OnPropertyChanged(nameof(fight.Player));
             fight = null;
             Enemies.Clear();
             OptionPickerViewModel.CleanUp();
@@ -104,5 +116,12 @@ namespace NFCombat2.ViewModels
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+        private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_fightService.Accepted))
+            {
+                
+            }
+        }
     }
 }

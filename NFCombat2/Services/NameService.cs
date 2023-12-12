@@ -4,6 +4,7 @@ using NFCombat2.Contracts;
 using static NFCombat2.Common.AppConstants.ItemNames;
 using static NFCombat2.Common.AppConstants.Labels;
 using static NFCombat2.Common.AppConstants.ModeNames;
+using static NFCombat2.Common.AppConstants.FightResults;
 
 namespace NFCombat2.Services
 {
@@ -57,6 +58,13 @@ namespace NFCombat2.Services
         public string ModeName(ItemMode mode)
         {
             return EnglishModes[mode];
+        }
+
+        public string FightResultMessage(FightType fightType, FightResult result)
+        {
+            
+            return EnglishFightResults[(fightType,result)];
+            
         }
     }
 }

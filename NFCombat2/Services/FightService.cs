@@ -14,12 +14,27 @@ using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Items.ActiveEquipments;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.SpecOps;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.Services
 {
-    public class FightService : IFightService
+    public class FightService : IFightService, INotifyPropertyChanged
     {
         private Fight _fight;
+        private bool _accepted = false;
+        public bool Accepted { get { return _accepted; } 
+            set
+            {
+                if(_accepted!= value)
+                {
+                    _accepted = value;
+                    OnPropertyChanged(nameof(Accepted));
+                }
+            }
+        }
+
+        
+
         
         private readonly ILogService _logService;
         private readonly IOptionsService _optionsService;
@@ -27,6 +42,7 @@ namespace NFCombat2.Services
         private readonly IAccuracyService _accuracyService;
         private readonly FightRepository _fightRepository;
         private readonly IPlayerService _playerService;
+        private readonly INameService _nameService;
         //private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
@@ -34,8 +50,9 @@ namespace NFCombat2.Services
             IPopupService popupService, 
             IAccuracyService accuracyService, 
             FightRepository fightRepository,
-            IPlayerService playerService
-            /*ISeederService seederService*/)
+            IPlayerService playerService,
+            INameService nameService
+            )
         {
             _logService = logService;
             _optionsService = optionsService;
@@ -43,12 +60,8 @@ namespace NFCombat2.Services
             _accuracyService = accuracyService;
             _fightRepository = fightRepository;
             _playerService = playerService;
-            //if (!_fightRepository.Seeded)
-            //{
-            //    _seederService = seederService;
-                
-            //    _seederService.SeedFights();
-            //}
+            _nameService = nameService;
+            
         }
 
         public ITarget CurrentTargetingEffect {get; set;}
@@ -71,9 +84,26 @@ namespace NFCombat2.Services
 
         private Stack<IOptionList> optionHistory = new Stack<IOptionList>();
         private IOptionList optionBuffer;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Fight GetFight()
         {
             return _fight;
+        }
+
+        public async void AcceptFightResults()
+        {
+            await _playerService.SavePlayer();
+            Accepted = true;
+            
+        }
+
+        public async void RejectFightResults()
+        {
+            var player = await _playerService.GetPlayerById(_fight.Player.Id);
+            await _playerService.SwitchToPlayer(player);
+            Accepted = false;
         }
 
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
@@ -189,9 +219,20 @@ namespace NFCombat2.Services
                 }
             }
         }
+        private void FinishCombat(FightResult result)
+        {
+            string message = _nameService.FightResultMessage(_fight.Type, result);
+            //TODO: add toast to accept or reject result, then catch event in viewmodel 
+        }
 
         public async Task<IOptionList> AfterOption()
         {
+            await HandleHealthLoss(_fight.Player);
+            _fight.CheckWinCondition();
+            if(_fight.Result != FightResult.None)
+            {
+                FinishCombat(_fight.Result);
+            }
             optionHistory.Clear();
             await ResolveEffects();
             switch(++_fight.TurnPhase)
@@ -489,12 +530,15 @@ namespace NFCombat2.Services
             if (option is ICombatAction combatEffect)
             {
                 await HandleRolls(combatEffect);
-                //AddEffect(combatEffect);
                 return await AfterOption();
 
             }
 
             return _optionsService.GetMoveActions(_fight);  
         }
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
+
+
 }

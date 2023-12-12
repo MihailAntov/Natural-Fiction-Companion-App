@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using NFCombat2.Views;
 using Microsoft.Maui.Controls;
 
+
 namespace NFCombat2.ViewModels
 {
     public class InventoryPageViewModel : INotifyPropertyChanged
@@ -312,7 +313,7 @@ namespace NFCombat2.ViewModels
             _popupService.ShowPopup(popup);
         }
 
-        public async void UsedEquipment(object eventItem)
+        public async void UsedItem(object eventItem)
         {
             if (eventItem is WeaponModification modification)
             {
@@ -324,16 +325,9 @@ namespace NFCombat2.ViewModels
                 var completed = await taskCompletionSource.Task;
                 if (completed)
                 {
-                    if(modification.AttachedTo == AttachedTo.None)
-                    {
-                        string message = $"Successfully unattached {modification.Name}.";
-                        _popupService.ShowToast(message);
-                    }
-                    else
-                    {
-                        string message = $"Successfully attached {modification.Name} to {modification.Weapon.Name}.";
-                        _popupService.ShowToast(message);
-                    }
+                    string message = await _logService.GetResolutionMessage(((IInventoryActiveItem)modification).AffectPlayer(_playerService.CurrentPlayer));
+                    _popupService.ShowToast(message);
+                    
                 }
                 return;
             }
@@ -352,6 +346,8 @@ namespace NFCombat2.ViewModels
                 if(item.Quantity <= 0)
                 {
                     Equipment.Remove((Equipment)eventItem);
+                    Items.Remove((Item)eventItem);
+                    ExtraItems.Remove((Item)eventItem);
                 }
 
                 string message = await _logService.GetResolutionMessage(used);
@@ -361,13 +357,6 @@ namespace NFCombat2.ViewModels
 
         }
 
-        public void UsedItem(object eventItem)
-        {
-            if (eventItem is Item item)
-            {
-                item.Description = item.Description;
-            }
-        }
 
         private void UpdateWeaponDisplay()
         {
