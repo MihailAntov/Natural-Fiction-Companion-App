@@ -9,11 +9,8 @@ namespace NFCombat2.Models.Items.Equipments
         public Bundle()
         {
             Name = "Bundle";
-            BonusHealth = 0;
-            HasBonusBag = true;
         }
-        public int BonusHealth { get; set;}
-        public bool HasBonusBag { get; set; }
+
 
         public void OnAdded(Player.Player player)
         {

@@ -24,7 +24,7 @@
 
 
 
-            <VerticalStackLayout>
+            <VerticalStackLayout IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
                 <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
                 <Label>
                     <Label.Text>
@@ -38,16 +38,36 @@
             <ListView ItemsSource="{Binding Enemies}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}"
-                            
-                        >
+                        <!--<TextCell Text="{Binding Name}">
                             <TextCell.Detail>
                                 <MultiBinding StringFormat="Hp:{0}  Distance:{1}">
                                     <Binding Path="Health"/>
                                     <Binding Path="Distance"/>
                                 </MultiBinding>
-                            </TextCell.Detail> 
-                        </TextCell>
+                            </TextCell.Detail>
+                        </TextCell>-->
+
+                        <ViewCell>
+                            <VerticalStackLayout Opacity="{Binding Health, Converter={helpers:OpacityConverter}}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="35"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.ColumnSpan="4"  Text="{Binding Name}"/>
+                                    <Image Grid.Row="1" Grid.Column="0" Source="healthcare"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Health}"/>
+                                    <Image Grid.Row="1" Grid.Column="2" Source="radar"/>
+                                    <Label Grid.Row="1" Grid.Column="3" Text="{Binding Distance}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>    
             </ListView>
@@ -63,11 +83,11 @@
                 </CollectionView>
             </Border>
 
-            
 
-            
 
-            <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}"/>
+
+
+            <views:OptionPickerView BindingContext="{Binding OptionPickerViewModel}" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}"/>
 
             <Entry
                 x:Name="EpisodeEntry"

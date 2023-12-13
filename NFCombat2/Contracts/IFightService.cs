@@ -1,14 +1,14 @@
 ﻿using NFCombat2.Models.Fights;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Common.Enums;
+using System.ComponentModel;
 
 namespace NFCombat2.Contracts
 {
-    public interface IFightService
+    public interface IFightService : INotifyPropertyChanged
     {
         
         Task<Fight> GetFightByEpisodeNumber(int episodeNumber);
-        Fight GetFight();
         public void AcceptFightResults();
         public void RejectFightResults();
 

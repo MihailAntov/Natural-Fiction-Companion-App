@@ -19,6 +19,7 @@ namespace NFCombat2.Common.Enums
         GasOperatedReloadingSystem,
         ChameleonSkin,
         Bundle,
+        CombatSuit,
 
         //active equipment
         ArcWhip,

@@ -1,5 +1,5 @@
 ﻿
-
+using NFCombat2.Models.Fights;
 using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Contracts
@@ -11,6 +11,6 @@ namespace NFCombat2.Contracts
         public string ProgramName(ProgramType type);
         public string Label(LabelType type);
         public string ModeName(ItemMode mode);
-        public string FightResultMessage(FightType fight, FightResult result);
+        public string FightResultMessage(Fight fight);
     }
 }

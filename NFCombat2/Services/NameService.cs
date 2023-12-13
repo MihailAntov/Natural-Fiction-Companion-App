@@ -1,6 +1,7 @@
 ﻿using NFCombat2.Common.AppConstants;
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
+using NFCombat2.Models.Fights;
 using static NFCombat2.Common.AppConstants.ItemNames;
 using static NFCombat2.Common.AppConstants.Labels;
 using static NFCombat2.Common.AppConstants.ModeNames;
@@ -60,10 +61,10 @@ namespace NFCombat2.Services
             return EnglishModes[mode];
         }
 
-        public string FightResultMessage(FightType fightType, FightResult result)
+        public string FightResultMessage(Fight fight)
         {
             
-            return EnglishFightResults[(fightType,result)];
+            return EnglishFightResults[(fight.Type,fight.Result)];
             
         }
     }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="NFCombat2.Views.FightResultPopupView">
+    <Grid Padding="20" WidthRequest="400">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label  Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.ColumnSpan="4" Text="{Binding Message}"/>
+        <Image Grid.Row="1" Grid.Column="1" Source="healthcare"/>
+        <Label Grid.Row="1"  Grid.Column="2" HorizontalTextAlignment="Start" Text="{Binding Fight.Player.Health}"/>
+        <Button Grid.Row="2" Grid.Column="1" Text="{Binding AcceptButtonName}" Command="{Binding AcceptResultCommand}"/>
+        <Button Grid.Row="2" Grid.Column="2" Text="{Binding RejectButtonName}" Command="{Binding RejectResultCommand}"/>
+        
+    </Grid>
+</toolkit:Popup>

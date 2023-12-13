@@ -8,11 +8,9 @@ namespace NFCombat2.Models.Items.Equipments
     {
         public ArmoredVest()
         {
-            BonusHealth = 5;
-            HasBonusBag = false;
+
         }
-        public int BonusHealth { get; set; }
-        public bool HasBonusBag { get; set; }
+
 
         public void OnAdded(Player.Player player)
         {

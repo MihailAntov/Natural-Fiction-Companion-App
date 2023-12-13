@@ -111,9 +111,12 @@ namespace NFCombat2.Models.Player
         }
         public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
-        public int Strength => BaseStrength + Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
+        public int Strength => 
+            BaseStrength + 
+            BonusStrength +
+            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
         public int BaseStrength { get { return (int)Math.Round(Health / 10.0); } }
-
+        public int BonusStrength { get; set; } = 0;
         public int MaxWeaponWeight { get; set; } = 1;
         public List<Weapon> Weapons
         {

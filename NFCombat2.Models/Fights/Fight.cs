@@ -34,7 +34,6 @@ namespace NFCombat2.Models.Fights
         public int RemainingCrits { get; set; } = 0;
 
         public int Turn { get; set; } = 1;
-
         public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
 
         public virtual IList<ICombatAction> EnemyActions()

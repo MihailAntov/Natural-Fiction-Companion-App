@@ -15,6 +15,8 @@ using NFCombat2.Models.Items.ActiveEquipments;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.SpecOps;
 using System.Runtime.CompilerServices;
+using NFCombat2.ViewModels;
+using NFCombat2.Views;
 
 namespace NFCombat2.Services
 {
@@ -87,10 +89,6 @@ namespace NFCombat2.Services
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Fight GetFight()
-        {
-            return _fight;
-        }
 
         public async void AcceptFightResults()
         {
@@ -103,7 +101,7 @@ namespace NFCombat2.Services
         {
             var player = await _playerService.GetPlayerById(_fight.Player.Id);
             await _playerService.SwitchToPlayer(player);
-            Accepted = false;
+            Accepted = true;
         }
 
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
@@ -177,6 +175,7 @@ namespace NFCombat2.Services
             }
 
             _fight = fight;
+            Accepted = false;
             fight.SetUp();
             return _fight;
         }
@@ -219,23 +218,43 @@ namespace NFCombat2.Services
                 }
             }
         }
-        private void FinishCombat(FightResult result)
+        private async void FinishCombat(FightResult result)
         {
-            string message = _nameService.FightResultMessage(_fight.Type, result);
-            //TODO: add toast to accept or reject result, then catch event in viewmodel 
+            
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+            var viewModel = new FightResultPopupViewModel(_fight, _nameService, taskCompletionSource);
+            var popup = new FightResultPopupView(viewModel);
+            _popupService.ShowPopup(popup);
+            var output =  await taskCompletionSource.Task;
+            await popup.CloseAsync();
+
+            if (output)
+            {
+                AcceptFightResults();
+            }
+            else
+            {
+                RejectFightResults();
+            }
+
+
+
         }
 
         public async Task<IOptionList> AfterOption()
         {
-            await HandleHealthLoss(_fight.Player);
-            _fight.CheckWinCondition();
-            if(_fight.Result != FightResult.None)
-            {
-                FinishCombat(_fight.Result);
-            }
+            
             optionHistory.Clear();
             await ResolveEffects();
-            switch(++_fight.TurnPhase)
+            await HandleHealthLoss();
+            _fight.CheckWinCondition();
+            if (_fight.Result != FightResult.None)
+            {
+                FinishCombat(_fight.Result);
+                return new OptionList();
+            }
+
+            switch (++_fight.TurnPhase)
             {
                 case TurnPhase.Move:
                     var moves = _optionsService.GetMoveActions(_fight);
@@ -294,24 +313,42 @@ namespace NFCombat2.Services
                 }
             }
 
-            if (_fight.Player.HealthHasChanged)
-            {
-                await HandleHealthLoss(_fight.Player);
-            }
+            await HandleHealthLoss();
+            
         }
 
-        private async Task HandleHealthLoss(Player player)
+        private async Task HandleHealthLoss()
         {
-            player.HealthHasChanged = false;
-            if(player.Class == PlayerClass.SpecOps)
+            await HandlePlayerHealthLoss();
+            await HandleEnemyHealthLoss();
+            
+            
+        }
+
+        private async Task HandlePlayerHealthLoss()
+        {
+            if (!_fight.Player.HealthHasChanged)
             {
-                await HandleTechniques(player);
+                return;
             }
 
-            if(player.Health < player.MinHealth)
+            _fight.Player.HealthHasChanged = false;
+            if (_fight.Player.Class == PlayerClass.SpecOps)
+            {
+                await HandleTechniques(_fight.Player);
+            }
+
+            if (_fight.Player.Health < _fight.Player.MinHealth)
             {
                 _fight.Result = FightResult.Lost;
             }
+        }
+
+        private async Task HandleEnemyHealthLoss()
+        {
+            _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
+            
+            return;
         }
 
         private async Task HandleTechniques(Player player)

@@ -27,6 +27,7 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GasOperatedReloadingSystem},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ChameleonSkin},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Bundle},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.CombatSuit},
 
                 //active equipments
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArcWhip},

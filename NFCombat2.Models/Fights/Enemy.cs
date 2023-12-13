@@ -12,9 +12,15 @@ namespace NFCombat2.Models.Fights
         public int Health { get { return health; } 
             set
             {
+                if(value < 0)
+                {
+                    value = 0;
+                }
+
                 if(health != value)
                 {
                     health = value;
+                     
                     OnPropertyChanged("Health");
                 }
             }

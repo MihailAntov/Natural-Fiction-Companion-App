@@ -10,7 +10,9 @@ namespace NFCombat2.Common.AppConstants
         {
             {LabelType.ChangeWeaponButton, "Change" },
             {LabelType.EquipNewWeaponButton, "Add" },
-            {LabelType.UseItemButton, "Use" }
+            {LabelType.UseItemButton, "Use" },
+            {LabelType.AcceptCombatResult, "Accept" },
+            {LabelType.RejectCombatResult, "Reject" },
         };
     }
 }

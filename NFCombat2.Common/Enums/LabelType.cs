@@ -6,6 +6,8 @@ namespace NFCombat2.Common.Enums
     {
         ChangeWeaponButton,
         EquipNewWeaponButton,
-        UseItemButton
+        UseItemButton,
+        AcceptCombatResult,
+        RejectCombatResult
     }
 }

@@ -21,6 +21,7 @@ namespace NFCombat2.Common.AppConstants
             {ItemType.GasOperatedReloadingSystem, "Gas Operated Reloading System" },
             {ItemType.ChameleonSkin, "Chameleon Skin" },
             {ItemType.Bundle, "Bundle" },
+            {ItemType.CombatSuit, "Combat Suit" },
 
             {ItemType.ArcWhip, "Arc Whip" },
             {ItemType.AutomatedMedKit, "Automated MedKit" },

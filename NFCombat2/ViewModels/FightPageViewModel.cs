@@ -27,6 +27,7 @@ namespace NFCombat2.ViewModels
             _fightService = fightService;
             _optionsService = optionsService;
             _logService = logService;
+            _fightService.PropertyChanged += OnAcceptedPropertyChanged;
 
             OptionPickerViewModel = opctionPickerViewModel;
             GetEpisodeCommand = new Command(GetEpisode);
@@ -116,12 +117,15 @@ namespace NFCombat2.ViewModels
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnAcceptedPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_fightService.Accepted))
             {
-                
+                NotInCombat = true;
+                CombatCleanup(); 
             }
         }
+
+        
     }
 }

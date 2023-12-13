@@ -32,7 +32,16 @@ namespace NFCombat2.Data.Entities.Repositories
                 return;
             }
             connection = new SQLiteAsyncConnection(_dbPath);
-            
+
+            //await connection.DropTableAsync<PlayerEntity>();
+            //await connection.DropTableAsync<PlayersItemsEntity>();
+            //await connection.DropTableAsync<PlayersEquipmentsEntity>();
+            //await connection.DropTableAsync<PlayersWeaponsEntity>();
+            //await connection.DropTableAsync<ItemEntity>();
+            //await connection.DropTableAsync<ProgramEntity>();
+            //await connection.DropTableAsync<PlayersProgramsEntity>();
+            //Uncomment above lines to reset item db
+
             await connection.CreateTableAsync<PlayerEntity>();
             await connection.CreateTableAsync<PlayersItemsEntity>();
             await connection.CreateTableAsync<PlayersEquipmentsEntity>();
@@ -43,12 +52,10 @@ namespace NFCombat2.Data.Entities.Repositories
 
             if(connection.Table<PlayerEntity>() != null)
             {
-                if(await connection.Table<PlayerEntity>().CountAsync() == 0) 
+                
+                if (await connection.Table<PlayerEntity>().CountAsync() == 0) 
                 {
                     ItemRepositorySeeder.SeedRepository(this);
-                    //await connection.DropTableAsync<PlayerEntity>();
-                    //await connection.DropTableAsync<PlayersItemsEntity>();
-                    //TODO remove this, only used to clear db for testing
                 }
             }
 
@@ -354,6 +361,7 @@ namespace NFCombat2.Data.Entities.Repositories
            await Init();
             try
             {
+                var allPlayers = await connection.Table<PlayerEntity>().ToListAsync();
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
                     .Select(_mapper.Map<Player>)
                     .FirstOrDefault(p => p.Id == id);

@@ -88,6 +88,10 @@ namespace NFCombat2.Services
 
         private async Task UpdateNames(Player player)
         {
+            if(player == null)
+            {
+                return;
+            }
             Task task = new Task(() =>
             {
 
@@ -138,8 +142,12 @@ namespace NFCombat2.Services
             
             
             var newPlayer = await GetPlayerById(player.Id);
-            await UpdateNames(newPlayer);
-            CurrentPlayer = newPlayer;
+            if(newPlayer != null)
+            {
+                player = newPlayer;
+            }
+            await UpdateNames(player);
+            CurrentPlayer = player;
             await _settings.UpdateCurrentPlayer(player.Id);
             
 
@@ -391,7 +399,11 @@ namespace NFCombat2.Services
 
         public async Task SavePlayer()
         {
-            await _repository.UpdatePlayer(CurrentPlayer);
+            if(CurrentPlayer != null)
+            {
+                await _repository.UpdatePlayer(CurrentPlayer);
+                OnPropertyChanged(nameof(CurrentPlayer));
+            }
         }
     }
 }

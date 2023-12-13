@@ -125,6 +125,7 @@ namespace NFCombat2.ViewModels
         public async void CleanUp()
         {
             Options?.Clear();
+            MenuLabel = string.Empty;
             ChoosingOption = false;
         }
 
