@@ -36,6 +36,8 @@ namespace NFCombat2.Models.Fights
         public int Turn { get; set; } = 1;
         public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
 
+        public List<Action> TemporaryEffects { get; set; } = new List<Action>();
+
         public virtual IList<ICombatAction> EnemyActions()
         {
             if(!Enemies.Any(e=> e.Health > 0))

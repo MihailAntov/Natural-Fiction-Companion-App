@@ -7,5 +7,6 @@ namespace NFCombat2.Models.Contracts
     {
         public abstract ICombatResolution AffectPlayer(Player.Player player);
         public int Quantity { get; set; }
+        public bool IsConsumable { get; }
     }
 }

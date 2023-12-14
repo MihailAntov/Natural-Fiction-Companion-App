@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class PlatinumPhial : Equipment, IInventoryActiveItem
     {
+        private readonly int _amount = 1;
         public PlatinumPhial()
         {
             IsConsumable = true;
@@ -22,8 +23,8 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             {
                 player.Equipment.Remove(this);
             }
-            player.MaxOverload++;
-            return new MaxOverloadIncrease(player);
+            player.MaxOverload += _amount; ;
+            return new MaxOverloadIncrease(player, _amount);
         }
     }
 }

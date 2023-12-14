@@ -9,17 +9,19 @@ namespace NFCombat2.Models.CombatResolutions
     public class MaxOverloadIncrease : ICombatResolution
     {
         private Player.Player _player;
-        public MaxOverloadIncrease(Player.Player player)
+        private int _amount;
+        public MaxOverloadIncrease(Player.Player player, int amount)
         {
             _player = player;
+            _amount = amount;
         }
         public MessageType MessageType => MessageType.MaxOverloadIncrease;
 
-        public string[] MessageArgs => new string[1] {(_player.MaxOverload).ToString() };
+        public string[] MessageArgs => new string[2] {_amount.ToString(),_player.MaxOverload.ToString() };
 
         public Task Resolve(Fight fight)
         {
-            fight.Player.MaxOverload++;
+            fight.Player.MaxOverload+= _amount;
             return Task.CompletedTask;
         }
     }

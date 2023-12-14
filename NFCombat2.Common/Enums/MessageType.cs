@@ -57,6 +57,12 @@ namespace NFCombat2.Common.Enums
         PoleMoveFurther,
         EquippedToWeapon,
         UnequippedFromWeapon,
+        PathogenDecrease,
+        IonizationDecrease,
+        StrengthIncrease,
+        TraumaDecrease,
+        OverloadDecrease,
+
 
         
         

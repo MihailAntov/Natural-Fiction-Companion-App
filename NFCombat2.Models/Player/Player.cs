@@ -57,6 +57,7 @@ namespace NFCombat2.Models.Player
                     health = value;
                     HealthHasChanged = true;
                     OnPropertyChanged(nameof(Health));
+                    OnPropertyChanged(nameof(Strength));
                 }
             }
         }
@@ -115,8 +116,22 @@ namespace NFCombat2.Models.Player
             BaseStrength + 
             BonusStrength +
             Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
-        public int BaseStrength { get { return (int)Math.Round(Health / 10.0); } }
-        public int BonusStrength { get; set; } = 0;
+        public int BaseStrength { get 
+            {
+                return (int)Math.Round(Health / 10.0); 
+            } 
+        }
+        private int _bonusMaxStrength = 0;
+        public int BonusStrength { get { return _bonusMaxStrength; }
+            set
+            {
+                if(_bonusMaxStrength != value)
+                {
+                    _bonusMaxStrength = value;
+                    OnPropertyChanged(nameof(Strength));
+                }
+            }
+        } 
         public int MaxWeaponWeight { get; set; } = 1;
         public List<Weapon> Weapons
         {

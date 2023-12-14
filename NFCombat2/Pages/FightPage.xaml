@@ -33,6 +33,10 @@
                         </MultiBinding>
                     </Label.Text>
                 </Label>
+                <HorizontalStackLayout>
+                    <Image Source="fist" WidthRequest="25" HeightRequest="25"/>
+                    <Label Text="{Binding Player.Strength}"/>
+                </HorizontalStackLayout>
 
             </VerticalStackLayout>
             <ListView ItemsSource="{Binding Enemies}">

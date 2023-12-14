@@ -342,12 +342,30 @@ namespace NFCombat2.ViewModels
                 }
 
                 var used = item.AffectPlayer(Player);
+                if (item.IsConsumable)
+                {
+                    item.Quantity--;
+                    if(item.Quantity == 0)
+                    {
+                        
+                        Player.Items.Remove((Item)item);
+                        Player.ExtraItems.Remove((Item)item);
+                        if (item is Equipment)
+                        {
+                            Player.Equipment.Remove((Equipment)item);
+                        }
+                    }
+                }
+
                 await _playerService.SavePlayer();
                 if(item.Quantity <= 0)
                 {
-                    Equipment.Remove((Equipment)eventItem);
                     Items.Remove((Item)eventItem);
                     ExtraItems.Remove((Item)eventItem);
+                    if(item is Equipment)
+                    {
+                        Equipment.Remove((Equipment)eventItem);
+                    }
                 }
 
                 string message = await _logService.GetResolutionMessage(used);

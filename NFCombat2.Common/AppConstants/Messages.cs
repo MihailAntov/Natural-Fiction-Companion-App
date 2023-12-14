@@ -49,7 +49,6 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.EnemyDefeatedMessage, "{0} is defeated!" },
             {MessageType.EnemyMissMessage, "{0} misses!" },
             {MessageType.EnemyCritMessage, "{0} deals double damage! You lose {1} life." },
-            {MessageType.MaxOverloadIncrease, "Your maximum overload is now {0}." },
 
             //item messages
             {MessageType.SteelPlateAbsorb, "Your steel plate absorbed {0} damage and has {1} durability left." },
@@ -59,7 +58,12 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.PoleMoveFurther, "Your distance to {0} is increased." },
             {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." },
             {MessageType.EquippedToWeapon, "Successfully equipped {0} to {1}." },
-            {MessageType.UnequippedFromWeapon, "Successfully unequipped {0} from {1}." }
+            {MessageType.UnequippedFromWeapon, "Successfully unequipped {0} from {1}." },
+            {MessageType.MaxOverloadIncrease, "Your maximum overload increases by {0} and is now {1}." },
+            {MessageType.PathogenDecrease, "Your pathogen level decreases by {0} and is now {1}." },
+            {MessageType.TraumaDecrease, "Your trauma level decreases by {0} and is now {1}." },
+            {MessageType.IonizationDecrease, "Your ionization level decreases by {0} and is now {1}." },
+            {MessageType.StrengthIncrease, "Your strength is increased by {0} for the remainder of the fight." },
 
         };
 

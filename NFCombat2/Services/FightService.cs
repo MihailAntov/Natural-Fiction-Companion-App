@@ -13,6 +13,7 @@ using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Items.ActiveEquipments;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items;
 using NFCombat2.Models.SpecOps;
 using System.Runtime.CompilerServices;
 using NFCombat2.ViewModels;
@@ -99,6 +100,7 @@ namespace NFCombat2.Services
 
         public async void RejectFightResults()
         {
+            
             var player = await _playerService.GetPlayerById(_fight.Player.Id);
             await _playerService.SwitchToPlayer(player);
             Accepted = true;
@@ -227,7 +229,11 @@ namespace NFCombat2.Services
             _popupService.ShowPopup(popup);
             var output =  await taskCompletionSource.Task;
             await popup.CloseAsync();
-
+            foreach(var effect in _fight.TemporaryEffects)
+            {
+                effect.Invoke();
+            }
+            _fight.TemporaryEffects.Clear();
             if (output)
             {
                 AcceptFightResults();
@@ -567,6 +573,19 @@ namespace NFCombat2.Services
             if (option is ICombatAction combatEffect)
             {
                 await HandleRolls(combatEffect);
+                if(option is ICombatActiveItem item && item.IsConsumable)
+                {
+                    item.Quantity--;
+                    if(item.Quantity == 0)
+                    {
+                        _fight.Player.Items.Remove((Item)item);
+                        _fight.Player.ExtraItems.Remove((Item)item);
+                        if(item is Equipment)
+                        {
+                            _fight.Player.Equipment.Remove((Equipment)item);
+                        }
+                    }
+                }
                 return await AfterOption();
 
             }

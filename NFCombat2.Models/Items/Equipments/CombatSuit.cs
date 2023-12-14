@@ -24,12 +24,14 @@ namespace NFCombat2.Models.Items.Equipments
         {
             player.BonusStrength += 3;
             player.BonusMaxHealth += 10;
+            OnPropertyChanged(nameof(player.Strength));
         }
 
         public void OnRemoved(Player.Player player)
         {
             player.BonusStrength -= 3;
             player.BonusMaxHealth -= 10;
+            OnPropertyChanged(nameof(player.Strength));
         }
     }
 }

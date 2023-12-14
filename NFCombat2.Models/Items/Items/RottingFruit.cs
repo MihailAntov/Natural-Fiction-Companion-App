@@ -1,5 +1,7 @@
 ﻿
 
+using NFCombat2.Common.Helpers;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
@@ -11,17 +13,20 @@ namespace NFCombat2.Models.Items.Items
         {
             Name = "Rotting Fruit";
             IsConsumable = true;
-        }
-        public string[] MessageArgs => throw new NotImplementedException();
+            Quantity = 1;
 
-        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
-        {
-            throw new NotImplementedException();
         }
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            throw new NotImplementedException();
+            Quantity--;
+            if (Quantity == 0)
+            {
+                player.Items.Remove(this);
+                player.ExtraItems.Remove(this);
+            }
+            player.Health += 4;
+            return new Heal(DiceCalculator.Calculate(0, null, 4));
         }
     }
 }
