@@ -20,7 +20,7 @@ namespace NFCombat2.Models.Fights
         }
         
         public FightResult Result { get; set; }
-
+        public bool AllowsPrograms { get; set; } = true;
         public Player.Player Player { get; set; }
         public FightType Type { get; set; } 
 
@@ -38,21 +38,28 @@ namespace NFCombat2.Models.Fights
 
         public List<Action> TemporaryEffects { get; set; } = new List<Action>();
 
+        public virtual IList<ICombatAction> EnemyMovement()
+        {
+            var movement = new List<ICombatAction>();
+            foreach(var enemy in Enemies)
+            {
+                enemy.HasMoved = false;
+                if (enemy.Range < enemy.Distance && enemy.Speed > 0)
+                {
+                    movement.Add(new EnemyGetCloser(this, enemy));
+                    enemy.HasMoved = true;
+                }
+            }
+            return movement;
+        }
+
         public virtual IList<ICombatAction> EnemyActions()
         {
-            if(!Enemies.Any(e=> e.Health > 0))
-            {
-                Result = FightResult.Won;
-            }
-
+            
             var actions = new List<ICombatAction>();
             foreach (var enemy in Enemies)
             {
-                if (enemy.Range < enemy.Distance)
-                {
-                    actions.Add(new EnemyGetCloser(this, enemy));
-                }
-
+                //TODO : check if enemies can shoot/attack after moving   
 
                 if (enemy.Distance == 0)
                 {
@@ -82,6 +89,7 @@ namespace NFCombat2.Models.Fights
             if(!Enemies.Any(e=> e.Health > 0))
             {
                 Result = FightResult.Won;
+                return;
             }
         }
 

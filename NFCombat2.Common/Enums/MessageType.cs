@@ -19,6 +19,8 @@ namespace NFCombat2.Common.Enums
         HealMessage,
         ChangeDistanceMessage,
         Draw,
+        TemporaryStrengthDamage,
+        SkillCheckSuccess,
         //action messages
         ShootMessage,
         AoeShootMessage,
@@ -62,7 +64,7 @@ namespace NFCombat2.Common.Enums
         StrengthIncrease,
         TraumaDecrease,
         OverloadDecrease,
-
+        WrenchThrow,
 
         
         

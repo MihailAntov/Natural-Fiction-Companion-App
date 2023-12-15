@@ -112,6 +112,11 @@ namespace NFCombat2.Models.Player
         }
         public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
+
+
+        public int StrengthWithoutWeapon =>
+            BaseStrength +
+            BonusStrength;
         public int Strength => 
             BaseStrength + 
             BonusStrength +

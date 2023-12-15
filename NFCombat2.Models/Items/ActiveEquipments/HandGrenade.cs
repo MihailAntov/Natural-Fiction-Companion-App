@@ -24,11 +24,11 @@ namespace NFCombat2.Models.Items.ActiveEquipments
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
 
-            Quantity--;
-            if(Quantity <= 0)
-            {
-                fight.Player.Equipment.Remove(this);
-            }
+            //Quantity--;
+            //if(Quantity <= 0)
+            //{
+            //    fight.Player.Equipment.Remove(this);
+            //}
 
             var amount = DiceCalculator.Calculate(2);
             var targets = fight.Enemies.Where(e => e.Distance <= 10).ToList();

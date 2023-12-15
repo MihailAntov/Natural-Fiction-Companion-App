@@ -132,6 +132,25 @@ namespace NFCombat2.Services
                 DamageDice = 1
             };
             enemies.Add(targetDummy);
+            var toboganEnemies = new List<Enemy>()
+            {
+                new Enemy(){Name = "Alien shooter", Range = 10, Health = 16, Accuracy = Accuracy.B, DamageDice = 1, FlatDamage = 1, Distance = 64, Speed = 8},
+                new Enemy(){Name = "Alien leader", Range = 0, Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
+            };
+            var guards = new List<Enemy>()
+            {
+                new Enemy(){Name = "Guard", Range = 15, Health = 18, Accuracy = Accuracy.B,DamageDice = 1, FlatDamage = 3, Speed = 0, Distance = 3}
+            };
+
+            var rock = new List<Enemy>()
+            {
+                new Enemy(){Name = "Rock", BonusStrength = 2, Damageable = false }
+            };
+
+            var swamp = new List<Enemy>()
+            {
+                new Enemy(){Name = "Swamp plants", Health = 14}
+            };
 
             var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
             var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
@@ -155,25 +174,67 @@ namespace NFCombat2.Services
                     enemies.Add(targetDummy2);
                     break;
                 case 1:
-                    fight = new ChaseFight(enemies);
-                    fight.Player = specOps;
+                    fight = new ChaseFight(toboganEnemies);
+                    fight.Player = _playerService.CurrentPlayer;
                     break;
-                case 2:
-                    fight = new SkillCheckFight(enemies);
-                    fight.Player = hacker;
+                case 21:
+                    fight = new SkillCheckFight(rock, CheckType.Rocks);
+                    fight.Player = _playerService.CurrentPlayer;
+                    
+                    break;
+                case 22:
+                    fight = new SkillCheckFight(rock, CheckType.River);
+                    if (fight is SkillCheckFight river)
+                    {
+                        river.LosingAtZeroFatal = true;
+                        river.MaxConsecutiveWins = 2;
+                        river.OnMaxConsecutiveRoundsReached = FightResult.Won;
+                    }
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
+                case 23:
+                    fight = new SkillCheckFight(rock, CheckType.Panel);
+                    if (fight is SkillCheckFight panel)
+                    {
+                        panel.MaxConsecutiveWins = 1;
+                        panel.OnMaxConsecutiveRoundsReached = FightResult.Won;
+                    }
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
+                case 24:
+                    fight = new SkillCheckFight(rock, CheckType.Door);
+                    if (fight is SkillCheckFight door)
+                    {
+                        door.MaxConsecutiveWins = 2;
+                        door.MaxRounds = 5;
+                        door.OnMaxRoundsReached = FightResult.Lost;
+                        door.OnMaxConsecutiveRoundsReached = FightResult.Won;
+                    }
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
+                case 25:
+                    fight = new HazardFight(swamp);
+                    fight.Player = _playerService.CurrentPlayer;
                     break;
                 case 3:
-                    fight = new TimedFight(enemies);
-                    fight.Player = hacker;
+                    var timedFight = new TimedFight(enemies);
+                    timedFight.OnTurnsReached = FightResult.Won;
+                    timedFight.OnEnemyHealthReached = FightResult.Won;
+                    timedFight.MaxTurns = 5;
+                    timedFight.MinEnemyHealth = 5;
+                    fight = timedFight;
+                    fight.Player = _playerService.CurrentPlayer;
                     break;
                 case 4:
                     fight = new TentacleFight(enemies);
                     fight.Player = _playerService.CurrentPlayer;
                     break;
+                case 5:
                 default:
-                    fight = new ConstrainedFight(enemies);
-                    fight.Player = hacker;
+                    fight = new EscapeFight(guards);
+                    fight.Player = _playerService.CurrentPlayer;
                     break;
+                
             }
 
             _fight = fight;
@@ -184,6 +245,14 @@ namespace NFCombat2.Services
 
         private async Task EnemyAction()
         {
+            var enemyMovement = _fight.EnemyMovement();
+            foreach(var movement in enemyMovement)
+            {
+                await AddEffect(movement);
+            }
+            await ResolveEffects();
+
+
             var enemyActions = _fight.EnemyActions();
             foreach(var action in enemyActions)
             {
@@ -249,7 +318,14 @@ namespace NFCombat2.Services
 
         public async Task<IOptionList> AfterOption()
         {
-            
+            foreach (var weapon in _fight.Player.Weapons)
+            {
+                if (weapon.RemainingCooldown > 0)
+                {
+                    weapon.RemainingCooldown -= weapon.ShotsPerTurn;
+                }
+            }
+
             optionHistory.Clear();
             await ResolveEffects();
             await HandleHealthLoss();
@@ -311,13 +387,7 @@ namespace NFCombat2.Services
                 
             }
 
-            foreach(var weapon in _fight.Player.Weapons)
-            {
-                if (weapon.RemainingCooldown > 0) 
-                {
-                    weapon.RemainingCooldown -= weapon.ShotsPerTurn;
-                }
-            }
+            
 
             await HandleHealthLoss();
             
@@ -333,6 +403,14 @@ namespace NFCombat2.Services
 
         private async Task HandlePlayerHealthLoss()
         {
+            if (_fight is SkillCheckFight skillCheck)
+            {
+                if(skillCheck.PlayerStrength == 0 && !skillCheck.WonLastRound && skillCheck.LosingAtZeroFatal)
+                {
+                    _fight.Result = FightResult.Lost;
+                }
+            }
+
             if (!_fight.Player.HealthHasChanged)
             {
                 return;
@@ -352,6 +430,10 @@ namespace NFCombat2.Services
 
         private async Task HandleEnemyHealthLoss()
         {
+            if(_fight is SkillCheckFight && _fight is not HazardFight)
+            {
+                return;
+            }
             _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
             
             return;
@@ -475,6 +557,14 @@ namespace NFCombat2.Services
                     case OptionType.Attack:
                         result = _optionsService.GetTargets(_fight, 0, 0);
                         break;
+                    case OptionType.StrengthCheckAttack:
+                        var checkAttack = new PlayerStrengthCheckAttack(_fight);
+                        await HandleRolls(checkAttack);
+                        return await AfterOption();
+                    case OptionType.SwampAttack:
+                        var swampAttack = new PlayerSwampAttack(_fight);
+                        await HandleRolls(swampAttack);
+                        return await AfterOption();
                     case OptionType.Stay:
                         var stay = new PlayerMovePass(_fight);
                         await AddEffect(stay);
@@ -492,13 +582,34 @@ namespace NFCombat2.Services
                         return await AfterOption();
                     case OptionType.EndTurn:
                         return await AfterOption();
+                    case OptionType.SkipTurn:
+                        if(_fight is EscapeFight escape)
+                        {
+                            escape.TurnsSkipped++;
+                        }
+                        _fight.TurnPhase = TurnPhase.EndTurn;
+                        return await AfterOption();
                 }
                 PreviousOptions = result;
                 return result;
 
             }
 
-            if(option is IHaveModes itemWithModes && itemWithModes.Mode == null)
+            if (option is ICombatActiveItem item && item.IsConsumable)
+            {
+                item.Quantity--;
+                if (item.Quantity == 0)
+                {
+                    _fight.Player.Items.Remove((Item)item);
+                    _fight.Player.ExtraItems.Remove((Item)item);
+                    if (item is Equipment)
+                    {
+                        _fight.Player.Equipment.Remove((Equipment)item);
+                    }
+                }
+            }
+
+            if (option is IHaveModes itemWithModes && itemWithModes.Mode == null)
             {
                 CurrentModeEffect = itemWithModes;
                 var options = _optionsService.GetModes(itemWithModes);
@@ -549,10 +660,10 @@ namespace NFCombat2.Services
             {
                 if(target.Distance == 0)
                 {
-                    var meleeAttack = new PlayerMeleeAttack(_fight, target);
+                    PlayerMeleeAttack meleeAttack = null!;
+                    meleeAttack = new PlayerMeleeAttack(_fight, target);
                     await HandleRolls(meleeAttack);
                     return await AfterOption();
-                    
                 }
 
 
@@ -562,6 +673,7 @@ namespace NFCombat2.Services
 
                 if (CurrentTargetingEffect is PlayerRangedAttack && _optionsService.CanShoot(_fight))
                 {
+                    await ResolveEffects();
                     return _optionsService.GetWeapons(_fight, true);
                 }
 
@@ -573,19 +685,6 @@ namespace NFCombat2.Services
             if (option is ICombatAction combatEffect)
             {
                 await HandleRolls(combatEffect);
-                if(option is ICombatActiveItem item && item.IsConsumable)
-                {
-                    item.Quantity--;
-                    if(item.Quantity == 0)
-                    {
-                        _fight.Player.Items.Remove((Item)item);
-                        _fight.Player.ExtraItems.Remove((Item)item);
-                        if(item is Equipment)
-                        {
-                            _fight.Player.Equipment.Remove((Equipment)item);
-                        }
-                    }
-                }
                 return await AfterOption();
 
             }

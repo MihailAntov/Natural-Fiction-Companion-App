@@ -43,14 +43,40 @@ namespace NFCombat2.Services
 
             if(CanAttack(fight))
             {
-                objects.Add(OptionType.Attack);
+                if(fight is HazardFight hazard)
+                {
+                    objects.Add(OptionType.SwampAttack);
+                }
+                else if (fight is SkillCheckFight skillCheck)
+                {
+                    objects.Add(OptionType.StrengthCheckAttack);
+                }
+                else
+                {
+                    objects.Add(OptionType.Attack);
+                }
             }
 
             objects.Add(OptionType.DoNothing);
 
-            //TODO : involve converter service to get name of option
-            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
+            var result = new List<IOption>();
+            foreach (var obj in objects)
+            {
+                CheckType type = CheckType.None;
+                if (fight is SkillCheckFight checkFight && obj == OptionType.StrengthCheckAttack)
+                {
+                    type = checkFight.CheckType;
+                }else if (fight is HazardFight hazardFight && obj == OptionType.SwampAttack)
+                {
+                    type = hazardFight.CheckType;
+                }
+
+
+                string label = _nameService.Option(obj, type);
+                result.Add(new Option(label, obj));
+            }
             return new OptionList(result, false, false) { Label = "Choose standard action" };
+            //TODO : involve converter service to get name of option
         }
 
         public IOptionList GetBonusActions(Fight fight)
@@ -85,7 +111,7 @@ namespace NFCombat2.Services
             var objects = new List<OptionType>();
             //var objects = new List<string>();
 
-            if (CanMove(fight))
+            if (CanMove(fight) && fight.Type != FightType.Escape)
             {
                 objects.Add(OptionType.Move);
             }
@@ -95,10 +121,17 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.Item);
             }
 
+            if(fight.Type == FightType.Escape)
+            {
+                objects.Add(OptionType.SkipTurn);
+            }
+
             objects.Add(OptionType.Stay);
 
             //TODO : involve converter service to get name of option
-            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
+
+
+            var result = objects.Select(o=> new Option(_nameService.Option(o), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = "Choose move action" };
         }
 
@@ -119,6 +152,8 @@ namespace NFCombat2.Services
 
         public IOptionList GetPrograms(Fight fight)
         {
+
+            //todo : implement program retrieval
             var program1 = new Program("Zap Bonus Action", "Нанася 1 зар щети на избран опонент. Можете да предприемете допълнително действие.", fight.Player) { Cost = 1 };
              program1.Effects.Add(new DamageProgramEffect(1, 0, program1));
             program1.Effects.Add(new BonusActionProgramEffect());

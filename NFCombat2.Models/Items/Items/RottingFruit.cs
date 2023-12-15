@@ -19,12 +19,12 @@ namespace NFCombat2.Models.Items.Items
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            Quantity--;
-            if (Quantity == 0)
-            {
-                player.Items.Remove(this);
-                player.ExtraItems.Remove(this);
-            }
+            //Quantity--;
+            //if (Quantity == 0)
+            //{
+            //    player.Items.Remove(this);
+            //    player.ExtraItems.Remove(this);
+            //}
             player.Health += 4;
             return new Heal(DiceCalculator.Calculate(0, null, 4));
         }

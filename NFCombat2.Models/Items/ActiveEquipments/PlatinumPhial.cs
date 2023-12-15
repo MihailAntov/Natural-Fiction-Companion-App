@@ -18,11 +18,11 @@ namespace NFCombat2.Models.Items.ActiveEquipments
         }
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            Quantity--;
-            if(Quantity <= 0)
-            {
-                player.Equipment.Remove(this);
-            }
+            //Quantity--;
+            //if(Quantity <= 0)
+            //{
+            //    player.Equipment.Remove(this);
+            //}
             player.MaxOverload += _amount; ;
             return new MaxOverloadIncrease(player, _amount);
         }

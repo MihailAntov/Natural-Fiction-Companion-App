@@ -99,14 +99,11 @@ namespace NFCombat2.Data.Entities.Repositories
                 case FightType.Chase:
                     result = new ChaseFight(enemies);
                     break;
-                case FightType.Constrained:
-                    result = new ConstrainedFight(enemies);
-                    break;
                 case FightType.Timed:
                     result = new TimedFight(enemies);
                     break;
                 case FightType.SkillCheck:
-                    result = new SkillCheckFight(enemies);
+                    result = new SkillCheckFight(enemies, CheckType.Rocks);
                     break;
             }
             return result;

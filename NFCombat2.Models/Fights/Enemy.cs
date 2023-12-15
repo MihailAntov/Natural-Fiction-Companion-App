@@ -6,6 +6,7 @@ namespace NFCombat2.Models.Fights
 {
     public class Enemy : INotifyPropertyChanged
     {
+        public bool Damageable { get; set; } = true;
         private int range;
         public string Name { get; set; }
         private int health;
@@ -25,8 +26,10 @@ namespace NFCombat2.Models.Fights
                 }
             }
         }
-        public int Strength { get { return (int)Math.Round(Health / 10.0); } }
+        public int Strength { get { return (int)Math.Round(Health / 10.0) + BonusStrength; } }
         public Accuracy Accuracy { get; set; }
+        public bool HasMoved { get; set; } = false;
+        public int BonusStrength { get; set; }
         public int Range
         {
             get { return range; }

@@ -14,9 +14,12 @@ namespace NFCombat2.Common.AppConstants
             {(FightType.Regular, FightResult.Won),"You have won!" },
             {(FightType.Regular, FightResult.Lost),"You have lost!" },
             {(FightType.Chase, FightResult.Won),"You have won!" },
-            {(FightType.Chase, FightResult.Lost),"You have won!" },
+            {(FightType.Chase, FightResult.Lost),"You have lost!" },
             {(FightType.Constrained, FightResult.Won),"You have won!" },
-            {(FightType.Constrained, FightResult.Lost),"You have won!" },
+            {(FightType.Constrained, FightResult.Lost),"You have lost!" },
+            {(FightType.Escape, FightResult.Won),"You've won!" },
+            {(FightType.Escape, FightResult.Lost),"You have lost!" },
+            {(FightType.Escape, FightResult.Escaped),"You have escaped!" }
         };
     }
 }

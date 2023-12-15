@@ -29,14 +29,14 @@ namespace NFCombat2.Models.Items.Items
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            Quantity--;
+            //Quantity--;
+            //if (Quantity <= 0)
+            //{
+            //    fight.Player.Items.Remove(this);
+            //    fight.Player.ExtraItems.Remove(this);
+            //}
             var damage = new DealDamage(RollsResult, fight.Enemies);
             fight.Effects.Enqueue(damage);
-            if (Quantity <= 0)
-            {
-                fight.Player.Items.Remove(this);
-                fight.Player.ExtraItems.Remove(this);
-            }
             return new List<ICombatResolution>() { damage };
         }
     }

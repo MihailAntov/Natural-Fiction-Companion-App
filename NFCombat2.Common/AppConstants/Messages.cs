@@ -22,6 +22,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.HealMessage, "You restore {0} health." },
             {MessageType.ChangeDistanceMessage, "{0} is now at {1} meters." },
             {MessageType.Draw, "No one takes the upper hand." },
+            {MessageType.TemporaryStrengthDamage, "You fail and lose {0} strength for the rest of the fight." },
+            {MessageType.SkillCheckSuccess, "You succeed!" },
             //actions
             {MessageType.ShootMessage, "You shoot {0} with your {1}." },
             {MessageType.AoeShootMessage, "You shoot {0} enemies with your {1}." },
@@ -64,6 +66,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.TraumaDecrease, "Your trauma level decreases by {0} and is now {1}." },
             {MessageType.IonizationDecrease, "Your ionization level decreases by {0} and is now {1}." },
             {MessageType.StrengthIncrease, "Your strength is increased by {0} for the remainder of the fight." },
+            {MessageType.WrenchThrow, "You throw a wrench at {0}." },
 
         };
 

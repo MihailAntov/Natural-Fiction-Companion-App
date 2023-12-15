@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
@@ -15,33 +16,25 @@ namespace NFCombat2.Models.Items.Items
             Quantity = 1;
         }
 
-        public bool UnavailableForRestOfCombat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool UnavailableForRestOfCombat { get; set; }
 
-        public MessageType MessageType => throw new NotImplementedException();
+        public MessageType MessageType => MessageType.UseItemMessage;
 
-        public string[] MessageArgs => throw new NotImplementedException();
+        public string[] MessageArgs => new string[1] { Name };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            Quantity--;
-            if (Quantity == 0)
-            {
-                fight.Player.Items.Remove(this);
-                fight.Player.ExtraItems.Remove(this);
-            }
-            throw new NotImplementedException();
+            
+            var reducePathogens = new PathogenDecrease(fight.Player, 1);
+            fight.Effects.Enqueue(reducePathogens);
+            return new List<ICombatResolution>() { reducePathogens };
         }
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            Quantity--;
-            if (Quantity == 0)
-            {
-                player.Items.Remove(this);
-                player.ExtraItems.Remove(this);
-            }
-
-            throw new NotImplementedException();
+            player.Pathogens--;
+            return new PathogenDecrease(player, 1);
+            
         }
     }
 }

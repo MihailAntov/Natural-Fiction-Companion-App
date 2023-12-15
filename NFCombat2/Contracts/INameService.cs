@@ -9,6 +9,7 @@ namespace NFCombat2.Contracts
         public string ItemName(ItemType type);
         public string ItemDescription(ItemType type);
         public string ProgramName(ProgramType type);
+        public string Option(OptionType option, CheckType checkType = CheckType.None);
         public string Label(LabelType type);
         public string ModeName(ItemMode mode);
         public string FightResultMessage(Fight fight);

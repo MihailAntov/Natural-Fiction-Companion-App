@@ -21,7 +21,7 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => MessageType.EnemyMoveMessage;
 
-        public string[] MessageArgs => Array.Empty<string>();
+        public string[] MessageArgs => new string[1] { Enemy.Name };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

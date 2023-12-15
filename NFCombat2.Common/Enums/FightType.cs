@@ -9,6 +9,7 @@ namespace NFCombat2.Common.Enums
         Escape = 2,
         SkillCheck = 3,
         Timed = 4,
-        Constrained = 5
+        Constrained = 5,
+        Hazard = 6
     }
 }

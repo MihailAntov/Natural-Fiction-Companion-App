@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 
@@ -11,17 +12,14 @@ namespace NFCombat2.Models.Items.Items
         {
             Name = "Sack of Acorns";
             IsConsumable = true;
+            Quantity = 1;
         }
-        public string[] MessageArgs => throw new NotImplementedException();
-
-        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            throw new NotImplementedException();
+            player.Pathogens--;
+            return new PathogenDecrease(player, 1);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace NFCombat2.Models.Actions
 
         public string DefenderMessage => $"{Target.Name}'s melee attack roll:";
 
-        public IList<ICombatResolution> AddToCombatEffects(Fight fight)
+        public virtual IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             int attackerScore = AttackerResult.Dice.Sum(d => d.DiceValue) + AttackerResult.FlatAmount;
             int defenderScore = DefenderResult.Dice.Sum(d => d.DiceValue) + DefenderResult.FlatAmount;

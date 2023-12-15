@@ -6,6 +6,7 @@ using static NFCombat2.Common.AppConstants.ItemNames;
 using static NFCombat2.Common.AppConstants.Labels;
 using static NFCombat2.Common.AppConstants.ModeNames;
 using static NFCombat2.Common.AppConstants.FightResults;
+using static NFCombat2.Common.AppConstants.Options;
 
 namespace NFCombat2.Services
 {
@@ -66,6 +67,11 @@ namespace NFCombat2.Services
             
             return EnglishFightResults[(fight.Type,fight.Result)];
             
+        }
+
+        public string Option(OptionType option, CheckType checkType = CheckType.None)
+        {
+            return EnglishOptions[(option, checkType)];
         }
     }
 }

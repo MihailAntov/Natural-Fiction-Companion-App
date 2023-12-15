@@ -26,12 +26,12 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            Quantity--;
+            //Quantity--;
+            //if (Quantity <= 0)
+            //{
+            //    player.Equipment.Remove(this);
+            //}
             player.Health += RollsResult.Dice.Sum(d => d.DiceValue);
-            if (Quantity <= 0)
-            {
-                player.Equipment.Remove(this);
-            }
 
             return new Heal(RollsResult);
         }

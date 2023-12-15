@@ -12,6 +12,7 @@ namespace NFCombat2.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            
             int health = (int)value;
             return health > 0 ? 1 : 0.5;
         }

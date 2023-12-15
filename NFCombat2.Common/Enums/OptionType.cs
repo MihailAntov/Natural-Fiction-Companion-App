@@ -6,6 +6,8 @@ namespace NFCombat2.Common.Enums
     {
         Shoot,
         Attack,
+        StrengthCheckAttack,
+        SwampAttack,
         Program,
         Item,
         Move,
@@ -13,6 +15,7 @@ namespace NFCombat2.Common.Enums
         Stay,
         Done,
         AdrenalineRush,
-        EndTurn
+        EndTurn,
+        SkipTurn
     }
 }

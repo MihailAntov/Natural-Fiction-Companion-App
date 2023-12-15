@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Contracts;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Player;
 
 
@@ -8,11 +9,19 @@ namespace NFCombat2.Models.Fights
     {
         public EscapeFight(IList<Enemy> enemies) : base(enemies)
         {
+            Type = FightType.Escape;
         }
 
-        public override IList<ICombatAction> EnemyActions()
+        public int TurnsSkipped { get; set; } = 0;
+
+        public override void CheckWinCondition()
         {
-            throw new NotImplementedException();
+            base.CheckWinCondition();
+            if (TurnsSkipped >= 5)
+            {
+                Result = FightResult.Escaped;
+                return;
+            }
         }
     }
 }

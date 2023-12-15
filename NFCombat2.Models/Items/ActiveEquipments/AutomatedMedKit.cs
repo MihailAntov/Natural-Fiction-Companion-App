@@ -24,7 +24,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            Quantity--;
+            //Quantity--;
             var player = fight.Player;
             ReduceHarmfulEffects(player);
             
@@ -34,10 +34,10 @@ namespace NFCombat2.Models.Items.ActiveEquipments
                 fight.Effects.Enqueue(resolution);
             }
 
-            if(Quantity <= 0)
-            {
-                fight.Player.Equipment.Remove(this);
-            }
+            //if(Quantity <= 0)
+            //{
+            //    fight.Player.Equipment.Remove(this);
+            //}
 
             return result;
         }
