@@ -10,6 +10,7 @@ namespace NFCombat2.Common.Enums
         SkillCheck = 3,
         Timed = 4,
         Constrained = 5,
-        Hazard = 6
+        Hazard = 6,
+        Virtual = 7
     }
 }

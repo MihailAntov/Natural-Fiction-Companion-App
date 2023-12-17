@@ -10,16 +10,20 @@ namespace NFCombat2.Models.Fights
         public int ConsecutiveWins { get; set; } = 0;
         public int MaxConsecutiveWins { get; set; } = 0;
         public int MaxRounds { get; set; } = 0;
+        public int MinStrength { get; set; } = 0;
         public bool LosingAtZeroFatal { get; set; } = false;
+        public bool CountWins { get; set; } = false;
 
         public FightResult OnMaxRoundsReached { get; set; } = FightResult.None;
+        public FightResult OnMinStrengthReached { get; set; } = FightResult.None;
         public FightResult OnMaxConsecutiveRoundsReached { get; set; } = FightResult.None;
-        public int PlayerStrength { get; set; }
+        
         public CheckType CheckType { get; set; }
         public SkillCheckFight(IList<Enemy> enemies, CheckType type) : base(enemies)
         {
             CheckType = type;
             Type = FightType.SkillCheck;
+            WeaponsContributeStrength = false;
         }
 
         public override IList<ICombatAction> EnemyActions()
@@ -42,6 +46,14 @@ namespace NFCombat2.Models.Fights
                 if (Turn >= MaxRounds)
                 {
                     Result = OnMaxRoundsReached;
+                }
+            }
+
+            if(OnMinStrengthReached != FightResult.None)
+            {
+                if(PlayerStrength <= MinStrength)
+                {
+                    Result = OnMinStrengthReached;
                 }
             }
         }

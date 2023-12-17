@@ -6,6 +6,7 @@
     <Grid Padding="20" WidthRequest="400">
         <Grid.RowDefinitions>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
@@ -17,10 +18,11 @@
         </Grid.ColumnDefinitions>
 
         <Label  Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.ColumnSpan="4" Text="{Binding Message}"/>
-        <Image Grid.Row="1" Grid.Column="1" Source="healthcare"/>
-        <Label Grid.Row="1"  Grid.Column="2" HorizontalTextAlignment="Start" Text="{Binding Fight.Player.Health}"/>
-        <Button Grid.Row="2" Grid.Column="1" Text="{Binding AcceptButtonName}" Command="{Binding AcceptResultCommand}"/>
-        <Button Grid.Row="2" Grid.Column="2" Text="{Binding RejectButtonName}" Command="{Binding RejectResultCommand}"/>
+        <Label  Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.ColumnSpan="4" Text="{Binding InfoMessage}"/>
+        <Image Grid.Row="2" Grid.Column="1" Source="healthcare"/>
+        <Label Grid.Row="2"  Grid.Column="2" HorizontalTextAlignment="Start" Text="{Binding Fight.Player.Health}"/>
+        <Button Grid.Row="3" Grid.Column="1" Text="{Binding AcceptButtonName}" Command="{Binding AcceptResultCommand}"/>
+        <Button Grid.Row="3" Grid.Column="2" Text="{Binding RejectButtonName}" Command="{Binding RejectResultCommand}"/>
         
     </Grid>
 </toolkit:Popup>

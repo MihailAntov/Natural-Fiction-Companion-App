@@ -152,6 +152,11 @@ namespace NFCombat2.Services
                 new Enemy(){Name = "Swamp plants", Health = 14}
             };
 
+            var hologram = new List<Enemy>()
+            {
+                new Enemy(){Name = "Hologram Brute", Health = 18, Distance = 4}
+            };
+
             var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
             var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
             //hacker.Weapons.Add(new PlasmaRapier());
@@ -180,7 +185,12 @@ namespace NFCombat2.Services
                 case 21:
                     fight = new SkillCheckFight(rock, CheckType.Rocks);
                     fight.Player = _playerService.CurrentPlayer;
-                    
+                    if (fight is SkillCheckFight rocks)
+                    {
+                        rocks.MinStrength = 0;
+                        rocks.OnMinStrengthReached = FightResult.Lost;
+                        rocks.CountWins = true;
+                    }
                     break;
                 case 22:
                     fight = new SkillCheckFight(rock, CheckType.River);
@@ -196,6 +206,8 @@ namespace NFCombat2.Services
                     fight = new SkillCheckFight(rock, CheckType.Panel);
                     if (fight is SkillCheckFight panel)
                     {
+                        panel.MinStrength = 0;
+                        panel.OnMinStrengthReached = FightResult.Lost;
                         panel.MaxConsecutiveWins = 1;
                         panel.OnMaxConsecutiveRoundsReached = FightResult.Won;
                     }
@@ -230,10 +242,15 @@ namespace NFCombat2.Services
                     fight.Player = _playerService.CurrentPlayer;
                     break;
                 case 5:
-                default:
                     fight = new EscapeFight(guards);
                     fight.Player = _playerService.CurrentPlayer;
                     break;
+                case 6:
+                    fight = new VirtualFight(hologram);
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
+                default:
+                    throw new NotImplementedException();
                 
             }
 

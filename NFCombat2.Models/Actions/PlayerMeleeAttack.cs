@@ -28,7 +28,7 @@ namespace NFCombat2.Models.Actions
         public int MinRange { get; set; } = 0;
         public int MaxRange { get; set; } = 0;
 
-        public MessageType MessageType => MessageType.AttackMessage;
+        public virtual MessageType MessageType => MessageType.AttackMessage;
 
         public DiceRollResult AttackerResult { get; set; }
 
@@ -47,6 +47,7 @@ namespace NFCombat2.Models.Actions
 
             if (attackerScore > defenderScore)
             {
+                
                 var victory = new DealMeleeDamage(Target, attackerScore - defenderScore);
                 result.Add(victory);
                 _fight.Effects.Enqueue(victory);

@@ -32,6 +32,7 @@ namespace NFCombat2.Models.Items.Items
             }
 
             var increase = new StrengthIncrease(fight.Player, 3);
+            fight.PlayerStrength += 3;
             fight.Effects.Enqueue(increase);
             return new List<ICombatResolution>() { increase };  
         }

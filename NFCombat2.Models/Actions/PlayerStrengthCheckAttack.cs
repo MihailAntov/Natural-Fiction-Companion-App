@@ -1,4 +1,5 @@
-﻿using NFCombat2.Common.Helpers;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -12,14 +13,15 @@ namespace NFCombat2.Models.Actions
 {
     public class PlayerStrengthCheckAttack : PlayerMeleeAttack
     {
-        private readonly Fight _fight;
+        private readonly SkillCheckFight _fight;
         public PlayerStrengthCheckAttack(Fight fight) : base(fight, fight.Enemies.FirstOrDefault())
         {
-            _fight = fight;
+            _fight = (SkillCheckFight)fight;
             Target = fight.Enemies.FirstOrDefault();
             AttackerResult = DiceCalculator.Calculate(1, null, ((SkillCheckFight)_fight).PlayerStrength);
             DefenderResult = DiceCalculator.Calculate(1, null, Target.Strength);
         }
+        public override MessageType MessageType => SkillCheckMessageTypeConverter.GetMessageType(_fight.CheckType);
 
 
 
@@ -33,7 +35,7 @@ namespace NFCombat2.Models.Actions
 
             if (attackerScore > defenderScore)
             {
-                var victory = new DealMeleeDamage(Target, attackerScore - defenderScore);
+                var victory = new SkillCheckSuccess();
                 result.Add(victory);
                 if(fight is SkillCheckFight skillCheck)
                 {
@@ -42,6 +44,12 @@ namespace NFCombat2.Models.Actions
                     {
                         skillCheck.ConsecutiveWins++;
                     }
+                    else
+                    {
+                        skillCheck.ConsecutiveWins = 1;
+
+                    }
+                    skillCheck.WonLastRound = true;
                 }
             }
             else if (defenderScore > attackerScore)

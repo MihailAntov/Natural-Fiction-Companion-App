@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Models.Fights
 {
-    internal class VirtualFight
+    public class VirtualFight : Fight
     {
+        public VirtualFight(IList<Enemy> enemies) : base(enemies)
+        {
+            Type = Common.Enums.FightType.Virtual;
+        }
+
+        public override void CheckWinCondition()
+        {
+            base.CheckWinCondition();
+            if(Player.Overload >= Player.MaxOverload)
+            {
+                Result = FightResult.Lost;
+            }
+        }
+
+
     }
 }

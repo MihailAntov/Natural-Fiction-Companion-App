@@ -38,16 +38,33 @@ namespace NFCombat2.Models.Actions
 
             if (attackerScore > defenderScore)
             {
-                var defeat = new TakeMeleeDamage(_fight.Player,_enemy, attackerScore - defenderScore);
-                result.Add(defeat);
-                _fight.Effects.Enqueue(defeat);
+                if(fight.Type == FightType.Virtual)
+                {
+                    var overload = new OverloadIncrease(fight.Player, 1);
+                    result.Add(overload);
+                    _fight.Effects.Enqueue(overload);
+                }
+                else
+                {
+                    var defeat = new TakeMeleeDamage(_fight.Player,_enemy, attackerScore - defenderScore);
+                    result.Add(defeat);
+                    _fight.Effects.Enqueue(defeat);
+                }
                 
             }
             else if (defenderScore > attackerScore)
             {
-                var victory = new DealMeleeDamage(_enemy, defenderScore - attackerScore);
-                result.Add(victory);
-                _fight.Effects.Enqueue(victory);
+                if (fight.Type == FightType.Virtual)
+                {
+                    var noDamageVictory = new NoDamage();
+                    result.Add(noDamageVictory);
+                }
+                else
+                {
+                    var victory = new DealMeleeDamage(_enemy, attackerScore - defenderScore);
+                    result.Add(victory);
+                    _fight.Effects.Enqueue(victory);
+                }
             }
             else
             {

@@ -4,11 +4,12 @@ using NFCombat2.Models.Actions;
 
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Player;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.Models.Fights
 {
-    public class Fight
+    public class Fight : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public Fight(IList<Enemy> enemies)
@@ -16,16 +17,33 @@ namespace NFCombat2.Models.Fights
             Enemies = enemies;
             Result = FightResult.None;
             Type = FightType.Regular;
-
+            //PlayerStrength = Player.StrengthWithoutWeapon;
         }
         
         public FightResult Result { get; set; }
         public bool AllowsPrograms { get; set; } = true;
         public Player.Player Player { get; set; }
         public FightType Type { get; set; } 
-
         public IList<Enemy> Enemies { get; set; }
-        
+        public bool WeaponsContributeStrength { get; protected set; } = true;
+        protected int _playerStrength = 0;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public int PlayerStrength { get { return _playerStrength; } set
+            { 
+                if(value < 0)
+                {
+                    value = 0;
+                }
+
+                if(_playerStrength!= value)
+                {
+                    _playerStrength = value;
+                    OnPropertyChanged(nameof(PlayerStrength));
+                }
+            }
+        }
         public Queue<IAction> Actions { get; set; } = new Queue<IAction>();
         public Queue<ICombatResolution> DelayedEffects { get; set; } = new Queue<ICombatResolution>();
 
@@ -59,7 +77,7 @@ namespace NFCombat2.Models.Fights
             var actions = new List<ICombatAction>();
             foreach (var enemy in Enemies)
             {
-                //TODO : check if enemies can shoot/attack after moving   
+                   
 
                 if (enemy.Distance == 0)
                 {
@@ -82,6 +100,7 @@ namespace NFCombat2.Models.Fights
             {
                 activatable.UnavailableForRestOfCombat = false;
             }
+            PlayerStrength = Player.StrengthWithoutWeapon;
         }
 
         public virtual void CheckWinCondition()
@@ -92,6 +111,9 @@ namespace NFCombat2.Models.Fights
                 return;
             }
         }
+
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
     }
 }

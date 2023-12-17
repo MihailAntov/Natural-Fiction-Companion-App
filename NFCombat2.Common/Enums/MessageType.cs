@@ -19,12 +19,28 @@ namespace NFCombat2.Common.Enums
         HealMessage,
         ChangeDistanceMessage,
         Draw,
+        PathogenDecrease,
+        PathogenIncrease,
+        IonizationDecrease,
+        IonizationIncrease,
+        StrengthIncrease,
+        TraumaDecrease,
+        TraumaIncrease,
+        OverloadDecrease,
+        OverloadIncrease,
         TemporaryStrengthDamage,
         SkillCheckSuccess,
+        HoldBreath,
+        NoDamage,
         //action messages
         ShootMessage,
         AoeShootMessage,
         AttackMessage,
+        SkillCheckRocks,
+        SkillCheckRiver,
+        SkillCheckDoor,
+        SkillCheckPanel,
+        SkillCheckSwamp,
         UseProgramMessage,
         ProgramHealMessage,
         ProgramFreezeMessage,
@@ -47,7 +63,7 @@ namespace NFCombat2.Common.Enums
         EnemyChangeDistanceMessage,
         EnemyCritMessage,
         EnemyMissMessage,
-
+        SwampAttack,
         //item messages
         UseMedkit,
         MaxOverloadIncrease,
@@ -59,13 +75,8 @@ namespace NFCombat2.Common.Enums
         PoleMoveFurther,
         EquippedToWeapon,
         UnequippedFromWeapon,
-        PathogenDecrease,
-        IonizationDecrease,
-        StrengthIncrease,
-        TraumaDecrease,
-        OverloadDecrease,
         WrenchThrow,
-
+        GasMaskProteced,
         
         
     }

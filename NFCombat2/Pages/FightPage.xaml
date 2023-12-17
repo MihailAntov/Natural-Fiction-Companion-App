@@ -35,7 +35,8 @@
                 </Label>
                 <HorizontalStackLayout>
                     <Image Source="fist" WidthRequest="25" HeightRequest="25"/>
-                    <Label Text="{Binding Player.Strength}"/>
+                    <Label Text="{Binding Player.Strength}" IsVisible="{Binding Fight.WeaponsContributeStrength}"/>
+                    <Label Text="{Binding Fight.PlayerStrength}" IsVisible="{Binding Fight.WeaponsContributeStrength, Converter={helpers:InverseBoolConverter}}"/>
                 </HorizontalStackLayout>
 
             </VerticalStackLayout>

@@ -73,5 +73,17 @@ namespace NFCombat2.Services
         {
             return EnglishOptions[(option, checkType)];
         }
+
+        public string InfoMessage(Fight fight)
+        {
+            if(fight is SkillCheckFight skillCheck)
+            {
+                if (skillCheck.CountWins)
+                {
+                    return $"You won {skillCheck.WonRounds} rounds.";
+                }
+            }
+            return string.Empty;
+        }
     }
 }

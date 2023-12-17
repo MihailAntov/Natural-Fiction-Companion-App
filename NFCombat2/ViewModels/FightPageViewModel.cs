@@ -11,8 +11,17 @@ namespace NFCombat2.ViewModels
 {
     public class FightPageViewModel : INotifyPropertyChanged
     {
+        private Fight _fight;
 
-        private Fight fight;
+        public Fight Fight { get { return _fight; } set 
+            {
+                if(_fight!= value)
+                {
+                    _fight = value;
+                    OnPropertyChanged(nameof(Fight));
+                }
+            }
+        }
         private IFightService _fightService;
         private IOptionsService _optionsService;
         private ILogService _logService;
@@ -52,8 +61,7 @@ namespace NFCombat2.ViewModels
                     OnPropertyChanged(nameof(NotInCombat));
                 }
             }
-        } 
-
+        }
         public ObservableCollection<Enemy> Enemies { get; set; } = new ObservableCollection<Enemy>();
         public ObservableCollection<string> Messages => _logService.Messages;
         private Player player;
@@ -77,17 +85,17 @@ namespace NFCombat2.ViewModels
         {
             int.TryParse(EpisodeNumber, out int episode);
             
-            fight = await _fightService.GetFightByEpisodeNumber(episode);
-            Player = fight.Player;
+            Fight = await _fightService.GetFightByEpisodeNumber(episode);
+            Player = Fight.Player;
             
             
 
             Enemies.Clear();
-            foreach (var enemy in fight.Enemies)
+            foreach (var enemy in Fight.Enemies)
             {
                 Enemies.Add(enemy);
             }
-            var initialOptionList = _optionsService.GetMoveActions(fight);
+            var initialOptionList = _optionsService.GetMoveActions(Fight);
             _fightService.PreviousOptions = initialOptionList;
             OptionPickerViewModel.Options = new ObservableCollection<IOption>(initialOptionList.Options);
             OptionPickerViewModel.MenuLabel = initialOptionList.Label;
@@ -106,8 +114,8 @@ namespace NFCombat2.ViewModels
 
         private async void CombatCleanup()
         {
-            OnPropertyChanged(nameof(fight.Player));
-            fight = null;
+            OnPropertyChanged(nameof(Fight.Player));
+            Fight = null;
             Enemies.Clear();
             OptionPickerViewModel.CleanUp();
             _logService.Messages.Clear();

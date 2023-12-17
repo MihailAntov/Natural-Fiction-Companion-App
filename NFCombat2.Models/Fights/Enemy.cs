@@ -59,7 +59,7 @@ namespace NFCombat2.Models.Fights
                 }
             }
         }
-        public int Speed { get; set; }
+        public int Speed { get; set; } = 3;
         public int RemainingFrozenTurns { get; set; } = 0;
         public bool AlwaysHits { get; set; } = false;
 

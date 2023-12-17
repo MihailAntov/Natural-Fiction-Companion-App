@@ -11,10 +11,10 @@ namespace NFCombat2.Models.Actions
 {
     public class PlayerSwampAttack : PlayerStrengthCheckAttack
     {
-        private Fight _fight;
+        private HazardFight _fight;
         public PlayerSwampAttack(Fight fight) : base(fight)
         {
-            _fight = fight;
+            _fight = (HazardFight)fight;
         }
 
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)

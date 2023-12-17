@@ -21,9 +21,11 @@ namespace NFCombat2.ViewModels
             AcceptResultCommand = new Command(AcceptResult);
             RejectResultCommand = new Command(RejectResult);
             Message = _nameService.FightResultMessage(Fight);
+            InfoMessage = _nameService.InfoMessage(Fight);
         }
         public Fight Fight { get; set; }
         public string Message { get; set; }
+        public string InfoMessage { get; set; }
         public Command AcceptResultCommand { get; set; }
         public Command RejectResultCommand { get; set; }
         public string AcceptButtonName { get; set; }

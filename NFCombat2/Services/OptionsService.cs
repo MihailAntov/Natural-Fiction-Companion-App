@@ -57,6 +57,11 @@ namespace NFCombat2.Services
                 }
             }
 
+            if (CanUseProgram(fight))
+            {
+                objects.Add(OptionType.Program);    
+            }
+
             objects.Add(OptionType.DoNothing);
 
             var result = new List<IOption>();
@@ -202,21 +207,35 @@ namespace NFCombat2.Services
                 return false;
             }
 
+            if(fight.Type == FightType.Virtual)
+            {
+                return false;
+            }
+
             return true;
         }
 
         private bool CanAttack(Fight fight)
         {
+            if(fight.Type == FightType.Virtual)
+            {
+                return false;
+            }
             return fight.Enemies.Any(e => e.Distance == 0);
         }
 
         private bool CanMove(Fight fight)
         {
+
             return !CanAttack(fight);
         }
 
         public bool HasItems(Fight fight)
         {
+            if(fight.Type == FightType.Virtual)
+            {
+                return false;
+            }
             return fight.Player.Activatables.Any();
         }
 
