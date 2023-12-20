@@ -1,4 +1,5 @@
 ﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Items.Weapons;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -7,7 +8,6 @@ namespace NFCombat2.Models.Fights
     public class Enemy : INotifyPropertyChanged
     {
         public bool Damageable { get; set; } = true;
-        private int range;
         public string Name { get; set; }
         private int health;
         public int Health { get { return health; } 
@@ -27,20 +27,34 @@ namespace NFCombat2.Models.Fights
             }
         }
         public int Strength { get { return (int)Math.Round(Health / 10.0) + BonusStrength; } }
-        public Accuracy Accuracy { get; set; }
         public bool HasMoved { get; set; } = false;
         public int BonusStrength { get; set; }
+        public List<Weapon> Weapons { get; set; } = new List<Weapon>();
         public int Range
         {
-            get { return range; }
-            set
+            get 
             {
-                range = value;
-                OnPropertyChanged();
+                if (Weapons.Any())
+                {
+                    return Weapons.Select(w=> w.MaxRange).Max();
+                }
+                return 0;
             }
         }
-        public int DamageDice { get; set; }
-        public int FlatDamage { get; set; }
+        //public Accuracy Accuracy { get; set; }
+        //private int range;
+        //public int Range
+        //{
+        //    get { return range; }
+        //    set
+        //    {
+        //        range = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //public int DamageDice { get; set; }
+        //public int FlatDamage { get; set; }
+        //public bool AlwaysHits { get; set; } = false;
         private int distance;
         public int Distance
         {
@@ -61,7 +75,6 @@ namespace NFCombat2.Models.Fights
         }
         public int Speed { get; set; } = 3;
         public int RemainingFrozenTurns { get; set; } = 0;
-        public bool AlwaysHits { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

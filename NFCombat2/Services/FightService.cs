@@ -110,15 +110,15 @@ namespace NFCombat2.Services
         {
 
             var enemies = new List<Enemy>();
-
+            var testWeapon1 = new Weapon() { Name = "Blaster", MaxRange = 10, DamageDice = 1, FlatDamage = 0, Accuracy = Accuracy.B };
+            var testWeapon2 = new Weapon() { Name = "Rifle", MaxRange = 15, DamageDice = 2, FlatDamage = 1, Accuracy = Accuracy.D };
             var targetDummy = new Enemy()
             {
                 Name = "Enemy 1",
                 Health = 10,
-                Distance = 3,
+                Distance = 5,
                 Speed = 2,
-                Range = 10,
-                DamageDice = 1
+                Weapons = new List<Weapon> { testWeapon1, testWeapon2 }
 
             };
 
@@ -126,20 +126,19 @@ namespace NFCombat2.Services
             {
                 Name = "Enemy 2",
                 Health = 10,
-                Distance = 5,
+                Distance = 15,
                 Speed = 2,
-                Range = 15,
-                DamageDice = 1
+                Weapons = new List<Weapon> { testWeapon1 }
             };
             enemies.Add(targetDummy);
             var toboganEnemies = new List<Enemy>()
             {
-                new Enemy(){Name = "Alien shooter", Range = 10, Health = 16, Accuracy = Accuracy.B, DamageDice = 1, FlatDamage = 1, Distance = 64, Speed = 8},
-                new Enemy(){Name = "Alien leader", Range = 0, Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
+                new Enemy(){Name = "Alien shooter",  Health = 16, Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Distance = 64, Speed = 8},
+                new Enemy(){Name = "Alien leader", Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
             };
             var guards = new List<Enemy>()
             {
-                new Enemy(){Name = "Guard", Range = 15, Health = 18, Accuracy = Accuracy.B,DamageDice = 1, FlatDamage = 3, Speed = 0, Distance = 3}
+                new Enemy(){Name = "Guard", Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Health = 18, Speed = 0, Distance = 3}
             };
 
             var rock = new List<Enemy>()
@@ -164,7 +163,7 @@ namespace NFCombat2.Services
 
             var kabuto = new List<Enemy>()
             {
-                new Enemy(){Name = "Kabuto", Health = 120, Distance = 4}
+                new Enemy(){Name = "Kabuto", Health = 120, Distance = 4, Weapons = new List<Weapon>(){testWeapon1, testWeapon2} }
             };
 
             var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
@@ -268,6 +267,12 @@ namespace NFCombat2.Services
                     break;
                 case 8:
                     var variantFight = new VariantFight(kabuto);
+                    fight = variantFight;
+                    break;
+                case 9:
+                    var kabutoFight = new VariantFight(kabuto);
+                    fight = kabutoFight;
+                    break;
                 default:
                     throw new NotImplementedException();
                 
@@ -275,6 +280,33 @@ namespace NFCombat2.Services
 
             _fight = fight;
             Accepted = false;
+
+            if(_fight is VariantFight _variantFight)
+            {
+                var variants = _fightRepository.GetVariants(episodeNumber);
+                TaskCompletionSource<IOption> variantSelected = new TaskCompletionSource<IOption>();
+                var viewModel = new MultipleChoicePopupViewModel(variants, _variantFight, variantSelected);
+                var popup = new MultipleChoicePopupView(viewModel);
+                viewModel.Popup = popup;
+                _popupService.ShowPopup(popup);
+                IOption chosenOption = await variantSelected.Task;
+                Variant variant = chosenOption.Content as Variant;
+                if(variant.Type == VariantDescription.MagnetDiscs)
+                {
+                    var weapons = new List<IOption>(_variantFight.Enemies.FirstOrDefault()
+                        .Weapons
+                        .Select(w => new Option(w.Name, w)).ToList());
+                    TaskCompletionSource<IOption> weaponSelected = new TaskCompletionSource<IOption>();
+                    var weaponDiscardViewModel = new MultipleChoicePopupViewModel(weapons, _variantFight, weaponSelected);
+                    var weaponDiscardPopup = new MultipleChoicePopupView(weaponDiscardViewModel);
+                    weaponDiscardViewModel.Popup = weaponDiscardPopup;
+                    _popupService.ShowPopup(weaponDiscardPopup);
+                    Weapon weapon = (await weaponSelected.Task).Content as Weapon;
+                    variant.DiscardedWeapon = weapon;
+                }
+                _variantFight.Variant = variant;
+            }
+            fight.Player = _playerService.CurrentPlayer;
             fight.SetUp();
             return _fight;
         }
@@ -629,6 +661,14 @@ namespace NFCombat2.Services
                 PreviousOptions = result;
                 return result;
 
+            }
+
+            if(option is Variant variant)
+            {
+                if(_fight is VariantFight variantFight)
+                {
+                    variantFight.Variant = variant;
+                }
             }
 
             if (option is ICombatActiveItem item && item.IsConsumable)

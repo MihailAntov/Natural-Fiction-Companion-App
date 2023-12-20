@@ -85,7 +85,13 @@ namespace NFCombat2.Models.Fights
                 }
                 else if (enemy.Range >= enemy.Distance)
                 {
-                    actions.Add(new EnemyRangedAttack(this, enemy));
+                    foreach(var weapon in enemy.Weapons)
+                    {
+                        if(weapon.MaxRange > 0 && weapon.MaxRange >= enemy.Distance)
+                        {
+                            actions.Add(new EnemyRangedAttack(this, enemy, weapon));
+                        }
+                    }
                 }
 
                 

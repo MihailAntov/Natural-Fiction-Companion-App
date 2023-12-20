@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Name="MultipleChoice"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="NFCombat2.Views.MultipleChoicePopupView">
+    <StackLayout Padding="20">
+        
+        <CollectionView ItemsSource="{Binding Options}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Button Text="{Binding Label}" CommandParameter="{Binding}" Command="{Binding Source={x:Reference MultipleChoice}, Path=BindingContext.ChooseCommand}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</toolkit:Popup>

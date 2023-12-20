@@ -161,6 +161,9 @@
 	  <MauiXaml Update="Views\ItemDetailsPopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MultipleChoicePopupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\OptionPickerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

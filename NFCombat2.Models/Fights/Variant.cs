@@ -2,15 +2,16 @@
 
 using Microsoft.VisualBasic;
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.Items.Weapons;
 
 namespace NFCombat2.Models.Fights
 {
     public class Variant
     {
-        public VariantDescription Type { get; set; }
+        public VariantDescription Type { get; set; } = VariantDescription.None;
         public string Text { get; set; }
         public int AnthenasBlocked { get; set; } = 0;
-        public Enemy DisarmedEnemy { get; set; } 
+        public Weapon DiscardedWeapon { get; set; } 
         public void Apply(Fight fight)
         {
             if(Type == VariantDescription.AnthenasBlocked)
@@ -25,8 +26,8 @@ namespace NFCombat2.Models.Fights
 
             if(Type == VariantDescription.MagnetDiscs)
             {
-                fight.Enemies.Clear();
-                fight.Enemies.Add(DisarmedEnemy);
+                
+                fight.Enemies.FirstOrDefault().Weapons.Remove(DiscardedWeapon);
             }
         }
     }

@@ -6,6 +6,7 @@ using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items;
 using NFCombat2.Common.Helpers;
+using NFCombat2.Models.Items.Weapons;
 
 namespace NFCombat2.Models.Actions
 {
@@ -14,14 +15,14 @@ namespace NFCombat2.Models.Actions
         private readonly Fight fight;
         private readonly Enemy _enemy;
         private Accuracy _accuracy;
-        public EnemyRangedAttack(Fight fight, Enemy enemy)
+        public EnemyRangedAttack(Fight fight, Enemy enemy, Weapon weapon)
         {
             this.fight = fight;
             _enemy = enemy;
             AttackRollResult = DiceCalculator.Calculate(1, AttackDiceMessage).Dice.FirstOrDefault();
-            RollsResult = DiceCalculator.Calculate(enemy.DamageDice, DiceMessage, enemy.FlatDamage);
-            _accuracy = _enemy.Accuracy;
-            AlwaysHits = enemy.AlwaysHits;
+            RollsResult = DiceCalculator.Calculate(weapon.DamageDice, DiceMessage, weapon.FlatDamage);
+            _accuracy = weapon.Accuracy;
+            AlwaysHits = weapon.AlwaysHits;
         }
 
         public bool IsAccuracyReduced { get; set; } = false;
