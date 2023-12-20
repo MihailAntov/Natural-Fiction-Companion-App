@@ -157,6 +157,16 @@ namespace NFCombat2.Services
                 new Enemy(){Name = "Hologram Brute", Health = 18, Distance = 4}
             };
 
+            var vespisoid = new List<Enemy>()
+            {
+                new Enemy(){Name = "Vespisoid", Health = 24, Distance = 4}
+            };
+
+            var kabuto = new List<Enemy>()
+            {
+                new Enemy(){Name = "Kabuto", Health = 120, Distance = 4}
+            };
+
             var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
             var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
             //hacker.Weapons.Add(new PlasmaRapier());
@@ -249,6 +259,15 @@ namespace NFCombat2.Services
                     fight = new VirtualFight(hologram);
                     fight.Player = _playerService.CurrentPlayer;
                     break;
+                case 7:
+                    var stationaryFight = new StationaryFight(vespisoid);
+                    stationaryFight.MinEnemyHealth = 5;
+                    stationaryFight.OnEnemyHealthReached = FightResult.Won;
+                    fight = stationaryFight;
+                    fight.Player = _playerService.CurrentPlayer;
+                    break;
+                case 8:
+                    var variantFight = new VariantFight(kabuto);
                 default:
                     throw new NotImplementedException();
                 

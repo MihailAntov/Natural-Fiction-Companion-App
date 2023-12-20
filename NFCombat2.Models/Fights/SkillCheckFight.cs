@@ -43,7 +43,7 @@ namespace NFCombat2.Models.Fights
 
             if (OnMaxRoundsReached != FightResult.None)
             {
-                if (Turn >= MaxRounds)
+                if (Turn > MaxRounds)
                 {
                     Result = OnMaxRoundsReached;
                 }

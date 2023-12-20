@@ -226,7 +226,10 @@ namespace NFCombat2.Services
 
         private bool CanMove(Fight fight)
         {
-
+            if(fight is StationaryFight)
+            {
+                return false;
+            }
             return !CanAttack(fight);
         }
 
@@ -241,7 +244,8 @@ namespace NFCombat2.Services
 
         public bool CanUseProgram(Fight fight)
         {
-            if(fight.Player.Class == PlayerClass.Hacker)
+            
+            if(fight.AllowsPrograms && fight.Player.Class == PlayerClass.Hacker)
             {
                 return true;
             }

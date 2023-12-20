@@ -18,15 +18,15 @@ namespace NFCombat2.Models.Actions
 
         public Enemy Enemy => _enemy;
 
-        public MessageType MessageType => MessageType.EnemyMoveMessage;
+        public MessageType MessageType => MessageType.EnemyMoveAwayMessage;
 
-        public string[] MessageArgs => Array.Empty<string>();
+        public string[] MessageArgs => new string[1] { _enemy.Name };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>()
             {
-                new EnemyChangeDistance(-_enemy.Speed,_enemy)
+                new EnemyChangeDistance(_enemy.Speed,_enemy)
             };
             foreach (var resolution in resolutions)
             {
