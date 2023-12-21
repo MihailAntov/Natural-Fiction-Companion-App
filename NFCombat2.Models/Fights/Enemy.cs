@@ -73,6 +73,8 @@ namespace NFCombat2.Models.Fights
                 }
             }
         }
+
+        public EnemyType EnemyType { get; set; }
         public int Speed { get; set; } = 3;
         public int RemainingFrozenTurns { get; set; } = 0;
 

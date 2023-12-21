@@ -247,8 +247,12 @@ namespace NFCombat2.Services
                     fight.Player = _playerService.CurrentPlayer;
                     break;
                 case 4:
-                    fight = new TentacleFight(enemies);
-                    fight.Player = _playerService.CurrentPlayer;
+                    var tentacleFight = new TentacleFight(enemies);
+                    tentacleFight.Player = _playerService.CurrentPlayer;
+                    tentacleFight.TraumaTentacleName = _nameService.EnemyName(EnemyType.TraumaTentacle);
+                    tentacleFight.PathogensTentacleName = _nameService.EnemyName(EnemyType.PathogenTentacle);
+                    tentacleFight.IonizationTentacleName = _nameService.EnemyName(EnemyType.IonizationTentacle);
+                    fight = tentacleFight;
                     break;
                 case 5:
                     fight = new EscapeFight(guards);
@@ -280,6 +284,7 @@ namespace NFCombat2.Services
 
             _fight = fight;
             Accepted = false;
+
 
             if(_fight is VariantFight _variantFight)
             {

@@ -7,6 +7,7 @@ using static NFCombat2.Common.AppConstants.Labels;
 using static NFCombat2.Common.AppConstants.ModeNames;
 using static NFCombat2.Common.AppConstants.FightResults;
 using static NFCombat2.Common.AppConstants.Options;
+using static NFCombat2.Common.AppConstants.EnemyNames;
 
 namespace NFCombat2.Services
 {
@@ -84,6 +85,19 @@ namespace NFCombat2.Services
                 }
             }
             return string.Empty;
+        }
+
+        public string EnemyName(EnemyType enemyType)
+        {
+            try
+            {
+                return EnglishEnemies[enemyType];
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
         }
     }
 }
