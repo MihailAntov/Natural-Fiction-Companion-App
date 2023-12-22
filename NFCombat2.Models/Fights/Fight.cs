@@ -12,9 +12,8 @@ namespace NFCombat2.Models.Fights
     public class Fight : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public Fight(IList<Enemy> enemies)
+        public Fight()
         {
-            Enemies = enemies;
             Result = FightResult.None;
             Type = FightType.Regular;
             //PlayerStrength = Player.StrengthWithoutWeapon;

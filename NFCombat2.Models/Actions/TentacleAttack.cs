@@ -1,6 +1,7 @@
 ﻿
 
 using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
@@ -8,7 +9,7 @@ using static NFCombat2.Common.Helpers.TentacleMessageTypeConverter;
 
 namespace NFCombat2.Models.Actions
 {
-    public class TentacleAttack : ICombatAction
+    public class TentacleAttack : ICombatAction, IHaveAttackRoll
     {
         private EnemyType _enemyType;
         public TentacleAttack(EnemyType enemyType)
@@ -20,6 +21,24 @@ namespace NFCombat2.Models.Actions
         public MessageType MessageType => GetMessageType(_enemyType);
 
         public string[] MessageArgs => Array.Empty<string>();
+
+        public Dice AttackRollResult { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Accuracy Accuracy => throw new NotImplementedException();
+
+        public string AttackDiceMessage => throw new NotImplementedException();
+
+        public bool AlwaysHits => throw new NotImplementedException();
+
+        public IList<ICombatResolution> AddCritToCombatResolutions(Fight fight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<ICombatResolution> AddMissToCombatResolutions(Fight fight)
+        {
+            throw new NotImplementedException();
+        }
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

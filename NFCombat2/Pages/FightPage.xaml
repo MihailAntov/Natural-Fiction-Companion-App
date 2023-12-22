@@ -64,8 +64,9 @@
                                         <ColumnDefinition Width="35"/>
                                         <ColumnDefinition Width="20"/>
                                         <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Grid.ColumnSpan="4"  Text="{Binding Name}"/>
+                                    <Label Grid.Row="0" Grid.ColumnSpan="5"  Text="{Binding Name}"/>
                                     <Image Grid.Row="1" Grid.Column="0" Source="healthcare"/>
                                     <Label Grid.Row="1" Grid.Column="1" Text="{Binding Health}" IsVisible="{Binding Damageable}"/>
                                     <Image Grid.Row="1" Grid.Column="2" Source="radar"/>

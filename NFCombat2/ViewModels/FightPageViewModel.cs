@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Models.Player;
 using NFCombat2.Common.Enums;
+using NFCombat2.Services;
 
 namespace NFCombat2.ViewModels
 {
@@ -25,18 +26,24 @@ namespace NFCombat2.ViewModels
         private IFightService _fightService;
         private IOptionsService _optionsService;
         private ILogService _logService;
+        private IPopupService _popupService;
+        private INameService _nameService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public FightPageViewModel(IFightService fightService,
             IOptionsService optionsService,
             ILogService logService,
+            IPopupService popupSerivce,
+            INameService nameService,
             OptionPickerViewModel opctionPickerViewModel)
         {
             _fightService = fightService;
             _fightService.PropertyChanged += OnFightServiceEnemiesPropertyChanged;
             _optionsService = optionsService;
             _logService = logService;
+            _popupService = popupSerivce;
+            _nameService = nameService;
             _fightService.PropertyChanged += OnAcceptedPropertyChanged;
 
             OptionPickerViewModel = opctionPickerViewModel;
@@ -87,6 +94,12 @@ namespace NFCombat2.ViewModels
             int.TryParse(EpisodeNumber, out int episode);
             
             Fight = await _fightService.GetFightByEpisodeNumber(episode);
+            if(Fight == null)
+            {
+                string message = _nameService.Label(LabelType.InvalidEpisodeNumber);
+                _popupService.ShowToast(message);
+                return;
+            }
             Player = Fight.Player;
             
             

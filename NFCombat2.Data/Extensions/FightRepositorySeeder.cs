@@ -9,18 +9,7 @@ namespace NFCombat2.Data.Extensions
     {
         public static async void SeedRepository(FightRepository repository)
         {
-            await repository.DeleteAll();
             
-            var fights = new List<FightEntity>()
-            {
-                new FightEntity()
-                {
-
-                },
-            };
-
-
-            await repository.InsertRange(fights);
         }
     }
 }

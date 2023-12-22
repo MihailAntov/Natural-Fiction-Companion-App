@@ -19,7 +19,7 @@ namespace NFCombat2.Models.Fights
         public FightResult OnMaxConsecutiveRoundsReached { get; set; } = FightResult.None;
         
         public CheckType CheckType { get; set; }
-        public SkillCheckFight(IList<Enemy> enemies, CheckType type) : base(enemies)
+        public SkillCheckFight(CheckType type) : base()
         {
             CheckType = type;
             Type = FightType.SkillCheck;

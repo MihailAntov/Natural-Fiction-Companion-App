@@ -8,6 +8,7 @@ namespace NFCombat2.Common.Enums
         EquipNewWeaponButton,
         UseItemButton,
         AcceptCombatResult,
-        RejectCombatResult
+        RejectCombatResult,
+        InvalidEpisodeNumber
     }
 }

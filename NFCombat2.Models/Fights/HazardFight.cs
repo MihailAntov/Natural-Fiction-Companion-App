@@ -10,7 +10,7 @@ namespace NFCombat2.Models.Fights
 {
     public class HazardFight : SkillCheckFight
     {
-        public HazardFight(IList<Enemy> enemies) : base(enemies, Common.Enums.CheckType.Swamp)
+        public HazardFight() : base(Common.Enums.CheckType.Swamp)
         {
             Type = Common.Enums.FightType.Hazard;
         }

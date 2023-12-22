@@ -8,7 +8,7 @@ namespace NFCombat2.Models.Fights
 {
     public class StationaryFight : TimedFight
     {
-        public StationaryFight(IList<Enemy> enemies) : base(enemies)
+        public StationaryFight() : base()
         {
             Type = Common.Enums.FightType.Stationary;
         }

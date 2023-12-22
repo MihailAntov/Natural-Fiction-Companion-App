@@ -5,7 +5,7 @@ namespace NFCombat2.Models.Fights
 {
     public class TimedFight : Fight
     {
-        public TimedFight(IList<Enemy> enemies) : base(enemies)
+        public TimedFight() : base()
         {
         }
         public int MaxTurns { get; set; } = 0;

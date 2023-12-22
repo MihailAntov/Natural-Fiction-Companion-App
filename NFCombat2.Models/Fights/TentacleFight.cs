@@ -10,7 +10,7 @@ namespace NFCombat2.Models.Fights
         public string TraumaTentacleName { get; set; }
         public string IonizationTentacleName { get; set; }
         public string PathogensTentacleName { get; set; }
-        public TentacleFight(IList<Enemy> enemies) : base(enemies)
+        public TentacleFight() : base()
         {
             MaxTurns = 10;
             OnTurnsReached = FightResult.Won;

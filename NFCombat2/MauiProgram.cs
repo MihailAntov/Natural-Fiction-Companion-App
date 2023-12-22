@@ -43,11 +43,12 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AddingProfileViewModel>();
 		builder.Services.AddSingleton<LogPageViewModel>();
 		builder.Services.AddSingleton<ConfirmationPopupViewModel>();
+		builder.Services.AddSingleton<FightRepository>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<PlayerRepository>(s => ActivatorUtilities.CreateInstance<PlayerRepository>(s, dbPath,false));
 		//TODO enable seeding only the first time
-        builder.Services.AddSingleton<FightRepository>(s => ActivatorUtilities.CreateInstance<FightRepository>(s, dbPath));
+        //builder.Services.AddSingleton<FightRepository>(s => ActivatorUtilities.CreateInstance<FightRepository>(s, dbPath));
         builder.Services.AddSingleton<ItemRepository>(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, dbPath));
         builder.Services.AddSingleton<SettingsRepository>(s => ActivatorUtilities.CreateInstance<SettingsRepository>(s, dbPath));
 		builder.Services.AddAutoMapper(typeof(PlayerProfile));

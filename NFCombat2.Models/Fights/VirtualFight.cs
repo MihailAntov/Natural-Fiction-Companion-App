@@ -6,7 +6,7 @@ namespace NFCombat2.Models.Fights
 {
     public class VirtualFight : Fight
     {
-        public VirtualFight(IList<Enemy> enemies) : base(enemies)
+        public VirtualFight() : base()
         {
             Type = Common.Enums.FightType.Virtual;
         }

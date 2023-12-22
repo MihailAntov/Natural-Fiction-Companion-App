@@ -9,7 +9,7 @@ namespace NFCombat2.Models.Fights
     public class VariantFight : Fight
     {
         public Variant Variant { get; set; }
-        public VariantFight(IList<Enemy> enemies) : base(enemies)
+        public VariantFight() : base()
         {
             
         }

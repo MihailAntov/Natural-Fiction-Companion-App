@@ -8,7 +8,7 @@ namespace NFCombat2.Models.Fights
     public class ChaseFight : Fight
     {
         private bool leaderJoined = false;
-        public ChaseFight(IList<Enemy> enemies) : base(enemies)
+        public ChaseFight() : base()
         {
             Type = Common.Enums.FightType.Chase;
         }

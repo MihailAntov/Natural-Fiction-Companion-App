@@ -4,6 +4,7 @@ using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using NFCombat2.Models.Items.Weapons;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -15,102 +16,26 @@ namespace NFCombat2.Data.Entities.Repositories
 {
     public class FightRepository
     {
-        string _dbPath;
-        private IMapper _mapper;
         public bool Seeded { get; set; } = false;
-   
+        
 
-        protected SQLiteAsyncConnection connection = null!;
-        public string StatusMessage { get; set; } = string.Empty;
+        //protected SQLiteAsyncConnection connection = null!;
+        //public string StatusMessage { get; set; } = string.Empty;
 
-        public FightRepository(string dbPath, IMapper mapper)
+        public FightRepository()
         {
-            _dbPath = dbPath;
-            _mapper = mapper;
-            Init();
             
         }
-        private async void Init()
+
+        public Fight? GetFight(int episodeNumber)
         {
-            if (connection != null)
+            if (Fights.ContainsKey(episodeNumber))
             {
-                await connection.CreateTableAsync<FightEntity>();
-                await connection.CreateTableAsync<EnemyEntity>();
-                return;
+                return Fights[episodeNumber];
             }
-            connection = new SQLiteAsyncConnection(_dbPath);
-            await connection.CreateTableAsync<FightEntity>();
-            await connection.CreateTableAsync<EnemyEntity>();
-            if(await connection.Table<FightEntity>().CountAsync() > 0)
-            {
-                Seeded = true;
-            }
-
+            return null;
+            
         }
-
-        public async Task InsertFight(FightEntity fight)
-        {
-            Init();
-            await connection.InsertAsync(fight);
-        }
-
-        public async Task InsertRange<T>(IEnumerable<T> items)
-        {
-            Init();
-            await connection.InsertAllAsync(items);
-        }
-
-        private async Task<int> DeleteAllFights()
-        {
-            return await connection.DropTableAsync<FightEntity>();
-        }
-        private async Task<int> DeleteAllEnemies()
-        {
-            return await connection.DropTableAsync<EnemyEntity>();
-        }
-
-        public async Task<int> DeleteAll()
-        {
-            Init();
-            int result = 0;
-            result += await DeleteAllFights();
-            result += await DeleteAllEnemies();
-            return result;
-        }
-
-        public async Task Update<T>(T item)
-        {
-            Init();
-            await connection.UpdateAsync(item);
-        }
-
-        public async Task<Fight> GetFight(int id)
-        {
-            Init();
-            var entity = await connection.GetAsync<FightEntity>(id);
-            var enemies = await GetEnemiesByFightId(entity.Id);
-            Fight result = null!;
-            switch (entity.FightType)
-            {
-                case FightType.Regular:
-                    result = new Fight(enemies);
-                    break;
-                case FightType.Escape:
-                    result = new EscapeFight(enemies);
-                    break;
-                case FightType.Chase:
-                    result = new ChaseFight(enemies);
-                    break;
-                case FightType.Timed:
-                    result = new TimedFight(enemies);
-                    break;
-                case FightType.SkillCheck:
-                    result = new SkillCheckFight(enemies, CheckType.Rocks);
-                    break;
-            }
-            return result;
-        }
-
         public List<IOption> GetVariants(int episodeNumber)
         {
             var variants = new List<IOption>();
@@ -150,22 +75,32 @@ namespace NFCombat2.Data.Entities.Repositories
             
         }
 
-
-
-        public async Task<IList<Enemy>> GetEnemiesByFightId(int fightId)
+        private static Dictionary<int, Fight> Fights = new Dictionary<int, Fight>()
         {
-            Init();
-            var entities = await connection.Table<EnemyEntity>()
-                .Where(e => e.FightId == fightId)
-                .ToListAsync();
-
-            var result = new List<Enemy>();
-
-            foreach(var entity in entities)
             {
-                result.Add(_mapper.Map<Enemy>(entity));
-            }
-            return result; 
-        }
+                36, new TimedFight()
+                {
+                    Enemies = new List<Enemy>()
+                    {
+                        new Enemy()
+                        {
+                            EnemyType = EnemyType.RegularBrute,
+                            Health = 40,
+                            Distance = 7,
+                            Weapons = new List<Weapon>()
+                            {
+                                new Weapon()
+                                {
+                                    DamageDice = 2,
+                                    MaxRange = 15,
+                                    Accuracy = Accuracy.D
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        };
+
     }
 }

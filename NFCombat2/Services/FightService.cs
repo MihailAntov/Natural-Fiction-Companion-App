@@ -109,180 +109,187 @@ namespace NFCombat2.Services
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
 
-            var enemies = new List<Enemy>();
-            var testWeapon1 = new Weapon() { Name = "Blaster", MaxRange = 10, DamageDice = 1, FlatDamage = 0, Accuracy = Accuracy.B };
-            var testWeapon2 = new Weapon() { Name = "Rifle", MaxRange = 15, DamageDice = 2, FlatDamage = 1, Accuracy = Accuracy.D };
-            var targetDummy = new Enemy()
-            {
-                Name = "Enemy 1",
-                Health = 10,
-                Distance = 5,
-                Speed = 2,
-                Weapons = new List<Weapon> { testWeapon1, testWeapon2 }
+            //var enemies = new List<Enemy>();
+            //var testWeapon1 = new Weapon() { Name = "Blaster", MaxRange = 10, DamageDice = 1, FlatDamage = 0, Accuracy = Accuracy.B };
+            //var testWeapon2 = new Weapon() { Name = "Rifle", MaxRange = 15, DamageDice = 2, FlatDamage = 1, Accuracy = Accuracy.D };
+            //var targetDummy = new Enemy()
+            //{
+            //    Name = "Enemy 1",
+            //    Health = 10,
+            //    Distance = 5,
+            //    Speed = 2,
+            //    Weapons = new List<Weapon> { testWeapon1, testWeapon2 }
 
-            };
+            //};
 
-            var targetDummy2 = new Enemy()
-            {
-                Name = "Enemy 2",
-                Health = 10,
-                Distance = 15,
-                Speed = 2,
-                Weapons = new List<Weapon> { testWeapon1 }
-            };
-            enemies.Add(targetDummy);
-            var toboganEnemies = new List<Enemy>()
-            {
-                new Enemy(){Name = "Alien shooter",  Health = 16, Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Distance = 64, Speed = 8},
-                new Enemy(){Name = "Alien leader", Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
-            };
-            var guards = new List<Enemy>()
-            {
-                new Enemy(){Name = "Guard", Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Health = 18, Speed = 0, Distance = 3}
-            };
+            //var targetDummy2 = new Enemy()
+            //{
+            //    Name = "Enemy 2",
+            //    Health = 10,
+            //    Distance = 15,
+            //    Speed = 2,
+            //    Weapons = new List<Weapon> { testWeapon1 }
+            //};
+            //enemies.Add(targetDummy);
+            //var toboganEnemies = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Alien shooter",  Health = 16, Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Distance = 64, Speed = 8},
+            //    new Enemy(){Name = "Alien leader", Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
+            //};
+            //var guards = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Guard", Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Health = 18, Speed = 0, Distance = 3}
+            //};
 
-            var rock = new List<Enemy>()
-            {
-                new Enemy(){Name = "Rock", BonusStrength = 2, Damageable = false }
-            };
+            //var rock = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Rock", BonusStrength = 2, Damageable = false }
+            //};
 
-            var swamp = new List<Enemy>()
-            {
-                new Enemy(){Name = "Swamp plants", Health = 14}
-            };
+            //var swamp = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Swamp plants", Health = 14}
+            //};
 
-            var hologram = new List<Enemy>()
-            {
-                new Enemy(){Name = "Hologram Brute", Health = 18, Distance = 4}
-            };
+            //var hologram = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Hologram Brute", Health = 18, Distance = 4}
+            //};
 
-            var vespisoid = new List<Enemy>()
-            {
-                new Enemy(){Name = "Vespisoid", Health = 24, Distance = 4}
-            };
+            //var vespisoid = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Vespisoid", Health = 24, Distance = 4}
+            //};
 
-            var kabuto = new List<Enemy>()
-            {
-                new Enemy(){Name = "Kabuto", Health = 120, Distance = 4, Weapons = new List<Weapon>(){testWeapon1, testWeapon2} }
-            };
+            //var kabuto = new List<Enemy>()
+            //{
+            //    new Enemy(){Name = "Kabuto", Health = 120, Distance = 4, Weapons = new List<Weapon>(){testWeapon1, testWeapon2} }
+            //};
 
-            var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
-            var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
-            //hacker.Weapons.Add(new PlasmaRapier());
-            //hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
-            //hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
-            hacker.Activatables.Add(new HandGrenade());
-            //specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
-            specOps.Activatables.Add(new HandGrenade());
-            specOps.Equipment.Add(new TacticalGlasses());
-            specOps.Equipment.Add(new PortableSurgicalLaser());
-            specOps.Techniques.Add(new Feint());
-            Fight fight;
+            //var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
+            //var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
+            ////hacker.Weapons.Add(new PlasmaRapier());
+            ////hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
+            ////hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
+            //hacker.Activatables.Add(new HandGrenade());
+            ////specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
+            //specOps.Activatables.Add(new HandGrenade());
+            //specOps.Equipment.Add(new TacticalGlasses());
+            //specOps.Equipment.Add(new PortableSurgicalLaser());
+            //specOps.Techniques.Add(new Feint());
+            //Fight fight;
 
-            switch (episodeNumber)
+            //switch (episodeNumber)
+            //{
+            //    case 0:
+            //        //fight = new Fight(enemies, hacker);
+            //        fight = new Fight(enemies);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        enemies.Add(targetDummy2);
+            //        break;
+            //    case 1:
+            //        fight = new ChaseFight(toboganEnemies);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 21:
+            //        fight = new SkillCheckFight(rock, CheckType.Rocks);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        if (fight is SkillCheckFight rocks)
+            //        {
+            //            rocks.MinStrength = 0;
+            //            rocks.OnMinStrengthReached = FightResult.Lost;
+            //            rocks.CountWins = true;
+            //        }
+            //        break;
+            //    case 22:
+            //        fight = new SkillCheckFight(rock, CheckType.River);
+            //        if (fight is SkillCheckFight river)
+            //        {
+            //            river.LosingAtZeroFatal = true;
+            //            river.MaxConsecutiveWins = 2;
+            //            river.OnMaxConsecutiveRoundsReached = FightResult.Won;
+            //        }
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 23:
+            //        fight = new SkillCheckFight(rock, CheckType.Panel);
+            //        if (fight is SkillCheckFight panel)
+            //        {
+            //            panel.MinStrength = 0;
+            //            panel.OnMinStrengthReached = FightResult.Lost;
+            //            panel.MaxConsecutiveWins = 1;
+            //            panel.OnMaxConsecutiveRoundsReached = FightResult.Won;
+            //        }
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 24:
+            //        fight = new SkillCheckFight(rock, CheckType.Door);
+            //        if (fight is SkillCheckFight door)
+            //        {
+            //            door.MaxConsecutiveWins = 2;
+            //            door.MaxRounds = 5;
+            //            door.OnMaxRoundsReached = FightResult.Lost;
+            //            door.OnMaxConsecutiveRoundsReached = FightResult.Won;
+            //        }
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 25:
+            //        fight = new HazardFight(swamp);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 3:
+            //        var timedFight = new TimedFight(enemies);
+            //        timedFight.OnTurnsReached = FightResult.Won;
+            //        timedFight.OnEnemyHealthReached = FightResult.Won;
+            //        timedFight.MaxTurns = 5;
+            //        timedFight.MinEnemyHealth = 5;
+            //        fight = timedFight;
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 4:
+            //        var tentacleFight = new TentacleFight(enemies);
+            //        tentacleFight.Player = _playerService.CurrentPlayer;
+            //        tentacleFight.TraumaTentacleName = _nameService.EnemyName(EnemyType.TraumaTentacle);
+            //        tentacleFight.PathogensTentacleName = _nameService.EnemyName(EnemyType.PathogenTentacle);
+            //        tentacleFight.IonizationTentacleName = _nameService.EnemyName(EnemyType.IonizationTentacle);
+            //        fight = tentacleFight;
+            //        break;
+            //    case 5:
+            //        fight = new EscapeFight(guards);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 6:
+            //        fight = new VirtualFight(hologram);
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 7:
+            //        var stationaryFight = new StationaryFight(vespisoid);
+            //        stationaryFight.MinEnemyHealth = 5;
+            //        stationaryFight.OnEnemyHealthReached = FightResult.Won;
+            //        fight = stationaryFight;
+            //        fight.Player = _playerService.CurrentPlayer;
+            //        break;
+            //    case 8:
+            //        var variantFight = new VariantFight(kabuto);
+            //        fight = variantFight;
+            //        break;
+            //    case 9:
+            //        var kabutoFight = new VariantFight(kabuto);
+            //        fight = kabutoFight;
+            //        break;
+            //    default:
+            //        throw new NotImplementedException();
+
+            //}
+
+            //_fight = fight;
+            _fight = _fightRepository.GetFight(episodeNumber);
+            if(_fight == null)
             {
-                case 0:
-                    //fight = new Fight(enemies, hacker);
-                    fight = new Fight(enemies);
-                    fight.Player = _playerService.CurrentPlayer;
-                    enemies.Add(targetDummy2);
-                    break;
-                case 1:
-                    fight = new ChaseFight(toboganEnemies);
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 21:
-                    fight = new SkillCheckFight(rock, CheckType.Rocks);
-                    fight.Player = _playerService.CurrentPlayer;
-                    if (fight is SkillCheckFight rocks)
-                    {
-                        rocks.MinStrength = 0;
-                        rocks.OnMinStrengthReached = FightResult.Lost;
-                        rocks.CountWins = true;
-                    }
-                    break;
-                case 22:
-                    fight = new SkillCheckFight(rock, CheckType.River);
-                    if (fight is SkillCheckFight river)
-                    {
-                        river.LosingAtZeroFatal = true;
-                        river.MaxConsecutiveWins = 2;
-                        river.OnMaxConsecutiveRoundsReached = FightResult.Won;
-                    }
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 23:
-                    fight = new SkillCheckFight(rock, CheckType.Panel);
-                    if (fight is SkillCheckFight panel)
-                    {
-                        panel.MinStrength = 0;
-                        panel.OnMinStrengthReached = FightResult.Lost;
-                        panel.MaxConsecutiveWins = 1;
-                        panel.OnMaxConsecutiveRoundsReached = FightResult.Won;
-                    }
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 24:
-                    fight = new SkillCheckFight(rock, CheckType.Door);
-                    if (fight is SkillCheckFight door)
-                    {
-                        door.MaxConsecutiveWins = 2;
-                        door.MaxRounds = 5;
-                        door.OnMaxRoundsReached = FightResult.Lost;
-                        door.OnMaxConsecutiveRoundsReached = FightResult.Won;
-                    }
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 25:
-                    fight = new HazardFight(swamp);
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 3:
-                    var timedFight = new TimedFight(enemies);
-                    timedFight.OnTurnsReached = FightResult.Won;
-                    timedFight.OnEnemyHealthReached = FightResult.Won;
-                    timedFight.MaxTurns = 5;
-                    timedFight.MinEnemyHealth = 5;
-                    fight = timedFight;
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 4:
-                    var tentacleFight = new TentacleFight(enemies);
-                    tentacleFight.Player = _playerService.CurrentPlayer;
-                    tentacleFight.TraumaTentacleName = _nameService.EnemyName(EnemyType.TraumaTentacle);
-                    tentacleFight.PathogensTentacleName = _nameService.EnemyName(EnemyType.PathogenTentacle);
-                    tentacleFight.IonizationTentacleName = _nameService.EnemyName(EnemyType.IonizationTentacle);
-                    fight = tentacleFight;
-                    break;
-                case 5:
-                    fight = new EscapeFight(guards);
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 6:
-                    fight = new VirtualFight(hologram);
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 7:
-                    var stationaryFight = new StationaryFight(vespisoid);
-                    stationaryFight.MinEnemyHealth = 5;
-                    stationaryFight.OnEnemyHealthReached = FightResult.Won;
-                    fight = stationaryFight;
-                    fight.Player = _playerService.CurrentPlayer;
-                    break;
-                case 8:
-                    var variantFight = new VariantFight(kabuto);
-                    fight = variantFight;
-                    break;
-                case 9:
-                    var kabutoFight = new VariantFight(kabuto);
-                    fight = kabutoFight;
-                    break;
-                default:
-                    throw new NotImplementedException();
-                
+
+                return null;
             }
 
-            _fight = fight;
             Accepted = false;
 
 
@@ -311,8 +318,8 @@ namespace NFCombat2.Services
                 }
                 _variantFight.Variant = variant;
             }
-            fight.Player = _playerService.CurrentPlayer;
-            fight.SetUp();
+            _fight.Player = _playerService.CurrentPlayer;
+            _fight.SetUp();
             return _fight;
         }
 
@@ -508,10 +515,8 @@ namespace NFCombat2.Services
                 return;
             }
 
-            if(_fight.Enemies.Any(e=> e.Health <= 0))
-            {
-                _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
-            }
+            _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
+            OnPropertyChanged(nameof(_fight.Enemies));
 
             
             return;
