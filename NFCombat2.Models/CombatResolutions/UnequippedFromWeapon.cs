@@ -15,11 +15,10 @@ namespace NFCombat2.Models.CombatResolutions
         public UnequippedFromWeapon(WeaponModification modification)
         {
             _modification = modification;
-            
         }
         public MessageType MessageType => MessageType.UnequippedFromWeapon;
 
-        public string[] MessageArgs => new string[1] { _modification.Name };
+        public string[] MessageArgs => new string[1] { _modification.Name};
 
         public Task Resolve(Fight fight)
         {

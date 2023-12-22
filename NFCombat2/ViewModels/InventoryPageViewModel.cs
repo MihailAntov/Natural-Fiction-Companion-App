@@ -325,7 +325,8 @@ namespace NFCombat2.ViewModels
                 var completed = await taskCompletionSource.Task;
                 if (completed)
                 {
-                    string message = await _logService.GetResolutionMessage(((IInventoryActiveItem)modification).AffectPlayer(_playerService.CurrentPlayer));
+                    var resolution = modification.AffectPlayer(_playerService.CurrentPlayer);
+                    string message = await _logService.GetResolutionMessage(resolution);
                     _popupService.ShowToast(message);
                     
                 }

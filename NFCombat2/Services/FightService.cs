@@ -507,7 +507,12 @@ namespace NFCombat2.Services
             {
                 return;
             }
-            _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
+
+            if(_fight.Enemies.Any(e=> e.Health <= 0))
+            {
+                _fight.Enemies = _fight.Enemies.Where(e => e.Health > 0).ToList();
+            }
+
             
             return;
         }
@@ -574,6 +579,11 @@ namespace NFCombat2.Services
                                 resolutions = effect.AddToCombatEffects(_fight);
                                 break;
                             case AttackResult.Crit:
+                                if(_fight.Player.Equipment.Any(e=> e.ItemType == ItemType.Helmet))
+                                {
+                                    resolutions = effect.AddToCombatEffects(_fight);
+                                    break;
+                                }
                                 resolutions = attack.AddCritToCombatResolutions(_fight);
                                 break;
                         }
@@ -769,6 +779,7 @@ namespace NFCombat2.Services
                 return await AfterOption();
 
             }
+
 
             return _optionsService.GetMoveActions(_fight);  
         }

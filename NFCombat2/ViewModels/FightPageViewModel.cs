@@ -34,6 +34,7 @@ namespace NFCombat2.ViewModels
             OptionPickerViewModel opctionPickerViewModel)
         {
             _fightService = fightService;
+            _fightService.PropertyChanged += OnFightServiceEnemiesPropertyChanged;
             _optionsService = optionsService;
             _logService = logService;
             _fightService.PropertyChanged += OnAcceptedPropertyChanged;
@@ -132,6 +133,18 @@ namespace NFCombat2.ViewModels
                 NotInCombat = true;
                 CombatCleanup(); 
             }
+        }
+
+        private void OnFightServiceEnemiesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+         if(e.PropertyName == nameof(_fight.Enemies))
+            {
+                Enemies.Clear();
+                foreach (var enemy in Fight.Enemies)
+                {
+                    Enemies.Add(enemy);
+                }
+            }   
         }
 
         

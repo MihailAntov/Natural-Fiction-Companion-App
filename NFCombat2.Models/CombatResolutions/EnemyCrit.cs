@@ -12,13 +12,14 @@ namespace NFCombat2.Models.CombatResolutions
 
         public EnemyCrit(DiceRollResult roll, Enemy enemy) : base(roll, enemy) 
         {
-            Damage = base.Damage * CritMultiplier;
+            
         }
         public int CritMultiplier { get; set; } = 2;
         public override MessageType MessageType => MessageType.EnemyCritMessage;
         public override string[] MessageArgs => new string[2] { _enemyName, Damage.ToString() };
         public override Task Resolve(Fight fight)
         {
+            Damage = base.Damage * CritMultiplier;
             if (fight.Player.Equipment.Any(e=> e is Helmet))
             {
                 fight.Player.Health -= Damage;

@@ -80,7 +80,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.PoleMoveFurther, "Your distance to {0} is increased." },
             {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." },
             {MessageType.EquippedToWeapon, "Successfully equipped {0} to {1}." },
-            {MessageType.UnequippedFromWeapon, "Successfully unequipped {0} from {1}." },
+            {MessageType.UnequippedFromWeapon, "Successfully unequipped {0}." },
             {MessageType.MaxOverloadIncrease, "Your maximum overload increases by {0} and is now {1}." },
             {MessageType.StrengthIncrease, "Your strength is increased by {0} for the remainder of the fight." },
             {MessageType.WrenchThrow, "You throw a wrench at {0}." },
