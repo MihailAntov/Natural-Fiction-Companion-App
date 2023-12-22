@@ -25,7 +25,7 @@ namespace NFCombat2.Models.Fights
             else
             {
                 
-                 return new TentacleAttack(type);
+                 return new TentacleAttack(type, name);
                 
             }
         }

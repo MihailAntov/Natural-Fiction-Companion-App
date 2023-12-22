@@ -338,7 +338,7 @@ namespace NFCombat2.ViewModels
                 bool canReroll = Player.Class == PlayerClass.SpecOps;
                 if(item is IHaveRolls rollsEffect)
                 {
-                    var taskCompletion = await _popupService.ShowDiceRollsPopup(rollsEffect, canReroll);
+                    var taskCompletion = await _popupService.ShowDiceRollsPopup(rollsEffect, canReroll, 1);
                     await taskCompletion.Task;
                 }
 

@@ -99,5 +99,27 @@ namespace NFCombat2.Services
                 return "Not Found";
             }
         }
+
+        public void RetrieveFightNames(Fight fight)
+        {
+            if(fight is TentacleFight tentacleFight)
+            {
+                tentacleFight.TraumaTentacleName = EnglishEnemies[EnemyType.TraumaTentacle];
+                tentacleFight.PathogensTentacleName = EnglishEnemies[EnemyType.PathogenTentacle];
+                tentacleFight.IonizationTentacleName = EnglishEnemies[EnemyType.IonizationTentacle];
+            }
+
+
+            foreach(var enemy in fight.Enemies)
+            {
+                enemy.Name = EnglishEnemies[enemy.EnemyType];
+                if(enemy.EnemyType == EnemyType.CommanderKabuto)
+                {
+                    enemy.Weapons[0].Name = EnglishNames[ItemType.KabutoMainHand];
+                    enemy.Weapons[1].Name = EnglishNames[ItemType.KabutoOffHand];
+                    
+                }
+            }
+        }
     }
 }

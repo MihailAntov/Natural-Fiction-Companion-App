@@ -97,7 +97,11 @@ namespace NFCombat2.Common.Enums
         CrystalNecklace,
         FuelCanister,
         MagnetDiscs,
-        IceSpark
+        IceSpark,
+
+        // misc
+        KabutoMainHand,
+        KabutoOffHand
 
     }
 }

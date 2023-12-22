@@ -67,8 +67,11 @@ namespace NFCombat2.Common.Enums
         SwampAttack,
         SpawnTentacle,
         TraumaTentacleAttack,
+        TraumaTentacleMiss,
         PathogenTentacleAttack,
+        PathogenTentacleMiss,
         IonizationTentacleAttack,
+        IonizationTentacleMiss,
         //item messages
         UseMedkit,
         MaxOverloadIncrease,

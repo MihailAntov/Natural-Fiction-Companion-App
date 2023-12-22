@@ -69,8 +69,11 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.SwampAttack, "The swamp is emitting poisonous fumes." },
             {MessageType.SpawnTentacle, "A new {0} appears." },
             {MessageType.TraumaTentacleAttack, "Your metal hand attacks you." },
+            {MessageType.TraumaTentacleMiss, "You fight it off." },
             {MessageType.IonizationTentacleAttack, "The maser fires at you." },
-            {MessageType.PathogenTentacleAttack, "Gas from the vents fills your lungs." },
+            {MessageType.IonizationTentacleMiss, "It misses." },
+            {MessageType.PathogenTentacleAttack, "The vents emit pale green gas." },
+            {MessageType.PathogenTentacleMiss, "You manage to hold your breath." },
 
             //item messages
             {MessageType.SteelPlateAbsorb, "Your steel plate absorbed {0} damage and has {1} durability left." },

@@ -77,6 +77,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private static Dictionary<int, Fight> Fights = new Dictionary<int, Fight>()
         {
+            // start
             {
                 36, new TimedFight()
                 {
@@ -96,6 +97,34 @@ namespace NFCombat2.Data.Entities.Repositories
                                     Accuracy = Accuracy.D
                                 }
                             }
+                        }
+                    }
+                }
+            },
+            // end
+            {
+                219, new TentacleFight()
+                {
+                    Enemies = new List<Enemy>()
+                    {
+                        new Enemy()
+                        {
+                            EnemyType = EnemyType.TraumaTentacle,
+                            Health = 10,
+                            Distance = 5,
+                        },
+                        new Enemy()
+                        {
+                            EnemyType = EnemyType.IonizationTentacle,
+                            Health = 10,
+                            Distance = 5,
+                            
+                        },
+                        new Enemy()
+                        {
+                            EnemyType = EnemyType.PathogenTentacle,
+                            Health = 10,
+                            Distance = 5,
                         }
                     }
                 }

@@ -286,9 +286,10 @@ namespace NFCombat2.Services
             _fight = _fightRepository.GetFight(episodeNumber);
             if(_fight == null)
             {
-
                 return null;
             }
+
+            _nameService.RetrieveFightNames(_fight);
 
             Accepted = false;
 
@@ -530,21 +531,36 @@ namespace NFCombat2.Services
         private async Task HandleRolls(ICombatAction effect)
         {
             bool canReroll = _playerService.CurrentPlayer.Class == PlayerClass.SpecOps;
+            int reRolls = 0;
+            if(effect is TentacleAttack tentacleAttack)
+            {
+                if(tentacleAttack.EnemyType == EnemyType.PathogenTentacle)
+                {
+                    canReroll = _playerService.CurrentPlayer.Equipment.Any(e => e.ItemType == ItemType.GasMask);
+                    reRolls++;
+                }
+
+                if(tentacleAttack.EnemyType == EnemyType.IonizationTentacle)
+                {
+                    canReroll = _playerService.CurrentPlayer.Items.Any(e => e.ItemType == ItemType.PortableEnvironmentalSuit);
+                    reRolls++;
+                }
+            }
             if(effect is IHaveAttackRoll attack && !attack.AlwaysHits)
             {
-                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll);
+                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll, reRolls);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
-                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll);
+                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll, reRolls);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveOpposedRolls meleeCombat)
             {
-                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, canReroll);
+                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, canReroll, reRolls);
                 await attackCompletion.Task;
                 
             }

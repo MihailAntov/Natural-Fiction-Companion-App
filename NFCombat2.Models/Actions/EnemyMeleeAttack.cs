@@ -61,7 +61,7 @@ namespace NFCombat2.Models.Actions
                 }
                 else
                 {
-                    var victory = new DealMeleeDamage(_enemy, attackerScore - defenderScore);
+                    var victory = new DealMeleeDamage(_enemy, defenderScore - attackerScore);
                     result.Add(victory);
                     _fight.Effects.Enqueue(victory);
                 }

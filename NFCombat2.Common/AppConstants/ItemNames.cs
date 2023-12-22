@@ -95,7 +95,12 @@ namespace NFCombat2.Common.AppConstants
             {ItemType.CrystalNecklace, "Crystal Necklace" },
             {ItemType.FuelCanister, "Fuel Canister" },
             {ItemType.MagnetDiscs, "Magnet Discs" },
-            {ItemType.IceSpark, "Ice Spark" }
+            {ItemType.IceSpark, "Ice Spark" },
+
+            {ItemType.KabutoMainHand, "Plasma Minigun" },
+            {ItemType.KabutoOffHand, " Long Barrel Plasma Minigun" },
+
+
         };
     }
 }

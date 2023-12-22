@@ -15,5 +15,6 @@ namespace NFCombat2.Contracts
         public string FightResultMessage(Fight fight);
         public string InfoMessage(Fight fight);
         public string EnemyName(EnemyType enemyType);
+        public void RetrieveFightNames(Fight fight);
     }
 }
