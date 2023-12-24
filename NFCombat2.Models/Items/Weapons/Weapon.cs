@@ -36,7 +36,7 @@ namespace NFCombat2.Models.Items.Weapons
         public int Durability { get; set; } = 100;
         public int Quantity { get; set; } = 1;
         public string Image { get; set; } = string.Empty;
-        private bool _hasGasOperatedReloadingSystem;
+        private bool _hasGasOperatedReloadingSystem = false;
         public bool HasGasOperatedReloadingSystem {
             get { return _hasGasOperatedReloadingSystem; }
             set
@@ -48,7 +48,7 @@ namespace NFCombat2.Models.Items.Weapons
                 }
             }
         }
-        private bool _hasBarrelExtender;
+        private bool _hasBarrelExtender = false;
         public bool HasBarrelExtender
         {
             get { return _hasBarrelExtender; }
@@ -61,7 +61,7 @@ namespace NFCombat2.Models.Items.Weapons
                 }
             }
         }
-        private bool _hasLaserSight;
+        private bool _hasLaserSight = false;
         public bool HasLaserSight
         {
             get { return _hasLaserSight; }
@@ -74,7 +74,7 @@ namespace NFCombat2.Models.Items.Weapons
                 }
             }
         }
-        private bool _hasGrenadeLauncher;
+        private bool _hasGrenadeLauncher = false;
         public bool HasGrenadeLauncher
         {
             get { return _hasGrenadeLauncher; }

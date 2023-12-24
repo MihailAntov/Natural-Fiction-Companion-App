@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using NFCombat2.Views;
 using Microsoft.Maui.Controls;
-
+using NFCombat2.Models.Items.Parts;
 
 namespace NFCombat2.ViewModels
 {

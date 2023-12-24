@@ -19,7 +19,7 @@ namespace NFCombat2.Models.CombatResolutions
         }
         public MessageType MessageType => MessageType.IonizationIncrease;
 
-        public string[] MessageArgs => new string[2] { _amount.ToString(), _player.Ionization.ToString() };
+        public string[] MessageArgs => new string[2] { _amount.ToString(), (_player.Ionization+_amount).ToString() };
 
         public Task Resolve(Fight fight)
         {

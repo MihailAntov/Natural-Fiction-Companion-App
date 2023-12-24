@@ -17,7 +17,7 @@ namespace NFCombat2.Models.CombatResolutions
         }
         public MessageType MessageType => MessageType.TraumaIncrease;
 
-        public string[] MessageArgs => new string[2] { _amount.ToString(), _player.Trauma.ToString() };
+        public string[] MessageArgs => new string[2] { _amount.ToString(), (_player.Trauma+_amount).ToString() };
 
         public Task Resolve(Fight fight)
         {

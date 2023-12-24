@@ -31,7 +31,8 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             if (Fights.ContainsKey(episodeNumber))
             {
-                return Fights[episodeNumber];
+                var creatorFunc = Fights[episodeNumber];
+                return creatorFunc();
             }
             return null;
             
@@ -75,11 +76,11 @@ namespace NFCombat2.Data.Entities.Repositories
             
         }
 
-        private static Dictionary<int, Fight> Fights = new Dictionary<int, Fight>()
+        private static Dictionary<int, Func<Fight>> Fights = new Dictionary<int, Func<Fight>>()
         {
             // start
             {
-                36, new TimedFight()
+                36,()=> new TimedFight()
                 {
                     Enemies = new List<Enemy>()
                     {
@@ -103,7 +104,7 @@ namespace NFCombat2.Data.Entities.Repositories
             },
             // end
             {
-                219, new TentacleFight()
+                219, ()=> new TentacleFight()
                 {
                     Enemies = new List<Enemy>()
                     {

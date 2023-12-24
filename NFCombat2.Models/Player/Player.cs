@@ -4,6 +4,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Programs;
 using NFCombat2.Models.SpecOps;
@@ -227,7 +228,8 @@ namespace NFCombat2.Models.Player
             }
         }
         public PlayerClass Class { get; set; } = PlayerClass.None;
-        public IList<Part> Parts { get; set; } = new List<Part>();
+        //public IList<Part> Parts { get; set; } = new List<Part>();
+        public PartBag PartsBag { get; set; } = new PartBag();
         private int trauma = 0;
         public int Trauma
         {

@@ -21,7 +21,7 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishNames[type];
+                return EnglishItems[type];
             }
             catch
             {
@@ -33,7 +33,7 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishNames[type];
+                return EnglishItems[type];
             }
             catch
             {
@@ -115,8 +115,8 @@ namespace NFCombat2.Services
                 enemy.Name = EnglishEnemies[enemy.EnemyType];
                 if(enemy.EnemyType == EnemyType.CommanderKabuto)
                 {
-                    enemy.Weapons[0].Name = EnglishNames[ItemType.KabutoMainHand];
-                    enemy.Weapons[1].Name = EnglishNames[ItemType.KabutoOffHand];
+                    enemy.Weapons[0].Name = EnglishItems[ItemType.KabutoMainHand];
+                    enemy.Weapons[1].Name = EnglishItems[ItemType.KabutoOffHand];
                     
                 }
             }

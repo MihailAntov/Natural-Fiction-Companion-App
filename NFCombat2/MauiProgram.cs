@@ -43,6 +43,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AddingProfileViewModel>();
 		builder.Services.AddSingleton<LogPageViewModel>();
 		builder.Services.AddSingleton<ConfirmationPopupViewModel>();
+		builder.Services.AddSingleton<PartsBagViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
