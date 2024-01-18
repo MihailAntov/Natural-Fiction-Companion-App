@@ -11,8 +11,14 @@ namespace NFCombat2.ViewModels
     {
         private PartBag _partBag;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public PartsBagViewModel(IPlayerService playerService)
+        {
+            PartsBag = playerService.CurrentPlayer.PartsBag;
+            ExpandTabCommand = new Command<PartCategory>(ExpandTab);
+        }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public Command ExpandTabCommand { get; set; }
         public PartBag PartsBag { get { return _partBag; } 
             set 
             {
@@ -23,10 +29,13 @@ namespace NFCombat2.ViewModels
                 }
             } 
         }
-        public PartsBagViewModel(IPlayerService playerService)
+        public void ExpandTab(PartCategory partCategory)
         {
-            PartsBag = playerService.CurrentPlayer.PartsBag;
+            partCategory.IsExpanded = !partCategory.IsExpanded;
         }
+
+
+        
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

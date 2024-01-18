@@ -114,6 +114,15 @@ namespace NFCombat2.Services
                 {
                     weapon.Name = _nameService.ItemName(weapon.ItemType);
                 }
+
+                foreach (var category in player.PartsBag.Categories)
+                {
+                    category.Name = _nameService.PartCategoryName(category.PartCategoryType);
+                    foreach(var part in category.Parts)
+                    {
+                        part.Name = _nameService.PartName(part.PartType);
+                    }
+                }
             });
             task.Start();
             await task;
@@ -139,7 +148,7 @@ namespace NFCombat2.Services
 
         public async Task SwitchToPlayer(Player player)
         {
-            
+            await _repository.UpdatePlayer(CurrentPlayer);
             
             var newPlayer = await GetPlayerById(player.Id);
             if(newPlayer != null)
@@ -153,6 +162,8 @@ namespace NFCombat2.Services
 
 
         }
+
+
 
         public async Task AttachModificationToWeapon(IAddable option, AttachedTo hand)
         {

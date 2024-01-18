@@ -4,10 +4,12 @@ using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Programs;
 using NFCombat2.Data.Extensions;
+using NFCombat2.Data.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Factories;
 using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
+using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Player;
 using SQLite;
@@ -49,6 +51,8 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.CreateTableAsync<ItemEntity>();
             await connection.CreateTableAsync<ProgramEntity>();
             await connection.CreateTableAsync<PlayersProgramsEntity>();
+            await connection.CreateTableAsync<PlayersPartsBagEntity>();
+            await connection.CreateTableAsync<PartBagEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
             {
@@ -178,6 +182,19 @@ namespace NFCombat2.Data.Entities.Repositories
             }
         }
 
+        private async Task UpdateParts(Player player)
+        {
+            // TODO: check if exists, create if not
+            PlayersPartsBagEntity playerEntity = await connection.Table<PlayersPartsBagEntity>()
+                .Where(e=> e.PlayerId == player.Id)
+                .FirstOrDefaultAsync();
+            var bagId = playerEntity.PartsBagId;
+            PartBagEntity bagEntity = await connection.Table<PartBagEntity>()
+                .FirstOrDefaultAsync(b=> b.Id == bagId);
+
+            PartsMapper.SaveParts(player.PartsBag, bagEntity);
+        }
+
         private async Task UpdatePrograms(Player player)
         {
             foreach(var program in player.Programs)
@@ -245,6 +262,7 @@ namespace NFCombat2.Data.Entities.Repositories
             await UpdateEquipments(player);
             await UpdateWeapons(player);
             await UpdatePrograms(player);
+            await UpdateParts(player);
             await UpdateEntity(entity);
         }
 
@@ -329,6 +347,13 @@ namespace NFCombat2.Data.Entities.Repositories
                     playerModification.OnAdded(player);
                 }
             }
+
+            var playersPartsBagEntity = await connection.Table<PlayersPartsBagEntity>()
+                .Where(pb => pb.PlayerId == player.Id).FirstOrDefaultAsync();
+            var bagEntity = await connection.GetAsync<PartBagEntity>(playersPartsBagEntity.PartsBagId);
+            PartsMapper.LoadParts(bagEntity, player.PartsBag);
+
+            
         }
 
         public async Task<List<Player>> GetAllProfiles()

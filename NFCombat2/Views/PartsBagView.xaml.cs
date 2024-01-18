@@ -12,8 +12,7 @@ public partial class PartsBagView : ContentView
 
     protected override void OnHandlerChanged()
     {
-        base.OnHandlerChanged();
-
         this.BindingContext = this.Handler.MauiContext.Services.GetRequiredService<PartsBagViewModel>();
+        base.OnHandlerChanged();
     }
 }

@@ -8,6 +8,8 @@ using static NFCombat2.Common.AppConstants.ModeNames;
 using static NFCombat2.Common.AppConstants.FightResults;
 using static NFCombat2.Common.AppConstants.Options;
 using static NFCombat2.Common.AppConstants.EnemyNames;
+using static NFCombat2.Common.AppConstants.PartNames;
+using NFCombat2.Models.Items.Parts;
 
 namespace NFCombat2.Services
 {
@@ -119,6 +121,32 @@ namespace NFCombat2.Services
                     enemy.Weapons[1].Name = EnglishItems[ItemType.KabutoOffHand];
                     
                 }
+            }
+        }
+
+        public string PartCategoryName(PartCategoryType category)
+        {
+            try
+            {
+                return EnglishPartCategories[category];
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string PartName(PartType partType)
+        {
+            try
+            {
+                return EnglishParts[partType];
+
+            }
+            catch
+            {
+                return "Not Found";
             }
         }
     }
