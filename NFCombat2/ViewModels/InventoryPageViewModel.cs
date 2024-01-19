@@ -519,6 +519,9 @@ namespace NFCombat2.ViewModels
                 {
                     ExtraItems.Add(item);
                 }
+
+                
+
                 OnPropertyChanged(nameof(Player));
                 UpdateWeaponDisplay();
             }

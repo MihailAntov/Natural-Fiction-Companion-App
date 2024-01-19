@@ -15,13 +15,14 @@ namespace NFCombat2.Data.Helpers
                 foreach (var part in category.Parts)
                 {
                     string partName = part.WorkCoefficient.ToString();
-                    PropertyInfo? property = bag.GetType().GetProperty(partName);
+                    PropertyInfo? property = entity.GetType().GetProperty(partName);
                     if (property != null)
                     {
-                        property.SetValue(bag, part.Quantity);
+                        property.SetValue(entity, part.Quantity);
                     }
                 }
             }
+
         }
 
         public static void LoadParts(PartBagEntity entity, PartBag bag)

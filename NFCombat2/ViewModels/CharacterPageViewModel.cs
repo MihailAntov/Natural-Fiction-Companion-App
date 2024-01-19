@@ -101,7 +101,8 @@ namespace NFCombat2.ViewModels
             }
             await SwitchToProfile(player);
 
-            OnPropertyChanged(nameof(Profiles));
+            //OnPropertyChanged(nameof(Profiles));
+            LoadPlayersAsync();
             
             
         }

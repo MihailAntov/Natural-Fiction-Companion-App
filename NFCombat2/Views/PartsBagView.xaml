@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              x:Name="PartsBagPage"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Views.PartsBagView">
-    <StackLayout BindableLayout.ItemsSource="{Binding PartsBag.Categories}">
-        <BindableLayout.ItemTemplate>
-            <DataTemplate>
-                <!--<Label Text="{Binding Name}"></Label>-->
-                <StackLayout>
-                    <Button Text="{Binding Name}" 
-                            Command="{Binding Source={x:Reference PartsBagPage}, Path=BindingContext.ExpandTabCommand}"
-                            CommandParameter="{Binding}"
-                            Padding="5"
-                            />
+    <StackLayout>
+        <StackLayout BindableLayout.ItemsSource="{Binding PartsBag.Categories}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <!--<Label Text="{Binding Name}"></Label>-->
+                    <StackLayout>
+                        <Button Text="{Binding Name}" 
+                                Command="{Binding Source={x:Reference PartsBagPage}, Path=BindingContext.ExpandTabCommand}"
+                                CommandParameter="{Binding}"
+                                Padding="5"
+                                />
 
-                    <CollectionView IsVisible="{Binding IsExpanded}" ItemsSource="{Binding Parts}" >
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="45"/>
-                                        <ColumnDefinition Width="10"/>
-                                        <ColumnDefinition Width="75"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding WorkCoefficient}"/>
-                                    <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}"/>
-                                    <Stepper Grid.Column="2" Value="{Binding Quantity}" Minimum="0" Maximum="99"></Stepper>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </StackLayout>
-            </DataTemplate>
-        </BindableLayout.ItemTemplate>
+                        <CollectionView IsVisible="{Binding IsExpanded}" ItemsSource="{Binding Parts}" >
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="45"/>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="75"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding WorkCoefficient}"/>
+                                        <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}"/>
+                                        <Stepper Grid.Column="2" Value="{Binding Quantity}" Minimum="0" Maximum="99"></Stepper>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+        <StackLayout IsVisible="{Binding Crafting}">
+
+        </StackLayout>
+        <ImageButton Source="wrench" HeightRequest="75" VerticalOptions="End" Command="{Binding CraftingPopupCommand}"/>
     </StackLayout>
 </ContentView>

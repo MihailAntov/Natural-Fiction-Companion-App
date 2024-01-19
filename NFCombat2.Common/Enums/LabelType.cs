@@ -9,6 +9,7 @@ namespace NFCombat2.Common.Enums
         UseItemButton,
         AcceptCombatResult,
         RejectCombatResult,
-        InvalidEpisodeNumber
+        InvalidEpisodeNumber,
+        CraftButton
     }
 }

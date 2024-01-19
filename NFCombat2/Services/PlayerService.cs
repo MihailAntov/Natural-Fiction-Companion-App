@@ -373,6 +373,11 @@ namespace NFCombat2.Services
             return list;
         }
 
+        public Task<ICollection<IAddable>> GetAllCraftables()
+        {
+            return _repository.GetCraftableItems();
+        }
+
         public Task<ICollection<IAddable>> GetAllEquipment()
         {
             return GetAllItemsByCategory(ItemCategory.Equipment);

@@ -7,6 +7,7 @@ namespace NFCombat2.Contracts
 {
     public interface IItemService
     {
+        public IAddable CheckFormula(string formula);
         
 
     }

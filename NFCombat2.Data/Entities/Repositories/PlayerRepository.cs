@@ -184,15 +184,31 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateParts(Player player)
         {
-            // TODO: check if exists, create if not
             PlayersPartsBagEntity playerEntity = await connection.Table<PlayersPartsBagEntity>()
                 .Where(e=> e.PlayerId == player.Id)
                 .FirstOrDefaultAsync();
-            var bagId = playerEntity.PartsBagId;
-            PartBagEntity bagEntity = await connection.Table<PartBagEntity>()
-                .FirstOrDefaultAsync(b=> b.Id == bagId);
 
+            PartBagEntity bagEntity;
+            if(playerEntity != null)
+            {
+                var bagId = playerEntity.PartsBagId;
+                bagEntity = await connection.Table<PartBagEntity>()
+                .FirstOrDefaultAsync(b => b.Id == bagId);
+            }
+            else
+            {
+                bagEntity = new PartBagEntity() { };
+                await connection.InsertAsync(bagEntity);
+                playerEntity = new PlayersPartsBagEntity()
+                {
+                    PlayerId = player.Id,
+                    PartsBagId = bagEntity.Id
+                };
+                await connection.InsertAsync(playerEntity);
+            }
+            
             PartsMapper.SaveParts(player.PartsBag, bagEntity);
+            await connection.UpdateAsync(bagEntity);
         }
 
         private async Task UpdatePrograms(Player player)
@@ -435,7 +451,7 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task<ICollection<IAddable>> GetItemsByCategory(ItemCategory category)
         {
             await Init();
-            var entities = await connection.Table<ItemEntity>().Where(i=> i.Category == category).ToListAsync();
+            var entities = await connection.Table<ItemEntity>().Where(i=> i.Category == category && i.IsCraftOnly == false).ToListAsync();
             List<IAddable> items = new List<IAddable>();
             foreach (var entity in entities)
             {
@@ -452,6 +468,29 @@ namespace NFCombat2.Data.Entities.Repositories
             }
             return items;
 
+        }
+
+        public async Task<ICollection<IAddable>> GetCraftableItems()
+        {
+            await Init();
+            var entities = await connection.Table<ItemEntity>().Where(i=>i.IsCraftOnly).ToListAsync();
+            List<IAddable> items = new List<IAddable>();
+            foreach (var entity in entities)
+            {
+                if (!entity.Id.HasValue)
+                {
+                    throw new NullReferenceException();
+                }
+                var itemId = entity.Id.Value;
+                var item = ItemConverter(entity.Type, entity.Category, itemId);
+                item.Episode = entity.Episode;
+                item.Formula = entity.Formula; 
+                //TODO quantity
+
+
+                items.Add(item);
+            }
+            return items;
         }
 
         

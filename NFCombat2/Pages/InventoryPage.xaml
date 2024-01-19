@@ -172,27 +172,7 @@
         <views:PartsBagView IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingParts}">
             
         </views:PartsBagView>
-        <!--<ListView ItemsSource="{Binding Parts}" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-
-                    <ViewCell>
-                        <ViewCell.View>
-                            <Grid>
-                                --><!--figure out layout--><!--
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="25"/>
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <Label VerticalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}"/>
-                            </Grid>
-                        </ViewCell.View>
-                    </ViewCell>
-
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
+        
        
 
 

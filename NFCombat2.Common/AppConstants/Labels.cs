@@ -13,7 +13,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.UseItemButton, "Use" },
             {LabelType.AcceptCombatResult, "Accept" },
             {LabelType.RejectCombatResult, "Reject" },
-            {LabelType.InvalidEpisodeNumber, "Invalid episode number" }
+            {LabelType.InvalidEpisodeNumber, "Invalid episode number" },
+            {LabelType.CraftButton, "Craft" }
         };
     }
 }

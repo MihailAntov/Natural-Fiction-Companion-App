@@ -16,6 +16,7 @@ namespace NFCombat2.Contracts
         public string Label(LabelType type);
         public string ModeName(ItemMode mode);
         public string FightResultMessage(Fight fight);
+        public string CraftResultMessage(CraftResult result);
         public string InfoMessage(Fight fight);
         public string EnemyName(EnemyType enemyType);
         public void RetrieveFightNames(Fight fight);

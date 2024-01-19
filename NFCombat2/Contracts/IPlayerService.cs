@@ -25,5 +25,6 @@ namespace NFCombat2.Contracts
         Task<ICollection<IAddable>> GetAllItems();
         Task<ICollection<IAddable>> GetAllWeapons();
         Task<ICollection<IAddable>> GetAllEquipment();
+        Task<ICollection<IAddable>> GetAllCraftables();
     }
 }

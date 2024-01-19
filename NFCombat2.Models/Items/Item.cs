@@ -27,6 +27,8 @@ namespace NFCombat2.Models.Items
         }
         public bool IsConsumable { get; set; } = false;
         public bool InExtraBag { get; set; }
+        public string Formula { get; set; } = string.Empty;
+        public int Episode { get; set; } = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -146,6 +146,9 @@
 	  <MauiXaml Update="Views\ConfirmationPopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CraftingPopupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\DiceResultView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

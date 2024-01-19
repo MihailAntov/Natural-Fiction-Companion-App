@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:helpers="clr-namespace:NFCombat2.Helpers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NFCombat2.Views.CraftingPopupView"
+               Closed="OnClosed">
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding Parts}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding WorkCoefficient}"/>
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label VerticalTextAlignment="Center" Text="{Binding CurrentlySelected}"/>
+                            <Label VerticalTextAlignment="Center" Text=" / "/>
+                            <Label VerticalTextAlignment="Center" Text="{Binding Quantity}"/>
+                        </HorizontalStackLayout>
+                        <Stepper Grid.Column="2" Value="{Binding CurrentlySelected}" Minimum="0" Maximum="{Binding Quantity}"></Stepper>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Craft" VerticalOptions="End" Command="{Binding CraftCommand}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}"/>
+        <Entry Text="{Binding Episode}" IsVisible="{Binding CorrectFormula}"/>
+        <Button Text="Confirm" IsVisible="{Binding CorrectFormula}" Command="{Binding ConfirmEpisodeCommand}"/>
+    </VerticalStackLayout>
+</toolkit:Popup>

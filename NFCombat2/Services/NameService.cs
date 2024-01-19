@@ -9,7 +9,8 @@ using static NFCombat2.Common.AppConstants.FightResults;
 using static NFCombat2.Common.AppConstants.Options;
 using static NFCombat2.Common.AppConstants.EnemyNames;
 using static NFCombat2.Common.AppConstants.PartNames;
-using NFCombat2.Models.Items.Parts;
+using static NFCombat2.Common.AppConstants.CraftResults;
+
 
 namespace NFCombat2.Services
 {
@@ -142,6 +143,19 @@ namespace NFCombat2.Services
             try
             {
                 return EnglishParts[partType];
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string CraftResultMessage(CraftResult result)
+        {
+            try
+            {
+                return EnglishCraftResults[result];
 
             }
             catch

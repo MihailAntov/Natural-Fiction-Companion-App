@@ -11,6 +11,7 @@ namespace NFCombat2.Common.AppConstants
             {EnemyType.TraumaTentacle, "Cable Tentacle (Metal Hand)" },
             {EnemyType.IonizationTentacle, "Cable Tentacle (Vents)" },
             {EnemyType.PathogenTentacle, "Cable Tentacle (Amonia Maser)" },
+            {EnemyType.RegularBrute, "Regular Brute" },
         };
     }
 }
