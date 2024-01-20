@@ -215,6 +215,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdatePrograms(Player player)
         {
+            //Marker : Programs
             foreach(var program in player.Programs)
             {
                 PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
@@ -306,8 +307,6 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
                 player.Items.Add(item);
                 continue;
-                
-                
             }
 
             var playersWeaponsEntities = await connection.Table<PlayersWeaponsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
@@ -371,7 +370,8 @@ namespace NFCombat2.Data.Entities.Repositories
             var bagEntity = await connection.GetAsync<PartBagEntity>(playersPartsBagEntity.PartsBagId);
             PartsMapper.LoadParts(bagEntity, player.PartsBag);
 
-            
+            var playersProgramsEntity = await connection.Table<PlayersProgramsEntity>()
+                .Where(pp => pp.PlayerId == player.Id).FirstOrDefaultAsync();
         }
 
         public async Task<List<Player>> GetAllProfiles()

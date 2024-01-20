@@ -4,22 +4,23 @@ namespace NFCombat2.Common.Enums
 {
     public enum ProgramType
     {
-        NOptimizeNMove,
-        NOptimizeNFix,
-        NOptimizeNAnalyze,
-        NOptimizeFix,
-        NExtendNFix,
-        NDirectNMove,
-        NDirectNFix,
-        DirectNMove,
-        DirectNFix,
-        DirectNAnalyze,
-        DirectFix,
-        ExtendNMove,
-        ExtendNFix,
-        OptimizeNMove,
-        OptimizeNFix,
-        OptimizeNAnalyze,
-        OptimizeFix
+        ReceiveNOptimizeNMove,
+        ReceiveNOptimizeNFix,
+        ReceiveNOptimizeNAnalyze,
+        ReceiveNOptimizeFix,
+        ReceiveNExtendNFix,
+        ReceiveNDirectNMove,
+        ReceiveNDirectNFix,
+        ReceiveDirectNMove,
+        ReceiveDirectNFix,
+        ReceiveDirectNAnalyze,
+        ReceiveDirectFix,
+        ReceiveExtendNMove,
+        ReceiveExtendNFix,
+        ReceiveOptimizeNMove,
+        ReceiveOptimizeNFix,
+        ReceiveOptimizeNAnalyze,
+        ReceiveOptimizeFix,
+        SendDirectNUnlock
     }
 }

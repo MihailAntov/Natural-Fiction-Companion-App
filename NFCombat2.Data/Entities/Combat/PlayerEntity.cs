@@ -30,6 +30,8 @@ namespace NFCombat2.Data.Entities.Combat
         public int MaxOverload { get; set; } = 10;
 
         public int MaxWeaponWeight { get; set; } = 1;
+
+        public int PartBagId { get; set; }
         //public List<WeaponEntity> Weapons { get; set; } = new List<WeaponEntity>();
         //public List<ItemEntity> Items { get; set; } = new List<ItemEntity>();
 

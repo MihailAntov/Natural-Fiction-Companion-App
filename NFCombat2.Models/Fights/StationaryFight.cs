@@ -37,6 +37,7 @@ namespace NFCombat2.Models.Fights
                 return;
             }
 
+            //Marker : Programs
             if(Player.Weapons.Any(w=> w.EffectiveMaxRange >= Enemies.FirstOrDefault().Distance) ||
                 Player.Programs.Any(w => w.MaxRange >= Enemies.FirstOrDefault().Distance) ||
                 Player.Items.OfType<ITarget>().Any(w => w.MaxRange >= Enemies.FirstOrDefault().Distance))

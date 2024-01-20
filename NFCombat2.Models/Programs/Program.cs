@@ -7,13 +7,10 @@ namespace NFCombat2.Models.Programs
 {
     public class Program : IStandardAction, ITarget
     {
-        private Player.Player _caster;
+        public Player.Player Caster { get; set; }
         public int Id { get; set; }
-        public Program(string label, string description, Player.Player caster)
+        public Program()
         {
-            Name = label;
-            Description = description;
-            _caster = caster;
         }
         public string Name { get; set; }
         public bool AreaOfEffect { get; set; }
@@ -29,7 +26,7 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.UseProgramMessage;
 
-        public string[] MessageArgs => new string[] { Name, (Cost + _caster.Overload).ToString() };
+        public string[] MessageArgs => new string[] { Name, (Cost + Caster.Overload).ToString() };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

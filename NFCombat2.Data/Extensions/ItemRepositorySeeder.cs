@@ -110,23 +110,24 @@ namespace NFCombat2.Data.Extensions
             await repository.InsertRange(items);
             var programs = new List<ProgramEntity>()
             {
-                new ProgramEntity(){Type = ProgramType.NOptimizeNMove},
-                new ProgramEntity(){Type = ProgramType.NOptimizeNFix},
-                new ProgramEntity(){Type = ProgramType.NOptimizeNAnalyze},
-                new ProgramEntity(){Type = ProgramType.NOptimizeFix},
-                new ProgramEntity(){Type = ProgramType.NExtendNFix},
-                new ProgramEntity(){Type = ProgramType.NDirectNMove},
-                new ProgramEntity(){Type = ProgramType.NDirectNFix},
-                new ProgramEntity(){Type = ProgramType.DirectNMove},
-                new ProgramEntity(){Type = ProgramType.DirectNFix},
-                new ProgramEntity(){Type = ProgramType.DirectNAnalyze},
-                new ProgramEntity(){Type = ProgramType.DirectFix},
-                new ProgramEntity(){Type = ProgramType.ExtendNMove},
-                new ProgramEntity(){Type = ProgramType.ExtendNFix},
-                new ProgramEntity(){Type = ProgramType.OptimizeNMove},
-                new ProgramEntity(){Type = ProgramType.OptimizeNFix},
-                new ProgramEntity(){Type = ProgramType.OptimizeNAnalyze},
-                new ProgramEntity(){Type = ProgramType.OptimizeFix}
+                new ProgramEntity(){Type = ProgramType.ReceiveNOptimizeNMove},
+                new ProgramEntity(){Type = ProgramType.ReceiveNOptimizeNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveNOptimizeNAnalyze},
+                new ProgramEntity(){Type = ProgramType.ReceiveNOptimizeFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveNExtendNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveNDirectNMove},
+                new ProgramEntity(){Type = ProgramType.ReceiveNDirectNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveDirectNMove},
+                new ProgramEntity(){Type = ProgramType.ReceiveDirectNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveDirectNAnalyze},
+                new ProgramEntity(){Type = ProgramType.ReceiveDirectFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveExtendNMove},
+                new ProgramEntity(){Type = ProgramType.ReceiveExtendNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveOptimizeNMove},
+                new ProgramEntity(){Type = ProgramType.ReceiveOptimizeNFix},
+                new ProgramEntity(){Type = ProgramType.ReceiveOptimizeNAnalyze},
+                new ProgramEntity(){Type = ProgramType.ReceiveOptimizeFix},
+                new ProgramEntity(){Type = ProgramType.SendDirectNUnlock}
             };
             await repository.InsertRange(programs);
         }
