@@ -18,6 +18,7 @@ using NFCombat2.Models.SpecOps;
 using System.Runtime.CompilerServices;
 using NFCombat2.ViewModels;
 using NFCombat2.Views;
+using NFCombat2.Models.Programs;
 
 namespace NFCombat2.Services
 {
@@ -697,6 +698,20 @@ namespace NFCombat2.Services
                 PreviousOptions = result;
                 return result;
 
+            }
+
+            if(option is ManualProgramCast programCast)
+            {
+                var program = await _popupService.ShowCastPopup();
+                if(program == null)
+                {
+                    result = _optionsService.GetPrograms(_fight);
+                    //PreviousOptions = result;
+                    return result;
+                }
+
+                return await ProcessChoice(program);
+                
             }
 
             if(option is Variant variant)

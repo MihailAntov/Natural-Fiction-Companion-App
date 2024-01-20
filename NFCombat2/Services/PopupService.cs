@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Programs;
 using NFCombat2.Models.PopUps;
 using NFCombat2.Contracts;
 using NFCombat2.Views;
@@ -97,6 +98,21 @@ namespace NFCombat2.Services
             ShowPopup(popup);
             var player = await task.Task;
             if(player != null)
+            {
+                await popup.CloseAsync();
+            }
+            return player;
+        }
+
+        public async Task<Program> ShowCastPopup()
+        {
+            TaskCompletionSource<Program> taskCompletionSource = new TaskCompletionSource<Program>();
+            var viewmodel = new ProgramCastViewModel(taskCompletionSource);
+
+            var popup = new ProgramCastView(viewmodel);
+            ShowPopup(popup);
+            var player = await taskCompletionSource.Task;
+            if (player != null)
             {
                 await popup.CloseAsync();
             }

@@ -8,7 +8,17 @@ namespace NFCombat2.Models.Factories
 {
     public static class ProgramFactory
     {
-        public static Program CreateProgram
+        public static Program GetProgram(ProgramType programType)
+        {
+            Program program = new Program();
+            switch(programType)
+            {
+                case ProgramType.ReceiveNOptimizeNMove:
+                default:
+                    break;
+            }
+            return program;
+        }
         
     }
 }

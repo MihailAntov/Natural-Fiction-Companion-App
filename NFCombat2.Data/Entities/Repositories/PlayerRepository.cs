@@ -53,7 +53,6 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.CreateTableAsync<ItemEntity>();
             await connection.CreateTableAsync<ProgramEntity>();
             await connection.CreateTableAsync<PlayersProgramsEntity>();
-            await connection.CreateTableAsync<PlayersPartsBagEntity>();
             await connection.CreateTableAsync<PartBagEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
@@ -186,27 +185,13 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdateParts(Player player)
         {
-            PlayersPartsBagEntity playerEntity = await connection.Table<PlayersPartsBagEntity>()
-                .Where(e=> e.PlayerId == player.Id)
-                .FirstOrDefaultAsync();
 
-            PartBagEntity bagEntity;
-            if(playerEntity != null)
+
+            PartBagEntity bagEntity = await connection.FindAsync<PartBagEntity>(player.Id);
+            if(bagEntity == null)
             {
-                var bagId = playerEntity.PartsBagId;
-                bagEntity = await connection.Table<PartBagEntity>()
-                .FirstOrDefaultAsync(b => b.Id == bagId);
-            }
-            else
-            {
-                bagEntity = new PartBagEntity() { };
+                bagEntity = new PartBagEntity() {Id = player.Id };
                 await connection.InsertAsync(bagEntity);
-                playerEntity = new PlayersPartsBagEntity()
-                {
-                    PlayerId = player.Id,
-                    PartsBagId = bagEntity.Id
-                };
-                await connection.InsertAsync(playerEntity);
             }
             
             PartsMapper.SaveParts(player.PartsBag, bagEntity);
@@ -287,6 +272,8 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task RetrievePlayerData(Player player)
         {
+
+            //items
             var playersItemsEntities = await connection.Table<PlayersItemsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var playersItemsEntity in playersItemsEntities)
             {
@@ -308,6 +295,9 @@ namespace NFCombat2.Data.Entities.Repositories
                 player.Items.Add(item);
                 continue;
             }
+
+
+            //weapons
 
             var playersWeaponsEntities = await connection.Table<PlayersWeaponsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var playersWeaponsEntity in playersWeaponsEntities)
@@ -331,6 +321,8 @@ namespace NFCombat2.Data.Entities.Repositories
                 
             }
 
+
+            //equipments
             var playersEquipmentsEntitites = await connection.Table<PlayersEquipmentsEntity>().Where(pi => pi.PlayerId == player.Id).ToListAsync();
             foreach (var playersEquipmentsEntity in playersEquipmentsEntitites)
             {
@@ -345,6 +337,8 @@ namespace NFCombat2.Data.Entities.Repositories
                 equipment.Quantity = playersEquipmentsEntity.Quantity;
                 player.Equipment.Add(equipment);
             }
+
+            
 
             foreach (Equipment equipment in player.Equipment)
             {
@@ -365,13 +359,27 @@ namespace NFCombat2.Data.Entities.Repositories
                 }
             }
 
-            var playersPartsBagEntity = await connection.Table<PlayersPartsBagEntity>()
-                .Where(pb => pb.PlayerId == player.Id).FirstOrDefaultAsync();
-            var bagEntity = await connection.GetAsync<PartBagEntity>(playersPartsBagEntity.PartsBagId);
-            PartsMapper.LoadParts(bagEntity, player.PartsBag);
+            //parts
+            
+            var bagEntity = await connection.FindAsync<PartBagEntity>(player.Id);
+            if(bagEntity != null)
+            {
+                PartsMapper.LoadParts(bagEntity, player.PartsBag);
+            }
 
-            var playersProgramsEntity = await connection.Table<PlayersProgramsEntity>()
-                .Where(pp => pp.PlayerId == player.Id).FirstOrDefaultAsync();
+            //programs
+
+            var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
+                .Where(pp => pp.PlayerId == player.Id).ToListAsync();
+            var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
+            
+            var programs = await connection.Table<ProgramEntity>()
+                .Where(p=> programIds.Contains(p.Id)).ToListAsync();
+
+            foreach(var program in programs)
+            {
+                player.Programs.Add(ProgramFactory.GetProgram(program.Type));
+            }
         }
 
         public async Task<List<Player>> GetAllProfiles()

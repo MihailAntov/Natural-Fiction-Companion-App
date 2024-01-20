@@ -157,11 +157,13 @@ namespace NFCombat2.Services
 
         public IOptionList GetPrograms(Fight fight)
         {
-            var programs = new List<Program>();
+            
 
+            var knownPrograms = fight.Player.Programs.Select(o => new Option(o.Name, o)).ToList<IOption>();
 
-
-
+            var result = new OptionList(knownPrograms, true, true) { Label = "Choose which program to use" };
+            result.Options.Add(new Option("Manual",new ManualProgramCast()));
+            return result;
 
             //todo : implement program retrieval
             //var program1 = new Program("Zap Bonus Action", "Нанася 1 зар щети на избран опонент. Можете да предприемете допълнително действие.", fight.Player) { Cost = 1 };
@@ -170,7 +172,7 @@ namespace NFCombat2.Services
 
             //var program2 = new Program("ZapZap", "Нанася 2 зара щети + 2 на избран опонент.", fight.Player) { Cost = 2 };
             //program2.Effects.Add(new DamageProgramEffect(2, 2,program2));
-            
+
             //var objects = new List<IAction>
             //{
             //    program1,
@@ -178,8 +180,7 @@ namespace NFCombat2.Services
             //};
 
 
-            var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
-            return new OptionList(result, true, true) { Label = "Choose which program to use" };
+
         }
 
         public IOptionList GetTargets(Fight fight, int minRange, int maxRange)
@@ -250,7 +251,7 @@ namespace NFCombat2.Services
         public bool CanUseProgram(Fight fight)
         {
             
-            if(fight.AllowsPrograms && fight.Player.Class == PlayerClass.Hacker)
+            if(fight.AllowsPrograms /*&& fight.Player.Class == PlayerClass.Hacker*/)
             {
                 return true;
             }

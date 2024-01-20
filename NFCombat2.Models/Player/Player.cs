@@ -207,7 +207,6 @@ namespace NFCombat2.Models.Player
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public IList<Program> Programs { get; set; } = new List<Program>();
-        public IList<ProgramType> KnownPrograms { get; set; } = new List<ProgramType>();
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers
         {
