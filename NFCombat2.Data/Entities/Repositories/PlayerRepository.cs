@@ -42,6 +42,8 @@ namespace NFCombat2.Data.Entities.Repositories
             //await connection.DropTableAsync<ItemEntity>();
             //await connection.DropTableAsync<ProgramEntity>();
             //await connection.DropTableAsync<PlayersProgramsEntity>();
+            //await connection.DropTableAsync<PartBagEntity>();
+            //await connection.DropTableAsync<PlayersPartsBagEntity>();
             //Uncomment above lines to reset item db
 
             await connection.CreateTableAsync<PlayerEntity>();

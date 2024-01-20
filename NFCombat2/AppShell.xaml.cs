@@ -1,9 +1,12 @@
-﻿namespace NFCombat2;
+﻿using NFCombat2.Contracts;
+
+namespace NFCombat2;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
+	public AppShell(IPlayerService playerService)
 	{
 		InitializeComponent();
+		BindingContext = playerService;
 	}
 }

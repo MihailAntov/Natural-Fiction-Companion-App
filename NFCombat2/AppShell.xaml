@@ -3,6 +3,7 @@
     x:Class="NFCombat2.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:NFCombat2.Helpers"
     xmlns:local="clr-namespace:NFCombat2.Pages"
     Shell.FlyoutBehavior="Disabled">
 
@@ -15,14 +16,14 @@
         <Tab Title="Character" Icon="character.png">
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />
         </Tab>
-        <Tab Title="Log" Icon="notes.png">
+        <Tab Title="Log" Icon="notes.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
             <ShellContent ContentTemplate="{DataTemplate local:LogPage}" />
         </Tab>
-        <Tab Title="Combat Simulator" Icon="fight.png">
+        <Tab Title="Combat Simulator" Icon="fight.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
             <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />
         </Tab>
 
-        <Tab Title="Equipment" Icon="inventory.png">
+        <Tab Title="Equipment" Icon="inventory.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
             <ShellContent ContentTemplate="{DataTemplate local:InventoryPage}" />
         </Tab>
 

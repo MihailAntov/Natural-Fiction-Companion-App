@@ -13,7 +13,8 @@ namespace NFCombat2.ViewModels
     {
         private readonly IPlayerService _playerService;
         private readonly IItemService _itemService;
-        private IAddable _toBeAdded;
+        private readonly INameService _nameService;
+        private readonly IPopupService _popupService;
         private TaskCompletionSource<CraftResult> _taskCompletionSource;   
         public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, TaskCompletionSource<CraftResult> taskCompletionSource)
         {
@@ -26,6 +27,7 @@ namespace NFCombat2.ViewModels
         }
 
         public string Episode { get; set; }
+        public IAddable ToBeAdded { get; set; } = null;
         public Command CraftCommand { get; set; }
         public Command ConfirmEpisodeCommand { get; set; }
 
@@ -55,23 +57,28 @@ namespace NFCombat2.ViewModels
                 return;
             }
 
-            _toBeAdded = _itemService.CheckFormula(result);
-            if(_toBeAdded == null)
+            ToBeAdded = _itemService.CheckFormula(result);
+            if(ToBeAdded == null)
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Incorrect);
                 return;
             }
             
             CorrectFormula = true;
+            return;
 
         }
 
         public async void ConfirmEpisode()
         {
-            if(_toBeAdded.Episode == int.Parse(Episode))
+            if(ToBeAdded.Episode == int.Parse(Episode))
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Correct);
-                await _playerService.AddItemToPlayer(_toBeAdded);
+                await _playerService.AddItemToPlayer(ToBeAdded);
+                foreach(var part in Parts)
+                {
+                    part.Quantity -= part.CurrentlySelected;
+                }
                 return;
             }
 

@@ -10,7 +10,7 @@ using static NFCombat2.Common.AppConstants.Options;
 using static NFCombat2.Common.AppConstants.EnemyNames;
 using static NFCombat2.Common.AppConstants.PartNames;
 using static NFCombat2.Common.AppConstants.CraftResults;
-
+using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
 {
@@ -151,10 +151,16 @@ namespace NFCombat2.Services
             }
         }
 
-        public string CraftResultMessage(CraftResult result)
+        public string CraftResultMessage(CraftResult result, IAddable item = null)
         {
             try
             {
+                string format = EnglishCraftResults[result];
+                if(item != null)
+                {
+                    string name = ItemName(item.ItemType);
+                    return string.Format(format, name);
+                }
                 return EnglishCraftResults[result];
 
             }

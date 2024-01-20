@@ -49,8 +49,12 @@ namespace NFCombat2.ViewModels
                 return;
             }
 
-            var toast = new Toast() { Text = _nameService.CraftResultMessage(result) };
+            var toast = new Toast() { Text = _nameService.CraftResultMessage(result, viewModel.ToBeAdded) };
             await toast.Show();
+            if(result == CraftResult.Correct)
+            {
+                await popup.CloseAsync();
+            }
         }
 
         

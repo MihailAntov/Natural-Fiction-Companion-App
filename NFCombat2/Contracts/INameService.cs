@@ -2,6 +2,7 @@
 using NFCombat2.Models.Fights;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Items.Parts;
+using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Contracts
 {
@@ -16,7 +17,7 @@ namespace NFCombat2.Contracts
         public string Label(LabelType type);
         public string ModeName(ItemMode mode);
         public string FightResultMessage(Fight fight);
-        public string CraftResultMessage(CraftResult result);
+        public string CraftResultMessage(CraftResult result, IAddable item);
         public string InfoMessage(Fight fight);
         public string EnemyName(EnemyType enemyType);
         public void RetrieveFightNames(Fight fight);

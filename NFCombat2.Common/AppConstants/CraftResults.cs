@@ -11,7 +11,7 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<CraftResult, string> EnglishCraftResults = new Dictionary<CraftResult, string>()
         {
-            {CraftResult.Correct, "Successfully crafted item." },
+            {CraftResult.Correct, "Successfully crafted {0}." },
             {CraftResult.Incorrect, "Incorrect formula." }
         };
     }
