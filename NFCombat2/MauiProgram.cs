@@ -34,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<FightPage>();
 		builder.Services.AddSingleton<OptionPickerView>();
 		builder.Services.AddSingleton<InventoryPage>();
+		builder.Services.AddSingleton<NotePage>();
 
 
 		builder.Services.AddSingleton<InventoryPageViewModel>();
@@ -41,9 +42,11 @@ public static class MauiProgram
 		builder.Services.AddSingleton<OptionPickerViewModel>();
 		builder.Services.AddSingleton<EntryWithSuggestionsViewModel>();
 		builder.Services.AddSingleton<AddingProfileViewModel>();
-		builder.Services.AddSingleton<LogPageViewModel>();
+		builder.Services.AddSingleton<NotePageViewModel>();
 		builder.Services.AddSingleton<ConfirmationPopupViewModel>();
 		builder.Services.AddSingleton<PartsBagViewModel>();
+		builder.Services.AddSingleton<NotePageViewModel>();
+		builder.Services.AddSingleton<NoteDetailsViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");

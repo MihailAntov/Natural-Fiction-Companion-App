@@ -2,9 +2,9 @@ using NFCombat2.ViewModels;
 
 namespace NFCombat2.Pages;
 
-public partial class LogPage : ContentPage
+public partial class NotePage : ContentPage
 {
-	public LogPage(LogPageViewModel viewModel)
+	public NotePage(NotePageViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

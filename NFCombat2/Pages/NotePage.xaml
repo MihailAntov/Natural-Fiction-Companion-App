@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="NotePage_"
+             x:Class="NFCombat2.Pages.NotePage"
+             Title="{Binding Title}">
+    <VerticalStackLayout>
+
+        <CollectionView ItemsSource="{Binding Notes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Button HorizontalOptions="CenterAndExpand" Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding NoteId}">
+                        
+                    </Button>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End">
+            
+        </ImageButton>
+    </VerticalStackLayout>
+</ContentPage>

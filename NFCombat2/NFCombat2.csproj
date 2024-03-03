@@ -134,7 +134,7 @@
 	  <MauiXaml Update="Pages\InventoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\LogPage.xaml">
+	  <MauiXaml Update="Pages\NotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\ImageRadioButton.xaml">
@@ -167,6 +167,9 @@
 	  <MauiXaml Update="Views\MultipleChoicePopupView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\NoteDetailsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\OptionPickerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -192,6 +195,12 @@
 	  <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
 	  <ProjectReference Include="..\NFCombat2.Data\NFCombat2.Data.csproj" />
 	  <ProjectReference Include="..\NFCombat2.Models\NFCombat2.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\NotePage.xaml.cs">
+	    <DependentUpon>NotePage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>
