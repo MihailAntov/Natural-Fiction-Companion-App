@@ -3,7 +3,9 @@
 using NFCombat2.Contracts;
 using NFCombat2.Models.Notes;
 using NFCombat2.Models.Player;
+using NFCombat2.Pages;
 using NFCombat2.Services;
+using NFCombat2.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -21,12 +23,26 @@ namespace NFCombat2.ViewModels
             _noteService = noteService;
             Player = _playerService.CurrentPlayer;
             Title = $"{Player.Name}'s log";
-            CreateNoteCommand = new Command<string>(CreateNote);
-            OpenNoteCommand = new Command<int>(OpenNote);
+            CreateNoteCommand = new Command(CreateNote);
+            OpenNoteCommand = new Command<int>(async (id)=> await OpenNote(id));
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
-
+            Notes = new ObservableCollection<Note>();
+            LoadNotes();
+            
         }
         private string _title;
+
+        private async void LoadNotes()
+        {
+            var notes = await _noteService.GetAllNotes(_playerService.CurrentPlayer.Id);
+
+            Notes.Clear();
+
+            foreach(var note in notes)
+            {
+                Notes.Add(note);
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,14 +62,21 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        private void OpenNote(int noteId)
+        private async Task OpenNote(int noteId)
         {
 
+            var note = await _noteService.GetNote(noteId);
+            var vm = new NoteDetailsViewModel(_noteService);
+            vm.Note = note;
+            
+            // todo: add navigation
+            await Shell.Current.Navigation.PushAsync(new NoteDetails(vm));
         }
 
-        public void CreateNote(string noteTitle)
+        public async void CreateNote()
         {
-
+            var newId = await _noteService.CreateNote(_playerService.CurrentPlayer.Id);
+            await OpenNote(newId);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
@@ -65,8 +88,7 @@ namespace NFCombat2.ViewModels
             {
                 Player = _playerService.CurrentPlayer;
                 Title = $"{Player.Name}'s log";
-
-                Notes = new ObservableCollection<Note>(await _noteService.GetAllNotes(Player.Id));
+                LoadNotes();
                 
             }
         }

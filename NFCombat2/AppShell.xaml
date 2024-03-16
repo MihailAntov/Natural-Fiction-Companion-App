@@ -17,7 +17,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />
         </Tab>
         <Tab Title="Log" Icon="notes.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
-            <ShellContent ContentTemplate="{DataTemplate local:LogPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:NotePage}" />
         </Tab>
         <Tab Title="Combat Simulator" Icon="fight.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
             <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />

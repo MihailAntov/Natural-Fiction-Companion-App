@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="NoteDetails_"
+             x:Class="NFCombat2.Pages.NoteDetails"
+             Title="NoteDetails">
+    <VerticalStackLayout>
+        <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}">
+
+        </Editor>
+        <Editor VerticalTextAlignment="Start" VerticalOptions="StartAndExpand" Text="{Binding Note.Text}">
+
+        </Editor>
+        <Button Text="Save" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
+        <ImageButton Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
+
+        </ImageButton>
+    </VerticalStackLayout>
+</ContentPage>

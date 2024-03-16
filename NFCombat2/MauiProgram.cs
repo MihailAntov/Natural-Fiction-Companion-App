@@ -10,6 +10,7 @@ using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Data.Extensions;
 using AutoMapper;
 using NFCombat2.Data.Profiles;
+using NFCombat2.Models.Notes;
 
 namespace NFCombat2;
 
@@ -27,6 +28,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
 		builder.Services.AddSingleton<IItemService, ItemService>();
 		builder.Services.AddSingleton<INameService, NameService>();
+		builder.Services.AddSingleton<INoteService, NoteService>();
 		//builder.Services.AddSingleton<ISeederService, SeederService>();
 
 		
@@ -49,12 +51,14 @@ public static class MauiProgram
 		builder.Services.AddSingleton<NoteDetailsViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
+		builder.Services.AddSingleton<Note>();
 		string dbPath = FileAccessHelper.GetLocalFilePath("profiles.db3");
         builder.Services.AddSingleton<PlayerRepository>(s => ActivatorUtilities.CreateInstance<PlayerRepository>(s, dbPath,false));
 		//TODO enable seeding only the first time
         //builder.Services.AddSingleton<FightRepository>(s => ActivatorUtilities.CreateInstance<FightRepository>(s, dbPath));
         builder.Services.AddSingleton<ItemRepository>(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, dbPath));
         builder.Services.AddSingleton<SettingsRepository>(s => ActivatorUtilities.CreateInstance<SettingsRepository>(s, dbPath));
+        //builder.Services.AddSingleton<NoteRepository>(s => ActivatorUtilities.CreateInstance<NoteRepository>(s, dbPath));
 		builder.Services.AddAutoMapper(typeof(PlayerProfile));
 
         builder

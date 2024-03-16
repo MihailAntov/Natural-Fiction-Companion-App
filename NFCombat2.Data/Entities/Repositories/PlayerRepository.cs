@@ -2,6 +2,7 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
+using NFCombat2.Data.Entities.Notes;
 using NFCombat2.Data.Entities.Programs;
 using NFCombat2.Data.Extensions;
 using NFCombat2.Data.Helpers;
@@ -11,6 +12,7 @@ using NFCombat2.Models.Items;
 using NFCombat2.Models.Items.Equipments;
 using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Models.Notes;
 using NFCombat2.Models.Player;
 using SQLite;
 using System;
@@ -43,6 +45,7 @@ namespace NFCombat2.Data.Entities.Repositories
             //await connection.DropTableAsync<ProgramEntity>();
             //await connection.DropTableAsync<PlayersProgramsEntity>();
             //await connection.DropTableAsync<PartBagEntity>();
+            //await connection.DropTableAsync<NoteEntity>();
             //Uncomment above lines to reset item db
 
             await connection.CreateTableAsync<PlayerEntity>();
@@ -53,6 +56,7 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.CreateTableAsync<ProgramEntity>();
             await connection.CreateTableAsync<PlayersProgramsEntity>();
             await connection.CreateTableAsync<PartBagEntity>();
+            await connection.CreateTableAsync<NoteEntity>();
 
             if(connection.Table<PlayerEntity>() != null)
             {
@@ -502,7 +506,80 @@ namespace NFCombat2.Data.Entities.Repositories
             return items;
         }
 
-        
+        public async Task<int> AddNewNote(int playerId)
+        {
+            int result = 0;
+            await Init();
+            var entity = new NoteEntity() { PlayerID = playerId };
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    result = await connection.InsertAsync(entity);
+                    StatusMessage = string.Format("{0} record(s) added (Title: {1})", result, entity.Id);
+                    result = entity.Id;
+
+                    var notes = await connection.Table<NoteEntity>().ToListAsync();
+                }
+                catch (Exception ex)
+                {
+                    StatusMessage = string.Format("Failed to add {0}. Error: {1}", 0, ex.Message);
+                }
+            });
+
+            return result;
+        }
+
+
+        public async Task UpdateNote(Note note)
+        {
+            await Init();
+
+            var entity = await connection.GetAsync<NoteEntity>(note.Id);
+            entity.Text = note.Text;
+            entity.Title = note.Title;
+            await connection.UpdateAsync(entity);
+        }
+
+        public async Task DeleteNote(Note note)
+        {
+
+            await Init();
+            await connection.DeleteAsync<NoteEntity>(note.Id);
+        }
+
+
+        public async Task<List<Note>> GetAllNotes(int playerId)
+        {
+            var noteEntities = await connection.Table<NoteEntity>()
+                .Where(ne => ne.PlayerID == playerId)
+                .ToListAsync();
+
+            var notes = noteEntities.Select(ne => new Note()
+            {
+                Title = ne.Title,
+                Text = ne.Text,
+                Id = ne.Id
+            }).ToList();
+
+            return notes;
+
+        }
+
+        public async Task<Note> GetNote(int noteId)
+        {
+            var noteEntity = await connection.GetAsync<NoteEntity>(noteId);
+            var note = new Note()
+            {
+                Id = noteEntity.Id,
+                Title = noteEntity.Title,
+                Text = noteEntity.Text
+            };
+
+            return note;
+        }
+
+
 
         private IAddable ItemConverter(ItemType type, ItemCategory category, int itemId, params object[] args)
         {

@@ -9,14 +9,17 @@
         <CollectionView ItemsSource="{Binding Notes}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Button HorizontalOptions="CenterAndExpand" Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding NoteId}">
-                        
+                    <VerticalStackLayout>
+                    <Button Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding Id}">
                     </Button>
+                        
+                    </VerticalStackLayout>
+                        
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End">
-            
+        <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.CreateNoteCommand}">
+
         </ImageButton>
     </VerticalStackLayout>
 </ContentPage>
