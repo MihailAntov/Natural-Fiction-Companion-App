@@ -12,7 +12,7 @@ namespace NFCombat2.Contracts
     {
         Task UpdateNote(Note note);
         Task DeleteNote(Note note);
-        Task<int> CreateNote(int playerId);
+        Task<Note> CreateNote(int playerId);
         Task<List<Note>> GetAllNotes(int playerId);
         Task<Note> GetNote(int noteId);
     }

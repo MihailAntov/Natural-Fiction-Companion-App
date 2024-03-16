@@ -30,12 +30,12 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.CombatSuit},
 
                 //active equipments
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArcWhip},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArcWhip,Formula="eeefflpuu",Episode=25},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.AutomatedMedKit},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.HandGrenade},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PortableSurgicalLaser},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.RocketPropelledFishingPole},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PneumaticDrill},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PortableSurgicalLaser,Formula="eelox",Episode=7},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.RocketPropelledFishingPole, Formula = "fffjos", Episode=28},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PneumaticDrill, Formula="ffffkot",Episode=35},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PlatinumPhial},
 
                 //active items

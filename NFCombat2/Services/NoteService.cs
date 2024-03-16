@@ -33,7 +33,7 @@ namespace NFCombat2.Services
             return await _repository.GetAllNotes(playerId);
         }
 
-        public async Task<int> CreateNote(int playerId)
+        public async Task<Note> CreateNote(int playerId)
         {
             return await _repository.AddNewNote(playerId);
         }

@@ -9,11 +9,10 @@
         <CollectionView ItemsSource="{Binding Notes}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout>
-                    <Button Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding Id}">
+
+                    <Button Padding="10" Margin="10" Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding}">
                     </Button>
                         
-                    </VerticalStackLayout>
                         
                 </DataTemplate>
             </CollectionView.ItemTemplate>

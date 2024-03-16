@@ -37,15 +37,15 @@ namespace NFCombat2.Data.Entities.Repositories
             }
             connection = new SQLiteAsyncConnection(_dbPath);
 
-            //await connection.DropTableAsync<PlayerEntity>();
-            //await connection.DropTableAsync<PlayersItemsEntity>();
-            //await connection.DropTableAsync<PlayersEquipmentsEntity>();
-            //await connection.DropTableAsync<PlayersWeaponsEntity>();
-            //await connection.DropTableAsync<ItemEntity>();
-            //await connection.DropTableAsync<ProgramEntity>();
-            //await connection.DropTableAsync<PlayersProgramsEntity>();
-            //await connection.DropTableAsync<PartBagEntity>();
-            //await connection.DropTableAsync<NoteEntity>();
+            await connection.DropTableAsync<PlayerEntity>();
+            await connection.DropTableAsync<PlayersItemsEntity>();
+            await connection.DropTableAsync<PlayersEquipmentsEntity>();
+            await connection.DropTableAsync<PlayersWeaponsEntity>();
+            await connection.DropTableAsync<ItemEntity>();
+            await connection.DropTableAsync<ProgramEntity>();
+            await connection.DropTableAsync<PlayersProgramsEntity>();
+            await connection.DropTableAsync<PartBagEntity>();
+            await connection.DropTableAsync<NoteEntity>();
             //Uncomment above lines to reset item db
 
             await connection.CreateTableAsync<PlayerEntity>();
@@ -487,6 +487,7 @@ namespace NFCombat2.Data.Entities.Repositories
         {
             await Init();
             var entities = await connection.Table<ItemEntity>().Where(i=>i.IsCraftOnly).ToListAsync();
+            //todo: replace iscraftonly with iscraftable to handle grenades and such
             List<IAddable> items = new List<IAddable>();
             foreach (var entity in entities)
             {
@@ -506,24 +507,26 @@ namespace NFCombat2.Data.Entities.Repositories
             return items;
         }
 
-        public async Task<int> AddNewNote(int playerId)
+        public async Task<Note> AddNewNote(int playerId)
         {
-            int result = 0;
+            Note result = new Note();
+            int status = 0;
             await Init();
             var entity = new NoteEntity() { PlayerID = playerId };
             await Task.Run(async () =>
             {
                 try
                 {
-                    result = await connection.InsertAsync(entity);
+                    status = await connection.InsertAsync(entity);
                     StatusMessage = string.Format("{0} record(s) added (Title: {1})", result, entity.Id);
-                    result = entity.Id;
+                    result.Id = entity.Id;
 
-                    var notes = await connection.Table<NoteEntity>().ToListAsync();
+                    
                 }
                 catch (Exception ex)
                 {
                     StatusMessage = string.Format("Failed to add {0}. Error: {1}", 0, ex.Message);
+                    result = null;
                 }
             });
 

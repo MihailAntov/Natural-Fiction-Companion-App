@@ -25,7 +25,15 @@ namespace NFCombat2.Models.Notes
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Text { get; set; }
+        public string Text { get { return _text; } set 
+            {
+                if(_text != value)
+                {
+                    _text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
+        }
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }

@@ -8,7 +8,7 @@
         <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}">
 
         </Editor>
-        <Editor VerticalTextAlignment="Start" VerticalOptions="StartAndExpand" Text="{Binding Note.Text}">
+        <Editor VerticalTextAlignment="Start" AutoSize="TextChanges" Text="{Binding Note.Text}">
 
         </Editor>
         <Button Text="Save" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>

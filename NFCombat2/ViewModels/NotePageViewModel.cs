@@ -24,7 +24,7 @@ namespace NFCombat2.ViewModels
             Player = _playerService.CurrentPlayer;
             Title = $"{Player.Name}'s log";
             CreateNoteCommand = new Command(CreateNote);
-            OpenNoteCommand = new Command<int>(async (id)=> await OpenNote(id));
+            OpenNoteCommand = new Command<Note>(async (note)=> await OpenNote(note));
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Notes = new ObservableCollection<Note>();
             LoadNotes();
@@ -32,14 +32,14 @@ namespace NFCombat2.ViewModels
         }
         private string _title;
 
-        private async void LoadNotes()
+        public async void LoadNotes()
         {
             var notes = await _noteService.GetAllNotes(_playerService.CurrentPlayer.Id);
 
             Notes.Clear();
 
             foreach(var note in notes)
-            {
+            { 
                 Notes.Add(note);
             }
         }
@@ -62,11 +62,9 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        private async Task OpenNote(int noteId)
+        private async Task OpenNote(Note note)
         {
-
-            var note = await _noteService.GetNote(noteId);
-            var vm = new NoteDetailsViewModel(_noteService);
+            var vm = new NoteDetailsViewModel(_noteService, this);
             vm.Note = note;
             
             // todo: add navigation
@@ -75,8 +73,9 @@ namespace NFCombat2.ViewModels
 
         public async void CreateNote()
         {
-            var newId = await _noteService.CreateNote(_playerService.CurrentPlayer.Id);
-            await OpenNote(newId);
+            var newNote = await _noteService.CreateNote(_playerService.CurrentPlayer.Id);
+            Notes.Add(newNote);
+            await OpenNote(newNote);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

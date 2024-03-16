@@ -12,11 +12,13 @@ namespace NFCombat2.ViewModels
     public class NoteDetailsViewModel
     {
         private readonly INoteService _noteService;
-        public NoteDetailsViewModel(INoteService noteService)
+        private NotePageViewModel _parent;
+        public NoteDetailsViewModel(INoteService noteService, NotePageViewModel parent)
         {
             _noteService = noteService;
             DeleteNoteCommand = new Command(DeleteNote);
             SaveNoteCommand = new Command(SaveNote);
+            _parent = parent;
         }
 
         public Note Note {get; set;}
@@ -33,6 +35,8 @@ namespace NFCombat2.ViewModels
         public async void DeleteNote()
         {
             await _noteService.DeleteNote(Note);
+            await Shell.Current.Navigation.PopAsync();
+            _parent.Notes.Remove(Note);
         }
 
 
