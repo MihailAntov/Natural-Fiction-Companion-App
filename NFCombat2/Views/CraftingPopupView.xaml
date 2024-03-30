@@ -24,7 +24,7 @@
                             <Label VerticalTextAlignment="Center" Text=" / "/>
                             <Label VerticalTextAlignment="Center" Text="{Binding Quantity}"/>
                         </HorizontalStackLayout>
-                        <Stepper Grid.Column="2" Value="{Binding CurrentlySelected}" Minimum="0" Maximum="{Binding Quantity}"></Stepper>
+                        <Stepper Grid.Column="2" Value="{Binding CurrentlySelected}"  Maximum="{Binding DisplayMaximum}" Minimum="0"></Stepper>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

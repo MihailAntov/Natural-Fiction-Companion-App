@@ -30,7 +30,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding WorkCoefficient}"/>
                                         <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}"/>
-                                        <Stepper Grid.Column="2" Value="{Binding Quantity}" Minimum="0" Maximum="99"></Stepper>
+                                        <Stepper Grid.Column="2" Value="{Binding Quantity}"  Maximum="99" Minimum="0"></Stepper>
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

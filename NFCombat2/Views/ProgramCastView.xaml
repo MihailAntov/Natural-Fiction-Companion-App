@@ -16,8 +16,9 @@
             <ColumnDefinition Width="200"/>
             
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Text="+" VerticalTextAlignment="Center"/>
-        <Picker Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding}"/>
+        
+        <Label Grid.Row="0" Grid.Column="0" Text="+" VerticalTextAlignment="End"/>
+        <Picker Title="Vili is great" Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding}"/>
         <Label Grid.Row="1" Grid.Column="0" Text="+" VerticalTextAlignment="Center"/>
         <Picker Grid.Row="1" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding SignalTypes}" ItemDisplayBinding="{Binding}"/>
         <Label Grid.Row="2" Grid.Column="0" Text="+" VerticalTextAlignment="Center"/>

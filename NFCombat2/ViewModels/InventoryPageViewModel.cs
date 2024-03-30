@@ -252,7 +252,7 @@ namespace NFCombat2.ViewModels
                 await _playerService.RemoveItemFromPlayer(addable);
                 
 
-                Player.Equipment.Remove(equipment);
+//                Player.Equipment.Remove(equipment);
                 Equipment = new ObservableCollection<Equipment>(Player.Equipment);
                 OnPropertyChanged(nameof(Player.Equipment));
                 return;
@@ -263,6 +263,8 @@ namespace NFCombat2.ViewModels
                 //todo
                 return;
             }
+
+
 
             if (addable is Item item)
             {

@@ -37,15 +37,15 @@ namespace NFCombat2.Data.Entities.Repositories
             }
             connection = new SQLiteAsyncConnection(_dbPath);
 
-            await connection.DropTableAsync<PlayerEntity>();
-            await connection.DropTableAsync<PlayersItemsEntity>();
-            await connection.DropTableAsync<PlayersEquipmentsEntity>();
-            await connection.DropTableAsync<PlayersWeaponsEntity>();
-            await connection.DropTableAsync<ItemEntity>();
-            await connection.DropTableAsync<ProgramEntity>();
-            await connection.DropTableAsync<PlayersProgramsEntity>();
-            await connection.DropTableAsync<PartBagEntity>();
-            await connection.DropTableAsync<NoteEntity>();
+            //await connection.DropTableAsync<PlayerEntity>();
+            //await connection.DropTableAsync<PlayersItemsEntity>();
+            //await connection.DropTableAsync<PlayersEquipmentsEntity>();
+            //await connection.DropTableAsync<PlayersWeaponsEntity>();
+            //await connection.DropTableAsync<ItemEntity>();
+            //await connection.DropTableAsync<ProgramEntity>();
+            //await connection.DropTableAsync<PlayersProgramsEntity>();
+            //await connection.DropTableAsync<PartBagEntity>();
+            //await connection.DropTableAsync<NoteEntity>();
             //Uncomment above lines to reset item db
 
             await connection.CreateTableAsync<PlayerEntity>();
