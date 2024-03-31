@@ -156,7 +156,7 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        private bool _browsingEquipments = true;
+        private bool _browsingEquipments = false;
         public bool BrowsingEquipments { get { return _browsingEquipments; }
             set
             {
@@ -205,6 +205,19 @@ namespace NFCombat2.ViewModels
                 {
                     _browsingExtraItems = value;
                     OnPropertyChanged(nameof(BrowsingExtraItems));
+                }
+            }
+        }
+        private bool _browsingWeapons = true;
+        public bool BrowsingWeapons
+        {
+            get { return _browsingWeapons; }
+            set
+            {
+                if (_browsingWeapons != value)
+                {
+                    _browsingWeapons = value;
+                    OnPropertyChanged(nameof(BrowsingWeapons));
                 }
             }
         }
@@ -260,7 +273,8 @@ namespace NFCombat2.ViewModels
 
             if (addable is Weapon weapon)
             {
-                //todo
+                await _playerService.RemoveItemFromPlayer(weapon);
+                UpdateWeaponDisplay();
                 return;
             }
 
@@ -451,6 +465,9 @@ namespace NFCombat2.ViewModels
         {
             switch (tab)
             {
+                case "weapons":
+                    BrowsingWeapons = isChecked;
+                    break;
                 case "equipment":
                     BrowsingEquipments = isChecked;
                     break;

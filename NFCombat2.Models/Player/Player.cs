@@ -227,7 +227,19 @@ namespace NFCombat2.Models.Player
                 return result;
             }
         }
-        public PlayerClass Class { get; set; } = PlayerClass.None;
+        private PlayerClass _class = PlayerClass.None;
+        public PlayerClass Class
+        {
+            get { return _class; }
+            set
+            {
+                if(_class != value)
+                {
+                    _class = value;
+                    OnPropertyChanged(nameof(Class));
+                }
+            }
+        }
         //public IList<Part> Parts { get; set; } = new List<Part>();
         public PartBag PartsBag { get; set; } = new PartBag();
         private int trauma = 0;

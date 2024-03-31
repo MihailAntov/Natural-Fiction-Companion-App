@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Player;
 using NFCombat2.Views;
@@ -14,19 +15,31 @@ namespace NFCombat2.ViewModels
 
         private IPlayerService _playerService;
         private IPopupService _popupService;
+        private INameService _nameService;
         private Player _player;
         
         public Command AddNewProfileCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService)
+        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService)
         {
             _playerService = playerService;
             _popupService = popupService;
+            _nameService = nameService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             Player = _playerService.CurrentPlayer;
-            SelectedItem = _playerService.CurrentPlayer;
+            
             LoadPlayersAsync();
             
+        }
+
+        public PlayerClassDisplay[] Classes { get
+            {
+                return (Enum.GetValuesAsUnderlyingType(typeof(PlayerClass)) as PlayerClass[]).Select(pc=> new PlayerClassDisplay()
+                {
+                    Class = pc,
+                    Name = _nameService.ClassName(pc)
+                }).ToArray();
+            }
         }
 
         private double _hpValue;
@@ -45,13 +58,27 @@ namespace NFCombat2.ViewModels
 
             }
         }
-        private Player _selectedItem { get; set; }
-        public Player SelectedItem { get { return _selectedItem; } set 
+        private Player _selectedProfile { get; set; }
+        public Player SelectedProfile { get { return _selectedProfile; } set 
             {
-                if(_selectedItem != value) 
+                if(_selectedProfile != value) 
                 {
-                    _selectedItem = value;
-                    OnPropertyChanged(nameof(SelectedItem));
+                    _selectedProfile = value;
+                    OnPropertyChanged(nameof(SelectedProfile));
+                }
+            }
+        }
+
+        private PlayerClass _selectedClass { get; set; }
+        public PlayerClass SelectedClass
+        {
+            get { return _selectedClass; }
+            set
+            {
+                if (_selectedClass != value)
+                {
+                    _selectedClass = value;
+                    OnPropertyChanged(nameof(SelectedClass));
                 }
             }
         }
@@ -123,6 +150,13 @@ namespace NFCombat2.ViewModels
             if(newItem is Player player)
             {
                 await SwitchToProfile(player);
+                return;
+            }
+
+            if(newItem is PlayerClassDisplay playerClass)
+            {
+                await ChangeClass(playerClass.Class);
+                return;
             }
 
             
@@ -132,8 +166,14 @@ namespace NFCombat2.ViewModels
             await _playerService.SavePlayer();
             await _playerService.SwitchToPlayer(player);
             OnPropertyChanged(nameof(Profiles));
-            SelectedItem = player;
-            
+            SelectedProfile = player;
+            SelectedClass = player.Class;
+        }
+
+        public async Task ChangeClass(PlayerClass playerClass)
+        {
+            _playerService.CurrentPlayer.Class = playerClass;
+            await _playerService.SavePlayer();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

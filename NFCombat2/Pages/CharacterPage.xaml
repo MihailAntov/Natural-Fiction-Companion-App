@@ -8,14 +8,21 @@
 
         <Picker x:Name="Profile"
         Title="Choose a profile"
-        SelectedItem="{Binding SelectedItem}"
+        SelectedItem="{Binding SelectedProfile}"
         SelectedIndexChanged="ChangedProfile"
         ItemsSource="{Binding Profiles}"
         ItemDisplayBinding="{Binding Name}">
         </Picker>
-        
+        <Picker x:Name="Class"
+        Title="Choose a class"
+        SelectedItem="{Binding SelectedClass}"
+        SelectedIndexChanged="ChangedProfile"
+        ItemsSource="{Binding Classes}"
+        ItemDisplayBinding="{Binding Name}">
+        </Picker>
 
-        
+
+
 
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>

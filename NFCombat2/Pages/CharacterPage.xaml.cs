@@ -6,10 +6,10 @@ namespace NFCombat2.Pages;
 
 public partial class CharacterPage : ContentPage
 {
-	public CharacterPage(IPlayerService profileService, IPopupService popupSerivce)
+	public CharacterPage(IPlayerService profileService, IPopupService popupSerivce, INameService nameService)
 	{
 		InitializeComponent();
-		BindingContext = new CharacterPageViewModel(profileService, popupSerivce);
+		BindingContext = new CharacterPageViewModel(profileService, popupSerivce,nameService);
 	}
 	
 
@@ -29,7 +29,9 @@ public partial class CharacterPage : ContentPage
         }
     }
 
-	
 
-    
+
+
+
+
 }

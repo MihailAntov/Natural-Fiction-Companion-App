@@ -18,7 +18,12 @@
 
     <StackLayout>
         <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
-             RadioButtonGroup.SelectedValue="equipment">
+             RadioButtonGroup.SelectedValue="weapons">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab">
+                <RadioButton.Content>
+                    <Image Source="pistol.png" />
+                </RadioButton.Content>
+            </RadioButton>
             <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab">
                 <RadioButton.Content>
                     <Image Source="equipment.png" />
@@ -41,7 +46,7 @@
             </RadioButton>
         </StackLayout>
         <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
-        <Grid HeightRequest="180" Margin="20" ColumnSpacing="0" IsVisible="{Binding BrowsingEquipments}">
+        <Grid HeightRequest="180" Margin="20" ColumnSpacing="0" IsVisible="{Binding BrowsingWeapons}">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -73,7 +78,7 @@
             <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets" IsVisible="{Binding Player.MainHand.HasGasOperatedReloadingSystem, FallbackValue=false}"/>
             <ImageButton Grid.Row="3" Grid.Column="1" Source="radar" IsVisible="{Binding Player.MainHand.HasBarrelExtender, FallbackValue=false}"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
-            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash"/>
+            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}"/>
 
 
 
@@ -90,7 +95,7 @@
             <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets" IsVisible="{Binding Player.OffHand.HasGasOperatedReloadingSystem, FallbackValue=false}"/>
             <ImageButton Grid.Row="3" Grid.Column="4" Source="radar" IsVisible="{Binding Player.OffHand.HasBarrelExtender, FallbackValue=false}"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
-            <ImageButton Grid.Row="5" Grid.Column="3" Source="trash"/>
+            <ImageButton Grid.Row="5" Grid.Column="3" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.OffHand}"/>
         </Grid>
 
 
@@ -134,14 +139,30 @@
 
                     <ViewCell>
                         <ViewCell.View>
+                            
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="35"/>
+                            </Grid.ColumnDefinitions>
+                            <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>-->
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
-                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="25"/>
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
                             </Grid>
+                            
                         </ViewCell.View>
                     </ViewCell>
 
@@ -155,13 +176,29 @@
 
                     <ViewCell>
                         <ViewCell.View>
-                            <Grid>
+                            <!--<Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="35"/>
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
                                 <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                            </Grid>-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="25"/>
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>
