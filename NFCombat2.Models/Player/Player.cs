@@ -235,6 +235,14 @@ namespace NFCombat2.Models.Player
             {
                 if(_class != value)
                 {
+                    if(_class == PlayerClass.Soldier)
+                    {
+                        BonusMaxHealth -= 20;
+                    }else if (value == PlayerClass.Soldier)
+                    {
+                        BonusMaxHealth += 20;
+                    }
+
                     _class = value;
                     OnPropertyChanged(nameof(Class));
                 }

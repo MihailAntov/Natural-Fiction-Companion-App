@@ -153,11 +153,11 @@ namespace NFCombat2.Services
                 await _repository.UpdatePlayer(CurrentPlayer);
             }
             
-            var newPlayer = await GetPlayerById(player.Id);
-            if(newPlayer != null)
-            {
-                player = newPlayer;
-            }
+            //var newPlayer = await GetPlayerById(player.Id);
+            //if(newPlayer != null)
+            //{
+            //    player = newPlayer;
+            //}
             await UpdateNames(player);
             CurrentPlayer = player;
             await _settings.UpdateCurrentPlayer(player.Id);

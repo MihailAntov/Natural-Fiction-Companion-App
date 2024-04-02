@@ -46,7 +46,7 @@
             <Image Grid.Row="1" Source="healthcare"/>
             <Label Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
             <Slider Grid.Column="3" Grid.Row="1"  Minimum="0" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}"/>
-            <Stepper Grid.Column="4" Grid.Row="1" Minimum="0" Maximum="99"/>
+            <Stepper Grid.Column="4" Grid.Row="1" Minimum="0" Maximum="99" Value="{Binding Player.BaseMaxHealth}"/>
 
             <Image Grid.Row="2" Source="highvoltage"/>
             <Label Grid.Column="1" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}"/>

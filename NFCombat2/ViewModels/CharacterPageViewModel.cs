@@ -32,13 +32,14 @@ namespace NFCombat2.ViewModels
             
         }
 
-        public PlayerClassDisplay[] Classes { get
+        public ObservableCollection<PlayerClassDisplay> Classes { get
             {
-                return (Enum.GetValuesAsUnderlyingType(typeof(PlayerClass)) as PlayerClass[]).Select(pc=> new PlayerClassDisplay()
-                {
-                    Class = pc,
-                    Name = _nameService.ClassName(pc)
-                }).ToArray();
+                return new ObservableCollection<PlayerClassDisplay>(
+                    (Enum.GetValuesAsUnderlyingType(typeof(PlayerClass)) as PlayerClass[]).Select(pc => new PlayerClassDisplay()
+                    {
+                        Class = pc,
+                        Name = _nameService.ClassName(pc)
+                    }));
             }
         }
 
@@ -58,7 +59,7 @@ namespace NFCombat2.ViewModels
 
             }
         }
-        private Player _selectedProfile { get; set; }
+        private Player _selectedProfile;
         public Player SelectedProfile { get { return _selectedProfile; } set 
             {
                 if(_selectedProfile != value) 
@@ -69,8 +70,9 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        private PlayerClass _selectedClass { get; set; }
-        public PlayerClass SelectedClass
+
+        private PlayerClassDisplay _selectedClass;
+        public PlayerClassDisplay SelectedClass
         {
             get { return _selectedClass; }
             set
@@ -116,7 +118,8 @@ namespace NFCombat2.ViewModels
         
         
 
-        public ObservableCollection<Player> Profiles {get; set;}
+        //public ObservableCollection<Player> Profiles {get; set;}
+        public IList<Player> Profiles { get; set; } = new List<Player>();
 
         public async Task AddProfile()
         {
@@ -167,7 +170,8 @@ namespace NFCombat2.ViewModels
             await _playerService.SwitchToPlayer(player);
             OnPropertyChanged(nameof(Profiles));
             SelectedProfile = player;
-            SelectedClass = player.Class;
+            SelectedClass = Classes.FirstOrDefault(c=> c.Class == player.Class);
+
         }
 
         public async Task ChangeClass(PlayerClass playerClass)
