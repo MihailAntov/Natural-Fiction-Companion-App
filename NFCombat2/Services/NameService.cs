@@ -11,6 +11,7 @@ using static NFCombat2.Common.AppConstants.EnemyNames;
 using static NFCombat2.Common.AppConstants.PartNames;
 using static NFCombat2.Common.AppConstants.CraftResults;
 using static NFCombat2.Common.AppConstants.ClassNames;
+using static NFCombat2.Common.AppConstants.ProgramComponentNames;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
@@ -176,6 +177,18 @@ namespace NFCombat2.Services
             try
             {
                 return EnglishClassNames[className];
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string ProgramComponentName(ProgramComponentType type)
+        {
+            try
+            {
+                return EnglishProgramComponentNames[type];
             }
             catch
             {

@@ -17,6 +17,7 @@ namespace NFCombat2.Models.Fights
 
         public override void CheckWinCondition()
         {
+            base.CheckWinCondition();
             if(OnTurnsReached != FightResult.None)
             {
                 if(Turn > MaxTurns)

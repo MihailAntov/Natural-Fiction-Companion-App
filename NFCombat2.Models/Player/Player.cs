@@ -207,6 +207,7 @@ namespace NFCombat2.Models.Player
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public IList<Program> Programs { get; set; } = new List<Program>();
+        public string ProgramList { get; set; }
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers
         {
@@ -241,12 +242,14 @@ namespace NFCombat2.Models.Player
                         MaxIonization -= 2;
                         MaxTrauma -= 2;
                         MaxPathogens -= 2;
+                        MaxWeaponWeight -= 1;
                     }else if (value == PlayerClass.Soldier)
                     {
                         BonusMaxHealth += 20;
                         MaxIonization += 2;
                         MaxTrauma += 2;
                         MaxPathogens += 2;
+                        MaxWeaponWeight += 1;
                     }
 
                     _class = value;

@@ -13,9 +13,10 @@ namespace NFCombat2.Services
 {
     public class PopupService : IPopupService
     {
-        public PopupService()
+        private readonly IProgramService _programService;
+        public PopupService(IProgramService programService)
         {
-
+            _programService = programService;
         }
         public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll, int reRollsAvailable)
         {
@@ -107,7 +108,7 @@ namespace NFCombat2.Services
         public async Task<Program> ShowCastPopup()
         {
             TaskCompletionSource<Program> taskCompletionSource = new TaskCompletionSource<Program>();
-            var viewmodel = new ProgramCastViewModel(taskCompletionSource);
+            var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService);
 
             var popup = new ProgramCastView(viewmodel);
             ShowPopup(popup);

@@ -8,7 +8,6 @@ namespace NFCombat2.Models.Programs
     public class Program : IStandardAction, ITarget
     {
         public Player.Player Caster { get; set; }
-        public int Id { get; set; }
         public Program()
         {
         }
@@ -16,7 +15,8 @@ namespace NFCombat2.Models.Programs
         public bool AreaOfEffect { get; set; }
         public bool BonusAction {  get; set; }
         public int Cost { get; set; }
-        
+        public int Episode { get; set; }    
+        public string Formula { get; set; }
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
         public ICollection<IProgramEffect> Effects { get; set; } = new List<IProgramEffect>();

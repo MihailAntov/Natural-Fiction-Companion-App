@@ -14,6 +14,7 @@ using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Notes;
 using NFCombat2.Models.Player;
+using NFCombat2.Models.Programs;
 using SQLite;
 using System;
 using System.Numerics;
@@ -54,7 +55,7 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.CreateTableAsync<PlayersWeaponsEntity>();
             await connection.CreateTableAsync<ItemEntity>();
             await connection.CreateTableAsync<ProgramEntity>();
-            await connection.CreateTableAsync<PlayersProgramsEntity>();
+            //await connection.CreateTableAsync<PlayersProgramsEntity>();
             await connection.CreateTableAsync<PartBagEntity>();
             await connection.CreateTableAsync<NoteEntity>();
 
@@ -203,24 +204,25 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdatePrograms(Player player)
         {
-            //Marker : Programs
-            foreach(var program in player.Programs)
-            {
-                PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
-                    .Where(pp => pp.PlayerId == player.Id && pp.ProgramId == program.Id)
-                    .FirstOrDefaultAsync();
+            //Marker : Programs TODO : add string holding programIds
+            //foreach(var program in player.Programs)
+            //{
+            //    PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
+            //        .Where(pp => pp.PlayerId == player.Id && pp.ProgramId == program.Id)
+            //        .FirstOrDefaultAsync();
 
-                if(entity == null)
-                {
-                    PlayersProgramsEntity newEntity = new PlayersProgramsEntity()
-                    {
-                        PlayerId = player.Id,
-                        ProgramId = program.Id
-                    };
-                    await connection.InsertAsync(newEntity);
-                }
+            //    if(entity == null)
+            //    {
+            //        PlayersProgramsEntity newEntity = new PlayersProgramsEntity()
+            //        {
+            //            PlayerId = player.Id,
+            //            ProgramId = program.Id
+            //        };
+            //        await connection.InsertAsync(newEntity);
+            //    }
 
-            }
+            //}
+
         }
 
         private async Task UpdateWeapons(Player player)
@@ -372,17 +374,18 @@ namespace NFCombat2.Data.Entities.Repositories
 
             //programs
 
-            var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
-                .Where(pp => pp.PlayerId == player.Id).ToListAsync();
-            var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
-            
-            var programs = await connection.Table<ProgramEntity>()
-                .Where(p=> programIds.Contains(p.Id)).ToListAsync();
+            //var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
+            //    .Where(pp => pp.PlayerId == player.Id).ToListAsync();
+            //var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
 
-            foreach(var program in programs)
-            {
-                player.Programs.Add(ProgramFactory.GetProgram(program.Type));
-            }
+            //var programs = await connection.Table<ProgramEntity>()
+            //    .Where(p=> programIds.Contains(p.Id)).ToListAsync();
+            //if (player.Class == PlayerClass.Hacker)
+            //{
+            //    List<Program> knownPrograms = GetKnownPrograms(player);
+            //    player.Programs = knownPrograms;
+            //}
+
         }
 
         public async Task<List<Player>> GetAllProfiles()

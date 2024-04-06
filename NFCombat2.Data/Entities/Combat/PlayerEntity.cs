@@ -31,6 +31,8 @@ namespace NFCombat2.Data.Entities.Combat
 
         public int MaxWeaponWeight { get; set; } = 1;
 
+        public string ProgramList { get; set; } = string.Empty;
+
         public int PartBagId { get; set; }
         //public List<WeaponEntity> Weapons { get; set; } = new List<WeaponEntity>();
         //public List<ItemEntity> Items { get; set; } = new List<ItemEntity>();

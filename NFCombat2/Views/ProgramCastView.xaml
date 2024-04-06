@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.ProgramCastView"
                Closed="OnClosed">
@@ -17,12 +18,12 @@
             
         </Grid.ColumnDefinitions>
         
-        <Label Grid.Row="0" Grid.Column="0" Text="+" VerticalTextAlignment="End"/>
-        <Picker Title="Vili is great" Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding}"/>
-        <Label Grid.Row="1" Grid.Column="0" Text="+" VerticalTextAlignment="Center"/>
-        <Picker Grid.Row="1" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding SignalTypes}" ItemDisplayBinding="{Binding}"/>
-        <Label Grid.Row="2" Grid.Column="0" Text="+" VerticalTextAlignment="Center"/>
-        <Picker Grid.Row="2" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding ParadigmTypes}" ItemDisplayBinding="{Binding}"/>
+        <Button Grid.Row="0" Grid.Column="0" Text="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarity}" CommandParameter="logicalOperation" />
+        <Picker  Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding LogicalOperationType}"/>
+        <Button Grid.Row="1" Grid.Column="0" Text="{Binding ElectricalSignalPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarity}" CommandParameter="electricalSignal" />
+        <Picker Grid.Row="1" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding SignalTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ElectricSignalType}"/>
+        <Button Grid.Row="2" Grid.Column="0" Text="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarity}" CommandParameter="programParadigm" />
+        <Picker Grid.Row="2" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding ParadigmTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ProgramParadigmType}"/>
         <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Execute"/>
 
     </Grid>
