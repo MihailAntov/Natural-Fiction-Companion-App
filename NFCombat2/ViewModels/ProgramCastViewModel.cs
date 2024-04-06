@@ -14,7 +14,7 @@ namespace NFCombat2.ViewModels
         {
             _taskCompletionSource = taskCompletionSource;
             _programService = programService;
-            ExecuteCommand = new Command(ExecuteProgram);
+            ExecuteProgramCommand = new Command(ExecuteProgram);
             ChangePolarityCommand = new Command<string>(ChangePolarity);
             OperationTypes = _programService.GetOperationTypes();
             SignalTypes = _programService.GetSignalTypes();
@@ -25,7 +25,7 @@ namespace NFCombat2.ViewModels
         public IList<ProgramFormulaComponent> SignalTypes { get; set; }
         public IList<ProgramFormulaComponent> ParadigmTypes { get; set; } 
 
-        public Command ExecuteCommand { get; set; }
+        public Command ExecuteProgramCommand { get; set; }
         public Command ChangePolarityCommand { get; set; }
         public void ChangePolarity(string component)
         {
@@ -44,7 +44,7 @@ namespace NFCombat2.ViewModels
         }
         
         public ProgramFormulaComponent LogicalOperationType { get; set; }
-        private bool _logicalOperationPolarity;
+        private bool _logicalOperationPolarity = true;
         public bool LogicalOperationPolarity { get { return _logicalOperationPolarity; } set
             {
                 if(_logicalOperationPolarity != value)
@@ -56,7 +56,7 @@ namespace NFCombat2.ViewModels
         }
 
         public ProgramFormulaComponent ElectricalSignalType { get; set; }
-        private bool _electricalSignalPolarity;
+        private bool _electricalSignalPolarity = true;
         public bool ElectricalSignalPolarity
         {
             get { return _electricalSignalPolarity; }
@@ -71,7 +71,7 @@ namespace NFCombat2.ViewModels
         }
 
         public ProgramFormulaComponent ProgramParadigmType { get; set; }
-        private bool _programParadigmPolarity;
+        private bool _programParadigmPolarity = true;
 
         public bool ProgramParadigmPolarity
         {
