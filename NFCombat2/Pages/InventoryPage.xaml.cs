@@ -1,3 +1,4 @@
+using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using NFCombat2.ViewModels;
 
@@ -5,10 +6,12 @@ namespace NFCombat2.Pages;
 
 public partial class InventoryPage : ContentPage
 {
-	public InventoryPage(InventoryPageViewModel viewModel)
+	private readonly IPlayerService _playerService;
+	public InventoryPage(InventoryPageViewModel viewModel, IPlayerService playerService)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+		_playerService = playerService;
 	}
 
 	public async void TappedItem(object sender, EventArgs e)
@@ -53,6 +56,12 @@ public partial class InventoryPage : ContentPage
 			}
 		}
 	}
-	
+
+    protected override async void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+		await _playerService.SavePlayer();
+        base.OnNavigatedFrom(args);
+    }
+
 
 }

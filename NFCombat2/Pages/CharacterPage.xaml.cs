@@ -6,10 +6,12 @@ namespace NFCombat2.Pages;
 
 public partial class CharacterPage : ContentPage
 {
-	public CharacterPage(IPlayerService profileService, IPopupService popupSerivce, INameService nameService)
+	private readonly IPlayerService _playerService;
+	public CharacterPage(IPlayerService playerService, IPopupService popupSerivce, INameService nameService)
 	{
 		InitializeComponent();
-		BindingContext = new CharacterPageViewModel(profileService, popupSerivce,nameService);
+		BindingContext = new CharacterPageViewModel(playerService, popupSerivce,nameService);
+		_playerService = playerService;
 	}
 	
 
@@ -24,9 +26,16 @@ public partial class CharacterPage : ContentPage
 				if(picker.SelectedItem != null)
 				{
 					viewModel.ProcessChoice(picker.SelectedItem);
+					picker.SelectedItem = null;
 				}
 			}      
         }
+    }
+
+    protected override async void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+		await _playerService.SavePlayer();
+        base.OnNavigatedFrom(args);
     }
 
 

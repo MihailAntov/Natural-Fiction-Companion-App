@@ -43,12 +43,12 @@ namespace NFCombat2.Models.Player
             }
             set
             {
-                //if(value > MaxHealth)
-                //{
-                //    value = MaxHealth;
-                //}
+                if (value > MaxHealth)
+                {
+                    value = MaxHealth;
+                }
 
-                if(value < 0)
+                if (value < 0)
                 {
                     value = 0;
                 }
@@ -238,9 +238,15 @@ namespace NFCombat2.Models.Player
                     if(_class == PlayerClass.Soldier)
                     {
                         BonusMaxHealth -= 20;
+                        MaxIonization -= 2;
+                        MaxTrauma -= 2;
+                        MaxPathogens -= 2;
                     }else if (value == PlayerClass.Soldier)
                     {
                         BonusMaxHealth += 20;
+                        MaxIonization += 2;
+                        MaxTrauma += 2;
+                        MaxPathogens += 2;
                     }
 
                     _class = value;

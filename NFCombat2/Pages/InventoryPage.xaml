@@ -4,6 +4,7 @@
              x:Class="NFCombat2.Pages.InventoryPage"
              x:Name="Inventory"
              xmlns:local="clr-namespace:NFCombat2.Pages"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:views="clr-namespace:NFCombat2.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="{Binding Title}">
@@ -34,7 +35,7 @@
                     <Image Source="backpack.png" />
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab" IsVisible="{Binding Player.Class, Converter={helpers:EngineerConverter}}">
                 <RadioButton.Content>
                     <Image Source="wrench.png" />
                 </RadioButton.Content>

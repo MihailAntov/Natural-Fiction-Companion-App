@@ -2,30 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              x:Name="Character"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Pages.CharacterPage"
              Title="Character">
     <StackLayout>
-
-        <Picker x:Name="Profile"
-        Title="Choose a profile"
-        SelectedItem="{Binding SelectedProfile}"
-        SelectedIndexChanged="ChangedProfile"
-        ItemsSource="{Binding Profiles}"
-        ItemDisplayBinding="{Binding Name}">
-        </Picker>
-        <Picker x:Name="Class"
-        Title="Choose a class"
-        SelectedItem="{Binding SelectedClass}"
-        SelectedIndexChanged="ChangedProfile"
-        ItemsSource="{Binding Classes}"
-        ItemDisplayBinding="{Binding Name}">
-        </Picker>
-
-
-
-
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -42,39 +27,52 @@
                 <ColumnDefinition Width="75"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="5" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
-            
-            <Image Grid.Row="1" Source="healthcare"/>
-            <Label Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
-            <Slider Grid.Column="3" Grid.Row="1"  Minimum="0" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}"/>
-            <Stepper Grid.Column="4" Grid.Row="1" Minimum="0" Maximum="99" Value="{Binding Player.BaseMaxHealth}"/>
+            <Picker x:Name="Profile"
+                    Grid.Row="1"
+                    Grid.Column="0" Grid.ColumnSpan="5"
+                    HorizontalTextAlignment="Center"
+                    Title="Change profile"
+                    SelectedIndexChanged="ChangedProfile"
+                    ItemsSource="{Binding Profiles}"
+                    ItemDisplayBinding="{Binding Name}">
 
-            <Image Grid.Row="2" Source="highvoltage"/>
-            <Label Grid.Column="1" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}"/>
-            <Slider Grid.Column="3" Grid.Row="2"  Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}"/>
+            </Picker>
+            <Label Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="2" HorizontalTextAlignment="Center" FontSize="Small" Text="{Binding Player.Class}"/>
+            <Picker x:Name="Class"
+                    Grid.Row="3"
+                    Grid.Column="0" Grid.ColumnSpan="5"
+                    HorizontalTextAlignment="Center"
+                    Title="Change class"
+                    SelectedIndexChanged="ChangedProfile"
+                    ItemsSource="{Binding Classes}"
+                    ItemDisplayBinding="{Binding Name}">
+            </Picker>
 
-            <Image Grid.Row="3" Source="injury"/>
-            <Label Grid.Column="1" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
-            <Slider Grid.Column="3" Grid.Row="3"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}"/>
+            <Image Grid.Row="4" Source="healthcare"/>
+            <Label Grid.Column="1" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
+            <Slider Grid.Column="3" Grid.Row="4"  Minimum="0" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}"/>
+            <Stepper Grid.Column="4" Grid.Row="4" Minimum="0" Maximum="99" Value="{Binding Player.BaseMaxHealth}"/>
 
-            <Image Grid.Row="4" Source="biohazard"/>
-            <Label Grid.Column="1" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
-            <Slider Grid.Column="3" Grid.Row="4"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}"/>
+            <Image Grid.Row="5" Source="highvoltage" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
+            <Label Grid.Column="1" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
+            <Slider Grid.Column="3" Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
 
-            <Image Grid.Row="5" Source="radiation"/>
-            <Label Grid.Column="1" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
-            <Slider Grid.Column="3" Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}"/>
+            <Image Grid.Row="6" Source="injury"/>
+            <Label Grid.Column="1" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
+            <Slider Grid.Column="3" Grid.Row="6"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}"/>
 
-            <Image Grid.Row="6" Source="fuel"/>
-            <Label Grid.Column="1" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
-            <Slider Grid.Column="3" Grid.Row="6"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}"/>
+            <Image Grid.Row="7" Source="biohazard"/>
+            <Label Grid.Column="1" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
+            <Slider Grid.Column="3" Grid.Row="7"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}"/>
+
+            <Image Grid.Row="8" Source="radiation"/>
+            <Label Grid.Column="1" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
+            <Slider Grid.Column="3" Grid.Row="8"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}"/>
+
+            <Image Grid.Row="9" Source="fuel"/>
+            <Label Grid.Column="1" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
+            <Slider Grid.Column="3" Grid.Row="9"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}"/>
         </Grid>
-            
-        
-            <Button VerticalOptions="EndAndExpand" Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
-
-        
-
-
+        <Button VerticalOptions="EndAndExpand" Text="Add new profile" Command="{Binding AddNewProfileCommand}"/>
     </StackLayout>
-
 </ContentPage>

@@ -32,14 +32,19 @@ namespace NFCombat2.ViewModels
             
         }
 
-        public ObservableCollection<PlayerClassDisplay> Classes { get
+        public List<PlayerClassDisplay> Classes { get
             {
-                return new ObservableCollection<PlayerClassDisplay>(
-                    (Enum.GetValuesAsUnderlyingType(typeof(PlayerClass)) as PlayerClass[]).Select(pc => new PlayerClassDisplay()
-                    {
-                        Class = pc,
-                        Name = _nameService.ClassName(pc)
-                    }));
+                List<PlayerClassDisplay> classes = (Enum.GetValuesAsUnderlyingType(typeof(PlayerClass)) as PlayerClass[]).Select(pc => new PlayerClassDisplay()
+                {
+                    Class = pc,
+                    Name = _nameService.ClassName(pc)
+                }).ToList();
+                if(Player != null)
+                {
+                    SelectedClass = classes.FirstOrDefault(c => c.Class == Player.Class);
+                }
+
+                return classes;
             }
         }
 
@@ -142,6 +147,10 @@ namespace NFCombat2.ViewModels
         public async void LoadPlayersAsync()
         {
             var players = await _playerService.GetAllPlayers();
+            if(Player!= null)
+            {
+                SelectedProfile = players.FirstOrDefault(p => p.Id == Player.Id);
+            }
             Profiles = new ObservableCollection<Player>(players);
             OnPropertyChanged(nameof(Profiles));
 
