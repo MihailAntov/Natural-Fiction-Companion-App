@@ -34,6 +34,8 @@ namespace NFCombat2.Data.Entities.Combat
         public string ProgramList { get; set; } = string.Empty;
 
         public int PartBagId { get; set; }
+
+        public int Fuel { get; set;} = 0;
         //public List<WeaponEntity> Weapons { get; set; } = new List<WeaponEntity>();
         //public List<ItemEntity> Items { get; set; } = new List<ItemEntity>();
 

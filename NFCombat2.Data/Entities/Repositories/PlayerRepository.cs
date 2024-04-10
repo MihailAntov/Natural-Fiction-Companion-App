@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using NFCombat2.Common.Enums;
+﻿using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Notes;
@@ -27,7 +26,7 @@ namespace NFCombat2.Data.Entities.Repositories
     {
         string _dbPath;
         private SQLiteAsyncConnection connection = null!;
-        private IMapper _mapper;
+        //private IMapper _mapper;
         public string StatusMessage { get; set; } = string.Empty;
         public bool ShouldSeed { get; set; } = false;
         private async Task Init()
@@ -69,10 +68,9 @@ namespace NFCombat2.Data.Entities.Repositories
             }
 
         }
-        public PlayerRepository(string dbPath, IMapper mapper, bool seed)
+        public PlayerRepository(string dbPath,  bool seed)
         {
             _dbPath = dbPath;
-            _mapper = mapper;
             ShouldSeed = seed;
             Init();
         }
@@ -266,7 +264,27 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task UpdatePlayer(Player player)
         {
             await Init();
-            var entity = _mapper.Map<PlayerEntity>(player);
+            //var entity = _mapper.Map<PlayerEntity>(player);
+            var entity = new PlayerEntity()
+
+            {
+                Id = player.Id,
+                Name = player.Name,
+                Health = player.Health,
+                BaseMaxHealth = player.BaseMaxHealth,
+                Class = player.Class,
+                MaxIonization = player.MaxIonization,
+                MaxTrauma = player.MaxTrauma,
+                MaxPathogens = player.MaxPathogens,
+                Ionization = player.Ionization,
+                Trauma = player.Trauma,
+                Pathogens = player.Pathogens,
+                Overload = player.Overload,
+                MaxOverload = player.MaxOverload,
+                Speed = player.Speed,
+                Fuel = player.Fuel
+
+            };
             await UpdateItems(player);
             await UpdateEquipments(player);
             await UpdateWeapons(player);
@@ -397,8 +415,27 @@ namespace NFCombat2.Data.Entities.Repositories
             {
 
                 players = (await connection.Table<PlayerEntity>().ToListAsync())
-                    .Select(_mapper.Map<Player>)
-                    .ToList();
+                    //.Select(_mapper.Map<Player>)
+                    .Select(pe=> new Player()
+                    {
+                        Id = pe.Id,
+                        Name = pe.Name,
+                        Health = pe.Health,
+                        BaseMaxHealth = pe.BaseMaxHealth,
+                        Class = pe.Class,
+                        MaxIonization = pe.MaxIonization,
+                        MaxTrauma = pe.MaxTrauma,
+                        MaxPathogens = pe.MaxPathogens,
+                        Ionization = pe.Ionization,
+                        Trauma = pe.Trauma,
+                        Pathogens = pe.Pathogens,
+                        Overload = pe.Overload,
+                        MaxOverload = pe.MaxOverload,
+                        Speed = pe.Speed,
+                        Fuel = pe.Fuel,
+                        
+
+                    }).ToList();
                 foreach (var player in players)
                 {
                     //RetrievePlayerData(player);
@@ -420,7 +457,27 @@ namespace NFCombat2.Data.Entities.Repositories
             {
                 var allPlayers = await connection.Table<PlayerEntity>().ToListAsync();
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
-                    .Select(_mapper.Map<Player>)
+                    //.Select(_mapper.Map<Player>)
+                    .Select(pe => new Player()
+                    {
+                        Id = pe.Id,
+                        Name = pe.Name,
+                        Health = pe.Health,
+                        BaseMaxHealth = pe.BaseMaxHealth,
+                        Class = pe.Class,
+                        MaxIonization = pe.MaxIonization,
+                        MaxTrauma = pe.MaxTrauma,
+                        MaxPathogens = pe.MaxPathogens,
+                        Ionization = pe.Ionization,
+                        Trauma = pe.Trauma,
+                        Pathogens = pe.Pathogens,
+                        Overload = pe.Overload,
+                        MaxOverload = pe.MaxOverload,
+                        Speed = pe.Speed,
+                        Fuel = pe.Fuel,
+
+
+                    })
                     .FirstOrDefault(p => p.Id == id);
                 
                 if (player != null)

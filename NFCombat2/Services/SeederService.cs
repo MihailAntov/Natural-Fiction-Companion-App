@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using NFCombat2.Contracts;
+﻿using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Data.Extensions;
 

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.6" />
@@ -18,6 +17,10 @@
   <ItemGroup>
     <ProjectReference Include="..\NFCombat2.Common\NFCombat2.Common.csproj" />
     <ProjectReference Include="..\NFCombat2.Models\NFCombat2.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Profiles\" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,6 @@ using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.SpecOps;
-using AutoMapper;
 using NFCombat2.ViewModels;
 using NFCombat2.Views;
 
@@ -23,17 +22,16 @@ namespace NFCombat2.Services
         private readonly IPopupService _popupService;
         private SettingsRepository _settings;
         private readonly INameService _nameService;
-        private IMapper _mapper;
-        private Player _player;
+        private Player _player = new Player();
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
-            IMapper mapper,
             IPopupService popupService,
             INameService nameService)
         {
+            
             _repository = repository;
             _settings = settings;
-            _mapper = mapper;
+            GetDefaultPlayer();
             _popupService = popupService;
             _nameService = nameService;
 
