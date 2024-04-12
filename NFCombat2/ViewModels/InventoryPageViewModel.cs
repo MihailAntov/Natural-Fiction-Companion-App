@@ -156,7 +156,7 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        private bool _browsingEquipments = true;
+        private bool _browsingEquipments = false;
         public bool BrowsingEquipments { get { return _browsingEquipments; }
             set
             {
@@ -208,6 +208,19 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+        private bool _browsingWeapons = true;
+        public bool BrowsingWeapons
+        {
+            get { return _browsingWeapons; }
+            set
+            {
+                if (_browsingWeapons != value)
+                {
+                    _browsingWeapons = value;
+                    OnPropertyChanged(nameof(BrowsingWeapons));
+                }
+            }
+        }
         public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
@@ -252,7 +265,7 @@ namespace NFCombat2.ViewModels
                 await _playerService.RemoveItemFromPlayer(addable);
                 
 
-                Player.Equipment.Remove(equipment);
+//                Player.Equipment.Remove(equipment);
                 Equipment = new ObservableCollection<Equipment>(Player.Equipment);
                 OnPropertyChanged(nameof(Player.Equipment));
                 return;
@@ -260,9 +273,12 @@ namespace NFCombat2.ViewModels
 
             if (addable is Weapon weapon)
             {
-                //todo
+                await _playerService.RemoveItemFromPlayer(weapon);
+                UpdateWeaponDisplay();
                 return;
             }
+
+
 
             if (addable is Item item)
             {
@@ -449,6 +465,9 @@ namespace NFCombat2.ViewModels
         {
             switch (tab)
             {
+                case "weapons":
+                    BrowsingWeapons = isChecked;
+                    break;
                 case "equipment":
                     BrowsingEquipments = isChecked;
                     break;

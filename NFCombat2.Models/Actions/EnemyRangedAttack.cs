@@ -14,14 +14,13 @@ namespace NFCombat2.Models.Actions
     {
         private readonly Fight fight;
         private readonly Enemy _enemy;
-        private Accuracy _accuracy;
         public EnemyRangedAttack(Fight fight, Enemy enemy, Weapon weapon)
         {
             this.fight = fight;
             _enemy = enemy;
             AttackRollResult = DiceCalculator.Calculate(1, AttackDiceMessage).Dice.FirstOrDefault();
             RollsResult = DiceCalculator.Calculate(weapon.DamageDice, DiceMessage, weapon.FlatDamage);
-            _accuracy = weapon.Accuracy;
+            BaseAccuracy = weapon.Accuracy;
             AlwaysHits = weapon.AlwaysHits;
         }
 

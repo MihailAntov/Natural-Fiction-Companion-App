@@ -1,7 +1,4 @@
-﻿
-
-using AutoMapper;
-using NFCombat2.Data.Entities.Combat;
+﻿using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Notes;
 using NFCombat2.Data.Entities.Programs;
@@ -19,7 +16,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private SQLiteAsyncConnection connection = null!;
 
-        public NoteRepository(string dbPath, IMapper mapper)
+        public NoteRepository(string dbPath)
         {
             _dbPath = dbPath;
             Init();

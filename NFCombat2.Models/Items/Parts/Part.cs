@@ -16,5 +16,8 @@ namespace NFCombat2.Models.Items.Parts
                 }
             }
         }
+
+        public int DisplayMaximum { get; set; }
+
     }
 }

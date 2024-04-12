@@ -48,6 +48,7 @@ namespace NFCombat2.Common.Enums
         GuardRobotBeta,
         GuardRobotGamma,
         UniformedAlien,
+        AlienWarden,
         DefenseSystem,
         AlienGuardC,
         DesertWormB,

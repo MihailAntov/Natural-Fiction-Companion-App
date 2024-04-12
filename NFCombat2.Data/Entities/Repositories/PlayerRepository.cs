@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using NFCombat2.Common.Enums;
+﻿using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Data.Entities.Items;
 using NFCombat2.Data.Entities.Notes;
@@ -14,6 +13,7 @@ using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Models.Notes;
 using NFCombat2.Models.Player;
+using NFCombat2.Models.Programs;
 using SQLite;
 using System;
 using System.Numerics;
@@ -26,7 +26,7 @@ namespace NFCombat2.Data.Entities.Repositories
     {
         string _dbPath;
         private SQLiteAsyncConnection connection = null!;
-        private IMapper _mapper;
+        //private IMapper _mapper;
         public string StatusMessage { get; set; } = string.Empty;
         public bool ShouldSeed { get; set; } = false;
         private async Task Init()
@@ -37,15 +37,15 @@ namespace NFCombat2.Data.Entities.Repositories
             }
             connection = new SQLiteAsyncConnection(_dbPath);
 
-            await connection.DropTableAsync<PlayerEntity>();
-            await connection.DropTableAsync<PlayersItemsEntity>();
-            await connection.DropTableAsync<PlayersEquipmentsEntity>();
-            await connection.DropTableAsync<PlayersWeaponsEntity>();
-            await connection.DropTableAsync<ItemEntity>();
-            await connection.DropTableAsync<ProgramEntity>();
-            await connection.DropTableAsync<PlayersProgramsEntity>();
-            await connection.DropTableAsync<PartBagEntity>();
-            await connection.DropTableAsync<NoteEntity>();
+            //await connection.DropTableAsync<PlayerEntity>();
+            //await connection.DropTableAsync<PlayersItemsEntity>();
+            //await connection.DropTableAsync<PlayersEquipmentsEntity>();
+            //await connection.DropTableAsync<PlayersWeaponsEntity>();
+            //await connection.DropTableAsync<ItemEntity>();
+            //await connection.DropTableAsync<ProgramEntity>();
+            //await connection.DropTableAsync<PlayersProgramsEntity>();
+            //await connection.DropTableAsync<PartBagEntity>();
+            //await connection.DropTableAsync<NoteEntity>();
             //Uncomment above lines to reset item db
 
             await connection.CreateTableAsync<PlayerEntity>();
@@ -54,7 +54,7 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.CreateTableAsync<PlayersWeaponsEntity>();
             await connection.CreateTableAsync<ItemEntity>();
             await connection.CreateTableAsync<ProgramEntity>();
-            await connection.CreateTableAsync<PlayersProgramsEntity>();
+            //await connection.CreateTableAsync<PlayersProgramsEntity>();
             await connection.CreateTableAsync<PartBagEntity>();
             await connection.CreateTableAsync<NoteEntity>();
 
@@ -68,10 +68,9 @@ namespace NFCombat2.Data.Entities.Repositories
             }
 
         }
-        public PlayerRepository(string dbPath, IMapper mapper, bool seed)
+        public PlayerRepository(string dbPath,  bool seed)
         {
             _dbPath = dbPath;
-            _mapper = mapper;
             ShouldSeed = seed;
             Init();
         }
@@ -203,24 +202,25 @@ namespace NFCombat2.Data.Entities.Repositories
 
         private async Task UpdatePrograms(Player player)
         {
-            //Marker : Programs
-            foreach(var program in player.Programs)
-            {
-                PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
-                    .Where(pp => pp.PlayerId == player.Id && pp.ProgramId == program.Id)
-                    .FirstOrDefaultAsync();
+            //Marker : Programs TODO : add string holding programIds
+            //foreach(var program in player.Programs)
+            //{
+            //    PlayersProgramsEntity entity = await connection.Table<PlayersProgramsEntity>()
+            //        .Where(pp => pp.PlayerId == player.Id && pp.ProgramId == program.Id)
+            //        .FirstOrDefaultAsync();
 
-                if(entity == null)
-                {
-                    PlayersProgramsEntity newEntity = new PlayersProgramsEntity()
-                    {
-                        PlayerId = player.Id,
-                        ProgramId = program.Id
-                    };
-                    await connection.InsertAsync(newEntity);
-                }
+            //    if(entity == null)
+            //    {
+            //        PlayersProgramsEntity newEntity = new PlayersProgramsEntity()
+            //        {
+            //            PlayerId = player.Id,
+            //            ProgramId = program.Id
+            //        };
+            //        await connection.InsertAsync(newEntity);
+            //    }
 
-            }
+            //}
+
         }
 
         private async Task UpdateWeapons(Player player)
@@ -264,7 +264,27 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task UpdatePlayer(Player player)
         {
             await Init();
-            var entity = _mapper.Map<PlayerEntity>(player);
+            //var entity = _mapper.Map<PlayerEntity>(player);
+            var entity = new PlayerEntity()
+
+            {
+                Id = player.Id,
+                Name = player.Name,
+                Health = player.Health,
+                BaseMaxHealth = player.BaseMaxHealth,
+                Class = player.Class,
+                MaxIonization = player.MaxIonization,
+                MaxTrauma = player.MaxTrauma,
+                MaxPathogens = player.MaxPathogens,
+                Ionization = player.Ionization,
+                Trauma = player.Trauma,
+                Pathogens = player.Pathogens,
+                Overload = player.Overload,
+                MaxOverload = player.MaxOverload,
+                Speed = player.Speed,
+                Fuel = player.Fuel
+
+            };
             await UpdateItems(player);
             await UpdateEquipments(player);
             await UpdateWeapons(player);
@@ -372,17 +392,18 @@ namespace NFCombat2.Data.Entities.Repositories
 
             //programs
 
-            var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
-                .Where(pp => pp.PlayerId == player.Id).ToListAsync();
-            var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
-            
-            var programs = await connection.Table<ProgramEntity>()
-                .Where(p=> programIds.Contains(p.Id)).ToListAsync();
+            //var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
+            //    .Where(pp => pp.PlayerId == player.Id).ToListAsync();
+            //var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
 
-            foreach(var program in programs)
-            {
-                player.Programs.Add(ProgramFactory.GetProgram(program.Type));
-            }
+            //var programs = await connection.Table<ProgramEntity>()
+            //    .Where(p=> programIds.Contains(p.Id)).ToListAsync();
+            //if (player.Class == PlayerClass.Hacker)
+            //{
+            //    List<Program> knownPrograms = GetKnownPrograms(player);
+            //    player.Programs = knownPrograms;
+            //}
+
         }
 
         public async Task<List<Player>> GetAllProfiles()
@@ -394,8 +415,27 @@ namespace NFCombat2.Data.Entities.Repositories
             {
 
                 players = (await connection.Table<PlayerEntity>().ToListAsync())
-                    .Select(_mapper.Map<Player>)
-                    .ToList();
+                    //.Select(_mapper.Map<Player>)
+                    .Select(pe=> new Player()
+                    {
+                        Id = pe.Id,
+                        Name = pe.Name,
+                        Health = pe.Health,
+                        BaseMaxHealth = pe.BaseMaxHealth,
+                        Class = pe.Class,
+                        MaxIonization = pe.MaxIonization,
+                        MaxTrauma = pe.MaxTrauma,
+                        MaxPathogens = pe.MaxPathogens,
+                        Ionization = pe.Ionization,
+                        Trauma = pe.Trauma,
+                        Pathogens = pe.Pathogens,
+                        Overload = pe.Overload,
+                        MaxOverload = pe.MaxOverload,
+                        Speed = pe.Speed,
+                        Fuel = pe.Fuel,
+                        
+
+                    }).ToList();
                 foreach (var player in players)
                 {
                     //RetrievePlayerData(player);
@@ -417,7 +457,27 @@ namespace NFCombat2.Data.Entities.Repositories
             {
                 var allPlayers = await connection.Table<PlayerEntity>().ToListAsync();
                 Player? player = (await connection.Table<PlayerEntity>().ToListAsync())
-                    .Select(_mapper.Map<Player>)
+                    //.Select(_mapper.Map<Player>)
+                    .Select(pe => new Player()
+                    {
+                        Id = pe.Id,
+                        Name = pe.Name,
+                        Health = pe.Health,
+                        BaseMaxHealth = pe.BaseMaxHealth,
+                        Class = pe.Class,
+                        MaxIonization = pe.MaxIonization,
+                        MaxTrauma = pe.MaxTrauma,
+                        MaxPathogens = pe.MaxPathogens,
+                        Ionization = pe.Ionization,
+                        Trauma = pe.Trauma,
+                        Pathogens = pe.Pathogens,
+                        Overload = pe.Overload,
+                        MaxOverload = pe.MaxOverload,
+                        Speed = pe.Speed,
+                        Fuel = pe.Fuel,
+
+
+                    })
                     .FirstOrDefault(p => p.Id == id);
                 
                 if (player != null)

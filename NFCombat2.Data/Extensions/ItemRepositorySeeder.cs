@@ -16,8 +16,8 @@ namespace NFCombat2.Data.Extensions
                 //equipments
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.TacticalGlasses},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GasMask},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GrenadeLauncher,IsInvention=true, IsCraftOnly = true, Formula = "GGG", Episode = 123 },
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Shuttle,IsInvention=true, IsCraftOnly= true, Formula = "SSS", Episode = 321},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GrenadeLauncher,IsInvention = true, IsCraftOnly = true, Formula = "GGG", Episode = 123 },
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Shuttle,IsInvention = true, IsCraftOnly= true, Formula = "SSS", Episode = 321},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArmoredVest},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.CamouflageSuit},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Helmet},

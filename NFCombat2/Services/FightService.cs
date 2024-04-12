@@ -776,6 +776,13 @@ namespace NFCombat2.Services
                     var areaOfEffectAttack = new PlayerRangedAttack(_fight, weapon);
                     areaOfEffectAttack.Targets = targets.Options.Select(t => (Enemy)t.Content).ToList();
                     await HandleRolls(areaOfEffectAttack);
+
+                    if (_optionsService.CanShoot(_fight))
+                    {
+                        await ResolveEffects();
+                        return _optionsService.GetWeapons(_fight, true);
+                    }
+
                     return await AfterOption();
                 }
 

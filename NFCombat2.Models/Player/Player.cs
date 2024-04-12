@@ -43,12 +43,12 @@ namespace NFCombat2.Models.Player
             }
             set
             {
-                //if(value > MaxHealth)
-                //{
-                //    value = MaxHealth;
-                //}
+                if (value > MaxHealth)
+                {
+                    value = MaxHealth;
+                }
 
-                if(value < 0)
+                if (value < 0)
                 {
                     value = 0;
                 }
@@ -207,6 +207,7 @@ namespace NFCombat2.Models.Player
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
         public IList<Program> Programs { get; set; } = new List<Program>();
+        public string ProgramList { get; set; }
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers
         {
@@ -227,7 +228,35 @@ namespace NFCombat2.Models.Player
                 return result;
             }
         }
-        public PlayerClass Class { get; set; } = PlayerClass.None;
+        private PlayerClass _class = PlayerClass.None;
+        public PlayerClass Class
+        {
+            get { return _class; }
+            set
+            {
+                if(_class != value)
+                {
+                    if(_class == PlayerClass.Soldier)
+                    {
+                        BonusMaxHealth -= 20;
+                        MaxIonization -= 2;
+                        MaxTrauma -= 2;
+                        MaxPathogens -= 2;
+                        MaxWeaponWeight -= 1;
+                    }else if (value == PlayerClass.Soldier)
+                    {
+                        BonusMaxHealth += 20;
+                        MaxIonization += 2;
+                        MaxTrauma += 2;
+                        MaxPathogens += 2;
+                        MaxWeaponWeight += 1;
+                    }
+
+                    _class = value;
+                    OnPropertyChanged(nameof(Class));
+                }
+            }
+        }
         //public IList<Part> Parts { get; set; } = new List<Part>();
         public PartBag PartsBag { get; set; } = new PartBag();
         private int trauma = 0;

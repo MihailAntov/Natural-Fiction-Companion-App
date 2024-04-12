@@ -56,6 +56,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramDamageMessage, "Your program damages your enemy." },
             {MessageType.ProgramCritMessage, "Your program focuses your aim." },
             {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
+            {MessageType.ProgramDisableTentacleMessage, "Your program disables the tentacle." },
+            {MessageType.ProgramNoEffect,"Your program has no effect." },
             //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer." }, 
             {MessageType.EnemyMoveAwayMessage, "{0} tries to run away." }, 

@@ -1,9 +1,11 @@
 ﻿
 
+using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items.Parts;
+using NFCombat2.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -24,8 +26,8 @@ namespace NFCombat2.ViewModels
             ConfirmEpisodeCommand = new Command(ConfirmEpisode);
             _taskCompletionSource = taskCompletionSource;
             _itemService = itemService;
+            _playerService.SavePlayer();
         }
-
         public string Episode { get; set; }
         public IAddable ToBeAdded { get; set; } = null;
         public Command CraftCommand { get; set; }
@@ -75,9 +77,11 @@ namespace NFCombat2.ViewModels
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Correct);
                 await _playerService.AddItemToPlayer(ToBeAdded);
-                foreach(var part in Parts)
+                foreach(var part in Parts.Where(p=>p.CurrentlySelected > 0))
                 {
-                    part.Quantity -= part.CurrentlySelected;
+                    int cost = part.CurrentlySelected;
+                    part.CurrentlySelected = 0;
+                    part.Quantity -= cost;
                 }
                 return;
             }
@@ -91,6 +95,10 @@ namespace NFCombat2.ViewModels
         {
             var bag = _playerService.CurrentPlayer.PartsBag;
             Parts = bag.Categories.SelectMany(c=> c.Parts).Where(p=> p.Quantity > 0).ToList();
+            foreach(var part in Parts)
+            {
+                part.DisplayMaximum = part.Quantity;
+            }
         }
 
         public void Cancel()

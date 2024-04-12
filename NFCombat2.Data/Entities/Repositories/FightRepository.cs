@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using NFCombat2.Common.Enums;
+﻿using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Combat;
 using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using static NFCombat2.Data.Extensions.FightRepositorySeeder;
 using NFCombat2.Models.Items.Weapons;
 using SQLite;
 using System;
@@ -16,12 +16,6 @@ namespace NFCombat2.Data.Entities.Repositories
 {
     public class FightRepository
     {
-        public bool Seeded { get; set; } = false;
-        
-
-        //protected SQLiteAsyncConnection connection = null!;
-        //public string StatusMessage { get; set; } = string.Empty;
-
         public FightRepository()
         {
             
@@ -75,62 +69,5 @@ namespace NFCombat2.Data.Entities.Repositories
             return variants;
             
         }
-
-        private static Dictionary<int, Func<Fight>> Fights = new Dictionary<int, Func<Fight>>()
-        {
-            // start
-            {
-                36,()=> new TimedFight()
-                {
-                    Enemies = new List<Enemy>()
-                    {
-                        new Enemy()
-                        {
-                            EnemyType = EnemyType.RegularBrute,
-                            Health = 40,
-                            Distance = 7,
-                            Weapons = new List<Weapon>()
-                            {
-                                new Weapon()
-                                {
-                                    DamageDice = 2,
-                                    MaxRange = 15,
-                                    Accuracy = Accuracy.D
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            // end
-            {
-                219, ()=> new TentacleFight()
-                {
-                    Enemies = new List<Enemy>()
-                    {
-                        new Enemy()
-                        {
-                            EnemyType = EnemyType.TraumaTentacle,
-                            Health = 10,
-                            Distance = 5,
-                        },
-                        new Enemy()
-                        {
-                            EnemyType = EnemyType.IonizationTentacle,
-                            Health = 10,
-                            Distance = 5,
-                            
-                        },
-                        new Enemy()
-                        {
-                            EnemyType = EnemyType.PathogenTentacle,
-                            Health = 10,
-                            Distance = 5,
-                        }
-                    }
-                }
-            },
-        };
-
     }
 }
