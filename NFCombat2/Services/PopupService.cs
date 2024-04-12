@@ -93,7 +93,7 @@ namespace NFCombat2.Services
         public async Task<Player> ShowAddProfilePopup(IPlayerService playerService)
         {
             TaskCompletionSource<Player> task = new TaskCompletionSource<Player>();
-            var viewmodel = new AddingProfileViewModel(playerService, task);
+            var viewmodel = new AddingProfileViewModel(playerService,this, task);
 
             var popup = new AddingProfileView(viewmodel);
             ShowPopup(popup);
