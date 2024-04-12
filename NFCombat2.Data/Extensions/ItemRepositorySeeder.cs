@@ -11,7 +11,7 @@ namespace NFCombat2.Data.Extensions
         {
             await repository.DeleteAllItems();
 
-            var items = new List<ItemEntity>()
+            var items = new List<ItemEntity>() 
             {
                 //equipments
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.TacticalGlasses},
