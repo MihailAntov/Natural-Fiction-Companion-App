@@ -135,7 +135,7 @@ namespace NFCombat2.Services
 
         public async Task<Player> RegisterPlayer(Player player)
         {
-
+            player.Name = player.Name.Trim();
             var success = await _repository.AddNewProfile(player);
             if(success == null)
             {

@@ -28,7 +28,7 @@ namespace NFCombat2.ViewModels
         {
             
             await _playerService.SavePlayer();
-            if (string.IsNullOrEmpty(player.Name))
+            if (string.IsNullOrWhiteSpace(player.Name))
             {
                 
                 _popupService.ShowToast("Please insert player name.");

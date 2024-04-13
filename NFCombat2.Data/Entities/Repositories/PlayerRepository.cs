@@ -251,6 +251,7 @@ namespace NFCombat2.Data.Entities.Repositories
                     newPlayersItems.Hand = weapon.Hand;
                     newPlayersItems.Durability = weapon.Durability;
                     await connection.InsertAsync(newPlayersItems);
+                    var allPlayers = await connection.Table<PlayerEntity>().ToListAsync();
                     var allPlayersItems = await connection.Table<PlayersWeaponsEntity>().ToListAsync();
                     continue;
                 }
@@ -439,7 +440,7 @@ namespace NFCombat2.Data.Entities.Repositories
                     }).ToList();
                 foreach (var player in players)
                 {
-                    //RetrievePlayerData(player);
+                    await RetrievePlayerData(player);
                 }
             }
             catch (Exception ex)
