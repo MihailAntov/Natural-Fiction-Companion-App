@@ -282,7 +282,8 @@ namespace NFCombat2.Data.Entities.Repositories
                 Overload = player.Overload,
                 MaxOverload = player.MaxOverload,
                 Speed = player.Speed,
-                Fuel = player.Fuel
+                Fuel = player.Fuel,
+                
 
             };
             await UpdateItems(player);

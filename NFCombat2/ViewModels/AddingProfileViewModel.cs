@@ -32,7 +32,7 @@ namespace NFCombat2.ViewModels
             {
                 
                 _popupService.ShowToast("Please insert player name.");
-                _taskCompletionSource.TrySetResult(null);
+                return;
             }
             var result = await _playerService.RegisterPlayer(player);
             _popupService.ShowToast($"Successfully Added {player.Name}");
