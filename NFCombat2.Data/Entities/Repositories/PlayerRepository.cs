@@ -284,6 +284,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 MaxOverload = player.MaxOverload,
                 Speed = player.Speed,
                 Fuel = player.Fuel,
+                ProgramList = player.ProgramList
                 
 
             };
@@ -394,6 +395,7 @@ namespace NFCombat2.Data.Entities.Repositories
 
             //programs
 
+
             //var playersProgramsEntities = await connection.Table<PlayersProgramsEntity>()
             //    .Where(pp => pp.PlayerId == player.Id).ToListAsync();
             //var programIds = playersProgramsEntities.Select(pp=> pp.ProgramId).ToList();
@@ -435,6 +437,7 @@ namespace NFCombat2.Data.Entities.Repositories
                         MaxOverload = pe.MaxOverload,
                         Speed = pe.Speed,
                         Fuel = pe.Fuel,
+                        ProgramList = pe.ProgramList
                         
 
                     }).ToList();
@@ -477,6 +480,7 @@ namespace NFCombat2.Data.Entities.Repositories
                         MaxOverload = pe.MaxOverload,
                         Speed = pe.Speed,
                         Fuel = pe.Fuel,
+                        ProgramList = pe.ProgramList
 
 
                     })

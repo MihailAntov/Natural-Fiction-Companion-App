@@ -14,7 +14,7 @@ namespace NFCombat2.Services
     public class PopupService : IPopupService
     {
         private readonly IProgramService _programService;
-        public PopupService(IProgramService programService)
+        public PopupService(IProgramService programService )
         {
             _programService = programService;
         }
@@ -63,7 +63,7 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<IAddable> ShowEntryWithSuggestionsPopup(IPlayerService playerService, ICollection<IAddable> options)
+        public async Task<IAddable> ShowEntryWithSuggestionsPopup(ICollection<IAddable> options, IPlayerService playerService)
         {
             var task = new TaskCompletionSource<IAddable>();
             var viewModel = new EntryWithSuggestionsViewModel(playerService, options, task);
@@ -105,19 +105,19 @@ namespace NFCombat2.Services
             return player;
         }
 
-        public async Task<Program> ShowCastPopup()
+        public async Task<Program> ShowCastPopup(IPlayerService playerService)
         {
             TaskCompletionSource<Program> taskCompletionSource = new TaskCompletionSource<Program>();
-            var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService);
-
+            var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService, playerService);
             var popup = new ProgramCastView(viewmodel);
+            viewmodel.Popup = popup;
             ShowPopup(popup);
-            var player = await taskCompletionSource.Task;
-            if (player != null)
+            var program = await taskCompletionSource.Task;
+            if (program != null)
             {
                 await popup.CloseAsync();
             }
-            return player;
+            return program;
         }
     }
 }

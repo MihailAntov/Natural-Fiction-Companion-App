@@ -25,14 +25,14 @@ namespace NFCombat2.Services
         private Player _player = new Player();
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
-            IPopupService popupService,
+            //IPopupService popupService,
             INameService nameService)
         {
             
             _repository = repository;
             _settings = settings;
             GetDefaultPlayer();
-            _popupService = popupService;
+            //_popupService = popupService;
             _nameService = nameService;
 
         }

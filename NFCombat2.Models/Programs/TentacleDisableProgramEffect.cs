@@ -22,5 +22,10 @@ namespace NFCombat2.Models.Programs
             }
             return new List<ICombatResolution>() { new ProgramNoEffect() };
         }
+
+        public bool HasEffect(Fight fight)
+        {
+            return fight is TentacleFight;
+        }
     }
 }

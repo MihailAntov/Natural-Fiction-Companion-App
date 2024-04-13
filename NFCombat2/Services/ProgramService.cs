@@ -23,12 +23,12 @@ namespace NFCombat2.Services
             string programList = player.ProgramList;
             string[] strings = programList.Split("&");
             IList<Program> result = new List<Program>();
-            foreach (string s in strings)
+            foreach (string formula in strings)
             {
-                var programType = GetProgramType(s);
-                if (programType.HasValue)
+                var program = GetProgram(formula);
+                if (program != null)
                 {
-                    result.Add(GetProgram(programType.Value));
+                    result.Add(program);
                 }
                 
             }
@@ -37,25 +37,33 @@ namespace NFCombat2.Services
 
 
 
-        public ProgramType? GetProgramType(string programString)
+        //public ProgramType? GetProgramType(string programString)
+        //{
+
+        //    if (Enum.TryParse(typeof(ProgramType), programString, true, out var programType))
+        //    {
+        //        return (ProgramType)programType;
+        //    }
+        //    return null;
+
+        //}
+
+        public Program GetProgram(string programFormula)
         {
-            
-            if(Enum.TryParse(typeof(ProgramType), programString, true, out var programType))
+            if (Enum.TryParse(typeof(ProgramType), programFormula, true, out var programType))
             {
-                return (ProgramType)programType;
+                return Factory.GetProgram((ProgramType)programType);
             }
             return null;
-            
-        }
-
-        public Program GetProgram(ProgramType programType)
-        {
-            return Factory.GetProgram(programType);
         }
 
 
-        public void LearnNewProgram(Player player, Program program)
+        public void LearnNewProgram(Program program, Player player)
         {
+            if(player.Programs.Any(p=> p.Formula == program.Formula))
+            {
+                return;
+            }
             player.ProgramList += $"&{program.Formula}";
         }
 
@@ -65,8 +73,7 @@ namespace NFCombat2.Services
             .Select(pc => new ProgramFormulaComponent()
             {
                 Type = pc,
-                Name = _nameService.ProgramComponentName(pc),
-                Formula = pc.ToString()
+                Name = _nameService.ProgramComponentName(pc)
             }).ToList();
             return result;
         }
@@ -77,8 +84,7 @@ namespace NFCombat2.Services
             .Select(pc => new ProgramFormulaComponent()
             {
                 Type = pc,
-                Name = _nameService.ProgramComponentName(pc),
-                Formula = pc.ToString()
+                Name = _nameService.ProgramComponentName(pc)
             }).ToList();
             return result;
         }
@@ -89,8 +95,7 @@ namespace NFCombat2.Services
             .Select(pc => new ProgramFormulaComponent()
             {
                 Type = pc,
-                Name = _nameService.ProgramComponentName(pc),
-                Formula = pc.ToString()
+                Name = _nameService.ProgramComponentName(pc)
             }).ToList();
             return result;
         }

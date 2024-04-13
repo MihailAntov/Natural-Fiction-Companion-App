@@ -8,7 +8,7 @@ using NFCombat2.Common.Helpers;
 
 namespace NFCombat2.Models.Programs
 {
-    public class HealProgramEffect : IProgramEffect
+    public class HealProgramEffect : IProgramEffect, IHaveRolls
     {
         private int _dice;
         private int _delayedDice;
@@ -20,6 +20,10 @@ namespace NFCombat2.Models.Programs
         public string[] MessageArgs => Array.Empty<string>();
         public MessageType MessageType => MessageType.ProgramHealMessage;
 
+        public DiceRollResult RollsResult { get; set; }
+
+        public string DiceMessage => "Your program's roll";
+
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var amount = DiceCalculator.Calculate(_dice);
@@ -28,6 +32,9 @@ namespace NFCombat2.Models.Programs
             return new List<ICombatResolution>() { heal };
         }
 
-        
+        public bool HasEffect(Fight fight)
+        {
+            return true;
+        }
     }
 }

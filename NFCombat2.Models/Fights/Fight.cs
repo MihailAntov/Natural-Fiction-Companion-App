@@ -61,11 +61,17 @@ namespace NFCombat2.Models.Fights
             foreach(var enemy in Enemies)
             {
                 enemy.HasMoved = false;
-                if (enemy.Range < enemy.Distance && enemy.Speed > 0)
+                if (enemy.RemainingFrozenTurns > 0)
+                {
+                    movement.Add(new EnemyMovePass(enemy));
+                    enemy.RemainingFrozenTurns--;
+                }
+                else if (enemy.Range < enemy.Distance && enemy.Speed > 0 )
                 {
                     movement.Add(new EnemyGetCloser(this, enemy));
                     enemy.HasMoved = true;
                 }
+                
             }
             return movement;
         }

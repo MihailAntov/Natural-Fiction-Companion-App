@@ -1,4 +1,5 @@
-﻿using NFCombat2.Common.Enums;
+﻿using CommunityToolkit.Maui.Views;
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Programs;
 using System.ComponentModel;
@@ -10,10 +11,12 @@ namespace NFCombat2.ViewModels
     {
         private readonly TaskCompletionSource<Program> _taskCompletionSource;
         private readonly IProgramService _programService;
-        public ProgramCastViewModel(TaskCompletionSource<Program> taskCompletionSource, IProgramService programService)
+        private readonly IPlayerService _playerService;
+        public ProgramCastViewModel(TaskCompletionSource<Program> taskCompletionSource, IProgramService programService, IPlayerService playerService)
         {
             _taskCompletionSource = taskCompletionSource;
             _programService = programService;
+            _playerService = playerService;
             ExecuteProgramCommand = new Command(ExecuteProgram);
             ChangePolarityCommand = new Command<string>(ChangePolarity);
             OperationTypes = _programService.GetOperationTypes();
@@ -24,6 +27,7 @@ namespace NFCombat2.ViewModels
         public IList<ProgramFormulaComponent> OperationTypes { get; set; }
         public IList<ProgramFormulaComponent> SignalTypes { get; set; }
         public IList<ProgramFormulaComponent> ParadigmTypes { get; set; } 
+        public Popup Popup { get; set; }
 
         public Command ExecuteProgramCommand { get; set; }
         public Command ChangePolarityCommand { get; set; }
@@ -92,9 +96,25 @@ namespace NFCombat2.ViewModels
             _taskCompletionSource.TrySetResult(null);
         }
 
-        public void ExecuteProgram()
+        public async void ExecuteProgram()
         {
+            var program = _programService.GetProgram(BuildProgramFormula());
+            if(program != null)
+            {
+                _programService.LearnNewProgram(program, _playerService.CurrentPlayer);
+                _taskCompletionSource.TrySetResult(program);
+                return;
+            }
+            await Popup.CloseAsync();
 
+        }
+
+        private string BuildProgramFormula()
+        {
+            LogicalOperationType.Positive = LogicalOperationPolarity;
+            ElectricalSignalType.Positive = ElectricalSignalPolarity;
+            ProgramParadigmType.Positive = ProgramParadigmPolarity;
+            return $"{LogicalOperationType.Formula}{ElectricalSignalType.Formula}{ProgramParadigmType.Formula}";
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

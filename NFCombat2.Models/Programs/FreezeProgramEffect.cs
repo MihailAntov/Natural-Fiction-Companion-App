@@ -10,16 +10,16 @@ namespace NFCombat2.Models.Programs
     public class FreezeProgramEffect : IProgramEffect, ITarget
     {
         private int _turns;
-        public FreezeProgramEffect(int turns, Program program)
+        public FreezeProgramEffect(int turns, bool areaOfEffect = false, int minRange = 0, int maxRange = 10)
         {
-                _turns = turns;
-            AreaOfEffect = program.AreaOfEffect;
-            MinRange = program.MinRange;
-            MaxRange = program.MaxRange;
+            _turns = turns;
+            AreaOfEffect = areaOfEffect;
+            MinRange = minRange;
+            MaxRange = maxRange;
         }
         public bool AreaOfEffect { get; set; }
         public string[] MessageArgs => Array.Empty<string>();
-        public ICollection<Enemy> Targets { get; set; }
+        public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
 
@@ -32,6 +32,9 @@ namespace NFCombat2.Models.Programs
             return new List<ICombatResolution>() { freeze };
         }
 
-        
+        public bool HasEffect(Fight fight)
+        {
+            return fight.Enemies.Any(e=> e.Distance >= MinRange && e.Distance <= MaxRange);
+        }
     }
 }

@@ -249,7 +249,7 @@ namespace NFCombat2.ViewModels
                     break;
             }
 
-            var result = await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            var result = await _popupService.ShowEntryWithSuggestionsPopup(options, _playerService);
             if(result == null)
             {
                 return;
@@ -306,7 +306,7 @@ namespace NFCombat2.ViewModels
                     weapon.Hand = hand;
             }
 
-            await _popupService.ShowEntryWithSuggestionsPopup(_playerService, options);
+            await _popupService.ShowEntryWithSuggestionsPopup(options, _playerService);
             UpdateWeaponDisplay();
 
 

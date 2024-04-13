@@ -25,6 +25,9 @@ namespace NFCombat2.Models.Programs
             return new List<ICombatResolution>() { crit };
         }
 
-        
+        public bool HasEffect(Fight fight)
+        {
+            return true;
+        }
     }
 }

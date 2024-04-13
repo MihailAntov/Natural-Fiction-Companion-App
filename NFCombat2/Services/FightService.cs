@@ -702,16 +702,35 @@ namespace NFCombat2.Services
 
             if(option is ManualProgramCast programCast)
             {
-                var program = await _popupService.ShowCastPopup();
-                if(program == null)
+                var programUsed = await _popupService.ShowCastPopup(_playerService);
+                if(programUsed == null)
                 {
-                    result = _optionsService.GetPrograms(_fight);
-                    //PreviousOptions = result;
-                    return result;
+                    _popupService.ShowToast("Your program had no effect.");
+                    return await AfterOption();
                 }
 
-                return await ProcessChoice(program);
+                return await ProcessChoice(programUsed);
                 
+            }
+
+            if(option is Program program)
+            {
+                _fight.Player.Overload += program.Cost;
+                var workingEffects = program.Effects.Where(e => e.HasEffect(_fight)).ToList();
+                if(workingEffects.Count == 0)
+                {
+                    return await AfterOption();
+                }
+
+                foreach(var effect in workingEffects)
+                {
+                    if(effect is ITarget targettingEffect)
+                    {
+                        CurrentTargetingEffect = targettingEffect;
+                    }
+
+                    return await ProcessChoice(effect);
+                }
             }
 
             if(option is Variant variant)
@@ -757,6 +776,16 @@ namespace NFCombat2.Services
                 var targets = _optionsService.GetTargets(_fight, targetingEffect.MinRange, targetingEffect.MaxRange);
                 
                 return targets;
+            }
+
+            if(option is ITarget programTargetingEffect && programTargetingEffect.AreaOfEffect)
+            {
+                CurrentTargetingEffect = programTargetingEffect;
+                var targets = _optionsService.GetTargets(_fight, programTargetingEffect.MinRange, programTargetingEffect.MaxRange);
+                CurrentTargetingEffect.Targets = targets.Options.Select(o => (Enemy)o.Content).ToList();
+                await HandleRolls((ICombatAction)CurrentTargetingEffect);
+                return await AfterOption();
+
             }
 
             

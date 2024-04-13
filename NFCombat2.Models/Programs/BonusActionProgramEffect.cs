@@ -17,6 +17,9 @@ namespace NFCombat2.Models.Programs
 
         }
 
-        
+        public bool HasEffect(Fight fight)
+        {
+            return true;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace NFCombat2.Models.CombatResolutions
         {
             get
             {
-                return new string[] { Targets.Count > 1 ? Targets.Count.ToString() : Target.Name.ToString() };
+                return new string[] { Targets.Count > 1 ? Targets.Count.ToString() : Targets.FirstOrDefault().Name.ToString(), _turns.ToString() };
             }
         }
 

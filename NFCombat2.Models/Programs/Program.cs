@@ -5,7 +5,7 @@ using NFCombat2.Models.Player;
 
 namespace NFCombat2.Models.Programs
 {
-    public class Program : IStandardAction, ITarget
+    public class Program : IStandardAction
     {
         public Player.Player Caster { get; set; }
         public Program()

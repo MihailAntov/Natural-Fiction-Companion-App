@@ -60,6 +60,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramNoEffect,"Your program has no effect." },
             //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer." }, 
+            {MessageType.EnemyMovePassMessage, "{0} is unable to move." }, 
             {MessageType.EnemyMoveAwayMessage, "{0} tries to run away." }, 
             {MessageType.EnemyShootMessage, "{0} shoots at you." },
             {MessageType.EnemyAttackMessage, "{0} attacks you in close combat." },
