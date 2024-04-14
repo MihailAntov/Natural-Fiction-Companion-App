@@ -16,19 +16,23 @@ namespace NFCombat2.Models.Programs
         {
             _dice = dice;
             _delayedDice = delayedDice;
+            RollsResult = DiceCalculator.Calculate(_dice);
         }
+        public int Cost { get; set; }
         public string[] MessageArgs => Array.Empty<string>();
         public MessageType MessageType => MessageType.ProgramHealMessage;
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => "Your program's roll";
-
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.ProgramHealingRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            var amount = DiceCalculator.Calculate(_dice);
-            var heal = new Heal(amount);
+            //var amount = DiceCalculator.Calculate(_dice);
+            var heal = new Heal(RollsResult);
             fight.Effects.Enqueue(heal);
+            fight.Player.Overload += Cost;
             return new List<ICombatResolution>() { heal };
         }
 

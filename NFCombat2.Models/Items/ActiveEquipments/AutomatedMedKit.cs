@@ -13,14 +13,15 @@ namespace NFCombat2.Models.Items.ActiveEquipments
         public AutomatedMedKit()
         {
             RollsResult = DiceCalculator.Calculate(3);
-            DiceMessage = "Your automated medkit roll:";
             Quantity = 1;
             IsConsumable = true;
             IsInvention = true;
         }
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage { get; }
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.MedKitRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
 
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

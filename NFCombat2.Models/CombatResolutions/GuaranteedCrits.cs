@@ -12,7 +12,7 @@ namespace NFCombat2.Models.CombatResolutions
             _numberOfCrits = numberOfCrits;
         }
         public string[] MessageArgs => new string[] { _numberOfCrits.ToString() };
-        public MessageType MessageType => MessageType.CritMessage;
+        public MessageType MessageType => MessageType.GuaranteedCritsMessage;
 
         public async Task Resolve(Fight fight)
         {

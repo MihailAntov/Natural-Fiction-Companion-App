@@ -22,12 +22,13 @@ namespace NFCombat2.Models.Actions
             RollsResult = DiceCalculator.Calculate(weapon.DamageDice, DiceMessage, weapon.FlatDamage);
             BaseAccuracy = weapon.Accuracy;
             AlwaysHits = weapon.AlwaysHits;
+            DiceMessageArgs[0] = _enemy.Name;
         }
 
         public bool IsAccuracyReduced { get; set; } = false;
         public string[] MessageArgs => new string[] { _enemy.Name};
         public MessageType MessageType => MessageType.EnemyShootMessage;
-
+        public string[] DiceMessageArgs { get; set; } = new string[1];
         public DiceRollResult RollsResult { get; set; }
         public Dice AttackRollResult { get; set; }
         public Accuracy BaseAccuracy { get; set; }
@@ -35,8 +36,10 @@ namespace NFCombat2.Models.Actions
           
         
 
-        public string AttackDiceMessage => $"{MessageArgs[0]}'s attack:";
-        public string DiceMessage => $"{MessageArgs[0]}'s damage:";
+        public string AttackDiceMessage { get; set; }
+        public DiceMessageType AttackDiceMessageType => DiceMessageType.EnemyRangedAttackRoll;
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.EnemyRangedDamageRoll;
 
         public bool AlwaysHits { get; }
 

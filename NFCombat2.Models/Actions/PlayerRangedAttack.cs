@@ -35,6 +35,7 @@ namespace NFCombat2.Models.Actions
         }
         public Weapon Weapon { get; }
         //public string[] MessageArgs => new string[] { TargetName, Weapon.Name };
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public string[] MessageArgs
         {
             get
@@ -64,8 +65,10 @@ namespace NFCombat2.Models.Actions
 
         public MessageType MessageType => Targets.Count > 1 ? MessageType.AoeShootMessage : MessageType.ShootMessage;
 
-        public string AttackDiceMessage => $"Your attack:";
-        public string DiceMessage => $"Your damage:";
+        public DiceMessageType AttackDiceMessageType => DiceMessageType.PlayerRangedAttackRoll;
+        public string AttackDiceMessage { get; set; }
+        public DiceMessageType DiceMessageType { get; set; } = DiceMessageType.PlayerRangedDamageRoll;
+        public string DiceMessage { get; set; }
 
         public bool AlwaysHits { get; }
 

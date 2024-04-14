@@ -9,10 +9,10 @@ namespace NFCombat2.ViewModels
 {
     public class ProgramCastViewModel : INotifyPropertyChanged
     {
-        private readonly TaskCompletionSource<Program> _taskCompletionSource;
+        private readonly TaskCompletionSource<ProgramExecution> _taskCompletionSource;
         private readonly IProgramService _programService;
         private readonly IPlayerService _playerService;
-        public ProgramCastViewModel(TaskCompletionSource<Program> taskCompletionSource, IProgramService programService, IPlayerService playerService)
+        public ProgramCastViewModel(TaskCompletionSource<ProgramExecution> taskCompletionSource, IProgramService programService, IPlayerService playerService)
         {
             _taskCompletionSource = taskCompletionSource;
             _programService = programService;
@@ -22,6 +22,7 @@ namespace NFCombat2.ViewModels
             OperationTypes = _programService.GetOperationTypes();
             SignalTypes = _programService.GetSignalTypes();
             ParadigmTypes = _programService.GetParadigmTypes();
+            
         }
 
         public IList<ProgramFormulaComponent> OperationTypes { get; set; }
@@ -93,7 +94,7 @@ namespace NFCombat2.ViewModels
 
         public void Cancel()
         {
-            _taskCompletionSource.TrySetResult(null);
+            _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.Cancelled});
         }
 
         public async void ExecuteProgram()
@@ -102,11 +103,13 @@ namespace NFCombat2.ViewModels
             if(program != null)
             {
                 _programService.LearnNewProgram(program, _playerService.CurrentPlayer);
-                _taskCompletionSource.TrySetResult(program);
+                _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.Success, Content = program});
                 return;
             }
-            await Popup.CloseAsync();
-
+            else
+            {
+                _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.Fail });
+            }
         }
 
         private string BuildProgramFormula()

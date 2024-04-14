@@ -20,7 +20,8 @@ namespace NFCombat2.Models.Items.ActiveEquipments
         public DiceRollResult RollsResult { get; set; }
 
         public string DiceMessage { get; set; }
-
+        public DiceMessageType DiceMessageType => DiceMessageType.HandGrenadeRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public override IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
 

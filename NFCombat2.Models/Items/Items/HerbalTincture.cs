@@ -19,8 +19,9 @@ namespace NFCombat2.Models.Items.Items
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => "Your herbal tincture roll:";
-
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.HerbalTinctureRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public bool UnavailableForRestOfCombat { get; set; }
 
         public MessageType MessageType => MessageType.UseItemMessage;

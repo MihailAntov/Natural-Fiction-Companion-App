@@ -21,6 +21,7 @@ namespace NFCombat2.Common.Enums
         ReceiveOptimizeNFix,
         ReceiveOptimizeNAnalyze,
         ReceiveOptimizeFix,
-        SendDirectNUnlock
+        SendDirectNUnlock,
+        Incorrect
     }
 }

@@ -22,8 +22,9 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage {get;}
-
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.SurgicalKitRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public ICombatResolution AffectPlayer(Player.Player player)
         {
             //Quantity--;

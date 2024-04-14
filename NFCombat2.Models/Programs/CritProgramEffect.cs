@@ -14,13 +14,14 @@ namespace NFCombat2.Models.Programs
         {
             _numberOfCrits = numberOfCrits;
         }
-
+        public int Cost { get; set; }
         public MessageType MessageType => MessageType.ProgramCritMessage;
         public string[] MessageArgs =>Array.Empty<string>();
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //fight.RemainingCrits += _numberOfCrits;
             var crit = new GuaranteedCrits(_numberOfCrits);
+            fight.Player.Overload += Cost;
             fight.Effects.Enqueue(crit);
             return new List<ICombatResolution>() { crit };
         }

@@ -12,12 +12,13 @@ namespace NFCombat2.Models.Programs
         public MessageType MessageType => MessageType.ProgramDisableTentacleMessage;
 
         public string[] MessageArgs => Array.Empty<string>();
-
+        public int Cost { get; set; }
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             if (fight is TentacleFight tentacleFight)
             {
                 tentacleFight.ProtectedFromMaser = true;
+                fight.Player.Overload += Cost;
                 return new List<ICombatResolution>() { new DisableMaser() };
             }
             return new List<ICombatResolution>() { new ProgramNoEffect() };

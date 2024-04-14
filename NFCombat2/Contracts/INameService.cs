@@ -12,6 +12,7 @@ namespace NFCombat2.Contracts
         public string ItemDescription(ItemType type);
         public string ProgramName(ProgramType type);
         public string ProgramComponentName(ProgramComponentType type);
+        public string ProgramDescription(ProgramType type);
         public string PartCategoryName(PartCategoryType categoryType);
         public string PartName(PartType part);
         public string Option(OptionType option, CheckType checkType = CheckType.None);
@@ -23,5 +24,6 @@ namespace NFCombat2.Contracts
         public string EnemyName(EnemyType enemyType);
         public void RetrieveFightNames(Fight fight);
         public string ClassName(PlayerClass className);
+        public string DiceMessage(DiceMessageType messageType, string[] messageArgs);
     }
 }

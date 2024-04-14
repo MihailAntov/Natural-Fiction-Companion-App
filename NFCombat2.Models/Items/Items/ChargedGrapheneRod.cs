@@ -25,7 +25,9 @@ namespace NFCombat2.Models.Items.Items
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => "Your charged graphene rod roll:";
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.GrapheneRodRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

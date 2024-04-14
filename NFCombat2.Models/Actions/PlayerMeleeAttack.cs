@@ -17,6 +17,7 @@ namespace NFCombat2.Models.Actions
             Target = target;
             AttackerResult = DiceCalculator.Calculate(1, null, _fight.Player.Strength);
             DefenderResult = DiceCalculator.Calculate(1, null, target.Strength);
+            DiceMessageArgs[0] = Target.Name;
         }
         public string[] MessageArgs => new string[] { Target?.Name };
         public string Name => "Melee Attack";
@@ -32,12 +33,14 @@ namespace NFCombat2.Models.Actions
 
         public DiceRollResult AttackerResult { get; set; }
 
-        public string AttackerMessage => "Your melee attack roll:";
+        public string AttackerMessage { get; set; }
+        public DiceMessageType AttackerDiceMessageType => DiceMessageType.PlayerMeleeAttackRoll;
 
         public DiceRollResult DefenderResult { get; set; }
 
-        public string DefenderMessage => $"{Target.Name}'s melee attack roll:";
-
+        public string DefenderMessage { get; set; }
+        public DiceMessageType DefenderDiceMessageType => DiceMessageType.EnemyMeleeAttackRoll;
+        public string[] DiceMessageArgs { get; set; } = new string[1];
         public virtual IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             int attackerScore = AttackerResult.Dice.Sum(d => d.DiceValue) + AttackerResult.FlatAmount;

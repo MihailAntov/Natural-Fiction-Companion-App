@@ -21,12 +21,14 @@ namespace NFCombat2.Services
         private PlayerRepository _repository;
         private readonly IPopupService _popupService;
         private SettingsRepository _settings;
+        private readonly IProgramService _programService;
         private readonly INameService _nameService;
         private Player _player = new Player();
         public PlayerService(PlayerRepository repository,
             SettingsRepository settings,
             //IPopupService popupService,
-            INameService nameService)
+            INameService nameService,
+            IProgramService programService)
         {
             
             _repository = repository;
@@ -34,6 +36,7 @@ namespace NFCombat2.Services
             GetDefaultPlayer();
             //_popupService = popupService;
             _nameService = nameService;
+            _programService = programService;
 
         }
 
@@ -67,6 +70,10 @@ namespace NFCombat2.Services
         {
             
             var players =  await _repository.GetAllProfiles();
+            foreach(var  player in players)
+            {
+                _programService.GetKnownPrograms(player);
+            }
             return players;
         }
 
@@ -121,6 +128,8 @@ namespace NFCombat2.Services
                         part.Name = _nameService.PartName(part.PartType);
                     }
                 }
+
+                
             });
             task.Start();
             await task;
@@ -130,6 +139,7 @@ namespace NFCombat2.Services
         public async Task<Player> GetPlayerById(int id)
         {
             var player = await _repository.GetPlayerById(id);
+            _programService.GetKnownPrograms(player);
             return player;
         }
 
@@ -147,7 +157,10 @@ namespace NFCombat2.Services
 
         public async Task SwitchToPlayer(Player player)
         {
-            if(CurrentPlayer != null)
+            player = await _repository.GetPlayerById(player.Id);
+            _programService.GetKnownPrograms(player);
+            //?
+            if (CurrentPlayer != null)
             {
                 await _repository.UpdatePlayer(CurrentPlayer);
             }

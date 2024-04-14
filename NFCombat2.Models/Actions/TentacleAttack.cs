@@ -19,6 +19,7 @@ namespace NFCombat2.Models.Actions
             EnemyType = enemyType;
             _enemyName = enemyName;
             RollsResult = DiceCalculator.Calculate(1);
+            DiceMessageArgs[0] = _enemyName;
 
         }
         public MessageType MessageType => GetMessageType(EnemyType);
@@ -27,8 +28,9 @@ namespace NFCombat2.Models.Actions
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => $"{_enemyName}'s roll:";
-
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.TentacleRoll;
+        public string[] DiceMessageArgs { get; set; } = new string[1];
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>();

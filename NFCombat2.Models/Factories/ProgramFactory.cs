@@ -25,162 +25,255 @@ namespace NFCombat2.Models.Factories
         {
             {ProgramType.ReceiveNOptimizeNMove,()=>new Program() //
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveNOptimizeNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new FreezeProgramEffect(3,false,1,10)
+
+                        new FreezeProgramEffect(3, false, 1, 10)
+                        {
+                            Cost = 2,
+                        }
                     }
                 }
             },
             {ProgramType.ReceiveNOptimizeNFix,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveNOptimizeNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(2,0,1,10,false,1,0,1)
+                        new DamageProgramEffect(2, 0, DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 2,
+                            MinRange = 1,
+                            MaxRange = 10,
+                            DelayedDuration = 1,
+                            DelayedNumberOfDice = 1,
+                            DelayedFlatDamage = 0,
+                            DelayedDiceMessageType = DiceMessageType.DelayedProgramDamageRoll
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveNOptimizeNAnalyze,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveNOptimizeNAnalyze.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
                         new CritProgramEffect(2)
+                        {
+                            Cost = 2,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveNOptimizeFix,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveNOptimizeFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
                         new HealProgramEffect(2, 1)
+                        {
+                            Cost = 2,
+                            
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveNExtendNFix,()=>new Program()//
                 {
-                    Cost = 1,
+                    
+                    Formula = ProgramType.ReceiveNExtendNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(2,0,0,0,false,1,0,1)
+                        new DamageProgramEffect(2,-1,DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 1,
+                            MinRange = 0,
+                            MaxRange = 0
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveNDirectNMove,()=>new Program()//
-                {Cost = 1,
+                {
+                Formula = ProgramType.ReceiveNDirectNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new FreezeProgramEffect(2,true,1,10)
+                        new FreezeProgramEffect(2, true, 1, 10)
+                        {
+                            Cost = 1,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveNDirectNFix,()=>new Program()//
-                {Cost = 1,
+                {
+                Formula = ProgramType.ReceiveNDirectNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(1,3,1,10,true)
+                        new DamageProgramEffect(1, 3, DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 1,
+                            AreaOfEffect = true,
+                            MinRange = 1,
+                            MaxRange = 10
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveDirectNMove,()=>new Program()//
-                {Cost=1,
+                {
+                Formula = ProgramType.ReceiveDirectNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new FreezeProgramEffect(2,false,1,10)
+                        new FreezeProgramEffect(2, false, 1, 10)
+                        {
+                            Cost=1,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveDirectNFix,()=>new Program()//
-                {Cost = 1,
+                {
+                Formula = ProgramType.ReceiveDirectNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(2,0,1,10,false)
+                        new DamageProgramEffect(2, 0, DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 1,
+                            MinRange = 1,
+                            MaxRange = 10
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveDirectNAnalyze,()=>new Program()//
                 {
-                    Cost = 1,
+                    
+                    Formula = ProgramType.ReceiveDirectNAnalyze.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
                         new CritProgramEffect(1)
+                        {
+                            Cost = 1,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveDirectFix,()=>new Program()//
                 {   
-                    Cost = 1,
+                    
+                    Formula = ProgramType.ReceiveDirectFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new HealProgramEffect(2,0),
+                        new HealProgramEffect(2, 0)
+                        {
+                            Cost = 1,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveExtendNMove,()=>new Program()//
                 {
-                    Cost = 1,
+                    
+                    Formula = ProgramType.ReceiveExtendNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new FreezeProgramEffect(2,false,11,1000)
+                        new FreezeProgramEffect(2, false, 11, 1000)
+                        {
+                            Cost = 1,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveExtendNFix,()=>new Program()//
                 {
-                    Cost = 1,
+                    
+                    Formula = ProgramType.ReceiveExtendNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(1,1,11,1000,false)
+                        new DamageProgramEffect(1, 1, DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 1,
+                            MinRange = 11, 
+                            MaxRange = 1000
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveOptimizeNMove,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveOptimizeNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new FreezeProgramEffect(2,false,1,10),
-                        new BonusActionProgramEffect()
+                        new BonusActionProgramEffect(),
+                        new FreezeProgramEffect(2, false, 1, 10)
+                        {
+                            Cost = 2,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveOptimizeNFix,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveOptimizeNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new DamageProgramEffect(2,0,1,10,false),
-                        new BonusActionProgramEffect()
+                        new BonusActionProgramEffect(),
+                        new DamageProgramEffect(2, 0, DiceMessageType.ProgramDamageRoll)
+                        {
+                            Cost = 2,
+                            MinRange = 1,
+                            MaxRange = 10
+                        }
+                        
                     },
                 }
             },
             {ProgramType.ReceiveOptimizeNAnalyze,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveOptimizeNAnalyze.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new CritProgramEffect(1),
-                        new BonusActionProgramEffect()
+                        new BonusActionProgramEffect(),
+                        new CritProgramEffect(1)
+                        {
+                            Cost = 2,
+                        }
                     },
                 }
             },
             {ProgramType.ReceiveOptimizeFix,()=>new Program()//
                 {
-                    Cost = 2,
+                    
+                    Formula = ProgramType.ReceiveOptimizeFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new HealProgramEffect(2,0),
-                        new BonusActionProgramEffect()
+                        new BonusActionProgramEffect(),
+                        new HealProgramEffect(2, 0)
+                        {
+                            Cost = 2,
+                        }
                     },
                 }
             },
             {ProgramType.SendDirectNUnlock,()=>new Program()
-                {
+                {   
+                    
+                    Formula = ProgramType.SendDirectNUnlock.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
                         new TentacleDisableProgramEffect()
+                        {
+                            Cost = 1,
+                        }
                     },
                 }
             },

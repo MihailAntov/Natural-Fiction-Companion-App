@@ -44,7 +44,7 @@ namespace NFCombat2.Models.Fights
             }
         }
         public Queue<IAction> Actions { get; set; } = new Queue<IAction>();
-        public Queue<ICombatResolution> DelayedEffects { get; set; } = new Queue<ICombatResolution>();
+        public Queue<ICombatAction> DelayedEffects { get; set; } = new Queue<ICombatAction>();
 
         public Queue<ICombatResolution> Effects { get; set; } = new Queue<ICombatResolution>();
         public bool HasBonusAction { get; set; } = false;

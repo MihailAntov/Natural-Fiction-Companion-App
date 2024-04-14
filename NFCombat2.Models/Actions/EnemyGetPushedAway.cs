@@ -30,8 +30,9 @@ namespace NFCombat2.Models.Actions
 
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => "Your EM Shield roll:";
-
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.PushAwayRoll;
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var resolutions = new List<ICombatResolution>()

@@ -14,7 +14,7 @@ namespace NFCombat2.Models.Programs
         public string Name { get; set; }
         public bool AreaOfEffect { get; set; }
         public bool BonusAction {  get; set; }
-        public int Cost { get; set; }
+        //public int Cost { get; set; }
         public int Episode { get; set; }    
         public string Formula { get; set; }
         public int MinRange { get; set; }
@@ -26,7 +26,7 @@ namespace NFCombat2.Models.Programs
 
         public MessageType MessageType => MessageType.UseProgramMessage;
 
-        public string[] MessageArgs => new string[] { Name, (Cost + Caster.Overload).ToString() };
+        public string[] MessageArgs => new string[] { Name, (Effects.Select(e=> e.Cost).Sum() + Caster.Overload).ToString() };
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

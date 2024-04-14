@@ -21,7 +21,7 @@ namespace NFCombat2.Services
         public void GetKnownPrograms(Player player)
         {
             string programList = player.ProgramList;
-            string[] strings = programList.Split("&");
+            string[] strings = programList.Split("&").Distinct().ToArray();
             IList<Program> result = new List<Program>();
             foreach (string formula in strings)
             {
@@ -52,7 +52,11 @@ namespace NFCombat2.Services
         {
             if (Enum.TryParse(typeof(ProgramType), programFormula, true, out var programType))
             {
-                return Factory.GetProgram((ProgramType)programType);
+                var type = (ProgramType)programType;
+                var program = Factory.GetProgram(type);
+                program.Description = _nameService.ProgramDescription(type);
+                program.Name = _nameService.ProgramName(type);
+                return program;
             }
             return null;
         }
@@ -64,6 +68,7 @@ namespace NFCombat2.Services
             {
                 return;
             }
+            player.Programs.Add(program);
             player.ProgramList += $"&{program.Formula}";
         }
 

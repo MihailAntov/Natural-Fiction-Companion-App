@@ -12,6 +12,9 @@ using static NFCombat2.Common.AppConstants.PartNames;
 using static NFCombat2.Common.AppConstants.CraftResults;
 using static NFCombat2.Common.AppConstants.ClassNames;
 using static NFCombat2.Common.AppConstants.ProgramComponentNames;
+using static NFCombat2.Common.AppConstants.ProgramDescriptions;
+using static NFCombat2.Common.AppConstants.ProgramNames;
+using static NFCombat2.Common.AppConstants.DiceMessages;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
@@ -60,7 +63,15 @@ namespace NFCombat2.Services
 
         public string ProgramName(ProgramType type)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return EnglishProgramNames[type];
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
         }
 
         public string ModeName(ItemMode mode)
@@ -189,6 +200,31 @@ namespace NFCombat2.Services
             try
             {
                 return EnglishProgramComponentNames[type];
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string ProgramDescription(ProgramType type)
+        {
+            try
+            {
+                return BulgarianProgramDescriptions[type];
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string DiceMessage(DiceMessageType messageType, string[] messageArgs)
+        {
+            try
+            {
+                var format = EnglishDiceMessages[messageType];
+                return String.Format(format, messageArgs);
             }
             catch
             {

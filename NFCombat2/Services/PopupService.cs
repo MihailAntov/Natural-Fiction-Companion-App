@@ -8,6 +8,7 @@ using NFCombat2.Contracts;
 using NFCombat2.Views;
 using NFCombat2.ViewModels;
 using NFCombat2.Models.Player;
+using NFCombat2.Common.Enums;
 
 namespace NFCombat2.Services
 {
@@ -105,19 +106,19 @@ namespace NFCombat2.Services
             return player;
         }
 
-        public async Task<Program> ShowCastPopup(IPlayerService playerService)
+        public async Task<ProgramExecution> ShowCastPopup(IPlayerService playerService)
         {
-            TaskCompletionSource<Program> taskCompletionSource = new TaskCompletionSource<Program>();
+            TaskCompletionSource<ProgramExecution> taskCompletionSource = new TaskCompletionSource<ProgramExecution>();
             var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService, playerService);
             var popup = new ProgramCastView(viewmodel);
             viewmodel.Popup = popup;
             ShowPopup(popup);
-            var program = await taskCompletionSource.Task;
-            if (program != null)
+            var execution = await taskCompletionSource.Task;
+            if(execution.Result != ProgramExecutionResult.Cancelled)
             {
                 await popup.CloseAsync();
             }
-            return program;
+            return execution;
         }
     }
 }

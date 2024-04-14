@@ -160,26 +160,9 @@ namespace NFCombat2.Services
             
 
             var knownPrograms = fight.Player.Programs.Select(o => new Option(o.Name, o)).ToList<IOption>();
-
             var result = new OptionList(knownPrograms, true, true) { Label = "Choose which program to use" };
             result.Options.Add(new Option("Manual",new ManualProgramCast()));
             return result;
-
-            //todo : implement program retrieval
-            //var program1 = new Program("Zap Bonus Action", "Нанася 1 зар щети на избран опонент. Можете да предприемете допълнително действие.", fight.Player) { Cost = 1 };
-            // program1.Effects.Add(new DamageProgramEffect(1, 0, program1));
-            //program1.Effects.Add(new BonusActionProgramEffect());
-
-            //var program2 = new Program("ZapZap", "Нанася 2 зара щети + 2 на избран опонент.", fight.Player) { Cost = 2 };
-            //program2.Effects.Add(new DamageProgramEffect(2, 2,program2));
-
-            //var objects = new List<IAction>
-            //{
-            //    program1,
-            //    program2  
-            //};
-
-
 
         }
 

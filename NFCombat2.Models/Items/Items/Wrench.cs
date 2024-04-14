@@ -27,7 +27,10 @@ namespace NFCombat2.Models.Items.Items
         public int MaxRange { get; set; } = 5;
         public DiceRollResult RollsResult { get; set; }
 
-        public string DiceMessage => "Your wrench damage roll:";
+        public string DiceMessage { get; set; }
+        public DiceMessageType DiceMessageType => DiceMessageType.WrenchRoll;
+
+        public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {

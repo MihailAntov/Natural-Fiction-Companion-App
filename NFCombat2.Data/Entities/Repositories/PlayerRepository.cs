@@ -402,11 +402,9 @@ namespace NFCombat2.Data.Entities.Repositories
 
             //var programs = await connection.Table<ProgramEntity>()
             //    .Where(p=> programIds.Contains(p.Id)).ToListAsync();
-            //if (player.Class == PlayerClass.Hacker)
-            //{
-            //    List<Program> knownPrograms = GetKnownPrograms(player);
-            //    player.Programs = knownPrograms;
-            //}
+
+            
+            
 
         }
 

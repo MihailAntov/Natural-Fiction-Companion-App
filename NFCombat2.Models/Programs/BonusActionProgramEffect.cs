@@ -12,10 +12,12 @@ namespace NFCombat2.Models.Programs
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             var bonus = new BonusAction();
+            fight.Player.Overload += Cost;
             fight.Effects.Enqueue(bonus);
             return new List<ICombatResolution>() { bonus };
 
         }
+        public int Cost { get; set; }
 
         public bool HasEffect(Fight fight)
         {

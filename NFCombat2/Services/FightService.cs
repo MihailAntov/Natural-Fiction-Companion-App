@@ -109,181 +109,6 @@ namespace NFCombat2.Services
 
         public async Task<Fight> GetFightByEpisodeNumber(int episodeNumber)
         {
-
-            //var enemies = new List<Enemy>();
-            //var testWeapon1 = new Weapon() { Name = "Blaster", MaxRange = 10, DamageDice = 1, FlatDamage = 0, Accuracy = Accuracy.B };
-            //var testWeapon2 = new Weapon() { Name = "Rifle", MaxRange = 15, DamageDice = 2, FlatDamage = 1, Accuracy = Accuracy.D };
-            //var targetDummy = new Enemy()
-            //{
-            //    Name = "Enemy 1",
-            //    Health = 10,
-            //    Distance = 5,
-            //    Speed = 2,
-            //    Weapons = new List<Weapon> { testWeapon1, testWeapon2 }
-
-            //};
-
-            //var targetDummy2 = new Enemy()
-            //{
-            //    Name = "Enemy 2",
-            //    Health = 10,
-            //    Distance = 15,
-            //    Speed = 2,
-            //    Weapons = new List<Weapon> { testWeapon1 }
-            //};
-            //enemies.Add(targetDummy);
-            //var toboganEnemies = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Alien shooter",  Health = 16, Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Distance = 64, Speed = 8},
-            //    new Enemy(){Name = "Alien leader", Health = 11, Distance = 64, Speed = 8, BonusStrength = 2}
-            //};
-            //var guards = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Guard", Weapons = new List<Weapon> { testWeapon1, testWeapon2 }, Health = 18, Speed = 0, Distance = 3}
-            //};
-
-            //var rock = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Rock", BonusStrength = 2, Damageable = false }
-            //};
-
-            //var swamp = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Swamp plants", Health = 14}
-            //};
-
-            //var hologram = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Hologram Brute", Health = 18, Distance = 4}
-            //};
-
-            //var vespisoid = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Vespisoid", Health = 24, Distance = 4}
-            //};
-
-            //var kabuto = new List<Enemy>()
-            //{
-            //    new Enemy(){Name = "Kabuto", Health = 120, Distance = 4, Weapons = new List<Weapon>(){testWeapon1, testWeapon2} }
-            //};
-
-            //var hacker = new Player() { Name = "Istvan", Class = PlayerClass.Hacker };
-            //var specOps = new Player() { Name = "Hackerman", Class = PlayerClass.Hacker };
-            ////hacker.Weapons.Add(new PlasmaRapier());
-            ////hacker.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1 });
-            ////hacker.Weapons.Add(new Weapon() { Label = "Sniper Rifle", MinRange = 5, MaxRange = 20, DamageDice = 1 });
-            //hacker.Activatables.Add(new HandGrenade());
-            ////specOps.Weapons.Add(new Weapon() { Label = "Pistol", MinRange = 0, MaxRange = 8, DamageDice = 1, Accuracy = Accuracy.C });
-            //specOps.Activatables.Add(new HandGrenade());
-            //specOps.Equipment.Add(new TacticalGlasses());
-            //specOps.Equipment.Add(new PortableSurgicalLaser());
-            //specOps.Techniques.Add(new Feint());
-            //Fight fight;
-
-            //switch (episodeNumber)
-            //{
-            //    case 0:
-            //        //fight = new Fight(enemies, hacker);
-            //        fight = new Fight(enemies);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        enemies.Add(targetDummy2);
-            //        break;
-            //    case 1:
-            //        fight = new ChaseFight(toboganEnemies);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 21:
-            //        fight = new SkillCheckFight(rock, CheckType.Rocks);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        if (fight is SkillCheckFight rocks)
-            //        {
-            //            rocks.MinStrength = 0;
-            //            rocks.OnMinStrengthReached = FightResult.Lost;
-            //            rocks.CountWins = true;
-            //        }
-            //        break;
-            //    case 22:
-            //        fight = new SkillCheckFight(rock, CheckType.River);
-            //        if (fight is SkillCheckFight river)
-            //        {
-            //            river.LosingAtZeroFatal = true;
-            //            river.MaxConsecutiveWins = 2;
-            //            river.OnMaxConsecutiveRoundsReached = FightResult.Won;
-            //        }
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 23:
-            //        fight = new SkillCheckFight(rock, CheckType.Panel);
-            //        if (fight is SkillCheckFight panel)
-            //        {
-            //            panel.MinStrength = 0;
-            //            panel.OnMinStrengthReached = FightResult.Lost;
-            //            panel.MaxConsecutiveWins = 1;
-            //            panel.OnMaxConsecutiveRoundsReached = FightResult.Won;
-            //        }
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 24:
-            //        fight = new SkillCheckFight(rock, CheckType.Door);
-            //        if (fight is SkillCheckFight door)
-            //        {
-            //            door.MaxConsecutiveWins = 2;
-            //            door.MaxRounds = 5;
-            //            door.OnMaxRoundsReached = FightResult.Lost;
-            //            door.OnMaxConsecutiveRoundsReached = FightResult.Won;
-            //        }
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 25:
-            //        fight = new HazardFight(swamp);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 3:
-            //        var timedFight = new TimedFight(enemies);
-            //        timedFight.OnTurnsReached = FightResult.Won;
-            //        timedFight.OnEnemyHealthReached = FightResult.Won;
-            //        timedFight.MaxTurns = 5;
-            //        timedFight.MinEnemyHealth = 5;
-            //        fight = timedFight;
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 4:
-            //        var tentacleFight = new TentacleFight(enemies);
-            //        tentacleFight.Player = _playerService.CurrentPlayer;
-            //        tentacleFight.TraumaTentacleName = _nameService.EnemyName(EnemyType.TraumaTentacle);
-            //        tentacleFight.PathogensTentacleName = _nameService.EnemyName(EnemyType.PathogenTentacle);
-            //        tentacleFight.IonizationTentacleName = _nameService.EnemyName(EnemyType.IonizationTentacle);
-            //        fight = tentacleFight;
-            //        break;
-            //    case 5:
-            //        fight = new EscapeFight(guards);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 6:
-            //        fight = new VirtualFight(hologram);
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 7:
-            //        var stationaryFight = new StationaryFight(vespisoid);
-            //        stationaryFight.MinEnemyHealth = 5;
-            //        stationaryFight.OnEnemyHealthReached = FightResult.Won;
-            //        fight = stationaryFight;
-            //        fight.Player = _playerService.CurrentPlayer;
-            //        break;
-            //    case 8:
-            //        var variantFight = new VariantFight(kabuto);
-            //        fight = variantFight;
-            //        break;
-            //    case 9:
-            //        var kabutoFight = new VariantFight(kabuto);
-            //        fight = kabutoFight;
-            //        break;
-            //    default:
-            //        throw new NotImplementedException();
-
-            //}
-
-            //_fight = fight;
             _fight = _fightRepository.GetFight(episodeNumber);
             if(_fight == null)
             {
@@ -400,6 +225,8 @@ namespace NFCombat2.Services
 
         public async Task<IOptionList> AfterOption()
         {
+
+
             foreach (var weapon in _fight.Player.Weapons)
             {
                 if (weapon.RemainingCooldown > 0)
@@ -467,6 +294,15 @@ namespace NFCombat2.Services
                 var effect = _fight.Effects.Dequeue();
                 await effect.Resolve(_fight);
                 
+            }
+
+            if(_fight.TurnPhase == TurnPhase.EnemyMove)
+            {
+                while(_fight.DelayedEffects.Count > 0)
+                {
+                    var action = _fight.DelayedEffects.Dequeue();
+                    await HandleRolls(action);
+                }
             }
 
             
@@ -547,20 +383,24 @@ namespace NFCombat2.Services
                     reRolls++;
                 }
             }
-            if(effect is IHaveAttackRoll attack && !attack.AlwaysHits)
+            if(effect is IHaveAttackRoll attack && !attack.AlwaysHits && _fight.RemainingCrits == 0)
             {
+                attack.AttackDiceMessage = _nameService.DiceMessage(attack.AttackDiceMessageType, attack.DiceMessageArgs);
                 var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll, reRolls);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
+                rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
                 var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll, reRolls);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveOpposedRolls meleeCombat)
             {
+                meleeCombat.AttackerMessage = _nameService.DiceMessage(meleeCombat.AttackerDiceMessageType, meleeCombat.DiceMessageArgs);
+                meleeCombat.DefenderMessage = _nameService.DiceMessage(meleeCombat.DefenderDiceMessageType, meleeCombat.DiceMessageArgs);
                 var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, canReroll, reRolls);
                 await attackCompletion.Task;
                 
@@ -702,20 +542,24 @@ namespace NFCombat2.Services
 
             if(option is ManualProgramCast programCast)
             {
-                var programUsed = await _popupService.ShowCastPopup(_playerService);
-                if(programUsed == null)
+                var execution = await _popupService.ShowCastPopup(_playerService);
+                switch (execution.Result)
                 {
-                    _popupService.ShowToast("Your program had no effect.");
-                    return await AfterOption();
+                    case ProgramExecutionResult.Success:
+                        return await ProcessChoice(execution.Content);
+                    case ProgramExecutionResult.NoEffect:
+                        _popupService.ShowToast("Your program had no effect in the current fight.");
+                        return await AfterOption();
+                    case ProgramExecutionResult.Fail:
+                        _popupService.ShowToast("Your program had no effect.");
+                        return await AfterOption();
+                    case ProgramExecutionResult.Cancelled:
+                        return PreviousOptions;
                 }
-
-                return await ProcessChoice(programUsed);
-                
             }
 
             if(option is Program program)
             {
-                _fight.Player.Overload += program.Cost;
                 var workingEffects = program.Effects.Where(e => e.HasEffect(_fight)).ToList();
                 if(workingEffects.Count == 0)
                 {
@@ -724,13 +568,15 @@ namespace NFCombat2.Services
 
                 foreach(var effect in workingEffects)
                 {
+
                     if(effect is ITarget targettingEffect)
                     {
                         CurrentTargetingEffect = targettingEffect;
                     }
 
-                    return await ProcessChoice(effect);
+                    await ProcessChoice(effect);
                 }
+                return await AfterOption();
             }
 
             if(option is Variant variant)
@@ -821,7 +667,7 @@ namespace NFCombat2.Services
 
             if (option is Enemy target)
             {
-                if(target.Distance == 0)
+                if(target.Distance == 0 && CurrentTargetingEffect is not IProgramEffect)
                 {
                     PlayerMeleeAttack meleeAttack = null!;
                     meleeAttack = new PlayerMeleeAttack(_fight, target);
@@ -848,7 +694,10 @@ namespace NFCombat2.Services
             if (option is ICombatAction combatEffect)
             {
                 await HandleRolls(combatEffect);
-                return await AfterOption();
+                if(option is not BonusActionProgramEffect)
+                {
+                    //return await AfterOption();
+                }
 
             }
 

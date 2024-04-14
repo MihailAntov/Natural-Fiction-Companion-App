@@ -12,7 +12,9 @@ namespace NFCombat2.Models.Contracts
         IList<ICombatResolution> AddCritToCombatResolutions(Fight fight);
         
         public Accuracy Accuracy { get; }
-        public string AttackDiceMessage { get; }
+        public string AttackDiceMessage { get; set; }
+        public string[] DiceMessageArgs { get; set; }
+        public DiceMessageType AttackDiceMessageType { get; }
         public bool AlwaysHits { get; }
     }
 }
