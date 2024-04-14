@@ -29,6 +29,7 @@ namespace NFCombat2.Models.Programs
 
         public bool AreaOfEffect { get; set; }
         public int Cost { get; set; }
+        public bool BonusAction { get; set; }
         public ICollection<Enemy> Targets { get; set; } = new HashSet<Enemy>();
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
@@ -49,11 +50,20 @@ namespace NFCombat2.Models.Programs
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
+            var result = new List<ICombatResolution>();
             var damage = new DealDamage(RollsResult, Targets);
             fight.Player.Overload += Cost;
             fight.Effects.Enqueue(damage);
+            result.Add(damage);
+            if (BonusAction)
+            {
                 
-            if(DelayedDuration > 0)
+                var bonus = new BonusAction();
+                fight.Effects.Enqueue(bonus);
+                result.Add(bonus);
+            }
+
+            if (DelayedDuration > 0)
             {
                 //DelayedRollsResult = DiceCalculator.Calculate(DelayedNumberOfDice,DelayedDiceMessage, DelayedFlatDamage);
                 //fight.DelayedEffects.Enqueue(new DealDamage(DelayedRollsResult, Targets));
@@ -66,7 +76,7 @@ namespace NFCombat2.Models.Programs
                 fight.DelayedEffects.Enqueue(delayedEffect);
             }
 
-            return new List<ICombatResolution>() { damage };
+            return result;
         }
 
         public bool HasEffect(Fight fight)

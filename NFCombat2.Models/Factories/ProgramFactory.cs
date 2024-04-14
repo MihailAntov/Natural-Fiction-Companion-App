@@ -209,11 +209,12 @@ namespace NFCombat2.Models.Factories
                 {
                     
                     Formula = ProgramType.ReceiveOptimizeNMove.ToString(),
+                    BonusAction = true,
                     Effects = new List<IProgramEffect>()
                     {
-                        new BonusActionProgramEffect(),
                         new FreezeProgramEffect(2, false, 1, 10)
                         {
+                            BonusAction = true,
                             Cost = 2,
                         }
                     },
@@ -223,11 +224,12 @@ namespace NFCombat2.Models.Factories
                 {
                     
                     Formula = ProgramType.ReceiveOptimizeNFix.ToString(),
+                    BonusAction = true,
                     Effects = new List<IProgramEffect>()
                     {
-                        new BonusActionProgramEffect(),
                         new DamageProgramEffect(2, 0, DiceMessageType.ProgramDamageRoll)
                         {
+                            BonusAction = true,
                             Cost = 2,
                             MinRange = 1,
                             MaxRange = 10
@@ -240,11 +242,12 @@ namespace NFCombat2.Models.Factories
                 {
                     
                     Formula = ProgramType.ReceiveOptimizeNAnalyze.ToString(),
+                    BonusAction = true,
                     Effects = new List<IProgramEffect>()
                     {
-                        new BonusActionProgramEffect(),
                         new CritProgramEffect(1)
                         {
+                            BonusAction = true,
                             Cost = 2,
                         }
                     },
@@ -254,11 +257,12 @@ namespace NFCombat2.Models.Factories
                 {
                     
                     Formula = ProgramType.ReceiveOptimizeFix.ToString(),
+                    BonusAction = true,
                     Effects = new List<IProgramEffect>()
                     {
-                        new BonusActionProgramEffect(),
                         new HealProgramEffect(2, 0)
                         {
+                            BonusAction = true,
                             Cost = 2,
                         }
                     },

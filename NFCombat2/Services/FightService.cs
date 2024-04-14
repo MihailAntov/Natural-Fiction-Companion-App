@@ -47,6 +47,7 @@ namespace NFCombat2.Services
         private readonly FightRepository _fightRepository;
         private readonly IPlayerService _playerService;
         private readonly INameService _nameService;
+        private readonly ITechniqueService _techniqueService;
         //private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
@@ -55,7 +56,8 @@ namespace NFCombat2.Services
             IAccuracyService accuracyService, 
             FightRepository fightRepository,
             IPlayerService playerService,
-            INameService nameService
+            INameService nameService,
+            ITechniqueService techniqueService
             )
         {
             _logService = logService;
@@ -65,6 +67,7 @@ namespace NFCombat2.Services
             _fightRepository = fightRepository;
             _playerService = playerService;
             _nameService = nameService;
+            _techniqueService = techniqueService;
             
         }
 
@@ -147,6 +150,7 @@ namespace NFCombat2.Services
             }
             _fight.Player = _playerService.CurrentPlayer;
             _fight.SetUp();
+            await HandleTechniques(_fight.Player);
             return _fight;
         }
 
@@ -362,7 +366,18 @@ namespace NFCombat2.Services
 
         private async Task HandleTechniques(Player player)
         {
-
+            List<List<Technique>> newChoices = _techniqueService.UpdateTechniques(player);
+            foreach(var level in newChoices)
+            {
+                var choice = level.Select(l => new TechniqueChoice()
+                {
+                    Name = _nameService.TechniqueName(l.Type),
+                    Description = _nameService.TechniqueDescription(l.Type),
+                    Technique = l
+                }).ToList();
+                var newTechnique = await _popupService.ShowTechniquePopup(choice);
+                player.Techniques[newTechnique.HealthThreshold] = newTechnique;
+            }
         }
 
         private async Task HandleRolls(ICombatAction effect)
@@ -568,15 +583,9 @@ namespace NFCombat2.Services
 
                 foreach(var effect in workingEffects)
                 {
-
-                    if(effect is ITarget targettingEffect)
-                    {
-                        CurrentTargetingEffect = targettingEffect;
-                    }
-
-                    await ProcessChoice(effect);
+                    return await ProcessChoice(effect);
                 }
-                return await AfterOption();
+                
             }
 
             if(option is Variant variant)
@@ -694,10 +703,7 @@ namespace NFCombat2.Services
             if (option is ICombatAction combatEffect)
             {
                 await HandleRolls(combatEffect);
-                if(option is not BonusActionProgramEffect)
-                {
-                    //return await AfterOption();
-                }
+                return await AfterOption();
 
             }
 

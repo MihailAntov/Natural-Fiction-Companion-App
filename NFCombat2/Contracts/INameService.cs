@@ -25,5 +25,7 @@ namespace NFCombat2.Contracts
         public void RetrieveFightNames(Fight fight);
         public string ClassName(PlayerClass className);
         public string DiceMessage(DiceMessageType messageType, string[] messageArgs);
+        public string TechniqueName(TechniqueType techniqueType);
+        public string TechniqueDescription(TechniqueType techniqueType);
     }
 }

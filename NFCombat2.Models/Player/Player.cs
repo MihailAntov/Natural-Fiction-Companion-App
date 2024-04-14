@@ -205,7 +205,16 @@ namespace NFCombat2.Models.Player
         public IList<Item> Items { get; set; } = new List<Item>();
         public IList<Item> ExtraItems { get; set; } = new List<Item>();
 
-        public IList<Technique> Techniques { get; set; } = new List<Technique>();
+        public Dictionary<int, Technique> Techniques { get; set; } = new Dictionary<int, Technique>()
+        {
+            {30,null },
+            {25,null },
+            {20,null },
+            {15,null },
+            {10,null },
+            {5,null },
+            {1,null },
+        };
         public IList<Program> Programs { get; set; } = new List<Program>();
         public string ProgramList { get; set; }
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
@@ -395,6 +404,8 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
+
+        
 
         //private int _maxFuel;
         //public int MaxFuel

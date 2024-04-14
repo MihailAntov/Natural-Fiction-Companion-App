@@ -6,5 +6,6 @@ namespace NFCombat2.Models.Contracts
     {
         public bool HasEffect(Fight fight);
         public int Cost { get; set; }
+        public bool BonusAction { get; set; }
     }
 }

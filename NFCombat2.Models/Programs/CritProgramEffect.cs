@@ -15,15 +15,25 @@ namespace NFCombat2.Models.Programs
             _numberOfCrits = numberOfCrits;
         }
         public int Cost { get; set; }
+        public bool BonusAction { get; set; }
         public MessageType MessageType => MessageType.ProgramCritMessage;
         public string[] MessageArgs =>Array.Empty<string>();
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //fight.RemainingCrits += _numberOfCrits;
             var crit = new GuaranteedCrits(_numberOfCrits);
+            List<ICombatResolution> result = new List<ICombatResolution>();
             fight.Player.Overload += Cost;
             fight.Effects.Enqueue(crit);
-            return new List<ICombatResolution>() { crit };
+            result.Add(crit);
+            if (BonusAction)
+            {
+                var bonus = new BonusAction();
+                fight.Effects.Enqueue(bonus);
+                result.Add(bonus);
+
+            }
+            return result;
         }
 
         public bool HasEffect(Fight fight)

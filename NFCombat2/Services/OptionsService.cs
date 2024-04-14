@@ -159,9 +159,15 @@ namespace NFCombat2.Services
         {
             
 
-            var knownPrograms = fight.Player.Programs.Select(o => new Option(o.Name, o)).ToList<IOption>();
-            var result = new OptionList(knownPrograms, true, true) { Label = "Choose which program to use" };
+            
+            var result = new OptionList(new List<IOption>(), true, true) { Label = "Choose which program to use" };
             result.Options.Add(new Option("Manual",new ManualProgramCast()));
+            
+            var knownPrograms = fight.Player.Programs;
+            foreach(var program in knownPrograms)
+            {
+                result.Options.Add(new Option(program.Name, program));
+            }
             return result;
 
         }

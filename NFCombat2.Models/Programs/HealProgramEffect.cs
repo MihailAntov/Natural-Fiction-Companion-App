@@ -19,6 +19,7 @@ namespace NFCombat2.Models.Programs
             RollsResult = DiceCalculator.Calculate(_dice);
         }
         public int Cost { get; set; }
+        public bool BonusAction { get; set; }
         public string[] MessageArgs => Array.Empty<string>();
         public MessageType MessageType => MessageType.ProgramHealMessage;
 
@@ -30,10 +31,19 @@ namespace NFCombat2.Models.Programs
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //var amount = DiceCalculator.Calculate(_dice);
+            var result = new List<ICombatResolution>();
             var heal = new Heal(RollsResult);
             fight.Effects.Enqueue(heal);
+            result.Add(heal);
             fight.Player.Overload += Cost;
-            return new List<ICombatResolution>() { heal };
+            if (BonusAction)
+            {
+                var bonus = new BonusAction();
+                fight.Effects.Enqueue(bonus);
+                result.Add(bonus);
+
+            }
+            return result;
         }
 
         public bool HasEffect(Fight fight)

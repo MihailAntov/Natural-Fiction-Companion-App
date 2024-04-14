@@ -15,6 +15,7 @@ using static NFCombat2.Common.AppConstants.ProgramComponentNames;
 using static NFCombat2.Common.AppConstants.ProgramDescriptions;
 using static NFCombat2.Common.AppConstants.ProgramNames;
 using static NFCombat2.Common.AppConstants.DiceMessages;
+using static NFCombat2.Common.AppConstants.TechniqueNamesAndDescriptions;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
@@ -225,6 +226,30 @@ namespace NFCombat2.Services
             {
                 var format = EnglishDiceMessages[messageType];
                 return String.Format(format, messageArgs);
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string TechniqueName(TechniqueType techniqueType)
+        {
+            try
+            {
+                return BulgarianTechniqueNames[techniqueType];
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string TechniqueDescription(TechniqueType techniqueType)
+        {
+            try
+            {
+                return BulgarianTechniqueDescriptions[techniqueType];
             }
             catch
             {

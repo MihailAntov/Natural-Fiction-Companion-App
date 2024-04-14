@@ -4,6 +4,7 @@ using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Player;
 using NFCombat2.Models.Programs;
+using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Contracts
 {
@@ -16,6 +17,7 @@ namespace NFCombat2.Contracts
         Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, bool canReroll, int reRollsAvailable);
         Task<ProgramExecution> ShowCastPopup(IPlayerService playerService);
         Task<Player> ShowAddProfilePopup(IPlayerService playerService);
+        Task<Technique> ShowTechniquePopup(List<TechniqueChoice> choices);
         Task<IAddable> ShowEntryWithSuggestionsPopup(ICollection<IAddable> effect, IPlayerService playerService);
     }
 }

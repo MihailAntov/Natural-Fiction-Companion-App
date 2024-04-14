@@ -13,6 +13,8 @@ namespace NFCombat2.Models.Programs
 
         public string[] MessageArgs => Array.Empty<string>();
         public int Cost { get; set; }
+        public bool BonusAction { get; set; } = false;
+
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             if (fight is TentacleFight tentacleFight)

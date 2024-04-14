@@ -9,6 +9,7 @@ using NFCombat2.Views;
 using NFCombat2.ViewModels;
 using NFCombat2.Models.Player;
 using NFCombat2.Common.Enums;
+using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Services
 {
@@ -119,6 +120,20 @@ namespace NFCombat2.Services
                 await popup.CloseAsync();
             }
             return execution;
+        }
+
+        public async Task<Technique> ShowTechniquePopup(List<TechniqueChoice> chocies)
+        {
+            TaskCompletionSource<Technique> taskCompletionSource = new TaskCompletionSource<Technique>();
+            var viewModel = new TechniqueChoiceViewModel(chocies,taskCompletionSource);
+            var popup = new TechniqueChoiceView(viewModel);
+            ShowPopup(popup);
+            var result = await taskCompletionSource.Task;
+            if(result != null)
+            {
+                await popup.CloseAsync();
+            }
+            return result;
         }
     }
 }

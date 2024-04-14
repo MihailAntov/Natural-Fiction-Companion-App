@@ -28,6 +28,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<INameService, NameService>();
 		builder.Services.AddSingleton<INoteService, NoteService>();
 		builder.Services.AddSingleton<IProgramService, ProgramService>();
+		builder.Services.AddSingleton<ITechniqueService, TechniqueService>();
 		//builder.Services.AddSingleton<ISeederService, SeederService>();
 
 		

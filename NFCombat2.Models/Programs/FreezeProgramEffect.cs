@@ -26,13 +26,22 @@ namespace NFCombat2.Models.Programs
         public MessageType MessageType => MessageType.ProgramFreezeMessage;
 
         public int Cost { get; set; } = 0;
+        public bool BonusAction { get; set; }
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
+            var result = new List<ICombatResolution>();
             var freeze = new Freeze(_turns, Targets);
             fight.Effects.Enqueue(freeze);
+            result.Add(freeze);
             fight.Player.Overload += Cost;
-            return new List<ICombatResolution>() { freeze };
+            if (BonusAction)
+            {
+                var bonus = new BonusAction();
+                fight.Effects.Enqueue(bonus);
+                result.Add(bonus);
+            }
+            return result;
         }
 
         public bool HasEffect(Fight fight)
