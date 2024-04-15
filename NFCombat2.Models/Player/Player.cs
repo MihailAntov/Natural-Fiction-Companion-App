@@ -216,7 +216,7 @@ namespace NFCombat2.Models.Player
             {1,null },
         };
         public IList<Program> Programs { get; set; } = new List<Program>();
-        public string ProgramList { get; set; }
+        public string ProgramList { get; set; } = String.Empty;
         public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
         public virtual IList<IModifyResolution> ResolutionModifiers
         {

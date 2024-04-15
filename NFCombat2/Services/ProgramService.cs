@@ -20,6 +20,10 @@ namespace NFCombat2.Services
         }
         public void GetKnownPrograms(Player player)
         {
+            if(player == null)
+            {
+                return;
+            }
             string programList = player.ProgramList;
             string[] strings = programList.Split("&").Distinct().ToArray();
             IList<Program> result = new List<Program>();

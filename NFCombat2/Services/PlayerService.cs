@@ -157,7 +157,7 @@ namespace NFCombat2.Services
 
         public async Task SwitchToPlayer(Player player)
         {
-            player = await _repository.GetPlayerById(player.Id);
+            //player = await _repository.GetPlayerById(player.Id);
             _programService.GetKnownPrograms(player);
             //?
             if (CurrentPlayer != null)

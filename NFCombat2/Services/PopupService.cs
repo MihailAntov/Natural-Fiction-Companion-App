@@ -20,7 +20,7 @@ namespace NFCombat2.Services
         {
             _programService = programService;
         }
-        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll, int reRollsAvailable)
+        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll = false, int reRollsAvailable = 0)
         {
             var task = new TaskCompletionSource<bool>();
             var viewModel = new DiceResultViewModel(effect, task, canReroll, reRollsAvailable);

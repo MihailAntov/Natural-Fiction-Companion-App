@@ -3,6 +3,7 @@
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
@@ -14,12 +15,14 @@ namespace NFCombat2.ViewModels
         public string Message { get; set; } 
         public bool CanReroll { get; set; }
         public Command ConfirmCommand { get; set; }
+        public Command RerollCommand { get; set; }
         private TaskCompletionSource<bool> _taskCompletionSource;
         public DiceResultViewModel(IHaveAttackRoll effect, TaskCompletionSource<bool> task, bool canReroll, int reRollsAvailable)
         {
             Dice = new List<Dice>() { effect.AttackRollResult };
             Message = effect.AttackDiceMessage;
             ConfirmCommand = new Command(ConfirmRolls);
+            RerollCommand = new Command<Dice>(Reroll);
             _taskCompletionSource = task;
             CanReroll = canReroll;
             _rerollsAvialable = reRollsAvailable;
@@ -51,11 +54,19 @@ namespace NFCombat2.ViewModels
 
         }
 
+        public void Reroll(Dice dice)
+        {
+            dice.Roll();
+            OnPropertyChanged(nameof(dice.FileName));
+        }
+
 
         
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        
+
     }
 }
