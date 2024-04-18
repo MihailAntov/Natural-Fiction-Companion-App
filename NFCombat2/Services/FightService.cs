@@ -19,6 +19,7 @@ using System.Runtime.CompilerServices;
 using NFCombat2.ViewModels;
 using NFCombat2.Views;
 using NFCombat2.Models.Programs;
+using NFCombat2.Models.Dice;
 
 namespace NFCombat2.Services
 {
@@ -383,32 +384,31 @@ namespace NFCombat2.Services
         private async Task HandleRolls(ICombatAction effect)
         {
             bool canReroll = _playerService.CurrentPlayer.Class == PlayerClass.SpecOps;
-            int reRolls = 0;
+            bool canFreeReroll = false;
             if(effect is TentacleAttack tentacleAttack)
             {
                 if(tentacleAttack.EnemyType == EnemyType.PathogenTentacle)
                 {
-                    canReroll = _playerService.CurrentPlayer.Equipment.Any(e => e.ItemType == ItemType.GasMask);
-                    reRolls++;
+                    canFreeReroll = _playerService.CurrentPlayer.Equipment.Any(e => e.ItemType == ItemType.GasMask);
                 }
 
                 if(tentacleAttack.EnemyType == EnemyType.IonizationTentacle)
                 {
-                    canReroll = _playerService.CurrentPlayer.Items.Any(e => e.ItemType == ItemType.PortableEnvironmentalSuit);
-                    reRolls++;
+                    canFreeReroll = _playerService.CurrentPlayer.Items.Any(e => e.ItemType == ItemType.PortableEnvironmentalSuit);
                 }
             }
+
             if(effect is IHaveAttackRoll attack && !attack.AlwaysHits && _fight.RemainingCrits == 0)
             {
                 attack.AttackDiceMessage = _nameService.DiceMessage(attack.AttackDiceMessageType, attack.DiceMessageArgs);
-                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, canReroll, reRolls);
+                var taskCompletion = await _popupService.ShowDiceAttackRollPopup(attack, _playerService.CurrentPlayer, canReroll, canFreeReroll);
                 await taskCompletion.Task;
             }
 
             if(effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
                 rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
-                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, canReroll, reRolls);
+                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, _playerService.CurrentPlayer, canReroll, canFreeReroll);
                 await taskCompletion.Task;
             }
 
@@ -416,7 +416,7 @@ namespace NFCombat2.Services
             {
                 meleeCombat.AttackerMessage = _nameService.DiceMessage(meleeCombat.AttackerDiceMessageType, meleeCombat.DiceMessageArgs);
                 meleeCombat.DefenderMessage = _nameService.DiceMessage(meleeCombat.DefenderDiceMessageType, meleeCombat.DiceMessageArgs);
-                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, canReroll, reRolls);
+                var attackCompletion = await _popupService.ShowMeleeCombatRollsPopup(meleeCombat, _playerService.CurrentPlayer, canReroll, canFreeReroll);
                 await attackCompletion.Task;
                 
             }

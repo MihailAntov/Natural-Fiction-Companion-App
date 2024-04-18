@@ -5,10 +5,10 @@
              x:Class="NFCombat2.Pages.NoteDetails"
              Title="NoteDetails">
     <VerticalStackLayout>
-        <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}">
+        <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}" Placeholder="Title">
 
         </Editor>
-        <Editor VerticalTextAlignment="Start" AutoSize="TextChanges" Text="{Binding Note.Text}">
+        <Editor VerticalTextAlignment="Start" AutoSize="TextChanges" Text="{Binding Note.Text}" Placeholder="Enter text...">
 
         </Editor>
         <Button Text="Save" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>

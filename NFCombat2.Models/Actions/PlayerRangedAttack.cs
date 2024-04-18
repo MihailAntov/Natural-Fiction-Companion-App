@@ -3,13 +3,11 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
-using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Dice;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items.Weapons;
-using NFCombat2.Models.PopUps;
-
 namespace NFCombat2.Models.Actions
 {
     public class PlayerRangedAttack : IStandardAction, ITarget, IHaveRolls, IHaveAttackRoll
@@ -60,7 +58,7 @@ namespace NFCombat2.Models.Actions
         public int MinRange { get; set; }
         public int MaxRange { get; set; }
         public Accuracy Accuracy { get { return _accuracy;  } set {  _accuracy = value; } }
-        public Dice AttackRollResult { get; set; }
+        public Dice.Dice AttackRollResult { get; set; }
         public DiceRollResult RollsResult { get; set; }
 
         public MessageType MessageType => Targets.Count > 1 ? MessageType.AoeShootMessage : MessageType.ShootMessage;

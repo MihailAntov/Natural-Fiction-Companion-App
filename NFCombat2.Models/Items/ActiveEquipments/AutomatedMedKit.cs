@@ -3,6 +3,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Dice;
 using NFCombat2.Models.Fights;
 using static NFCombat2.Common.AppConstants.Messages;
 

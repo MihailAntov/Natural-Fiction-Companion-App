@@ -7,6 +7,7 @@ using NFCombat2.Models.Fights;
 using NFCombat2.Models.Items;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Items.Weapons;
+using NFCombat2.Models.Dice;
 
 namespace NFCombat2.Models.Actions
 {
@@ -30,7 +31,7 @@ namespace NFCombat2.Models.Actions
         public MessageType MessageType => MessageType.EnemyShootMessage;
         public string[] DiceMessageArgs { get; set; } = new string[1];
         public DiceRollResult RollsResult { get; set; }
-        public Dice AttackRollResult { get; set; }
+        public Dice.Dice AttackRollResult { get; set; }
         public Accuracy BaseAccuracy { get; set; }
         public Accuracy Accuracy => IsAccuracyReduced ? (BaseAccuracy < Accuracy.E ? BaseAccuracy + 1: BaseAccuracy) : BaseAccuracy;
           

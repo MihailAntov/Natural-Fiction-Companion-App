@@ -13,13 +13,14 @@
         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="5">
+                    <StackLayout Margin="10">
                         <Image Source="{Binding FileName}" WidthRequest="50" HeightRequest="50" >
                             <Image.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="Gold" />
                             </Image.Behaviors>
                         </Image>
-                        <Button Text="Reroll" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding Source={x:Reference DiceResult}, Path=BindingContext.CanReroll}" />
+                        <Button Text="Reroll  (-4)" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanReroll}" />
+                        <Button Text="Reroll" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.FreeRerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanFreeReroll}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

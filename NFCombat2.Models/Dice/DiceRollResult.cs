@@ -1,4 +1,4 @@
-﻿namespace NFCombat2.Common.Helpers
+﻿namespace NFCombat2.Models.Dice
 {
     public class DiceRollResult
     {

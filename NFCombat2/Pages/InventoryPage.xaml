@@ -22,7 +22,7 @@
              RadioButtonGroup.SelectedValue="weapons">
             <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab">
                 <RadioButton.Content>
-                    <Image Source="pistol.png" />
+                    <Image Source="pistol.png"/>
                 </RadioButton.Content>
             </RadioButton>
             <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab">

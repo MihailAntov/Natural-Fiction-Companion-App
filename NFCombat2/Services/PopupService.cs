@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Programs;
-using NFCombat2.Models.PopUps;
 using NFCombat2.Contracts;
 using NFCombat2.Views;
 using NFCombat2.ViewModels;
@@ -20,10 +19,10 @@ namespace NFCombat2.Services
         {
             _programService = programService;
         }
-        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, bool canReroll = false, int reRollsAvailable = 0)
+        public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, Player player, bool hasReroll = false, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect, task, canReroll, reRollsAvailable);
+            var viewModel = new DiceResultViewModel(effect,player,  task, hasReroll, hasFreeReroll);
             var popup = new DiceResultView(viewModel);
             
             ShowPopup(popup);
@@ -32,10 +31,10 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, bool canReroll, int reRollsAvailable)
+        public async Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, Player player, bool hasReroll, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect.AttackerResult, effect.AttackerMessage, task , canReroll, reRollsAvailable);
+            var viewModel = new DiceResultViewModel(effect.AttackerResult, effect.AttackerMessage, player, task , hasReroll, hasFreeReroll);
             var popup = new DiceResultView(viewModel);
 
             ShowPopup(popup);
@@ -43,7 +42,7 @@ namespace NFCombat2.Services
             await popup.CloseAsync();
 
             task = new TaskCompletionSource<bool>();
-            viewModel = new DiceResultViewModel(effect.DefenderResult, effect.DefenderMessage, task, canReroll, reRollsAvailable);
+            viewModel = new DiceResultViewModel(effect.DefenderResult, effect.DefenderMessage, player, task, hasReroll, hasFreeReroll);
             popup = new DiceResultView(viewModel);
             ShowPopup(popup);
             await task.Task;
@@ -53,10 +52,10 @@ namespace NFCombat2.Services
             return task;
         }
 
-        public async Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect, bool canReroll, int reRollsAvailable)
+        public async Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect, Player player, bool hasReroll, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect, task, canReroll, reRollsAvailable);
+            var viewModel = new DiceResultViewModel(effect, player, task, hasReroll, hasFreeReroll);
             var popup = new DiceResultView(viewModel);
             
             ShowPopup(popup);

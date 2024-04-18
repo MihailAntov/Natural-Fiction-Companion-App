@@ -5,6 +5,8 @@ using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
 using NFCombat2.Models.CombatResolutions;
+using NFCombat2.Models.Dice;
+
 namespace NFCombat2.Models.Actions
 {
     public class EnemyMeleeAttack : ICombatAction, IHaveOpposedRolls
