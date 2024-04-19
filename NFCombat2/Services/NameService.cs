@@ -87,9 +87,14 @@ namespace NFCombat2.Services
             
         }
 
-        public string Option(OptionType option, CheckType checkType = CheckType.None)
+        public string Option(OptionType option, CheckType checkType = CheckType.None, int healthCost = 0)
         {
-            return EnglishOptions[(option, checkType)];
+            string text = EnglishOptions[(option, checkType)];
+            if(healthCost != 0)
+            {
+                return String.Format(text, healthCost);
+            }
+            return text;
         }
 
         public string InfoMessage(Fight fight)

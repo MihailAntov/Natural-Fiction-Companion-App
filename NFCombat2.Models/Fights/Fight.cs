@@ -24,6 +24,7 @@ namespace NFCombat2.Models.Fights
         public Player.Player Player { get; set; }
         public FightType Type { get; set; } 
         public IList<Enemy> Enemies { get; set; }
+        public int AdrenalineCost { get; set; } = 3;
         public bool WeaponsContributeStrength { get; protected set; } = true;
         protected int _playerStrength = 0;
 

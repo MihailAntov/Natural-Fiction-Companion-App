@@ -26,6 +26,7 @@ namespace NFCombat2.Common.AppConstants
             {(OptionType.StrengthCheckAttack,CheckType.Rocks),"Try to move the rocks" },
             {(OptionType.StrengthCheckAttack,CheckType.Door),"Try to break down the door" },
             {(OptionType.SwampAttack,CheckType.Swamp),"Try to fight the swamp plants" },
+            {(OptionType.AdrenalineRush,CheckType.None),"Adrenaline Rush (-{0})" }
         };
     }
 }

@@ -61,6 +61,11 @@ namespace NFCombat2.Services
             {
                 objects.Add(OptionType.Program);    
             }
+            //TODO : finish this
+            if(fight.Player.Class == PlayerClass.SpecOps)
+            {
+                objects.Add(OptionType.AdrenalineRush);
+            }
 
             objects.Add(OptionType.DoNothing);
 
@@ -76,6 +81,13 @@ namespace NFCombat2.Services
                     type = hazardFight.CheckType;
                 }
 
+                if(obj == OptionType.AdrenalineRush)
+                {
+                    string adrenalineLabel = _nameService.Option(obj, type, fight.AdrenalineCost);
+                    result.Add(new Option(adrenalineLabel, obj));
+                    continue;
+                    //TODO : extract as method, call method in get standard, get move, end turn
+                }
 
                 string label = _nameService.Option(obj, type);
                 result.Add(new Option(label, obj));
