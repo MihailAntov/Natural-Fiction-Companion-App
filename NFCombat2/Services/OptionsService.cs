@@ -9,6 +9,7 @@ using NFCombat2.Models.Programs;
 using NFCombat2.Contracts;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Items.Equipments;
+using Java.Util;
 
 namespace NFCombat2.Services
 {
@@ -61,8 +62,8 @@ namespace NFCombat2.Services
             {
                 objects.Add(OptionType.Program);    
             }
-            //TODO : finish this
-            if(fight.Player.Class == PlayerClass.SpecOps)
+
+            if(fight.Player.Class == PlayerClass.SpecOps && !fight.UsedAdrenalineThisTurn)
             {
                 objects.Add(OptionType.AdrenalineRush);
             }
@@ -86,7 +87,6 @@ namespace NFCombat2.Services
                     string adrenalineLabel = _nameService.Option(obj, type, fight.AdrenalineCost);
                     result.Add(new Option(adrenalineLabel, obj));
                     continue;
-                    //TODO : extract as method, call method in get standard, get move, end turn
                 }
 
                 string label = _nameService.Option(obj, type);
@@ -143,12 +143,25 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.SkipTurn);
             }
 
+            if (fight.Player.Class == PlayerClass.SpecOps && !fight.UsedAdrenalineThisTurn)
+            {
+                objects.Add(OptionType.AdrenalineRush);
+            }
+
             objects.Add(OptionType.Stay);
 
             //TODO : involve converter service to get name of option
-
-
-            var result = objects.Select(o=> new Option(_nameService.Option(o), o)).ToList<IOption>();
+            CheckType type = CheckType.None;
+            var result = new List<IOption>();
+            foreach(var obj in objects)
+            {
+                if(obj == OptionType.AdrenalineRush)
+                {
+                    result.Add(new Option(_nameService.Option(obj, type, fight.AdrenalineCost),obj));
+                    continue;
+                }
+                result.Add(new Option(_nameService.Option(obj), obj));
+            }
             return new OptionList(result, false, false) { Label = "Choose move action" };
         }
 
@@ -194,11 +207,16 @@ namespace NFCombat2.Services
             var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
             return new OptionList(result, false,true) { Label = label };
         }
-        public IOptionList GetEndTurn()
+        public IOptionList GetEndTurn(Fight fight)
         {
 
-            var option = new Option("End turn", OptionType.EndTurn);
-            var result = new OptionList() { Label = "End turn", CanGoBack = false, IsInfoNeeded = false, Options = new List<IOption> { option } };
+            var end = new Option("End turn", OptionType.EndTurn);
+            var options = new List<IOption>() { end };
+            if(_playerService.CurrentPlayer.Class == PlayerClass.SpecOps && !fight.UsedAdrenalineThisTurn)
+            {
+                options.Add(new Option(_nameService.Option(OptionType.AdrenalineRush, CheckType.None, fight.AdrenalineCost), OptionType.AdrenalineRush));
+            }
+            var result = new OptionList() { Label = "End turn", CanGoBack = false, IsInfoNeeded = false, Options = options };
             return result;
         }
 
@@ -303,6 +321,67 @@ namespace NFCombat2.Services
                 Label = "Choose mode",
                 Options = options
             };
+        }
+
+        public IOptionList GetAdrenalineActions(Fight fight)
+        {
+            var objects = new List<OptionType>();
+            if (CanMove(fight) && fight.Type != FightType.Escape)
+            {
+                objects.Add(OptionType.Move);
+            }
+
+            if (HasItems(fight))
+            {
+                objects.Add(OptionType.Item);
+            }
+
+            if (CanShoot(fight))
+            {
+                objects.Add(OptionType.Shoot);
+            }
+
+            if (CanAttack(fight))
+            {
+                if (fight is HazardFight hazard)
+                {
+                    objects.Add(OptionType.SwampAttack);
+                }
+                else if (fight is SkillCheckFight skillCheck)
+                {
+                    objects.Add(OptionType.StrengthCheckAttack);
+                }
+                else
+                {
+                    objects.Add(OptionType.Attack);
+                }
+            }
+
+            objects.Add(OptionType.DoNothing);
+            List<IOption> results = new List<IOption>();
+            foreach(var obj in objects)
+            {
+                CheckType type = CheckType.None;
+                if (fight is SkillCheckFight checkFight && obj == OptionType.StrengthCheckAttack)
+                {
+                    type = checkFight.CheckType;
+                }
+                else if (fight is HazardFight hazardFight && obj == OptionType.SwampAttack)
+                {
+                    type = hazardFight.CheckType;
+                }
+
+                if (obj == OptionType.AdrenalineRush)
+                {
+                    string adrenalineLabel = _nameService.Option(obj, type, fight.AdrenalineCost);
+                    results.Add(new Option(adrenalineLabel, obj));
+                    continue;
+                }
+
+                string label = _nameService.Option(obj, type);
+                results.Add(new Option(label, obj));
+            }
+            return new OptionList(results, false, false) { Label = "Choose extra action" };
         }
     }
 }

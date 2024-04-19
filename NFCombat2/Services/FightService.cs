@@ -172,6 +172,11 @@ namespace NFCombat2.Services
             }
             await ResolveEffects();
             _fight.Turn++;
+            if (!_fight.UsedAdrenalineThisTurn)
+            {
+                _fight.AdrenalineCost = _fight.AdrenalineCostIncrement;
+            }
+            _fight.UsedAdrenalineThisTurn = false;
             string turnAnnouncement = $"Round {_fight.Turn} beginning.";
             _popupService.ShowToast(turnAnnouncement);
             
@@ -269,7 +274,7 @@ namespace NFCombat2.Services
                     PreviousOptions = bonusACtions;
                     return bonusACtions;
                 case TurnPhase.EndTurn:
-                    var endTurn = _optionsService.GetEndTurn();
+                    var endTurn = _optionsService.GetEndTurn(_fight);
                     return endTurn;
                 case TurnPhase.EnemyMove:
                     await EnemyAction();
@@ -516,6 +521,12 @@ namespace NFCombat2.Services
                         break;
                     case OptionType.Attack:
                         result = _optionsService.GetTargets(_fight, 0, 0);
+                        break;
+                    case OptionType.AdrenalineRush:
+                        _fight.AdrenalineCost += _fight.AdrenalineCostIncrement;
+                        _fight.UsedAdrenalineThisTurn = true;
+                        _fight.TurnPhase--;
+                        result = _optionsService.GetAdrenalineActions(_fight);
                         break;
                     case OptionType.StrengthCheckAttack:
                         var checkAttack = new PlayerStrengthCheckAttack(_fight);
