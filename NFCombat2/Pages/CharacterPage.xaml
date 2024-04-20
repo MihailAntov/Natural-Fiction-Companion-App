@@ -5,6 +5,11 @@
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Pages.CharacterPage"
              Title="Character">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
     <StackLayout>
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>

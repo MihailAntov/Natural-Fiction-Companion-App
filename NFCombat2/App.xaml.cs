@@ -1,13 +1,15 @@
 ﻿using NFCombat2.Contracts;
+using NFCombat2.ViewModels;
 
 namespace NFCombat2;
 
 public partial class App : Application
 {
-	public App(IPlayerService playerService)
+	public App()
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell(playerService);
+		MainPage = new AppShell();		
+		//MainPage = new AppShell();
 	}
 }

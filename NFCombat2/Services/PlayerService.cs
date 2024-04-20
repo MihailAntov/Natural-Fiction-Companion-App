@@ -20,19 +20,22 @@ namespace NFCombat2.Services
     {
         private PlayerRepository _repository;
         private readonly IPopupService _popupService;
-        private SettingsRepository _settings;
+        //private SettingsRepository _settings;
+        private readonly ISettingsService _settingsService;
         private readonly IProgramService _programService;
         private readonly INameService _nameService;
         private Player _player = new Player();
         public PlayerService(PlayerRepository repository,
-            SettingsRepository settings,
+            //SettingsRepository settings,
+            ISettingsService settingsService,
             //IPopupService popupService,
             INameService nameService,
             IProgramService programService)
         {
             
             _repository = repository;
-            _settings = settings;
+            //_settings = settings;
+            _settingsService = settingsService;
             GetDefaultPlayer();
             //_popupService = popupService;
             _nameService = nameService;
@@ -79,7 +82,7 @@ namespace NFCombat2.Services
 
         public async void GetDefaultPlayer()
         {
-            int currentPlayerId = await _settings.CurrentPlayerId();
+            int currentPlayerId = await _settingsService.GetCurrentPlayerId();
             
             Player player = await GetPlayerById(currentPlayerId);
             if(player == null)
@@ -172,10 +175,7 @@ namespace NFCombat2.Services
             //}
             await UpdateNames(player);
             CurrentPlayer = player;
-            await _settings.UpdateCurrentPlayer(player.Id);
-            
-
-
+            await _settingsService.SetCurrentPlayerId(player.Id);
         }
 
 

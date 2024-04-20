@@ -2,6 +2,7 @@
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Player;
+using NFCombat2.Pages;
 using NFCombat2.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,16 +18,19 @@ namespace NFCombat2.ViewModels
         private IPopupService _popupService;
         private INameService _nameService;
         private Player _player;
+        private readonly SettingsPageViewModel _settingsPageViewModel;
         
         public Command AddNewProfileCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService)
+        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel)
         {
             _playerService = playerService;
             _popupService = popupService;
             _nameService = nameService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
+            OpenSettingsCommand = new Command(async () => await OpenSettings());
             Player = _playerService.CurrentPlayer;
+            _settingsPageViewModel = settingsPageViewModel;
             
             LoadPlayersAsync();
             
@@ -125,7 +129,7 @@ namespace NFCombat2.ViewModels
 
         //public ObservableCollection<Player> Profiles {get; set;}
         public IList<Player> Profiles { get; set; } = new List<Player>();
-
+        public Command OpenSettingsCommand { get; set; }
         public async Task AddProfile()
         {
             var player = await _popupService.ShowAddProfilePopup(_playerService);
@@ -187,6 +191,12 @@ namespace NFCombat2.ViewModels
         {
             _playerService.CurrentPlayer.Class = playerClass;
             await _playerService.SavePlayer();
+        }
+
+        
+        public async Task OpenSettings()
+        {
+            await Shell.Current.Navigation.PushAsync(new SettingsPage(_settingsPageViewModel));
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

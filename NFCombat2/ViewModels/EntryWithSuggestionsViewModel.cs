@@ -81,12 +81,12 @@ namespace NFCombat2.ViewModels
                 if (entry.Text.Length > 2)
                 {
                     AreSuggestionsVisible = true;
-                    //OnPropertyChanged(nameof(Options));
+                    OnPropertyChanged(nameof(Options));
                 }
                 else
                 {
                     AreSuggestionsVisible = false;
-                    //OnPropertyChanged(nameof(Options));
+                    OnPropertyChanged(nameof(Options));
                 }
             }
         }

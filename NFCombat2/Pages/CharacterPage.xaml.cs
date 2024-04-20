@@ -7,10 +7,10 @@ namespace NFCombat2.Pages;
 public partial class CharacterPage : ContentPage
 {
 	private readonly IPlayerService _playerService;
-	public CharacterPage(IPlayerService playerService, IPopupService popupSerivce, INameService nameService)
+	public CharacterPage(IPlayerService playerService, IPopupService popupSerivce, INameService nameService, SettingsPageViewModel settingsPageViewModel)
 	{
 		InitializeComponent();
-		BindingContext = new CharacterPageViewModel(playerService, popupSerivce,nameService);
+		BindingContext = new CharacterPageViewModel(playerService, popupSerivce,nameService,settingsPageViewModel);
 		_playerService = playerService;
 	}
 	

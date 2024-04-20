@@ -11,7 +11,7 @@
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />-->
-
+    
     <TabBar>
         <Tab Title="Character" Icon="character.png">
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />

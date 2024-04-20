@@ -22,15 +22,26 @@ namespace NFCombat2.Services
 {
     public class NameService : INameService
     {
-        public NameService()
+        private readonly ISettingsService _settingsService;
+        public NameService(ISettingsService settingsService)
         {
-            
+            _settingsService = settingsService;
         }
         public string ItemName(ItemType type)
         {
             try
             {
-                return EnglishItems[type];
+                //return EnglishItems[type];
+                var lang = _settingsService.Language;
+                switch (lang)
+                {
+                    
+                    case Language.English:
+                        return EnglishItems[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianItems[type];
+                }
             }
             catch
             {

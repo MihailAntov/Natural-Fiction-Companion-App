@@ -33,13 +33,13 @@ namespace NFCombat2.Data.Entities.Repositories
             
         }
 
-        public async Task<int> CurrentPlayerId()
+        public async Task<int> GetCurrentPlayerId()
         {
             await Init();
             return (await connection.Table<Settings>().FirstOrDefaultAsync()).CurrentPlayerId;
         }
 
-        public async Task UpdateCurrentPlayer(int id)
+        public async Task SetCurrentPlayerId(int id)
         {
             await Init();
             var settigns = await connection.Table<Settings>().FirstOrDefaultAsync();
@@ -47,12 +47,19 @@ namespace NFCombat2.Data.Entities.Repositories
             await connection.UpdateAsync(settigns);
         }
 
-        public async Task UpdateLanguage(Language language)
+        public async Task SetLanguage(Language language)
         {
             await Init();
             var settigns = await connection.Table<Settings>().FirstOrDefaultAsync();
             settigns.Language = language;
             await connection.UpdateAsync(settigns);
+        }
+
+        public async Task<Language> GetLanguage()
+        {
+            await Init();
+            var settings = await connection.Table<Settings>().FirstOrDefaultAsync();
+            return settings.Language;
         }
     }
 }

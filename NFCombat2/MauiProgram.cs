@@ -29,6 +29,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<INoteService, NoteService>();
 		builder.Services.AddSingleton<IProgramService, ProgramService>();
 		builder.Services.AddSingleton<ITechniqueService, TechniqueService>();
+		builder.Services.AddSingleton<ISettingsService, SettingsService>();
 		//builder.Services.AddSingleton<ISeederService, SeederService>();
 
 		
@@ -37,6 +38,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<OptionPickerView>();
 		builder.Services.AddSingleton<InventoryPage>();
 		builder.Services.AddSingleton<NotePage>();
+		builder.Services.AddSingleton<SettingsPage>();
 
 
 		builder.Services.AddSingleton<InventoryPageViewModel>();
@@ -49,6 +51,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<PartsBagViewModel>();
 		builder.Services.AddSingleton<NotePageViewModel>();
 		builder.Services.AddSingleton<NoteDetailsViewModel>();
+		builder.Services.AddSingleton<SettingsPageViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
 		builder.Services.AddSingleton<Note>();

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NFCombat2.Pages.SettingsPage"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
+             Title="SettingsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/ImageRadioButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
+     RadioButtonGroup.SelectedValue="weapons">
+        <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="bg" CheckedChanged="ChosenLanguage" IsChecked="{Binding BGChosen}">
+            <RadioButton.Content>
+                <Image Source="bg.png"/>
+            </RadioButton.Content>
+        </RadioButton>
+        <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="en" CheckedChanged="ChosenLanguage" IsChecked="{Binding BGChosen, Converter={helpers:InverseBoolConverter}}">
+            <RadioButton.Content>
+                <Image Source="en.png" />
+            </RadioButton.Content>
+        </RadioButton>
+    </StackLayout>
+</ContentPage>
