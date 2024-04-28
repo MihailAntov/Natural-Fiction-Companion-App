@@ -4,13 +4,12 @@ using NFCombat2.ViewModels;
 
 namespace NFCombat2.Views;
 
-public partial class EntryWithSuggestions : Popup
+public partial class EntryWithSuggestions : ContentPage
 {
 	public EntryWithSuggestions(EntryWithSuggestionsViewModel viewModel)
 	{
 		InitializeComponent();
         BindingContext = viewModel;
-        CanBeDismissedByTappingOutsideOfPopup = true;
 	}
 
     public async void ChooseItem(object sender, ItemTappedEventArgs e)
@@ -31,13 +30,24 @@ public partial class EntryWithSuggestions : Popup
         }
     }
 
-    public async void OnClosed(object sender, PopupClosedEventArgs e)
+    //public async void OnClosed(object sender, PopupClosedEventArgs e)
+    //{
+    //    if (BindingContext is EntryWithSuggestionsViewModel viewModel)
+    //    {
+    //        viewModel.Cancel();
+    //    }
+    //}
+
+    protected override async void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        if (BindingContext is EntryWithSuggestionsViewModel viewModel)
+        if(BindingContext is EntryWithSuggestionsViewModel viewModel)
         {
             viewModel.Cancel();
         }
+        base.OnNavigatedFrom(args);
     }
 
-    
+
+
+
 }

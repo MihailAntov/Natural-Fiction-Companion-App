@@ -40,6 +40,7 @@ namespace NFCombat2.Models.Items.Items
             //}
             var damage = new DealDamage(RollsResult, fight.Enemies);
             fight.Effects.Enqueue(damage);
+            RollsResult = DiceCalculator.Calculate(7, DiceMessage, 7);
             return new List<ICombatResolution>() { damage };
         }
     }

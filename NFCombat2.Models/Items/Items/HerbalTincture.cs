@@ -39,7 +39,9 @@ namespace NFCombat2.Models.Items.Items
         public ICombatResolution AffectPlayer(Player.Player player)
         {
             player.Health += RollsResult.Dice.Sum(d => d.DiceValue);
-            return new Heal(RollsResult);
+            var heal = new Heal(RollsResult);
+            RollsResult = DiceCalculator.Calculate(2);
+            return heal;
         }
     }
 }

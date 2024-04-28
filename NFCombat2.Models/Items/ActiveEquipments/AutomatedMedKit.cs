@@ -72,15 +72,17 @@ namespace NFCombat2.Models.Items.ActiveEquipments
         public ICombatResolution AffectPlayer(Player.Player player)
             //TODO : change return type to string, display effect with toast
         {
-            Quantity--;
+            //Quantity--;
             ReduceHarmfulEffects(player);
-            RestoreHealth(player); 
-            if(Quantity <= 0)
+            RestoreHealth(player);
+            var resolution = new Heal(RollsResult);
+            RollsResult = DiceCalculator.Calculate(3);
+            if (Quantity <= 0)
             {
                 player.Equipment.Remove(this);
             }
 
-            return new Heal(RollsResult);
+            return resolution;
             
         }
     }

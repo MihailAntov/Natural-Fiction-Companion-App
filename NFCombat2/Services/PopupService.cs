@@ -68,12 +68,13 @@ namespace NFCombat2.Services
         {
             var task = new TaskCompletionSource<IAddable>();
             var viewModel = new EntryWithSuggestionsViewModel(playerService, options, task);
-            var popup = new EntryWithSuggestions(viewModel);
-            ShowPopup(popup);
+            var suggestions = new EntryWithSuggestions(viewModel);
+            //ShowPopup(suggestions);
+            await Shell.Current.Navigation.PushAsync(suggestions);
             var result = await task.Task;
             if(result != null)
             {
-                await popup.CloseAsync();
+                await Shell.Current.Navigation.PopAsync();
             }
             return result;
         }
