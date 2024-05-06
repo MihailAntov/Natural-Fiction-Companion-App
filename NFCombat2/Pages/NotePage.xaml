@@ -4,6 +4,18 @@
              x:Name="NotePage_"
              x:Class="NFCombat2.Pages.NotePage"
              Title="{Binding Title}">
+    <Shell.TitleView>
+        <Label
+        Text="{Binding Title}"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
+
     <VerticalStackLayout>
 
         <CollectionView ItemsSource="{Binding Notes}">

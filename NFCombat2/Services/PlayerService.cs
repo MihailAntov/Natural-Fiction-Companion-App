@@ -91,7 +91,7 @@ namespace NFCombat2.Services
                 //player = (await GetAllPlayers()).FirstOrDefault();
             }
             await UpdateNames(player);
-            _player = player;
+            CurrentPlayer = player;
             
         }
 

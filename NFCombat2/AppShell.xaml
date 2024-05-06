@@ -7,10 +7,6 @@
     xmlns:local="clr-namespace:NFCombat2.Pages"
     Shell.FlyoutBehavior="Disabled">
 
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />-->
     
     <TabBar>
         <Tab Title="Character" Icon="character.png">

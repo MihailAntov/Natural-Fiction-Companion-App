@@ -4,6 +4,18 @@
              x:Class="NFCombat2.Pages.SettingsPage"
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              Title="SettingsPage">
+    <Shell.TitleView>
+        <Label
+        Text="Settings"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

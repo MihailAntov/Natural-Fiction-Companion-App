@@ -15,8 +15,6 @@ public partial class CharacterPage : ContentPage
 	}
 	
 
-	
-
 	public async void ChangedProfile(object sender, EventArgs e)
 	{
         if (BindingContext is CharacterPageViewModel viewModel)

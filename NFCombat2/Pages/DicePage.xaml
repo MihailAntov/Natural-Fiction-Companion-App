@@ -3,7 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.DicePage"
              Title="Dice Roller">
-
+    <Shell.TitleView>
+        <Label
+        Text="Dice"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
 
 
     <Grid>

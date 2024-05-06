@@ -6,9 +6,19 @@
              xmlns:local="clr-namespace:NFCombat2.Pages"
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:views="clr-namespace:NFCombat2.Views"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             Title="{Binding Title}">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+    <Shell.TitleView>
+        <Label
+        Text="{Binding Title}"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

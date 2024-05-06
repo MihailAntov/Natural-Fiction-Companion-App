@@ -5,7 +5,17 @@
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Pages.FightPage"
              Title="Fight Simulator">
-
+    <Shell.TitleView>
+        <Label
+        Text="Fight Simulator"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
 
     <ScrollView>
         

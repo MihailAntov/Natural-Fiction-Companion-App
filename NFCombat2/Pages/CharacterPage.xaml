@@ -4,12 +4,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Pages.CharacterPage"
-             Title="Character">
+             Shell.ForegroundColor="White">
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}" SemanticProperties.Hint="Tap to open the settings menu">
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    
+    <Shell.TitleView>
+        <Label
+        Text="Character"
+        TextColor="White"
+        VerticalTextAlignment="Center"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="50"
+        FontSize="Title"
+        FontFamily="PlayRegular"/>
+    </Shell.TitleView>
     <StackLayout>
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}">
             <Grid.RowDefinitions>
