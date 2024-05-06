@@ -28,7 +28,7 @@ namespace NFCombat2.Services
         public PlayerService(PlayerRepository repository,
             //SettingsRepository settings,
             ISettingsService settingsService,
-            //IPopupService popupService,
+            IPopupService popupService,
             INameService nameService,
             IProgramService programService)
         {
@@ -37,7 +37,7 @@ namespace NFCombat2.Services
             //_settings = settings;
             _settingsService = settingsService;
             GetDefaultPlayer();
-            //_popupService = popupService;
+            _popupService = popupService;
             _nameService = nameService;
             _programService = programService;
 
@@ -87,10 +87,11 @@ namespace NFCombat2.Services
             Player player = await GetPlayerById(currentPlayerId);
             if(player == null)
             {
-                player = (await GetAllPlayers()).FirstOrDefault();
+                return;
+                //player = (await GetAllPlayers()).FirstOrDefault();
             }
             await UpdateNames(player);
-            CurrentPlayer = player;
+            _player = player;
             
         }
 
@@ -393,14 +394,19 @@ namespace NFCombat2.Services
             return _repository.GetCraftableItems();
         }
 
-        public Task<ICollection<IAddable>> GetAllEquipment()
-        {
-            return GetAllItemsByCategory(ItemCategory.Equipment);
-        }
+        //public Task<ICollection<IAddable>> GetAllEquipment()
+        //{
+        //    return GetAllItemsByCategory(ItemCategory.Equipment);
+        //}
 
-        public Task<ICollection<IAddable>> GetAllItems()
+        //public Task<ICollection<IAddable>> GetAllItems()
+        //{
+        //    return GetAllItemsByCategory(ItemCategory.Item);
+        //}
+
+        public Task<ICollection<IAddable>> GetAllAddableItems()
         {
-            return GetAllItemsByCategory(ItemCategory.Item);
+            return GetAllItemsByCategory();
         }
 
         public Task<ICollection<IAddable>> GetAllWeapons()
@@ -408,7 +414,7 @@ namespace NFCombat2.Services
             return GetAllItemsByCategory(ItemCategory.Weapon);
         }
 
-        private async Task<ICollection<IAddable>> GetAllItemsByCategory(ItemCategory category)
+        private async Task<ICollection<IAddable>> GetAllItemsByCategory(ItemCategory category = ItemCategory.None)
         {
 
             var entities = await _repository.GetItemsByCategory(category);

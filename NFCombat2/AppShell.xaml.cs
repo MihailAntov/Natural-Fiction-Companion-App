@@ -5,8 +5,9 @@ namespace NFCombat2;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
+	public AppShell(CharacterPageViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

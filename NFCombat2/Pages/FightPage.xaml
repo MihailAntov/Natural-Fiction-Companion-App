@@ -20,6 +20,7 @@
                     Text="X"
                     HorizontalOptions="End"
                     Command="{Binding CancelCombatCommand}"
+                    SemanticProperties.Hint="Tap to cancel combat"
                     />
 
 
@@ -100,9 +101,10 @@
             IsVisible="{Binding NotInCombat}"
             Keyboard="Numeric"
             Text="{Binding EpisodeNumber}"
-            SemanticProperties.Hint="Loads an episode"
+            SemanticProperties.Hint="Enter episode number"
             Placeholder="Enter episode number"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+                />
 
 
             <Button 
@@ -110,6 +112,7 @@
                 IsVisible="{Binding NotInCombat}"
                 Command="{Binding GetEpisodeCommand}"
                 Clicked="HideKeyboard"
+                SemanticProperties.Hint="Tap to find fight with the episode number input above"
                 />
             
 

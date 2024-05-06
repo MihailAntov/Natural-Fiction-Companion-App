@@ -2,6 +2,7 @@
 
 using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
+using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Items.Equipments
 {
@@ -13,7 +14,7 @@ namespace NFCombat2.Models.Items.Equipments
             Description = "Increases accuracy by one.";
         }
 
-        public Task Modify(ICombatAction action)
+        public Task Modify(ICombatAction action, Fight fight)
         {
             if(action is PlayerRangedAttack attack)
             {

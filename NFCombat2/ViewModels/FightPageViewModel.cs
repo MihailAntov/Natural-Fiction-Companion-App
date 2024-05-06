@@ -129,6 +129,10 @@ namespace NFCombat2.ViewModels
         private async void CombatCleanup()
         {
             OnPropertyChanged(nameof(Fight.Player));
+            //foreach(var hpLevel in Fight.Player.Techniques.Keys)
+            //{
+            //    Fight.Player.Techniques[hpLevel] = null;
+            //} 
             Fight = null;
             Enemies.Clear();
             OptionPickerViewModel.CleanUp();

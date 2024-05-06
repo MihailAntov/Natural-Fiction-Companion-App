@@ -6,21 +6,22 @@ namespace NFCombat2.Models.CombatResolutions
 {
     public class ChangeDistance : ICombatResolution
     {
-        private int _amount;
+        public int Amount { get; set; }
         private Enemy _enemy;
    
         public ChangeDistance(int amount, Enemy enemy)
         {
-            _amount = amount;
+            Amount = amount;
             _enemy = enemy;
-           
+            MessageArgs = new string[] { _enemy.Name, (_enemy.Distance + Amount).ToString() };
+
         }
 
         public MessageType MessageType => MessageType.ChangeDistanceMessage;
-        public string[] MessageArgs => new string[] { _enemy.Name, _enemy.Distance.ToString() };
+        public string[] MessageArgs { get; set; }
         public async Task Resolve(Fight fight)
         {
-            _enemy.Distance += _amount;
+            _enemy.Distance += Amount;
         }
     }
 }

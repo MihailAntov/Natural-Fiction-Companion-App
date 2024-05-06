@@ -16,18 +16,21 @@
         <Tab Title="Character" Icon="character.png">
             <ShellContent ContentTemplate="{DataTemplate local:CharacterPage}" />
         </Tab>
-        <Tab Title="Log" Icon="notes.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
+        <!--<Tab Title="Log" Icon="notes.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">-->
+        <Tab Title="Log" Icon="notes.png" IsVisible="{Binding HasChosenHero}">
             <ShellContent ContentTemplate="{DataTemplate local:NotePage}" />
         </Tab>
-        <Tab Title="Combat Simulator" Icon="fight.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
+        <!--<Tab Title="Combat Simulator" Icon="fight.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">-->
+        <Tab Title="Combat Simulator" Icon="fight.png" IsVisible="{Binding HasChosenHero}">
             <ShellContent ContentTemplate="{DataTemplate local:FightPage}" />
         </Tab>
 
-        <Tab Title="Equipment" Icon="inventory.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">
+        <!--<Tab Title="Equipment" Icon="inventory.png" IsVisible="{Binding CurrentPlayer, Converter={helpers:PlayerSelectedBoolConverter}}">-->
+        <Tab Title="Equipment" Icon="inventory.png" IsVisible="{Binding HasChosenHero}">
             <ShellContent ContentTemplate="{DataTemplate local:InventoryPage}" />
         </Tab>
 
-        <Tab Title="Dice Roller" Icon="dice.png">
+        <Tab Title="Dice Roller" Icon="dice.png" IsVisible="{Binding HasChosenHero}">
             <ShellContent ContentTemplate="{DataTemplate local:DicePage}" />
         </Tab>
 

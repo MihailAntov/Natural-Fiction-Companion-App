@@ -221,6 +221,16 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+        private string _selectedTabValue = "weapons";
+        public string SelectedTabValue { get { return _selectedTabValue; } set
+            {
+                if(_selectedTabValue != value)
+                {
+                    _selectedTabValue = value;
+                    OnPropertyChanged(nameof(SelectedTabValue));
+                }
+            }
+        }
         public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
@@ -232,6 +242,7 @@ namespace NFCombat2.ViewModels
             switch (type)
             {
                 case "item":
+                case "equipment":
                     options = await LoadItemsAsync();
                     break;
                 case "extraitem":
@@ -244,9 +255,9 @@ namespace NFCombat2.ViewModels
                         }
                     }
                     break;
-                case "equipment":
-                    options = await LoadEquipmentAsync();
-                    break;
+                //case "equipment":
+                //    options = await LoadEquipmentAsync();
+                //    break;
             }
 
             var result = await _popupService.ShowEntryWithSuggestionsPopup(options, _playerService);
@@ -255,7 +266,23 @@ namespace NFCombat2.ViewModels
                 return;
             }
 
+            if(result is Equipment)
+            {
+                SelectedTabValue = "equipment";
+            }else if(result is Item resultingItem)
+            {
+                SelectedTabValue = resultingItem.InExtraBag ? "extraitems" : "items";
+            }
+
+
             AddToObservalbeCollection(result);
+        }
+
+        public void SwitchToCorrectTab(string type)
+        {
+            ChangeTabState("equipment", type == "equipment");
+            ChangeTabState("items", type == "items");
+            ChangeTabState("extraitems", type == "extraitems");
         }
 
         public async Task RemoveFromPlayer(IAddable addable)
@@ -450,16 +477,16 @@ namespace NFCombat2.ViewModels
 
         private async Task<ICollection<IAddable>> LoadItemsAsync()
         {
-            return await _playerService.GetAllItems();
+            return await _playerService.GetAllAddableItems();
         }
         private async Task<ICollection<IAddable>> LoadWeaponsAsync()
         {
             return await _playerService.GetAllWeapons();
         }
-        private async Task<ICollection<IAddable>> LoadEquipmentAsync()
-        {
-            return await _playerService.GetAllEquipment();
-        }
+        //private async Task<ICollection<IAddable>> LoadEquipmentAsync()
+        //{
+        //    return await _playerService.GetAllEquipment();
+        //}
 
         public void ChangeTabState(string tab, bool isChecked)
         {

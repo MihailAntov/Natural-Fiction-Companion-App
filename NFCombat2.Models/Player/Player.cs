@@ -217,7 +217,25 @@ namespace NFCombat2.Models.Player
         };
         public IList<Program> Programs { get; set; } = new List<Program>();
         public string ProgramList { get; set; } = String.Empty;
-        public virtual IList<IModifyAction> ActionModifiers => Equipment.OfType<IModifyAction>().ToList();
+        public virtual IList<IModifyAction> ActionModifiers 
+        {
+            get
+            {
+                var result = new List<IModifyAction>();
+                if (MainHand is IModifyAction mainHand)
+                {
+                    result.Add(mainHand);
+                }
+                if (OffHand is IModifyAction offHand)
+                {
+                    result.Add(offHand);
+                }
+                result.AddRange(Equipment.OfType<IModifyAction>());
+                result.AddRange(Items.OfType<IModifyAction>());
+                result.AddRange(Techniques.Values.OfType<IModifyAction>());
+                return result;
+            }
+        }
         public virtual IList<IModifyResolution> ResolutionModifiers
         {
             get
@@ -233,7 +251,7 @@ namespace NFCombat2.Models.Player
                 }
                 result.AddRange(Equipment.OfType<IModifyResolution>());
                 result.AddRange(Items.OfType<IModifyResolution>());
-                result.AddRange(Techniques.OfType<IModifyResolution>());
+                result.AddRange(Techniques.Values.OfType<IModifyResolution>());
                 return result;
             }
         }

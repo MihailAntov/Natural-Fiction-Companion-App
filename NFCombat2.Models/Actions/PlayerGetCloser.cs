@@ -23,13 +23,15 @@ namespace NFCombat2.Models.Actions
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            
+            List<ICombatResolution> resolutions = new List<ICombatResolution>();
+            fight.MovedThisTurn = true;
             foreach(var enemy in fight.Enemies)
             {
                 var resolution = new ChangeDistance(-fight.Player.Speed, enemy);
                 fight.Effects.Enqueue(resolution);
+                resolutions.Add(resolution);
             }
-            return new List<ICombatResolution>();
+            return resolutions;
         }
     }
 }

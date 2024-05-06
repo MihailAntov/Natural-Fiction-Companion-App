@@ -12,5 +12,7 @@ namespace NFCombat2.Models.SpecOps
         public override string Name { get; set; }
         public override int HealthThreshold => 30;
         public override TechniqueType Type => TechniqueType.Backflip;
+
+        //todo 
     }
 }

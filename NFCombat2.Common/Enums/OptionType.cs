@@ -15,6 +15,7 @@ namespace NFCombat2.Common.Enums
         Stay,
         Done,
         AdrenalineRush,
+        Backflip,
         EndTurn,
         SkipTurn
     }

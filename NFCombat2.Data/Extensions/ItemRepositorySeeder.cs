@@ -2,6 +2,7 @@
 using NFCombat2.Data.Entities.Repositories;
 using NFCombat2.Common.Enums;
 using NFCombat2.Data.Entities.Programs;
+using NFCombat2.Data.Entities;
 
 namespace NFCombat2.Data.Extensions
 {
@@ -16,26 +17,26 @@ namespace NFCombat2.Data.Extensions
                 //equipments
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.TacticalGlasses},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GasMask},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GrenadeLauncher,IsInvention = true, IsCraftOnly = true, Formula = "GGG", Episode = 123 },
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Shuttle,IsInvention = true, IsCraftOnly= true, Formula = "SSS", Episode = 321},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GrenadeLauncher,IsInvention = true, IsCraftOnly = true, Formula = "hhhhhhhkz", Episode = 17 },
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Shuttle,IsInvention = true,IsCraftOnly = true, Formula = "bffffffffffffiiiiiiiiiiiikqwwwwwwwwww", Episode = 12},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArmoredVest},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.CamouflageSuit},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Helmet},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.NuclearWarhead},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.LaserSight},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.BarrelExtender},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GasOperatedReloadingSystem},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.NuclearWarhead,IsInvention = true,IsCraftOnly = true, Formula = "deeegghhhhnrzzzzzzzzzz", Episode = 3},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.LaserSight,IsInvention = true,IsCraftOnly = true, Formula = "eeeeeeeelx", Episode = 18},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.BarrelExtender,IsInvention = true,IsCraftOnly = true, Formula = "hhhhhj", Episode = 56},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.GasOperatedReloadingSystem,IsInvention = true, Formula = "ggggghhhm",Episode = 86},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ChameleonSkin},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.Bundle},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.CombatSuit},
 
                 //active equipments
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArcWhip,Formula="eeefflpuu",Episode=25},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.AutomatedMedKit},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.HandGrenade},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PortableSurgicalLaser,Formula="eelox",Episode=7},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.RocketPropelledFishingPole, Formula = "fffjos", Episode=28},
-                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PneumaticDrill, Formula="ffffkot",Episode=35},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.ArcWhip,IsInvention = true,IsCraftOnly = true,Formula="eeefflpuu",Episode=25},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.AutomatedMedKit,IsInvention = true, Formula = "efglptx",Episode = 10},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.HandGrenade,IsInvention = true, Formula = "hhhjoz", Episode = 4},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PortableSurgicalLaser,IsInvention = true,Formula="eelox",Episode=7},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.RocketPropelledFishingPole,IsCraftOnly = true,IsInvention = true, Formula = "fffjos", Episode=28},
+                new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PneumaticDrill,IsInvention = true,IsCraftOnly = true, Formula="ffffkot",Episode=35},
                 new ItemEntity(){Category = ItemCategory.Equipment, Type = ItemType.PlatinumPhial},
 
                 //active items
@@ -55,13 +56,13 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Item, Type = ItemType.PortableEnvironmentalSuit},
 
                 //weapons
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.PlasmaRapier},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.QuantumMagnumParadox},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.PlasmaRapier,IsInvention = true,IsCraftOnly = true, Formula = "ceghmptttxxx", Episode = 8},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.QuantumMagnumParadox,IsCraftOnly = true, Formula = "dfhhhhhhhhnovvvvv", Episode = 22},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.Knife},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.Flamethrower},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.Flamethrower,IsInvention = true,IsCraftOnly = true, Formula = "bghhhmovz",Episode = 29},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.ConfiscatedRifle},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SemiautomaticPistol},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.RailGun},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.RailGun,IsInvention = true,IsCraftOnly = true, Formula = "ceeegggghhhhhlpuuuvvv",Episode = 78},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.TrainingRifle},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.TrainingSniperRifle},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.JawHooks},
@@ -86,8 +87,8 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SmallCaliberPistol},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.RocketLauncher},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.MachineGun},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.GravityModulator},
-                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.EMShield},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.GravityModulator,IsInvention = true, Formula = "agggmqyyy", Episode = 34},
+                new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.EMShield,IsInvention = true, Formula = "aeeeeelpyy", Episode = 41},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SemiautomaticBeretta},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.BoltActionCarbine},
                 new ItemEntity(){Category = ItemCategory.Weapon, Type = ItemType.SniperRifle},

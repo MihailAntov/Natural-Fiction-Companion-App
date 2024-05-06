@@ -50,6 +50,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.MovePassMessage, "You stay where you are." },
             {MessageType.ActionPassMessage, "You wait." },
             {MessageType.EnemyPushedBackMessage, "{0} is pushed back by your shield's force field." },
+            {MessageType.BackFlipMessage, "You do a backflip." },
             //program action messages
             {MessageType.ProgramHealMessage, "Your program heals you." },
             {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },

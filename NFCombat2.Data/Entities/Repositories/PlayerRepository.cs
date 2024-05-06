@@ -88,9 +88,13 @@ namespace NFCombat2.Data.Entities.Repositories
                     // basic validation to ensure a name was entered
                     if (string.IsNullOrEmpty(player.Name))
                         throw new Exception("Valid name required");
-                    
-                    
-                    result = await connection.InsertAsync(new PlayerEntity { Name = player.Name, Class = player.Class });
+
+                    var entity = new PlayerEntity() { Name = player.Name, Class = player.Class };
+                    result = await connection.InsertAsync(entity);
+                    if(result == 1)
+                    {
+                        player.Id = entity.Id;
+                    }
 
                     StatusMessage = string.Format("{0} record(s) added (Name: {1})", result, player.Name);
                 }
@@ -528,7 +532,16 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task<ICollection<IAddable>> GetItemsByCategory(ItemCategory category)
         {
             await Init();
-            var entities = await connection.Table<ItemEntity>().Where(i=> i.Category == category && i.IsCraftOnly == false).ToListAsync();
+            List<ItemEntity> entities = new List<ItemEntity>();
+            if(category == ItemCategory.None)
+            {
+                entities = await connection.Table<ItemEntity>().Where(i => i.Category != ItemCategory.Weapon && i.IsCraftOnly == false).ToListAsync();
+            }
+            else
+            {
+                entities = await connection.Table<ItemEntity>().Where(i => i.Category == category && i.IsCraftOnly == false).ToListAsync();
+            }
+
             List<IAddable> items = new List<IAddable>();
             foreach (var entity in entities)
             {
@@ -544,7 +557,6 @@ namespace NFCombat2.Data.Entities.Repositories
                 items.Add(item);
             }
             return items;
-
         }
 
         public async Task<ICollection<IAddable>> GetCraftableItems()
@@ -653,6 +665,15 @@ namespace NFCombat2.Data.Entities.Repositories
             if(category == ItemCategory.Weapon)
             {
                 return WeaponFactory.GetWeapon(type, itemId, args);
+            }
+            else if (category == ItemCategory.GenericItem)
+            {
+                return new Item()
+                {
+                    ItemType = type,
+                    Id = itemId
+
+                };
             }
             else
             {

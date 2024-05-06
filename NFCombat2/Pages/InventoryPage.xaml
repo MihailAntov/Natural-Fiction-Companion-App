@@ -19,28 +19,28 @@
 
     <StackLayout>
         <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
-             RadioButtonGroup.SelectedValue="weapons">
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab">
+             RadioButtonGroup.SelectedValue="{Binding SelectedTabValue}">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view weapons">
                 <RadioButton.Content>
                     <Image Source="pistol.png"/>
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view equipment">
                 <RadioButton.Content>
                     <Image Source="equipment.png" />
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="items" CheckedChanged="ChangedTab">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="items" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view items">
                 <RadioButton.Content>
                     <Image Source="backpack.png" />
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab" IsVisible="{Binding Player.Class, Converter={helpers:EngineerConverter}}">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab" IsVisible="{Binding Player.Class, Converter={helpers:EngineerConverter}}" SemanticProperties.Hint="Tap to view parts">
                 <RadioButton.Content>
                     <Image Source="wrench.png" />
                 </RadioButton.Content>
             </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab" IsVisible="{Binding Player.HasExtraBag}">
+            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab" IsVisible="{Binding Player.HasExtraBag}" SemanticProperties.Hint="Tap to view items in secondary bag">
                 <RadioButton.Content>
                     <Image Source="sack.png" />
                 </RadioButton.Content>
@@ -66,7 +66,7 @@
             </Grid.RowDefinitions>
             <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
                 <!--<ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">-->
-                <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main">
+                <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main" SemanticProperties.Hint="Tap to change weapon">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Gold" />
                     </ImageButton.Behaviors>
@@ -74,12 +74,12 @@
             </Border>
 
 
-            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion" IsVisible="{Binding Player.MainHand.HasGrenadeLauncher, FallbackValue=false}"/>
+            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion" IsVisible="{Binding Player.MainHand.HasGrenadeLauncher, FallbackValue=false}" />
             <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair" IsVisible="{Binding Player.MainHand.HasLaserSight, FallbackValue=false}"/>
             <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets" IsVisible="{Binding Player.MainHand.HasGasOperatedReloadingSystem, FallbackValue=false}"/>
             <ImageButton Grid.Row="3" Grid.Column="1" Source="radar" IsVisible="{Binding Player.MainHand.HasBarrelExtender, FallbackValue=false}"/>
             <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
-            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}"/>
+            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}" SemanticProperties.Hint="Tap to discard main hand weapon"/>
 
 
 

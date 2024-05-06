@@ -98,6 +98,10 @@ namespace NFCombat2.Services
 
         public async void AcceptFightResults()
         {
+            foreach(var hp in _fight.Player.Techniques.Keys)
+            {
+                _fight.Player.Techniques[hp] = null;
+            }
             await _playerService.SavePlayer();
             Accepted = true;
             
@@ -161,6 +165,7 @@ namespace NFCombat2.Services
             foreach(var movement in enemyMovement)
             {
                 await AddEffect(movement);
+                _fight.EnemyMovedThisTurn = true;
             }
             await ResolveEffects();
 
@@ -177,6 +182,11 @@ namespace NFCombat2.Services
                 _fight.AdrenalineCost = _fight.AdrenalineCostIncrement;
             }
             _fight.UsedAdrenalineThisTurn = false;
+            _fight.MovedLastTurn = _fight.MovedThisTurn;
+            _fight.MovedThisTurn = false;
+            _fight.EnemyMovedLastTurn = _fight.EnemyMovedThisTurn;
+            _fight.EnemyMovedThisTurn = false;
+            _fight.HasBonusAction = false;
             string turnAnnouncement = $"Round {_fight.Turn} beginning.";
             _popupService.ShowToast(turnAnnouncement);
             
@@ -187,7 +197,7 @@ namespace NFCombat2.Services
         {
             foreach (IModifyAction modifier in _fight.Player.ActionModifiers)
             {
-                await modifier.Modify(action);
+                await modifier.Modify(action, _fight);
             }
         }
 
@@ -481,7 +491,6 @@ namespace NFCombat2.Services
             foreach (var resolution in resolutions)
             {
                 await ModifyResolution(resolution);
-
             }
 
             if (effect.MessageType != MessageType.None)
@@ -523,11 +532,19 @@ namespace NFCombat2.Services
                         result = _optionsService.GetTargets(_fight, 0, 0);
                         break;
                     case OptionType.AdrenalineRush:
+                        _fight.Player.Health -= _fight.AdrenalineCost;
                         _fight.AdrenalineCost += _fight.AdrenalineCostIncrement;
                         _fight.UsedAdrenalineThisTurn = true;
                         _fight.TurnPhase--;
+                        await HandleTechniques(_fight.Player);
                         result = _optionsService.GetAdrenalineActions(_fight);
                         break;
+                    case OptionType.Backflip:
+                        var flip = new PlayerBackflip();
+                        await AddEffect(flip);
+                        _fight.UsedBackflipThisFight = true;
+                        _fight.TurnPhase--;
+                        return await AfterOption();
                     case OptionType.StrengthCheckAttack:
                         var checkAttack = new PlayerStrengthCheckAttack(_fight);
                         await HandleRolls(checkAttack);

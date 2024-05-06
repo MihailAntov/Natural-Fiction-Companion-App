@@ -22,9 +22,10 @@ namespace NFCombat2.Contracts
 
         public Task SavePlayer();
 
-        Task<ICollection<IAddable>> GetAllItems();
+        //Task<ICollection<IAddable>> GetAllItems();
         Task<ICollection<IAddable>> GetAllWeapons();
-        Task<ICollection<IAddable>> GetAllEquipment();
+        //Task<ICollection<IAddable>> GetAllEquipment();
+        Task<ICollection<IAddable>> GetAllAddableItems();
         Task<ICollection<IAddable>> GetAllCraftables();
     }
 }

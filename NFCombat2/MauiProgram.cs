@@ -52,6 +52,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<NotePageViewModel>();
 		builder.Services.AddSingleton<NoteDetailsViewModel>();
 		builder.Services.AddSingleton<SettingsPageViewModel>();
+		builder.Services.AddSingleton<CharacterPageViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
 		builder.Services.AddSingleton<Note>();

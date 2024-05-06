@@ -25,6 +25,11 @@ namespace NFCombat2.Models.Fights
         public FightType Type { get; set; } 
         public IList<Enemy> Enemies { get; set; }
         public bool UsedAdrenalineThisTurn { get; set; }
+        public bool UsedBackflipThisFight { get; set; } = false;
+        public bool MovedThisTurn { get; set; } = false;
+        public bool MovedLastTurn { get; set; } = false;
+        public bool EnemyMovedThisTurn { get; set; } = false;
+        public bool EnemyMovedLastTurn { get; set; } = false;
         public int AdrenalineCost { get; set; } = 3;
         public int AdrenalineCostIncrement { get; set; } = 3;
         public bool WeaponsContributeStrength { get; protected set; } = true;

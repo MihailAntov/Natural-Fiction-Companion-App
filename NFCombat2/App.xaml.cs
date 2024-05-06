@@ -5,11 +5,11 @@ namespace NFCombat2;
 
 public partial class App : Application
 {
-	public App()
+	public App(CharacterPageViewModel viewModel)
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();		
+		MainPage = new AppShell(viewModel);		
 		//MainPage = new AppShell();
 	}
 }

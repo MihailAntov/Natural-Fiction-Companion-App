@@ -68,6 +68,11 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.AdrenalineRush);
             }
 
+            if (fight.Player.Class == PlayerClass.SpecOps && fight.Player.Techniques.Any(t => t.Value != null && t.Value.Type == TechniqueType.Backflip) && !fight.UsedBackflipThisFight)
+            {
+                objects.Add(OptionType.Backflip);
+            }
+
             objects.Add(OptionType.DoNothing);
 
             var result = new List<IOption>();
@@ -118,6 +123,11 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.Program);
             }
 
+            if (fight.Player.Class == PlayerClass.SpecOps && fight.Player.Techniques.Any(t => t.Value != null && t.Value.Type == TechniqueType.Backflip) && !fight.UsedBackflipThisFight)
+            {
+                objects.Add(OptionType.Backflip);
+            }
+
             //TODO: involve converter service to get name of option
             var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = "Choose bonus to use" };
@@ -148,6 +158,11 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.AdrenalineRush);
             }
 
+            if (fight.Player.Class == PlayerClass.SpecOps && fight.Player.Techniques.Any(t=> t.Value != null && t.Value.Type == TechniqueType.Backflip) && !fight.UsedBackflipThisFight)
+            {
+                objects.Add(OptionType.Backflip);
+            }
+
             objects.Add(OptionType.Stay);
 
             //TODO : involve converter service to get name of option
@@ -160,6 +175,7 @@ namespace NFCombat2.Services
                     result.Add(new Option(_nameService.Option(obj, type, fight.AdrenalineCost),obj));
                     continue;
                 }
+
                 result.Add(new Option(_nameService.Option(obj), obj));
             }
             return new OptionList(result, false, false) { Label = "Choose move action" };

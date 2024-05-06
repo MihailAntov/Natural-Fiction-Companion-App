@@ -1,15 +1,25 @@
 ﻿using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
+using Microsoft.Maui.Storage;
 
 namespace NFCombat2.Services
 {
     public class SettingsService : ISettingsService
     {
-        private readonly SettingsRepository _settingsRepository;
-        public SettingsService(SettingsRepository settingsRepository)
+        //private readonly SettingsRepository _settingsRepository;
+        public SettingsService()
         {
-            _settingsRepository = settingsRepository;
+            //_settingsRepository = settingsRepository;
+            if (!Preferences.Default.ContainsKey("language"))
+            {
+                Preferences.Default.Set("language", "Bulgarian");
+            }
+
+            if (!Preferences.Default.ContainsKey("playerId"))
+            {
+                Preferences.Default.Set("playerId", 0);
+            }
             LoadLanguage();
         }
         //public Language Language { 
@@ -26,23 +36,32 @@ namespace NFCombat2.Services
 
         private async void LoadLanguage()
         {
-            Language = await _settingsRepository.GetLanguage();
+            var lang = Preferences.Default.Get("language","Bulgarian");
+            if (Enum.TryParse(typeof(Language), lang, true, out var language))
+            {
+                Language = (Language)language;
+            }
+            //Language = await _settingsRepository.GetLanguage();
         }
 
         public async Task SetLanguage(Language language)
         {
-            await _settingsRepository.SetLanguage(language);
+            //await _settingsRepository.SetLanguage(language);
+            Preferences.Default.Set("language",language.ToString());
             Language = language;
         }
 
         public async Task<int> GetCurrentPlayerId()
         {
-            return await _settingsRepository.GetCurrentPlayerId();
+            var pref = Preferences.Default.Get("playerId", 0);
+            return (int)pref;
+            //return await _settingsRepository.GetCurrentPlayerId();
         }
 
         public async Task SetCurrentPlayerId(int id)
         {
-            await _settingsRepository.SetCurrentPlayerId(id);
+            Preferences.Default.Set("playerId", id);
+            //await _settingsRepository.SetCurrentPlayerId(id);
         }
     }
 }
