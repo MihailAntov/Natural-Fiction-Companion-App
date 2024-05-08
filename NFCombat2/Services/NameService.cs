@@ -16,6 +16,7 @@ using static NFCombat2.Common.AppConstants.ProgramDescriptions;
 using static NFCombat2.Common.AppConstants.ProgramNames;
 using static NFCombat2.Common.AppConstants.DiceMessages;
 using static NFCombat2.Common.AppConstants.TechniqueNamesAndDescriptions;
+using static NFCombat2.Common.AppConstants.HandNames;
 using NFCombat2.Models.Contracts;
 
 namespace NFCombat2.Services
@@ -266,6 +267,18 @@ namespace NFCombat2.Services
             try
             {
                 return BulgarianTechniqueDescriptions[techniqueType];
+            }
+            catch
+            {
+                return "Not Found";
+            }
+        }
+
+        public string HandName(Hand hand)
+        {
+            try
+            {
+                return EnglishHandNames[hand];
             }
             catch
             {

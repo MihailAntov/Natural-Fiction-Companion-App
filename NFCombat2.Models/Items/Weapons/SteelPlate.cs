@@ -11,6 +11,7 @@ namespace NFCombat2.Models.Items.Weapons
         {
             ItemType = ItemType.SteelPlate;
             Name = "Steel Plate";
+            Weight = 1;
         }
 
         public Task<List<ICombatAction>> Modify(ICombatResolution resolution)

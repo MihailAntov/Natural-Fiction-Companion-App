@@ -420,7 +420,7 @@ namespace NFCombat2.ViewModels
         }
 
 
-        private void UpdateWeaponDisplay()
+        public void UpdateWeaponDisplay()
         {
             if(_playerService.CurrentPlayer.MainHand == null && _playerService.CurrentPlayer.OffHand == null)
             {

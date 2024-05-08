@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Programs;
@@ -20,8 +21,11 @@ namespace NFCombat2.ViewModels
             ExecuteProgramCommand = new Command(ExecuteProgram);
             ChangePolarityCommand = new Command<string>(ChangePolarity);
             OperationTypes = _programService.GetOperationTypes();
+            LogicalOperationType = OperationTypes.FirstOrDefault();
             SignalTypes = _programService.GetSignalTypes();
+            ElectricalSignalType = SignalTypes.FirstOrDefault();
             ParadigmTypes = _programService.GetParadigmTypes();
+            ProgramParadigmType = ParadigmTypes.FirstOrDefault();
             
         }
 
@@ -60,7 +64,7 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public ProgramFormulaComponent ElectricalSignalType { get; set; }
+        public ProgramFormulaComponent ElectricalSignalType { get; set; } 
         private bool _electricalSignalPolarity = true;
         public bool ElectricalSignalPolarity
         {
@@ -75,7 +79,7 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public ProgramFormulaComponent ProgramParadigmType { get; set; }
+        public ProgramFormulaComponent ProgramParadigmType { get; set; } 
         private bool _programParadigmPolarity = true;
 
         public bool ProgramParadigmPolarity
@@ -99,6 +103,7 @@ namespace NFCombat2.ViewModels
 
         public async void ExecuteProgram()
         {
+            
             var program = _programService.GetProgram(BuildProgramFormula());
             if(program != null)
             {

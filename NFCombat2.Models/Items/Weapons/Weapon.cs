@@ -90,6 +90,7 @@ namespace NFCombat2.Models.Items.Weapons
 
         public string Formula { get; set; } = string.Empty;
         public int Episode { get; set; } = 0;
+        public string Description { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

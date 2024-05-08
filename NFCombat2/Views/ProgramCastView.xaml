@@ -5,7 +5,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.ProgramCastView"
                Closed="OnClosed">
-    <Grid>
+    <Grid Padding="20">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -18,12 +18,15 @@
             
         </Grid.ColumnDefinitions>
         
-        <Button Padding="0" FontSize="Large" Grid.Row="0" Grid.Column="0"  Text="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="logicalOperation" />
-        <Picker Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding LogicalOperationType}"/>
-        <Button Padding="0" FontSize="Large" Grid.Row="1" Grid.Column="0" Text="{Binding ElectricalSignalPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="electricalSignal" />
-        <Picker Grid.Row="1" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding SignalTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ElectricalSignalType}"/>
-        <Button Padding="0" FontSize="Large" Grid.Row="2" Grid.Column="0" Text="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="programParadigm" />
-        <Picker Grid.Row="2" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding ParadigmTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ProgramParadigmType}"/>
+        <!--<Button Padding="0" FontSize="Large" Grid.Row="0" Grid.Column="0"  Text="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="logicalOperation" />-->
+        <ImageButton Padding="0" Grid.Row="0" Grid.Column="0"  Source="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="logicalOperation" MaximumHeightRequest="60"/>
+        <Picker VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding LogicalOperationType}" />
+        <!--<Button Padding="0" FontSize="Large" Grid.Row="1" Grid.Column="0" Text="{Binding ElectricalSignalPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="electricalSignal" />-->
+        <ImageButton Padding="0" Grid.Row="1" Grid.Column="0" Source="{Binding ElectricalSignalPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="electricalSignal" MaximumHeightRequest="60"/>
+        <Picker VerticalTextAlignment="Center" Grid.Row="1" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding SignalTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ElectricalSignalType}" />
+        <!--<Button Padding="0" FontSize="Large" Grid.Row="2" Grid.Column="0" Text="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="programParadigm"/>-->
+        <ImageButton Padding="0" Grid.Row="2" Grid.Column="0" Source="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="programParadigm" MaximumHeightRequest="60"/>
+        <Picker VerticalTextAlignment="Center" Grid.Row="2" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding ParadigmTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ProgramParadigmType}" />
         <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Execute" Command="{Binding ExecuteProgramCommand}"/>
 
     </Grid>

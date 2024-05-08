@@ -11,7 +11,8 @@ namespace NFCombat2.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? "+" : "-";
+            //return (bool)value ? "+" : "-";
+            return (bool)value ? "more" : "less";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

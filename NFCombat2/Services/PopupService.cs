@@ -135,5 +135,16 @@ namespace NFCombat2.Services
             }
             return result;
         }
+
+        public async Task<Hand> ShowHandChoicePopup(INameService nameSerivce)
+        {
+            TaskCompletionSource<Hand> taskCompletionSource=  new TaskCompletionSource<Hand>();
+            var viewmodel = new HandChoiceViewModel(taskCompletionSource,nameSerivce);
+            var popup = new HandChoiceView(viewmodel);
+            viewmodel.Popup = popup;
+            ShowPopup(popup);
+            var execution = await taskCompletionSource.Task;
+            return execution;
+        }
     }
 }

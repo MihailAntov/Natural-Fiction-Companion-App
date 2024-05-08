@@ -13,6 +13,7 @@ namespace NFCombat2.Models.Items.Weapons
         {
             Name = "Electromagnetic Shield";
             ItemType = ItemType.EMShield;
+            Weight = 1;
         }
         
         public Task<List<ICombatAction>> Modify(ICombatResolution resolution)

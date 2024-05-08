@@ -20,7 +20,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>0.3</ApplicationDisplayVersion>
-		<ApplicationVersion>5</ApplicationVersion>
+		<ApplicationVersion>6</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -91,7 +91,10 @@
 	  <None Remove="Resources\Images\injury.png" />
 	  <None Remove="Resources\Images\inventions.png" />
 	  <None Remove="Resources\Images\knife.png" />
+	  <None Remove="Resources\Images\less.png" />
 	  <None Remove="Resources\Images\machinegun.png" />
+	  <None Remove="Resources\Images\minus.png" />
+	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\none.png" />
 	  <None Remove="Resources\Images\notes.png" />
 	  <None Remove="Resources\Images\pistol.png" />
@@ -165,6 +168,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FightResultPopupView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\HandChoiceView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\InfoView.xaml">

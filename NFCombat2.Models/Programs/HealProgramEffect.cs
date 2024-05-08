@@ -9,15 +9,15 @@ using NFCombat2.Models.Dice;
 
 namespace NFCombat2.Models.Programs
 {
-    public class HealProgramEffect : IProgramEffect, IHaveRolls
+    public class HealProgramEffect : IProgramEffect, IHaveRolls, IHaveDelayedRolls
     {
         private int _dice;
-        private int _delayedDice;
-        public HealProgramEffect(int dice, int delayedDice)
+        public int DelayedDice { get; set; }
+        public HealProgramEffect(int dice, DiceMessageType messageType)
         {
             _dice = dice;
-            _delayedDice = delayedDice;
             RollsResult = DiceCalculator.Calculate(_dice);
+            DiceMessageType = messageType;
         }
         public int Cost { get; set; }
         public bool BonusAction { get; set; }
@@ -27,8 +27,12 @@ namespace NFCombat2.Models.Programs
         public DiceRollResult RollsResult { get; set; }
 
         public string DiceMessage { get; set; }
-        public DiceMessageType DiceMessageType => DiceMessageType.ProgramHealingRoll;
+        public DiceMessageType DiceMessageType { get; private set; }
         public string[] DiceMessageArgs { get; set; } = Array.Empty<string>();
+        public DiceRollResult DelayedRollsResult { get; set; }
+
+        public DiceMessageType DelayedDiceMessageType => DiceMessageType.DelayedProgramHealingRoll;
+
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
             //var amount = DiceCalculator.Calculate(_dice);
@@ -44,6 +48,20 @@ namespace NFCombat2.Models.Programs
                 result.Add(bonus);
 
             }
+
+            
+            if (DelayedDice > 0)
+            {
+                //DelayedRollsResult = DiceCalculator.Calculate(DelayedNumberOfDice,DelayedDiceMessage, DelayedFlatDamage);
+                //fight.DelayedEffects.Enqueue(new DealDamage(DelayedRollsResult, Targets));
+                var delayedEffect = new HealProgramEffect(DelayedDice, DiceMessageType.DelayedProgramHealingRoll )
+                {
+                    
+                };
+                fight.DelayedEffects.Enqueue(delayedEffect);
+            }
+            
+
             return result;
         }
 

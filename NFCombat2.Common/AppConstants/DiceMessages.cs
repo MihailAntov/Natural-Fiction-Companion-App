@@ -14,7 +14,7 @@ namespace NFCombat2.Common.AppConstants
             {DiceMessageType.ProgramDamageRoll, "Your program's damage" },
             {DiceMessageType.DelayedProgramDamageRoll, "Your program's follow-up damage" },
             {DiceMessageType.ProgramHealingRoll, "Your program's healing" },
-            {DiceMessageType.DelayedProgramHealingRoll, "Your program's follow-up damage" },
+            {DiceMessageType.DelayedProgramHealingRoll, "Your program's follow-up healing" },
             {DiceMessageType.PlayerMeleeAttackRoll, "Your melee attack" },
             {DiceMessageType.PlayerRangedAttackRoll, "Your attack" },
             {DiceMessageType.PlayerRangedDamageRoll, "Your damage" },

@@ -5,6 +5,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Items.Parts;
+using NFCombat2.Models.Items.Weapons;
 using NFCombat2.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -15,10 +16,11 @@ namespace NFCombat2.ViewModels
     {
         private readonly IPlayerService _playerService;
         private readonly IItemService _itemService;
+        private readonly InventoryPageViewModel _inventoryPageViewModel;
         private readonly INameService _nameService;
         private readonly IPopupService _popupService;
         private TaskCompletionSource<CraftResult> _taskCompletionSource;   
-        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, TaskCompletionSource<CraftResult> taskCompletionSource)
+        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService,IPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel)
         {
             _playerService = playerService;
             SetUpParts();
@@ -26,6 +28,9 @@ namespace NFCombat2.ViewModels
             ConfirmEpisodeCommand = new Command(ConfirmEpisode);
             _taskCompletionSource = taskCompletionSource;
             _itemService = itemService;
+            _nameService = nameService;
+            _popupService = popupService;
+            _inventoryPageViewModel = inventoryPageViewModel;
             _playerService.SavePlayer();
         }
         public string Episode { get; set; }
@@ -52,7 +57,7 @@ namespace NFCombat2.ViewModels
         {
             string result = string.Join(string.Empty,Parts
                 .Select(p => new string(char.Parse(p.WorkCoefficient.ToString()),p.CurrentlySelected))
-                .OrderBy(s=>s));
+                .OrderBy(s=>s)).ToLower();
             if(result.Length == 0 )
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Incorrect);
@@ -76,6 +81,13 @@ namespace NFCombat2.ViewModels
             if(ToBeAdded.Episode == int.Parse(Episode))
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Correct);
+                //magic needs to happen here
+                if (ToBeAdded is Weapon weapon)
+                {
+                    var hand = await _popupService.ShowHandChoicePopup(_nameService);
+                    weapon.Hand = hand;
+                }
+                
                 await _playerService.AddItemToPlayer(ToBeAdded);
                 foreach(var part in Parts.Where(p=>p.CurrentlySelected > 0))
                 {
@@ -83,6 +95,7 @@ namespace NFCombat2.ViewModels
                     part.CurrentlySelected = 0;
                     part.Quantity -= cost;
                 }
+                _inventoryPageViewModel.UpdateWeaponDisplay();
                 return;
             }
 

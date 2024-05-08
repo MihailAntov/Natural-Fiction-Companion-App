@@ -5,7 +5,7 @@
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.AddingProfileView"
                Closed="OnClosed">
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="20">
 
 
         <Picker x:Name="PlayerClass"

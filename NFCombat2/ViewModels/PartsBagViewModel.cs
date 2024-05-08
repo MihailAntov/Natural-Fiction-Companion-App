@@ -14,17 +14,24 @@ namespace NFCombat2.ViewModels
     public class PartsBagViewModel : INotifyPropertyChanged
     {
         private PartBag _partBag;
+        private readonly InventoryPageViewModel _inventoryPageViewModel;
         private readonly IPlayerService _playerService;
         private readonly INameService _nameService;
         private readonly IPopupService _popupService;
         private readonly IItemService _itemService;
 
-        public PartsBagViewModel(IPlayerService playerService, INameService nameService, IPopupService popupService, IItemService itemService)
+        public PartsBagViewModel(
+            IPlayerService playerService, 
+            INameService nameService, 
+            IPopupService popupService, 
+            IItemService itemService,
+            InventoryPageViewModel inventoryPageViewModel)
         {
             PartsBag = playerService.CurrentPlayer.PartsBag;
             _playerService = playerService;
             _nameService = nameService;
             _itemService = itemService;
+            _inventoryPageViewModel = inventoryPageViewModel;
             CraftButtonText = _nameService.Label(Common.Enums.LabelType.CraftButton);
             CraftingPopupCommand = new Command(DisplayCraftingPopup);
             ExpandTabCommand = new Command<PartCategory>(ExpandTab);
@@ -38,8 +45,9 @@ namespace NFCombat2.ViewModels
         public Command CraftingPopupCommand { get; set; }
         public async void DisplayCraftingPopup()
         {
+
             TaskCompletionSource<CraftResult> taskCompletionSource = new TaskCompletionSource<CraftResult>();
-            var viewModel = new CraftingPopupViewModel(_playerService, _itemService, taskCompletionSource);
+            var viewModel = new CraftingPopupViewModel(_playerService, _itemService,_nameService,_popupService, taskCompletionSource, _inventoryPageViewModel);
             var popup = new CraftingPopupView(viewModel);
             _popupService.ShowPopup(popup);
             var result = await taskCompletionSource.Task;

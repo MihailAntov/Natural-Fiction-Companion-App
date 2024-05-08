@@ -10,6 +10,7 @@ namespace NFCombat2.Models.Items.Weapons
         {
             Name = "Gravity Modulator";
             ItemType = ItemType.GravityModulator;
+            Weight = 1;
         }
         public Task<List<ICombatAction>> Modify(ICombatResolution resolution)
         {

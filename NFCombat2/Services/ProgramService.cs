@@ -84,6 +84,7 @@ namespace NFCombat2.Services
                 Type = pc,
                 Name = _nameService.ProgramComponentName(pc)
             }).ToList();
+            
             return result;
         }
 

@@ -389,9 +389,16 @@ namespace NFCombat2.Services
             return list;
         }
 
-        public Task<ICollection<IAddable>> GetAllCraftables()
+        public async Task<ICollection<IAddable>> GetAllCraftables()
         {
-            return _repository.GetCraftableItems();
+            var craftables = await _repository.GetCraftableItems();
+            foreach (var item in craftables)
+            {
+                item.Name = _nameService.ItemName(item.ItemType);
+                item.Description = _nameService.ItemDescription(item.ItemType);
+            }
+
+            return craftables;
         }
 
         //public Task<ICollection<IAddable>> GetAllEquipment()

@@ -562,7 +562,7 @@ namespace NFCombat2.Data.Entities.Repositories
         public async Task<ICollection<IAddable>> GetCraftableItems()
         {
             await Init();
-            var entities = await connection.Table<ItemEntity>().Where(i=>i.IsCraftOnly).ToListAsync();
+            var entities = await connection.Table<ItemEntity>().Where(i=>i.IsInvention).ToListAsync();
             //todo: replace iscraftonly with iscraftable to handle grenades and such
             List<IAddable> items = new List<IAddable>();
             foreach (var entity in entities)

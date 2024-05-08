@@ -25,7 +25,7 @@ namespace NFCombat2.Models.Factories
         {
             {ProgramType.ReceiveNOptimizeNMove,()=>new Program() //
                 {
-                    
+
                     Formula = ProgramType.ReceiveNOptimizeNMove.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
@@ -39,7 +39,7 @@ namespace NFCombat2.Models.Factories
             },
             {ProgramType.ReceiveNOptimizeNFix,()=>new Program()//
                 {
-                    
+
                     Formula = ProgramType.ReceiveNOptimizeNFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
@@ -58,7 +58,7 @@ namespace NFCombat2.Models.Factories
             },
             {ProgramType.ReceiveNOptimizeNAnalyze,()=>new Program()//
                 {
-                    
+
                     Formula = ProgramType.ReceiveNOptimizeNAnalyze.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
@@ -71,13 +71,14 @@ namespace NFCombat2.Models.Factories
             },
             {ProgramType.ReceiveNOptimizeFix,()=>new Program()//
                 {
-                    
+
                     Formula = ProgramType.ReceiveNOptimizeFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new HealProgramEffect(2, 1)
+                        new HealProgramEffect(2, DiceMessageType.ProgramHealingRoll)
                         {
                             Cost = 2,
+                            DelayedDice = 1
                             
                         }
                     },
@@ -170,7 +171,7 @@ namespace NFCombat2.Models.Factories
                     Formula = ProgramType.ReceiveDirectFix.ToString(),
                     Effects = new List<IProgramEffect>()
                     {
-                        new HealProgramEffect(2, 0)
+                        new HealProgramEffect(2, DiceMessageType.ProgramHealingRoll)
                         {
                             Cost = 1,
                         }
@@ -260,7 +261,7 @@ namespace NFCombat2.Models.Factories
                     BonusAction = true,
                     Effects = new List<IProgramEffect>()
                     {
-                        new HealProgramEffect(2, 0)
+                        new HealProgramEffect(2, DiceMessageType.ProgramHealingRoll)
                         {
                             BonusAction = true,
                             Cost = 2,

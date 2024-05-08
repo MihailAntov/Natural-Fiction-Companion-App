@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Views;
+using NFCombat2.Common.Enums;
 using NFCombat2.Common.Helpers;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Player;
@@ -19,5 +20,6 @@ namespace NFCombat2.Contracts
         Task<Player> ShowAddProfilePopup(IPlayerService playerService);
         Task<Technique> ShowTechniquePopup(List<TechniqueChoice> choices);
         Task<IAddable> ShowEntryWithSuggestionsPopup(ICollection<IAddable> effect, IPlayerService playerService);
+        Task<Hand> ShowHandChoicePopup(INameService nameSerivce);
     }
 }
