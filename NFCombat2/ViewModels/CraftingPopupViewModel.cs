@@ -12,15 +12,14 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class CraftingPopupViewModel : INotifyPropertyChanged
+    public class CraftingPopupViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
         private readonly IItemService _itemService;
         private readonly InventoryPageViewModel _inventoryPageViewModel;
-        private readonly INameService _nameService;
         private readonly IPopupService _popupService;
         private TaskCompletionSource<CraftResult> _taskCompletionSource;   
-        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService,IPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel)
+        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService,IPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel) : base(nameService)
         {
             _playerService = playerService;
             SetUpParts();
@@ -33,12 +32,39 @@ namespace NFCombat2.ViewModels
             _inventoryPageViewModel = inventoryPageViewModel;
             _playerService.SavePlayer();
         }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            CraftButtonLabel = _nameService.Label(LabelType.CraftButton);
+            ConfirmButtonLabel = _nameService.Label(LabelType.ConfirmButton);
+        }
         public string Episode { get; set; }
         public IAddable ToBeAdded { get; set; } = null;
         public Command CraftCommand { get; set; }
         public Command ConfirmEpisodeCommand { get; set; }
 
         public List<Part> Parts { get; set; }
+
+        private string _craftButtonLabel;
+        public string CraftButtonLabel { get { return _craftButtonLabel; } set
+            {
+                if(_craftButtonLabel != value)
+                {
+                    _craftButtonLabel = value;
+                    OnPropertyChanged(nameof(CraftButtonLabel));
+                }
+            } 
+        }
+        private string _confirmButtonLabel;
+        public string ConfirmButtonLabel { get { return _confirmButtonLabel; } set
+            {
+                if(_confirmButtonLabel != value)
+                {
+                    _confirmButtonLabel = value;
+                    OnPropertyChanged(nameof(ConfirmButtonLabel));
+                }
+            } 
+        }
         private bool _correctFormula = false;
         public bool CorrectFormula { get { return _correctFormula; } set
             {
@@ -123,5 +149,7 @@ namespace NFCombat2.ViewModels
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
+        
     }
 }

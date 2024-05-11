@@ -13,13 +13,13 @@ public partial class AddingProfileView : Popup
        
 	}
 
-    public async void ChangedClass(object sender, EventArgs e)
-    {
-        if (BindingContext is AddingProfileViewModel viewModel)
-        {
-            await viewModel.ChangedClass();
-        }
-    }
+    //public async void ChangedClass(object sender, EventArgs e)
+    //{
+    //    if (BindingContext is AddingProfileViewModel viewModel)
+    //    {
+    //        await viewModel.ChangedClass();
+    //    }
+    //}
 
     public async void OnClosed(object sender, PopupClosedEventArgs e)
     {

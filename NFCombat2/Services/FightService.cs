@@ -98,10 +98,10 @@ namespace NFCombat2.Services
 
         public async void AcceptFightResults()
         {
-            foreach(var hp in _fight.Player.Techniques.Keys)
-            {
-                _fight.Player.Techniques[hp] = null;
-            }
+            //foreach(var hp in _fight.Player.Techniques.Keys)
+            //{
+            //    _fight.Player.Techniques[hp] = null;
+            //}
             await _playerService.SavePlayer();
             Accepted = true;
             
@@ -109,7 +109,6 @@ namespace NFCombat2.Services
 
         public async void RejectFightResults()
         {
-            
             var player = await _playerService.GetPlayerById(_fight.Player.Id);
             await _playerService.SwitchToPlayer(player);
             Accepted = true;
@@ -225,11 +224,16 @@ namespace NFCombat2.Services
             _popupService.ShowPopup(popup);
             var output =  await taskCompletionSource.Task;
             await popup.CloseAsync();
+            optionHistory.Clear();
             foreach(var effect in _fight.TemporaryEffects)
             {
                 effect.Invoke();
             }
             _fight.TemporaryEffects.Clear();
+            foreach(var hpLevel in _fight.Player.Techniques.Keys)
+            {
+                _fight.Player.Techniques[hpLevel] = null;
+            }
             if (output)
             {
                 AcceptFightResults();

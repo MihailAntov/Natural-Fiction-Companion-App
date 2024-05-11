@@ -69,7 +69,8 @@ namespace NFCombat2.Models.Factories
                     MaxRange = 15,
                     DamageDice = 1,
                     FlatDamage = 2,
-                    Weight = 1
+                    Weight = 2
+                    // ?
                 }
             },
             {
@@ -96,7 +97,7 @@ namespace NFCombat2.Models.Factories
                     FlatDamage = 3,
                     Weight = 2,
                     CritMultiplier = 4,
-                    
+
                 }
             },
             {
@@ -147,7 +148,7 @@ namespace NFCombat2.Models.Factories
                     DamageDice = 0,
                     FlatDamage = 20,
                     Weight = 2,
-                    
+
                 }
             },
             {
@@ -351,6 +352,7 @@ namespace NFCombat2.Models.Factories
                     Name = "SteelPlate",
                     Image = "steelplate",
                     WeaponSpecial = WeaponSpecial.SteelPlate,
+                    Weight = 1,
                 }
             },
             {
@@ -409,6 +411,7 @@ namespace NFCombat2.Models.Factories
                     Name = "GravityModulator",
                     Image = "gravitymodulator",
                     WeaponSpecial = WeaponSpecial.GravityModulator,
+                    Weight = 1,
                 }
             },
             {
@@ -417,7 +420,8 @@ namespace NFCombat2.Models.Factories
                 {
                     Name = "EMShield",
                     Image = "cybersecurity",
-                    WeaponSpecial = WeaponSpecial.EMShield
+                    WeaponSpecial = WeaponSpecial.EMShield,
+                    Weight = 1
                 }
             },
             {

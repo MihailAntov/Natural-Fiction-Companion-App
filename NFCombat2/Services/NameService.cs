@@ -18,23 +18,46 @@ using static NFCombat2.Common.AppConstants.DiceMessages;
 using static NFCombat2.Common.AppConstants.TechniqueNamesAndDescriptions;
 using static NFCombat2.Common.AppConstants.HandNames;
 using NFCombat2.Models.Contracts;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.Services
 {
-    public class NameService : INameService
+    public class NameService : INameService, INotifyPropertyChanged
     {
         private readonly ISettingsService _settingsService;
+        private Language _language;
+        public Language Language { get { return _language; } set 
+            { 
+                if(_language != value)
+                {
+                    _language = value;
+                    OnPropertyChanged(nameof(Language));
+                }
+            } 
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public NameService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
+            _settingsService.PropertyChanged += OnLanguagePropertyChanged;
+        }
+
+        public void OnLanguagePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_settingsService.Language))
+            {
+                Language = _settingsService.Language;
+            }
         }
         public string ItemName(ItemType type)
         {
             try
             {
                 //return EnglishItems[type];
-                var lang = _settingsService.Language;
-                switch (lang)
+                switch (Language)
                 {
                     
                     case Language.English:
@@ -66,7 +89,15 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishLabels[type];
+                switch (Language)
+                {
+                    
+                    case Language.English:
+                        return EnglishLabels[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianLabels[type];
+                }
             }
             catch
             {
@@ -285,5 +316,9 @@ namespace NFCombat2.Services
                 return "Not Found";
             }
         }
+
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
     }
 }

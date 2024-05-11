@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace NFCombat2.ViewModels
 {
-    public class SettingsPageViewModel : INotifyPropertyChanged
+    public class SettingsPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly ISettingsService _settingsService;
-        public SettingsPageViewModel(ISettingsService settingsService)
+        public SettingsPageViewModel(ISettingsService settingsService,INameService nameService) :base(nameService)
         {
            _settingsService = settingsService;
             GetDefaultLanguage();
@@ -21,9 +21,30 @@ namespace NFCombat2.ViewModels
 
         private bool _bgChosen;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _languageLabel;
+        public string LanguageLabel
+        {
+            get { return _languageLabel; }
+            set
+            {
+                if(_languageLabel != value)
+                {
+                    _languageLabel = value;
+                    OnPropertyChanged(nameof(LanguageLabel));
+                }
+            }
+        }
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool BGChosen { get { return _bgChosen; }  }
+        public bool BGChosen { get { return _bgChosen; } private set 
+            {
+                if(_bgChosen != value )
+                {
+                    _bgChosen = value;
+                    OnPropertyChanged(nameof(BGChosen));
+                }
+            } 
+        }
         public void GetDefaultLanguage()
         {
             var lang = _settingsService.Language;
@@ -33,6 +54,7 @@ namespace NFCombat2.ViewModels
                 return;
             }
             _bgChosen = false;
+            OnPropertyChanged(nameof(BGChosen));
             
         }
 
@@ -44,15 +66,24 @@ namespace NFCombat2.ViewModels
                 {
                     case "bg":
                         _settingsService.SetLanguage(Common.Enums.Language.Bulgarian);
+                        BGChosen = true;
                         break;
                     case "en":
                         _settingsService.SetLanguage(Common.Enums.Language.English);
+                        BGChosen = false;
                         break;
                 }
             }
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        public override void UpdateLanguageSpecificProperties()
+        {
+            LanguageLabel = _nameService.Label(LabelType.Language);
+        }
+
+
+
+        //public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

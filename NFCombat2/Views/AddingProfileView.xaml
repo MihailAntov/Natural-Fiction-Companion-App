@@ -9,16 +9,15 @@
 
 
         <Picker x:Name="PlayerClass"
-                Title="Select a class"
+                Title="{Binding SelectClassLabel}"
                 ItemsSource="{Binding PlayerClasses}"
-                SelectedIndexChanged="ChangedClass"
                 ItemDisplayBinding="{Binding}">
         </Picker>
 
 
-        <Label Text="Player Name"/>
-        <Entry x:Name="PlayerName" Placeholder="Enter Name" Text=""/>
-        <Button Text="Add Profile" Command="{Binding RegisterCommand}" >
+        <Label Text="{Binding PlayerNameLabel}"/>
+        <Entry x:Name="PlayerName" Placeholder="{Binding PlayerNameHintLabel}" Text=""/>
+        <Button Text="{Binding AddPlayerButtonLabel}" Command="{Binding RegisterCommand}" >
             <Button.CommandParameter>
                 <MultiBinding Converter="{helpers:PlayerConverter}">
                     <MultiBinding.Bindings>
@@ -33,7 +32,5 @@
         <Entry x:Name="ProfileName" Placeholder="Enter Name"/>
         <Button Text="Add Profile" Command="{Binding RegisterCommand}" CommandParameter="{Binding Source={x:Reference ProfileName}, Path=Text}"/>
         <Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>-->
-
-        <Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>
     </VerticalStackLayout>
 </toolkit:Popup>

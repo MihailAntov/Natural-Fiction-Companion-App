@@ -2,10 +2,12 @@
 using NFCombat2.Contracts;
 using NFCombat2.Data.Entities.Repositories;
 using Microsoft.Maui.Storage;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace NFCombat2.Services
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService : ISettingsService, INotifyPropertyChanged
     {
         //private readonly SettingsRepository _settingsRepository;
         public SettingsService()
@@ -31,10 +33,20 @@ namespace NFCombat2.Services
         //    get { return _settingsRepository.GetCurrentPlayerId() }
         //    set { Task.Run(async ()=>await _settingsRepository.SetCurrentPlayerId(value)); }
         //}
-        public Language Language { get; private set; }
+        private Language _language;
+        public Language Language { get { return _language; }
+            private set
+            {
+                
+                _language = value;
+                OnPropertyChanged(nameof(Language));
 
+            }
+        }
 
-        private async void LoadLanguage()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void LoadLanguage()
         {
             var lang = Preferences.Default.Get("language","Bulgarian");
             if (Enum.TryParse(typeof(Language), lang, true, out var language))
@@ -63,5 +75,8 @@ namespace NFCombat2.Services
             Preferences.Default.Set("playerId", id);
             //await _settingsRepository.SetCurrentPlayerId(id);
         }
+
+        public void OnPropertyChanged([CallerMemberName] string name = "") =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

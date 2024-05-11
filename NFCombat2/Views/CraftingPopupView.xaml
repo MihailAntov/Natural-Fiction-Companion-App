@@ -29,8 +29,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Craft" VerticalOptions="End" Command="{Binding CraftCommand}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}"/>
+        <Button Text="{Binding CraftButtonLabel}" VerticalOptions="End" Command="{Binding CraftCommand}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}"/>
         <Entry Text="{Binding Episode}" IsVisible="{Binding CorrectFormula}"/>
-        <Button Text="Confirm" IsVisible="{Binding CorrectFormula}" Command="{Binding ConfirmEpisodeCommand}"/>
+        <Button Text="{Binding ConfirmButtonLabel}" IsVisible="{Binding CorrectFormula}" Command="{Binding ConfirmEpisodeCommand}"/>
     </VerticalStackLayout>
 </toolkit:Popup>

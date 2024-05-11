@@ -1,5 +1,7 @@
 ﻿
 
+using NFCombat2.Common.Enums;
+
 namespace NFCombat2.Common.Enums
 {
     public enum LabelType
@@ -10,6 +12,12 @@ namespace NFCombat2.Common.Enums
         AcceptCombatResult,
         RejectCombatResult,
         InvalidEpisodeNumber,
-        CraftButton
+        CraftButton,
+        Language,
+        ConfirmButton,
+        AddPlayerButton,
+        SelectClass,
+        PlayerName,
+        PlayerNameHint
     }
 }

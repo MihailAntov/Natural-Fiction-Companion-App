@@ -3,11 +3,14 @@ using NFCombat2.Models.Fights;
 using NFCombat2.Common.Enums;
 using NFCombat2.Models.Items.Parts;
 using NFCombat2.Models.Contracts;
+using System.ComponentModel;
 
 namespace NFCombat2.Contracts
 {
     public interface INameService
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public Language Language { get; set; }
         public string ItemName(ItemType type);
         public string ItemDescription(ItemType type);
         public string ProgramName(ProgramType type);
