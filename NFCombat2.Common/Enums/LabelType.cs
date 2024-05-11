@@ -18,6 +18,14 @@ namespace NFCombat2.Common.Enums
         AddPlayerButton,
         SelectClass,
         PlayerName,
-        PlayerNameHint
+        PlayerNameHint,
+        ChangeClassPicker,
+        AddNewProfileButton,
+        CharacterPageTitle,
+        ChangeProfilePicker,
+        FightPageTitle,
+        FindEpisodeButton,
+        EpisodeEntryHint
+
     }
 }

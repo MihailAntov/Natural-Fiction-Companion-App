@@ -10,7 +10,7 @@ using NFCombat2.Services;
 
 namespace NFCombat2.ViewModels
 {
-    public class FightPageViewModel : INotifyPropertyChanged
+    public class FightPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private Fight _fight;
 
@@ -27,16 +27,14 @@ namespace NFCombat2.ViewModels
         private IOptionsService _optionsService;
         private ILogService _logService;
         private IPopupService _popupService;
-        private INameService _nameService;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public FightPageViewModel(IFightService fightService,
             IOptionsService optionsService,
             ILogService logService,
             IPopupService popupSerivce,
             INameService nameService,
-            OptionPickerViewModel opctionPickerViewModel)
+            OptionPickerViewModel opctionPickerViewModel) : base(nameService)
         {
             _fightService = fightService;
             _fightService.PropertyChanged += OnFightServiceEnemiesPropertyChanged;
@@ -67,6 +65,48 @@ namespace NFCombat2.ViewModels
                 {
                     notInCombat = value;
                     OnPropertyChanged(nameof(NotInCombat));
+                }
+            }
+        }
+
+        private string _fightPageTitle;
+        public string FightPageTitle
+        {
+            get { return _fightPageTitle; }
+            set
+            {
+                if (_fightPageTitle != value)
+                {
+                    _fightPageTitle = value;
+                    OnPropertyChanged(nameof(FightPageTitle));
+                }
+            }
+        }
+
+        private string _findEpisodeButton;
+        public string FindEpisodeButton
+        {
+            get { return _findEpisodeButton; }
+            set
+            {
+                if (_findEpisodeButton != value)
+                {
+                    _findEpisodeButton = value;
+                    OnPropertyChanged(nameof(FindEpisodeButton));
+                }
+            }
+        }
+
+        private string _episodeEntryHint;
+        public string EpisodeEntryHint
+        {
+            get { return _episodeEntryHint; }
+            set
+            {
+                if (_episodeEntryHint != value)
+                {
+                    _episodeEntryHint = value;
+                    OnPropertyChanged(nameof(EpisodeEntryHint));
                 }
             }
         }
@@ -140,8 +180,6 @@ namespace NFCombat2.ViewModels
             OptionPickerViewModel.IsInfoNeeded = false;
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         private void OnAcceptedPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -164,6 +202,11 @@ namespace NFCombat2.ViewModels
             }   
         }
 
-        
+        public override void UpdateLanguageSpecificProperties()
+        {
+            FightPageTitle = _nameService.Label(LabelType.FightPageTitle);
+            FindEpisodeButton = _nameService.Label(LabelType.FindEpisodeButton);
+            EpisodeEntryHint = _nameService.Label(LabelType.EpisodeEntryHint);
+        }
     }
 }

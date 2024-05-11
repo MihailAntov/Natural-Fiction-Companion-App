@@ -10,22 +10,19 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class CharacterPageViewModel : INotifyPropertyChanged
+    public class CharacterPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private IPlayerService _playerService;
         private IPopupService _popupService;
-        private INameService _nameService;
         private Player _player;
         private readonly SettingsPageViewModel _settingsPageViewModel;
         
         public Command AddNewProfileCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel)
+        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel) : base(nameService)
         {
             _playerService = playerService;
             _popupService = popupService;
-            _nameService = nameService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             OpenSettingsCommand = new Command(async () => await OpenSettings());
@@ -124,8 +121,76 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        
-        
+
+        private string _characterPageTitle;
+        public string CharacterPageTitle
+        {
+            get { return _characterPageTitle; }
+            set
+            {
+                if (_characterPageTitle != value)
+                {
+                    _characterPageTitle = value;
+                    OnPropertyChanged(nameof(CharacterPageTitle));
+                }
+            }
+        }
+
+        private string _changeProfilePicker;
+        public string ChangeProfilePicker
+        {
+            get { return _changeProfilePicker; }
+            set
+            {
+                if (_changeProfilePicker != value)
+                {
+                    _changeProfilePicker = value;
+                    OnPropertyChanged(nameof(ChangeProfilePicker));
+                }
+            }
+        }
+
+        private string _playerClassLabel;
+        public string PlayerClassLabel
+        {
+            get { return _playerClassLabel; }
+            set
+            {
+                if (_playerClassLabel != value)
+                {
+                    _playerClassLabel = value;
+                    OnPropertyChanged(nameof(PlayerClassLabel));
+                }
+            }
+        }
+
+        private string _changeClassPicker;
+        public string ChangeClassPicker
+        {
+            get { return _changeClassPicker; }
+            set
+            {
+                if (_changeClassPicker != value)
+                {
+                    _changeClassPicker = value;
+                    OnPropertyChanged(nameof(ChangeClassPicker));
+                }
+            }
+        }
+
+        private string _addNewProfileButton;
+        public string AddNewProfileButton
+        {
+            get { return _addNewProfileButton; }
+            set
+            {
+                if (_addNewProfileButton != value)
+                {
+                    _addNewProfileButton = value;
+                    OnPropertyChanged(nameof(AddNewProfileButton));
+                }
+            }
+        }
 
         //public ObservableCollection<Player> Profiles {get; set;}
         public IList<Player> Profiles { get; set; } = new List<Player>();
@@ -199,9 +264,6 @@ namespace NFCombat2.ViewModels
             await Shell.Current.Navigation.PushAsync(new SettingsPage(_settingsPageViewModel));
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
         private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
@@ -209,6 +271,7 @@ namespace NFCombat2.ViewModels
                 if(_playerService.CurrentPlayer != null)
                 {
                     Player = _playerService.CurrentPlayer;
+                    PlayerClassLabel = _nameService.ClassName(Player.Class);
                     HasChosenHero = true;
                 }
                 else
@@ -218,5 +281,19 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        public override void UpdateLanguageSpecificProperties()
+        {
+            CharacterPageTitle = _nameService.Label(LabelType.CharacterPageTitle);
+            ChangeClassPicker = _nameService.Label(LabelType.ChangeClassPicker);
+            ChangeProfilePicker = _nameService.Label(LabelType.ChangeProfilePicker);
+            AddNewProfileButton = _nameService.Label(LabelType.AddNewProfileButton);
+            if(Player != null)
+            {
+                PlayerClassLabel = _nameService.ClassName(Player.Class);
+            }
+            //to update the class name dropdown names
+            OnPropertyChanged(nameof(Classes));
+            
+        }
     }
 }

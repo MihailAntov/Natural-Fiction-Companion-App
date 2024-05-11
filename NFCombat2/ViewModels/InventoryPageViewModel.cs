@@ -71,7 +71,6 @@ namespace NFCombat2.ViewModels
         private void SetInitialValues()
         {
             UpdateWeaponDisplay();
-            Title = $"{Player.Name}'s inventory";
         }
 
         private double _mainHandTransparency = 1;

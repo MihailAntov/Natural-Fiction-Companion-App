@@ -5,7 +5,7 @@
              Title="Dice Roller">
     <Shell.TitleView>
         <Label
-        Text="Dice"
+        Text="{Binding DicePageTitle}"
         TextColor="White"
         VerticalTextAlignment="Center"
         VerticalOptions="Center"
@@ -48,9 +48,9 @@
 
 
 
-        <Button Grid.Row="2" Grid.Column="1" Text="Roll" Clicked="OnRoll" SemanticProperties.Hint="Tap to roll dice"/>
+        <Button Grid.Row="2" Grid.Column="1" Text="{Binding RollButton}" Clicked="OnRoll" SemanticProperties.Hint="Tap to roll dice"/>
         <Label Grid.Row="4" Grid.Column="0" FontSize="Large" HorizontalOptions="Center" Text="{Binding NumberOfDice}"/>
-        <Label Grid.Row="4" Grid.Column="1" FontSize="Large"  HorizontalOptions="Center" Text="d6 +"/>
+        <!--<Label Grid.Row="4" Grid.Column="1" FontSize="Large"  HorizontalOptions="Center" Text="d6 +"/>-->
         <Label Grid.Row="4" Grid.Column="2"  FontSize="Large" HorizontalOptions="Center" Text="{Binding BonusDamage}"/>
         <Stepper Scale="0.5" Grid.Row="5" Grid.Column="0"  Maximum="25" Minimum="1" Value="{Binding NumberOfDice}" ValueChanged="OnNumberOfDiceChanged" SemanticProperties.Hint="Adjust number of dice"/>
         <Stepper Scale="0.5" Grid.Row="5" Grid.Column="2"  Maximum="100" Minimum="0" Value="{Binding BonusDamage}" ValueChanged="OnBonusDamageChanged" SemanticProperties.Hint="Adjust bonus to roll"/>

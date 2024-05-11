@@ -20,7 +20,16 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.SelectClass, "Choose a class" },
             {LabelType.PlayerName, "Name" },
             {LabelType.PlayerNameHint,"Enter your name here" },
-            {LabelType.AddPlayerButton, "Create" }
+            {LabelType.AddPlayerButton, "Create" },
+            {LabelType.CharacterPageTitle, "Character" },
+            {LabelType.ChangeProfilePicker, "Switch profile" },
+            {LabelType.ChangeClassPicker, "Change class" },
+            {LabelType.AddNewProfileButton, "Add new profile" },
+            {LabelType.FightPageTitle, "Combat Simulator" },
+            {LabelType.FindEpisodeButton, "Find episode" },
+            {LabelType.EpisodeEntryHint, "Enter the fight's episode number" },
+
+
 
         };
 
@@ -38,7 +47,15 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.SelectClass, "Избери клас" },
             {LabelType.PlayerName, "Име" },
             {LabelType.PlayerNameHint,"Въведи името на персонажа" },
-            {LabelType.AddPlayerButton, "Създай" }
+            {LabelType.AddPlayerButton, "Създай" },
+            {LabelType.CharacterPageTitle, "Персонаж" },
+            {LabelType.ChangeProfilePicker, "Смени профила" },
+            {LabelType.ChangeClassPicker, "Смени класа" },
+            {LabelType.AddNewProfileButton, "Добави нов профил" },
+            {LabelType.FightPageTitle, "Симулатор на битка" },
+            {LabelType.FindEpisodeButton, "Открий епизод" },
+            {LabelType.EpisodeEntryHint, "Въведи епизода на битката" },
+
         };
     }
 }

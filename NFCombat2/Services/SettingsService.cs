@@ -39,7 +39,7 @@ namespace NFCombat2.Services
             {
                 
                 _language = value;
-                OnPropertyChanged(nameof(Language));
+                OnPropertyChanged(nameof(this.Language));
 
             }
         }

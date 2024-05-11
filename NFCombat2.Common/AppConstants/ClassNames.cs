@@ -17,5 +17,14 @@ namespace NFCombat2.Common.AppConstants
             {PlayerClass.Engineer, "Engineer" },
             {PlayerClass.Hacker, "Hacker" },
         };
+
+        public static Dictionary<PlayerClass, string> BulgarianClassNames = new Dictionary<PlayerClass, string>()
+        {
+            {PlayerClass.None, "Няма" },
+            {PlayerClass.Soldier, "Войник" },
+            {PlayerClass.SpecOps, "Специален отряд" },
+            {PlayerClass.Engineer, "Отдел по поддръжка" },
+            {PlayerClass.Hacker, "Информационни войски" },
+        };
     }
 }

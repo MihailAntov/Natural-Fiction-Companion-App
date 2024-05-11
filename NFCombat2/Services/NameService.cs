@@ -26,8 +26,17 @@ namespace NFCombat2.Services
     public class NameService : INameService, INotifyPropertyChanged
     {
         private readonly ISettingsService _settingsService;
-        private Language _language;
-        public Language Language { get { return _language; } set 
+        private Language _language = Language.None;
+        public Language Language { 
+            get 
+            { if (_language == Language.None) 
+                {
+                    _language = _settingsService.Language;
+                    OnPropertyChanged(nameof(Language));
+                }
+                return _language;
+            } 
+            set 
             { 
                 if(_language != value)
                 {
@@ -182,6 +191,7 @@ namespace NFCombat2.Services
                 {
                     enemy.Weapons[0].Name = EnglishItems[ItemType.KabutoMainHand];
                     enemy.Weapons[1].Name = EnglishItems[ItemType.KabutoOffHand];
+                    //TODO FIX THIS SHIT
                     
                 }
             }
@@ -236,7 +246,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishClassNames[className];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishClassNames[className];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianClassNames[className];
+                }
             }
             catch
             {

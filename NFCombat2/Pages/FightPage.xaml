@@ -7,7 +7,7 @@
              Title="Fight Simulator">
     <Shell.TitleView>
         <Label
-        Text="Fight Simulator"
+        Text="{Binding FightPageTitle}"
         TextColor="White"
         VerticalTextAlignment="Center"
         VerticalOptions="Center"
@@ -32,6 +32,7 @@
                     Command="{Binding CancelCombatCommand}"
                     SemanticProperties.Hint="Tap to cancel combat"
                     />
+            
 
 
 
@@ -112,13 +113,13 @@
             Keyboard="Numeric"
             Text="{Binding EpisodeNumber}"
             SemanticProperties.Hint="Enter episode number"
-            Placeholder="Enter episode number"
+            Placeholder="{Binding EpisodeEntryHint}"
             HorizontalOptions="Center" 
                 />
 
 
             <Button 
-                Text="Find"
+                Text="{Binding FindEpisodeButton}"
                 IsVisible="{Binding NotInCombat}"
                 Command="{Binding GetEpisodeCommand}"
                 Clicked="HideKeyboard"
