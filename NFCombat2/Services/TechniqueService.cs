@@ -1,4 +1,5 @@
 ﻿using NFCombat2.Contracts;
+using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Player;
 using NFCombat2.Models.SpecOps;
 using System;
@@ -22,8 +23,16 @@ namespace NFCombat2.Services
             {
                 if(key <= health)
                 {
+                    if (player.Techniques[key]!= null)
+                    {
+                        if (player.Techniques[key] is IModifyPlayer playerModifier)
+                        {
+                            playerModifier.OnRemoved(player);
+                        }
+                    }
                     player.Techniques[key] = null;
-                }else if (player.Techniques[key] == null)
+                }
+                else if (player.Techniques[key] == null)
                 {
                     result.Add(Factory.TechniqueChoices[key]);
                 }

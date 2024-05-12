@@ -122,8 +122,14 @@ namespace NFCombat2.Models.Player
             BaseStrength + 
             BonusStrength +
             Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
-        public int BaseStrength { get 
+        public int BaseStrength 
+        { 
+            get 
             {
+                if(Techniques.Values.Any(t=> t is FightingSpirit))
+                {
+                    return (int)Math.Round(MaxHealth / 10.0);
+                }
                 return (int)Math.Round(Health / 10.0); 
             } 
         }

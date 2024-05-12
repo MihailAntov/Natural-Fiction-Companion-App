@@ -12,5 +12,6 @@ namespace NFCombat2.Models.SpecOps
         public override string Name { get; set; }
         public override int HealthThreshold => 15;
         public override TechniqueType Type => TechniqueType.FightningSpirit;
+        //implemented directly in EffectiveHealth getter
     }
 }

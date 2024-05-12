@@ -117,11 +117,11 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.Attack);
             }
 
-            if (CanUseProgram(fight))
-            {
-                //objects.Add("Program");
-                objects.Add(OptionType.Program);
-            }
+            //if (CanUseProgram(fight))
+            //{
+            //    //objects.Add("Program");
+            //    objects.Add(OptionType.Program);
+            //}
 
             if (fight.Player.Class == PlayerClass.SpecOps && fight.Player.Techniques.Any(t => t.Value != null && t.Value.Type == TechniqueType.Backflip) && !fight.UsedBackflipThisFight)
             {

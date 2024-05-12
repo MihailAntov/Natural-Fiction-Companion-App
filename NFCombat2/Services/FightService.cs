@@ -98,10 +98,6 @@ namespace NFCombat2.Services
 
         public async void AcceptFightResults()
         {
-            //foreach(var hp in _fight.Player.Techniques.Keys)
-            //{
-            //    _fight.Player.Techniques[hp] = null;
-            //}
             await _playerService.SavePlayer();
             Accepted = true;
             
@@ -232,6 +228,11 @@ namespace NFCombat2.Services
             _fight.TemporaryEffects.Clear();
             foreach(var hpLevel in _fight.Player.Techniques.Keys)
             {
+                if (_fight.Player.Techniques[hpLevel] is IModifyPlayer playerModifier)
+                {
+                    playerModifier.OnRemoved(_fight.Player);
+                }
+
                 _fight.Player.Techniques[hpLevel] = null;
             }
             if (output)
@@ -397,6 +398,10 @@ namespace NFCombat2.Services
                 }).ToList();
                 var newTechnique = await _popupService.ShowTechniquePopup(choice);
                 player.Techniques[newTechnique.HealthThreshold] = newTechnique;
+                if(newTechnique is IModifyPlayer playerModifier)
+                {
+                    playerModifier.OnAdded(player);
+                }
             }
         }
 
