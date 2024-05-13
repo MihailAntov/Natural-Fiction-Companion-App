@@ -48,11 +48,6 @@ namespace NFCombat2.Models.Player
                     value = MaxHealth;
                 }
 
-                if (value < 0)
-                {
-                    value = 0;
-                }
-
                 if(health != value)
                 {
                     health = value;

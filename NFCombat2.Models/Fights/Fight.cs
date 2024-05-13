@@ -124,6 +124,7 @@ namespace NFCombat2.Models.Fights
 
         public virtual void CheckWinCondition()
         {
+
             if(!Enemies.Any(e=> e.Health > 0))
             {
                 Result = FightResult.Won;

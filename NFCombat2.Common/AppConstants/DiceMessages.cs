@@ -30,6 +30,8 @@ namespace NFCombat2.Common.AppConstants
             {DiceMessageType.GrapheneRodRoll, "Your graphene rod's damage" },
             {DiceMessageType.HerbalTinctureRoll, "Your herbal tincture's healing" },
             {DiceMessageType.PushAwayRoll, "Your shield's pushback" },
+            {DiceMessageType.PrimalInstictHealRoll, "Your primal instinct healing roll" },
+            {DiceMessageType.ComboDamageRoll, "Your combo damage roll" },
         };
     }
 }

@@ -1,15 +1,18 @@
-﻿
-
-using NFCombat2.Common.Enums;
+﻿using NFCombat2.Common.Enums;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Fights;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NFCombat2.Models.CombatResolutions
 {
-    public class DealMeleeDamage : ICombatResolution
+    public class DealComboDamage : ICombatResolution
     {
         public Enemy Target { get; set; }
-        public DealMeleeDamage(Enemy target, int amount)
+        public DealComboDamage(Enemy target, int amount)
         {
             Target = target;
             Amount = amount;
@@ -18,7 +21,7 @@ namespace NFCombat2.Models.CombatResolutions
         public int Amount { get; set; }
         public MessageType MessageType => MessageType.DamageMessage;
 
-        public string[] MessageArgs => new string[] {Target.Name, Amount.ToString()};
+        public string[] MessageArgs => new string[] { Target.Name, Amount.ToString() };
 
         public Task Resolve(Fight fight)
         {

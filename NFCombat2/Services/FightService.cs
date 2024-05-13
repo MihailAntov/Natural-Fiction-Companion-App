@@ -213,7 +213,12 @@ namespace NFCombat2.Services
         }
         private async void FinishCombat(FightResult result)
         {
-            
+            await ResolveEffects();
+            if(_fight.Player.Health < _fight.Player.MinHealth)
+            {
+                _fight.Player.Health = _fight.Player.MinHealth;
+            }
+
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
             var viewModel = new FightResultPopupViewModel(_fight, _nameService, taskCompletionSource);
             var popup = new FightResultPopupView(viewModel);
@@ -541,7 +546,11 @@ namespace NFCombat2.Services
                         result = _optionsService.GetTargets(_fight, 0, 0);
                         break;
                     case OptionType.AdrenalineRush:
-                        _fight.Player.Health -= _fight.AdrenalineCost;
+                        if(!_fight.Player.Techniques.Values.Any(t=> t is BattleMastery))
+                        {
+                            _fight.Player.Health -= _fight.AdrenalineCost;
+                        }
+                        //_fight.Player.Health -= _fight.AdrenalineCost;
                         _fight.AdrenalineCost += _fight.AdrenalineCostIncrement;
                         _fight.UsedAdrenalineThisTurn = true;
                         _fight.TurnPhase--;
@@ -731,6 +740,7 @@ namespace NFCombat2.Services
                     await ResolveEffects();
                     return _optionsService.GetWeapons(_fight, true);
                 }
+
 
                 return await AfterOption();
 

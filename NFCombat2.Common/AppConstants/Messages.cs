@@ -51,6 +51,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ActionPassMessage, "You wait." },
             {MessageType.EnemyPushedBackMessage, "{0} is pushed back by your shield's force field." },
             {MessageType.BackFlipMessage, "You do a backflip." },
+            {MessageType.PrimalInstinctHealmessage, "Your primal instincts kick in, restoring your health." },
+            {MessageType.ComboDamage, "Your follow up with a combo attack." },
             //program action messages
             {MessageType.ProgramHealMessage, "Your program heals you." },
             {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },

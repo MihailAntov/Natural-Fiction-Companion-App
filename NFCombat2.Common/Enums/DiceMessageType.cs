@@ -26,6 +26,8 @@ namespace NFCombat2.Common.Enums
         SurgicalKitRoll,
         GrapheneRodRoll,
         HerbalTinctureRoll,
-        PushAwayRoll
+        PushAwayRoll,
+        PrimalInstictHealRoll,
+        ComboDamageRoll
     }
 }

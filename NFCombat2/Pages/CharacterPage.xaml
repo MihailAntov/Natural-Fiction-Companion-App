@@ -67,7 +67,7 @@
 
             <Image Grid.Row="4" Source="healthcare"/>
             <Label Grid.Column="1" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
-            <Slider Grid.Column="3" Grid.Row="4"  Minimum="0" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}" SemanticProperties.Hint="Adjust player health"/>
+            <Slider Grid.Column="3" Grid.Row="4"  Minimum="{Binding Player.MinHealth}" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}" SemanticProperties.Hint="Adjust player health"/>
             <Stepper Grid.Column="4" Grid.Row="4" Minimum="0" Maximum="99" Value="{Binding Player.BaseMaxHealth}" SemanticProperties.Hint="Adjust player maximum health"/>
 
             <Image Grid.Row="5" Source="highvoltage" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
