@@ -29,5 +29,27 @@ namespace NFCombat2.Common.AppConstants
             {(OptionType.AdrenalineRush,CheckType.None),"Adrenaline Rush (-{0})" },
             {(OptionType.Backflip,CheckType.None),"Backflip" }
         };
+
+        public static Dictionary<(OptionType, CheckType), string> BulgarianOptions = new Dictionary<(OptionType, CheckType), string>()
+
+        {
+            {(OptionType.EndTurn, CheckType.None), "Край на хода" },
+            {(OptionType.Move, CheckType.None), "Придвижване" },
+            {(OptionType.SkipTurn, CheckType.None), "Бягане" },
+            {(OptionType.Attack, CheckType.None), "Атака отблизо" },
+            {(OptionType.Shoot, CheckType.None), "Стрелба" },
+            {(OptionType.Item, CheckType.None), "Използване на предмет" },
+            {(OptionType.Program, CheckType.None), "Програма" },
+            {(OptionType.DoNothing, CheckType.None), "Не прави нищо" },
+            {(OptionType.Stay, CheckType.None), "Стоене на място" },
+            {(OptionType.Done, CheckType.None), "Край на стрелбата" },
+            {(OptionType.StrengthCheckAttack,CheckType.Panel),"Счупи панела" },
+            {(OptionType.StrengthCheckAttack,CheckType.River),"Бори се с течението на реката" },
+            {(OptionType.StrengthCheckAttack,CheckType.Rocks),"Премести камъните" },
+            {(OptionType.StrengthCheckAttack,CheckType.Door),"Разбий вратата" },
+            {(OptionType.SwampAttack,CheckType.Swamp),"Бори се с блатната растителност" },
+            {(OptionType.AdrenalineRush,CheckType.None),"Приток на адреналин (-{0})" },
+            {(OptionType.Backflip,CheckType.None),"Задно салто" }
+        };
     }
 }

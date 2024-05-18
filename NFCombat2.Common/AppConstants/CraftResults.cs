@@ -14,5 +14,13 @@ namespace NFCombat2.Common.AppConstants
             {CraftResult.Correct, "Successfully crafted {0}." },
             {CraftResult.Incorrect, "Incorrect formula." }
         };
+
+        public static Dictionary<CraftResult, string> BulgarianCraftResults = new Dictionary<CraftResult, string>()
+
+        {
+            {CraftResult.Correct, "Успешно изобрети {0}." },
+            {CraftResult.Incorrect, "Грешна формула." }
+
+        };
     }
 }

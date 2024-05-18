@@ -26,8 +26,30 @@ namespace NFCombat2.Common.AppConstants
             {ProgramType.ReceiveOptimizeNAnalyze, "+Receive +Optimize -Analyze" },
             {ProgramType.ReceiveOptimizeFix, "+Receive +Optimize +Fix" },
             {ProgramType.SendDirectNUnlock, "+Send +Direct -Unlock" },
- 
-            
         };
+
+        public static Dictionary<ProgramType, string> BulgarianProgramNames = new Dictionary<ProgramType, string>
+        {
+            {ProgramType.ReceiveNOptimizeNMove, "+Приеми -Оптимизирай -Премести" },
+            {ProgramType.ReceiveNOptimizeNFix, "+Приеми -Оптимизирай -Поправи" },
+            {ProgramType.ReceiveNOptimizeNAnalyze, "+Приеми -Оптимизирай -Анализирай" },
+            {ProgramType.ReceiveNOptimizeFix, "+Приеми -Оптимизирай +Поправи" },
+            {ProgramType.ReceiveNExtendNFix, "+Приеми -Удължи -Поправи" },
+            {ProgramType.ReceiveNDirectNMove, "+Приеми -Насочи -Премести" },
+            {ProgramType.ReceiveNDirectNFix, "+Приеми -Насочи -Поправи" },
+            {ProgramType.ReceiveDirectNMove, "+Приеми +Насочи -Премести" },
+            {ProgramType.ReceiveDirectNFix, "+Приеми +Насочи -Поправи" },
+            {ProgramType.ReceiveDirectNAnalyze, "+Приеми +Насочи -Анализирай" },
+            {ProgramType.ReceiveDirectFix, "+Приеми +Насочи +Поправи" },
+            {ProgramType.ReceiveExtendNMove, "+Приеми +Удължи -Премести" },
+            {ProgramType.ReceiveExtendNFix, "+Приеми +Удължи -Поправи" },
+            {ProgramType.ReceiveOptimizeNMove, "+Приеми +Оптимизирай -Премести" },
+            {ProgramType.ReceiveOptimizeNFix, "+Приеми +Оптимизирай -Поправи" },
+            {ProgramType.ReceiveOptimizeNAnalyze, "+Приеми +Оптимизирай -Анализирай" },
+            {ProgramType.ReceiveOptimizeFix, "+Приеми +Оптимизирай +Поправи" },
+            {ProgramType.SendDirectNUnlock, "+Изпрати +Насочи -Отключи" },
+        };
+
+
     }
 }

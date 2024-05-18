@@ -8,24 +8,25 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<ProgramType, string> EnglishProgramDescriptions = new Dictionary<ProgramType, string>()
         {
-            {ProgramType.ReceiveNOptimizeNMove, "+Receive -Optimize -Move" },
-            {ProgramType.ReceiveNOptimizeNFix, "+Receive -Optimize -Fix" },
-            {ProgramType.ReceiveNOptimizeNAnalyze, "+Receive -Optimize -Analyze" },
-            {ProgramType.ReceiveNOptimizeFix, "+Receive -Optimize +Fix" },
-            {ProgramType.ReceiveNExtendNFix, "+Receive -Extend -Fix" },
-            {ProgramType.ReceiveNDirectNMove, "+Receive -Direct -Move" },
-            {ProgramType.ReceiveNDirectNFix, "+Receive -Direct -Fix" },
-            {ProgramType.ReceiveDirectNMove, "+Receive +Direct -Move" },
-            {ProgramType.ReceiveDirectNFix, "+Receive +Direct -Fix" },
-            {ProgramType.ReceiveDirectNAnalyze, "+Receive +Direct -Analuze" },
-            {ProgramType.ReceiveDirectFix, "+Receive +Direct +Fix" },
-            {ProgramType.ReceiveExtendNMove, "+Receive +Extend -Move" },
-            {ProgramType.ReceiveExtendNFix, "+Receive +Extend -Fix" },
-            {ProgramType.ReceiveOptimizeNMove, "+Receive +Optimize -Move" },
-            {ProgramType.ReceiveOptimizeNFix, "+Receive +Optimize -Fix" },
-            {ProgramType.ReceiveOptimizeNAnalyze, "+Receive +Optimize -Analyze" },
-            {ProgramType.ReceiveOptimizeFix, "+Receive +Optimize +Fix" },
-            {ProgramType.SendDirectNUnlock, "+Send +Direct -Unlock" },
+            {ProgramType.ReceiveNOptimizeNMove, "One opponent can’t move on their next three turns. The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 2." },
+            {ProgramType.ReceiveNOptimizeNFix, "One opponent loses 2d of health this turn and an additional 1 on the next one. The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 2." },
+            {ProgramType.ReceiveNOptimizeNAnalyze, "Your next two shots are guaranteed to be critical hits. Increase overload by 2." },
+            {ProgramType.ReceiveNOptimizeFix, "Restore 2d health this turn and an additional 1 on the next one. Increase overload by 2." },
+            {ProgramType.ReceiveNExtendNFix, "One opponent loses 2d-1 health. The program has no effect if the distance to the target is greater than 0 meters. Increase overload by 1." },
+            {ProgramType.ReceiveNDirectNMove, "All enemies cannot move on their next two turns. The program has no effect if the distance to any of the targets is greater than 10 meters or less than 1 meter. Increase overload by 1." },
+            {ProgramType.ReceiveNDirectNFix, "All enemies lose 1d+3 health. The program has no effect if the distance to any of the targets is greater than 10 meters or less than 1 meter. Increase overload by 1." },
+            {ProgramType.ReceiveDirectNMove, "One opponent cannot move on their next two turns. The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 1." },
+            {ProgramType.ReceiveDirectNFix, "One opponent loses 2d health. The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 1." },
+            {ProgramType.ReceiveDirectNAnalyze, "Your next shot is guaranteed to be a critical hit. Increase overload by 1." },
+            {ProgramType.ReceiveDirectFix, "Restore 2d health. Increase overload by 1." },
+            {ProgramType.ReceiveExtendNMove, "One opponent cannot move on their next two turns. The program has no effect if the distance to the target is less than 11 meters. Increase overload by 1." },
+            {ProgramType.ReceiveExtendNFix, "One opponent loses 1d+1 health. The program has no effect if the distance to the target is less than 11 meters. Increase overload by 1." },
+            {ProgramType.ReceiveOptimizeNMove, "One opponent cannot move on their next two turns. You can take an extra action this turn (move, use an item, shoot or attack). The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 2." },
+            {ProgramType.ReceiveOptimizeNFix, "One opponent loses 2d health. You can take an extra action this turn (move, use an item, shoot or attack). The program has no effect if the distance to the target is greater than 10 meters or less than 1 meter. Increase overload by 2." },
+            {ProgramType.ReceiveOptimizeNAnalyze, "Your next shot is guaranteed to be a critical hit. You can take an extra action this turn (move, use an item, shoot or attack). Increase overload by 2." },
+            {ProgramType.ReceiveOptimizeFix, "Restore 2d health. You can take an extra action this turn (move, use an item, shoot or attack). Increase overload by 2." },
+            {ProgramType.SendDirectNUnlock, "Your multivector attack disrupts the maser's motherboard, blocking its effect." },
+
         };
 
         public static Dictionary<ProgramType, string> BulgarianProgramDescriptions = new Dictionary<ProgramType, string>()
@@ -47,7 +48,7 @@ namespace NFCombat2.Common.AppConstants
             {ProgramType.ReceiveOptimizeNFix, "Един противник губи 2 зара издръжливост.\r\nМожеш да извършиш допълнително действие в този ход (придвижване, стрелба или атака).\r\nПрограмата няма ефект, ако разстоянието до целта е по-голямо от 10 метра или по-малко от 1 метър.\r\nУвеличи степента на Претоварване с две нива.\r\n" },
             {ProgramType.ReceiveOptimizeNAnalyze, "Следващият ти изстрел с огнестрелно оръжие задължително уцелва и нанася двойни щети на противника.\r\nМожеш да извършиш допълнително действие в този ход (придвижване, стрелба или атака).\r\nУвеличи степента на Претоварване с две нива.\r\n" },
             {ProgramType.ReceiveOptimizeFix, "Възстанови си до 2 зара издръжливост.\r\nМожеш да извършиш допълнително действие в този ход (придвижване, стрелба или атака).\r\nУвеличи степента на Претоварване с две нива.\r\n" },
-            {ProgramType.SendDirectNUnlock, "???" },
+            {ProgramType.SendDirectNUnlock, "Мултивекторната ти атака разстройва платката на мазера, блокирайки действието му." },
         };
     }
 }

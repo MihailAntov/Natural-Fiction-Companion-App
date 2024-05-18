@@ -17,6 +17,7 @@ using static NFCombat2.Common.AppConstants.ProgramNames;
 using static NFCombat2.Common.AppConstants.DiceMessages;
 using static NFCombat2.Common.AppConstants.TechniqueNamesAndDescriptions;
 using static NFCombat2.Common.AppConstants.HandNames;
+using static NFCombat2.Common.AppConstants.Messages;
 using NFCombat2.Models.Contracts;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -86,7 +87,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishItems[type];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishItems[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianItems[type];
+                }
             }
             catch
             {
@@ -118,7 +126,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishProgramNames[type];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishProgramNames[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianProgramNames[type];
+                }
 
             }
             catch
@@ -129,20 +144,62 @@ namespace NFCombat2.Services
 
         public string ModeName(ItemMode mode)
         {
-            return EnglishModes[mode];
+            try
+            {
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishModes[mode];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianModes[mode];
+                }
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
+
         }
 
         public string FightResultMessage(Fight fight)
         {
             
-            return EnglishFightResults[(fight.Type,fight.Result)];
-            
+            try
+            {
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishFightResults[(fight.Type, fight.Result)];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianFightResults[(fight.Type,fight.Result)];
+                }
+
+            }
+            catch
+            {
+                return "Not Found";
+            }
+
         }
 
         public string Option(OptionType option, CheckType checkType = CheckType.None, int healthCost = 0)
         {
-            string text = EnglishOptions[(option, checkType)];
-            if(healthCost != 0)
+            string text;
+            switch (Language)
+            {
+                case Language.English:
+                    text = EnglishOptions[(option, checkType)];
+                    break;
+                case Language.Bulgarian:
+                default:
+                    text = BulgarianOptions[(option, checkType)];
+                    break;
+            }
+            
+            if (healthCost != 0)
             {
                 return String.Format(text, healthCost);
             }
@@ -151,11 +208,20 @@ namespace NFCombat2.Services
 
         public string InfoMessage(Fight fight)
         {
-            if(fight is SkillCheckFight skillCheck)
+            
+
+            if (fight is SkillCheckFight skillCheck)
             {
                 if (skillCheck.CountWins)
                 {
-                    return $"You won {skillCheck.WonRounds} rounds.";
+                    switch (Language)
+                    {
+                        case Language.English:
+                            return String.Format(EnglishMessages[MessageType.WonRoundsCount],skillCheck.WonRounds);
+                        case Language.Bulgarian:
+                        default:
+                            return String.Format(BulgarianMessages[MessageType.WonRoundsCount], skillCheck.WonRounds);
+                    }
                 }
             }
             return string.Empty;
@@ -165,8 +231,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishEnemies[enemyType];
-
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishEnemies[enemyType];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianEnemies[enemyType];
+                }
             }
             catch
             {
@@ -176,22 +248,25 @@ namespace NFCombat2.Services
 
         public void RetrieveFightNames(Fight fight)
         {
+            // TODO
+            var enemies = Language == Language.English ? EnglishEnemies : BulgarianEnemies;
+
             if(fight is TentacleFight tentacleFight)
             {
-                tentacleFight.TraumaTentacleName = EnglishEnemies[EnemyType.TraumaTentacle];
-                tentacleFight.PathogensTentacleName = EnglishEnemies[EnemyType.PathogenTentacle];
-                tentacleFight.IonizationTentacleName = EnglishEnemies[EnemyType.IonizationTentacle];
+                tentacleFight.TraumaTentacleName = enemies[EnemyType.TraumaTentacle];
+                tentacleFight.PathogensTentacleName = enemies[EnemyType.PathogenTentacle];
+                tentacleFight.IonizationTentacleName = enemies[EnemyType.IonizationTentacle];
             }
 
-
+            var items = Language == Language.English ? EnglishItems : BulgarianItems;
             foreach(var enemy in fight.Enemies)
             {
-                enemy.Name = EnglishEnemies[enemy.EnemyType];
+                enemy.Name = enemies[enemy.EnemyType];
                 if(enemy.EnemyType == EnemyType.CommanderKabuto)
                 {
-                    enemy.Weapons[0].Name = EnglishItems[ItemType.KabutoMainHand];
-                    enemy.Weapons[1].Name = EnglishItems[ItemType.KabutoOffHand];
-                    //TODO FIX THIS SHIT
+                    enemy.Weapons[0].Name = items[ItemType.KabutoMainHand];
+                    enemy.Weapons[1].Name = items[ItemType.KabutoOffHand];
+                    //TODO FIX THIS SHIT ?
                     
                 }
             }
@@ -201,8 +276,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishPartCategories[category];
-
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishPartCategories[category];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianPartCategories[category];
+                }
             }
             catch
             {
@@ -214,7 +295,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishParts[partType];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishParts[partType];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianParts[partType];
+                }
 
             }
             catch
@@ -227,13 +315,15 @@ namespace NFCombat2.Services
         {
             try
             {
-                string format = EnglishCraftResults[result];
+                //todo
+                var craftResults = Language == Language.English ? EnglishCraftResults : BulgarianCraftResults;
+                string format = craftResults[result];
                 if(item != null)
                 {
                     string name = ItemName(item.ItemType);
                     return string.Format(format, name);
                 }
-                return EnglishCraftResults[result];
+                return craftResults[result];
 
             }
             catch
@@ -265,7 +355,15 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishProgramComponentNames[type];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishProgramComponentNames[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianProgramComponentNames[type];
+                }
+
             }
             catch
             {
@@ -277,7 +375,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return BulgarianProgramDescriptions[type];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishProgramDescriptions[type];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianProgramDescriptions[type];
+                }
             }
             catch
             {
@@ -289,7 +394,8 @@ namespace NFCombat2.Services
         {
             try
             {
-                var format = EnglishDiceMessages[messageType];
+                var diceMessages = Language == Language.English ? EnglishDiceMessages : BulgarianDiceMessages;
+                var format = diceMessages[messageType];
                 return String.Format(format, messageArgs);
             }
             catch
@@ -302,7 +408,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return BulgarianTechniqueNames[techniqueType];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishTechniqueNames[techniqueType];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianTechniqueNames[techniqueType];
+                }
             }
             catch
             {
@@ -314,7 +427,15 @@ namespace NFCombat2.Services
         {
             try
             {
-                return BulgarianTechniqueDescriptions[techniqueType];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishTechniqueDescriptions[techniqueType];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianTechniqueDescriptions[techniqueType];
+                }
+                
             }
             catch
             {
@@ -326,7 +447,14 @@ namespace NFCombat2.Services
         {
             try
             {
-                return EnglishHandNames[hand];
+                switch (Language)
+                {
+                    case Language.English:
+                        return EnglishHandNames[hand];
+                    case Language.Bulgarian:
+                    default:
+                        return BulgarianHandNames[hand];
+                }
             }
             catch
             {

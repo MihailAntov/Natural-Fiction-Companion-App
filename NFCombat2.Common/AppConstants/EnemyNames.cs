@@ -63,5 +63,65 @@ namespace NFCombat2.Common.AppConstants
             {EnemyType.IonizationTentacle, "Cable Tentacle (Vents)" },
             {EnemyType.PathogenTentacle, "Cable Tentacle (Amonia Maser)" }
         };
+
+        public static Dictionary<EnemyType, string> BulgarianEnemies = new Dictionary<EnemyType, string>()
+
+        {
+            //{EnemyType.RegularBrute, "" },
+            //{EnemyType.RegularBrute, "Regular Brute" }
+            {EnemyType.RegularBrute, " Редови бруут" },
+            {EnemyType.PaplacidGuard, "Паплацид пазач" },
+            {EnemyType.RegularMeiCin, "Редови мей‘цин" },
+            {EnemyType.AlienAssassin, "Извънземен убиец" },
+            {EnemyType.AlienAttacker, "Извънземен нападател" },
+            {EnemyType.NephropidCommando, "Нефропид командос" },
+            {EnemyType.AlienGuardA, "Извънземен пазач" },
+            {EnemyType.HologramBrute, "Холограмен бруут" },
+            {EnemyType.InjuredMeiCin, "Ранен мей‘цин" },
+            {EnemyType.SwampFoliage, "Блатна растителност" },
+            {EnemyType.DesertWormA, "Червей пустиняк" },
+            {EnemyType.FelinterRookie, "Фелинтер новобранец" },
+            {EnemyType.PileOfRocks, "Купчина камъни" },
+            {EnemyType.UndergroundRiver, "Подземна река" },
+            {EnemyType.LtSide, "Лейтанант Сайд" },
+            {EnemyType.DarkPaplacid, "Мургав паплацид" },
+            {EnemyType.MetalPanel, "Метален панел" },
+            {EnemyType.StripedBeast, "Ивичест звяр" },
+            {EnemyType.VespisoidFugitive, "Весписоид беглец" },
+            {EnemyType.FirstPaplacidA, "Първи паплацид" },
+            {EnemyType.SecondPaplacidA, "Втори паплацид" },
+            {EnemyType.ThirdPaplacidA, "Трети паплацид" },
+            {EnemyType.FourthPaplacidA, "Четвърти Паплацид" },
+            {EnemyType.FirstPaplacidB, "Първи паплацид" },
+            {EnemyType.SecondPaplacidB, "Втори паплацид" },
+            {EnemyType.YoungDesertWorm, "Млад червей пустиняк" },
+            {EnemyType.AlienPilot, "Извънземен пилот" },
+            {EnemyType.Sniper, "Снайперист" },
+            {EnemyType.AlienGuardB, "Извънземен пазач" },
+            {EnemyType.AlientShooter, "Извънземен стрелец" },
+            {EnemyType.AlienLeader, "Извънземен водач" },
+            {EnemyType.MetalDoor, "Метална врата" },
+            {EnemyType.NephropidMechanic, "Нефорпид механик" },
+            {EnemyType.FelinterMechanic, "Фелинтер механик" },
+            {EnemyType.AlienSentinel, "Извънземен страж" },
+            {EnemyType.GuardRobotAlpha, "Охранителен робот Алфа" },
+            {EnemyType.GuardRobotBeta, "Охранителен робот Бета" },
+            {EnemyType.GuardRobotGamma, "Охранителен робот Гама" },
+            {EnemyType.UniformedAlien, "Униформен извънземен" },
+            {EnemyType.AlienWarden, "Извънземен охранител" },
+            {EnemyType.DefenseSystem, "Отбранителна установка" },
+            {EnemyType.AlienGuardC, "Извънземен пазач" },
+            {EnemyType.DesertWormB, "Червей пустиняк" },
+            {EnemyType.AgentZorgy, "Агент Зорги" },
+            {EnemyType.MotivatedAlienPursuer, "Надъхан извънземен преследвач" },
+            {EnemyType.DefenseGun, "Защитна картечница" },
+            {EnemyType.FelinterWarrior, "Фелинтер воин" },
+            {EnemyType.CommanderKabuto, "Командир Кабуто" },
+            {EnemyType.DesertWormC, "Червей пустиняк" },
+            {EnemyType.TraumaTentacle, "Кабел пипало (Метална ръка)" },
+            {EnemyType.IonizationTentacle, "Кабел пипало (Вентилационни шлюзове)" },
+            {EnemyType.PathogenTentacle, "Кабел пипало (Амонячен мазер)" }
+
+        };
     }
 }

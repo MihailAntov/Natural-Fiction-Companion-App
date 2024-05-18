@@ -22,6 +22,20 @@ namespace NFCombat2.Common.AppConstants
                 {ProgramComponentType.Fix, "Repair" },
                 {ProgramComponentType.Move, "Move" },
             };
+
+        public static Dictionary<ProgramComponentType, string> BulgarianProgramComponentNames =
+            new Dictionary<ProgramComponentType, string>()
+            {
+                {ProgramComponentType.Send, "Изпрати" },
+                {ProgramComponentType.Receive, "Получи" },
+                {ProgramComponentType.Direct, "Насочи" },
+                {ProgramComponentType.Extend, "Удължи" },
+                {ProgramComponentType.Optimize, "Оптимизирай" },
+                {ProgramComponentType.Analyze, "Анализирай" },
+                {ProgramComponentType.Unlock, "Отключи" },
+                {ProgramComponentType.Fix, "Поправи" },
+                {ProgramComponentType.Move, "Премести" },
+            };
     }
 }
 

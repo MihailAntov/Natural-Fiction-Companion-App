@@ -14,5 +14,12 @@ namespace NFCombat2.Common.AppConstants
             {Hand.MainHand, "Main hand" },
             {Hand.OffHand, "Off hand" },
         };
+
+        public static Dictionary<Hand, string> BulgarianHandNames = new Dictionary<Hand, string>()
+
+        {
+            {Hand.MainHand, "Лява" },
+            {Hand.OffHand, "Дясна" },
+        };
     }
 }

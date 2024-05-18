@@ -44,5 +44,53 @@ namespace NFCombat2.Common.AppConstants
             {PartType.Projector, "Projector" },
             {PartType.Detonator, "Detonator" },
         };
+
+        public static Dictionary<PartCategoryType, string> BulgarianPartCategories = new Dictionary<PartCategoryType, string>
+
+        {
+
+            {PartCategoryType.ReactiveAgent, "Реактивни агенти" },
+
+            {PartCategoryType.ItemComponent, "Съставни части" },
+
+            {PartCategoryType.TransmitterNode, "Предавателни възли" },
+
+            {PartCategoryType.CoreItemComponent, "Основни действащи звена" },
+
+            {PartCategoryType.Tool, "Работни машини" },
+
+        };
+
+
+
+        public static Dictionary<PartType, string> BulgarianParts = new Dictionary<PartType, string>
+        {
+            {PartType.FuelCell, "Горивна клетка" },
+            {PartType.LiquidFuel, "Течно гориво" },
+            {PartType.PlasmaCharge, "Плазмен заряд" },
+            {PartType.NuclearFuel, "Ядрено гориво" },
+            {PartType.ElectricDetail, "Електрически детайл" },
+            {PartType.TangentialComponent, "Тангенциален компонент" },
+            {PartType.AirProfile, "Въздушен профил" },
+            {PartType.WeaponElement, "Елемент за оръжие" },
+            {PartType.SupportingConstruct, "Носеща конструкция" },
+            {PartType.Reductor, "Редуктор" },
+            {PartType.Connector, "Съединител" },
+            {PartType.Transformer, "Трансформатор" },
+            {PartType.Compressor, "Компресор" },
+            {PartType.Inhibitor, "Забавител" },
+            {PartType.Trigger, "Линеен спусъков механизъм" },
+            {PartType.ElectricalGenerator, "Електрически генератор" },
+            {PartType.Engine, "Двигател" },
+            {PartType.Reactor, "Реактор" },
+            {PartType.Reel, "Макара" },
+            {PartType.Cutter, "Режещо тяло" },
+            {PartType.Electrode, "Електрод" },
+            {PartType.BalisticMechanism, "Балистичен механизъм" },
+            {PartType.Transmission, "Ходова част" },
+            {PartType.LaserMatrix, "Лазерна матрица" },
+            {PartType.Projector, "Проектор" },
+            {PartType.Detonator, "Детонатор" },
+        };
     }
 }

@@ -27,5 +27,25 @@ namespace NFCombat2.Common.AppConstants
             {(FightType.Escape, FightResult.Lost),"You have lost!" },
             {(FightType.Escape, FightResult.Escaped),"You have escaped!" },
         };
+
+        public static Dictionary<(FightType, FightResult), string> BulgarianFightResults = new Dictionary<(FightType, FightResult), string>()
+
+        {
+            {(FightType.Regular, FightResult.Won),"Спечели битката!" },
+            {(FightType.Regular, FightResult.Lost),"Загуби битката." },
+            {(FightType.Chase, FightResult.Won),"Спечели битката!" },
+            {(FightType.Chase, FightResult.Lost),"Загуби битката." },
+            {(FightType.SkillCheck, FightResult.Won),"Успя!" },
+            {(FightType.SkillCheck, FightResult.Lost),"Провали се." },
+            {(FightType.Hazard, FightResult.Won),"Успя!" },
+            {(FightType.Hazard, FightResult.Lost),"Провали се." },
+            {(FightType.Virtual, FightResult.Won),"Спечели битката!" },
+            {(FightType.Virtual, FightResult.Lost),"Загуби битката." },
+            {(FightType.Stationary, FightResult.Won),"Спечели битката!" },
+            {(FightType.Stationary, FightResult.Lost),"Загуби битката." },
+            {(FightType.Escape, FightResult.Won),"Спечели битката!" },
+            {(FightType.Escape, FightResult.Lost),"Загуби битката." },
+            {(FightType.Escape, FightResult.Escaped),"Успя да избягаш!" },
+        };
     }
 }

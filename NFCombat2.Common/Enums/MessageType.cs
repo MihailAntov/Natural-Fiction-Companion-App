@@ -59,6 +59,7 @@ namespace NFCombat2.Common.Enums
         BackFlipMessage,
         PrimalInstinctHealmessage,
         ComboDamage,
+        WonRoundsCount,
         //enemy messages
         EnemyMoveMessage,
         EnemyMovePassMessage,

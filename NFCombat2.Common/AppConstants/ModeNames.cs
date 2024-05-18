@@ -11,5 +11,12 @@ namespace NFCombat2.Common.AppConstants
             {ItemMode.PoleMoveCloser, "Move closer" },
             {ItemMode.PoleMoveFuther, "Move further" }
         };
+
+        public static Dictionary<ItemMode, string> BulgarianModes = new Dictionary<ItemMode, string>()
+
+        {
+            {ItemMode.PoleMoveCloser, "Приближаване" },
+            {ItemMode.PoleMoveFuther, "Отдалечаване" }
+        };
     }
 }
