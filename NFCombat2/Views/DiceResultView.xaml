@@ -19,8 +19,8 @@
                                 <toolkit:IconTintColorBehavior TintColor="Gold" />
                             </Image.Behaviors>
                         </Image>
-                        <Button Text="Reroll  (-4)" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanReroll}" />
-                        <Button Text="Reroll" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.FreeRerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanFreeReroll}" />
+                        <Button Text="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollButtonName}" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanReroll}" />
+                        <Button Text="{Binding Source={x:Reference DiceResult}, Path=BindingContext.FreeRerollButtonName}" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.FreeRerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanFreeReroll}" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

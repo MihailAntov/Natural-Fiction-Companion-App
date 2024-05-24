@@ -315,6 +315,7 @@ namespace NFCombat2.Data.Entities.Repositories
                 int itemId = entity.Id.Value;
                 
                 var item = (Item)ItemConverter(entity.Type,entity.Category, itemId);
+
                 item.Quantity = playersItemsEntity.Quantity;
                 item.InExtraBag = playersItemsEntity.InExtraBag;
                 if (item.InExtraBag)

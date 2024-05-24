@@ -18,25 +18,23 @@ using NFCombat2.Models.Items.Parts;
 
 namespace NFCombat2.ViewModels
 {
-    public class InventoryPageViewModel : INotifyPropertyChanged
+    public class InventoryPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
         private readonly IOptionsService _optionsService;
         private readonly IPopupService _popupService;
         private readonly ILogService _logService;
-        private readonly INameService _nameService;
         
         public InventoryPageViewModel(
             IPlayerService playerService,
             IPopupService popupService,
             IOptionsService optionsService,
             ILogService logService,
-            INameService nameService)
+            INameService nameService) : base (nameService)
         {
             _playerService = playerService;
             _optionsService = optionsService;
             _logService = logService;
-            _nameService = nameService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             Player = _playerService.CurrentPlayer;
             Items = new ObservableCollection<Item>(Player.Items);
@@ -63,7 +61,20 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _addItemButton;
+        public string AddItemButton
+        {
+            get { return _addItemButton; }
+            set
+            {
+                if (_addItemButton != value)
+                {
+                    _addItemButton = value;
+                    OnPropertyChanged(nameof(AddItemButton));
+                }
+            }
+        }
         public Command AddToPlayerCommand { get; set; }
         public Command GetWeaponDetailsCommand { get; set; }
         public Command DeleteCommand { get; set; }
@@ -538,15 +549,14 @@ namespace NFCombat2.ViewModels
         }
 
         public int InventorySlots => Player.InventorySlots;
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
 
         private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
             {
                 Player = _playerService.CurrentPlayer;
-                Title = $"{Player.Name}'s inventory";
+                Title = _nameService.Label(LabelType.InventoryPageTitle);
                 Equipment.Clear();
                 foreach (var item in Player.Equipment)
                 {
@@ -572,6 +582,42 @@ namespace NFCombat2.ViewModels
             }
 
             
+        }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+
+            Title = _nameService.Label(LabelType.InventoryPageTitle);
+            AddItemButton = _nameService.Label(LabelType.AddItemButton);
+            foreach (var item in Items)
+            {
+                item.Name = _nameService.ItemName(item.ItemType);
+            }
+
+            foreach (var equipment in Equipment)
+            {
+                equipment.Name = _nameService.ItemName(equipment.ItemType);
+            }
+
+            foreach (var item in ExtraItems)
+            {
+                item.Name = _nameService.ItemName(item.ItemType);
+            }
+
+            if(_playerService != null && _playerService.CurrentPlayer != null)
+            {
+                if(_playerService.CurrentPlayer.MainHand != null)
+                {
+                    _playerService.CurrentPlayer.MainHand.Name = _nameService.ItemName(_playerService.CurrentPlayer.MainHand.ItemType);
+                    MainHandName = _playerService.CurrentPlayer.MainHand.Name;
+                }
+
+                if (_playerService.CurrentPlayer.OffHand != null)
+                {
+                    _playerService.CurrentPlayer.OffHand.Name = _nameService.ItemName(_playerService.CurrentPlayer.OffHand.ItemType);
+                    OffHandName = _playerService.CurrentPlayer.OffHand.Name;
+                }
+            }
         }
     }
 }

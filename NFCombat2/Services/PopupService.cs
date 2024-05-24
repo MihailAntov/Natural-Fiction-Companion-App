@@ -25,7 +25,7 @@ namespace NFCombat2.Services
         public async Task<TaskCompletionSource<bool>> ShowDiceAttackRollPopup(IHaveAttackRoll effect, Player player, bool hasReroll = false, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect,player,  task, hasReroll, hasFreeReroll);
+            var viewModel = new DiceResultViewModel(effect,player,  task, hasReroll, hasFreeReroll,_nameService);
             var popup = new DiceResultView(viewModel);
             
             ShowPopup(popup);
@@ -37,7 +37,7 @@ namespace NFCombat2.Services
         public async Task<TaskCompletionSource<bool>> ShowMeleeCombatRollsPopup(IHaveOpposedRolls effect, Player player, bool hasReroll, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect.AttackerResult, effect.AttackerMessage, player, task , hasReroll, hasFreeReroll);
+            var viewModel = new DiceResultViewModel(effect.AttackerResult, effect.AttackerMessage, player, task , hasReroll, hasFreeReroll, _nameService);
             var popup = new DiceResultView(viewModel);
 
             ShowPopup(popup);
@@ -45,7 +45,7 @@ namespace NFCombat2.Services
             await popup.CloseAsync();
 
             task = new TaskCompletionSource<bool>();
-            viewModel = new DiceResultViewModel(effect.DefenderResult, effect.DefenderMessage, player, task, hasReroll, hasFreeReroll);
+            viewModel = new DiceResultViewModel(effect.DefenderResult, effect.DefenderMessage, player, task, hasReroll, hasFreeReroll, _nameService);
             popup = new DiceResultView(viewModel);
             ShowPopup(popup);
             await task.Task;
@@ -58,7 +58,7 @@ namespace NFCombat2.Services
         public async Task<TaskCompletionSource<bool>> ShowDiceRollsPopup(IHaveRolls effect, Player player, bool hasReroll, bool hasFreeReroll = false)
         {
             var task = new TaskCompletionSource<bool>();
-            var viewModel = new DiceResultViewModel(effect, player, task, hasReroll, hasFreeReroll);
+            var viewModel = new DiceResultViewModel(effect, player, task, hasReroll, hasFreeReroll, _nameService);
             var popup = new DiceResultView(viewModel);
             
             ShowPopup(popup);
@@ -70,7 +70,7 @@ namespace NFCombat2.Services
         public async Task<IAddable> ShowEntryWithSuggestionsPopup(ICollection<IAddable> options, IPlayerService playerService)
         {
             var task = new TaskCompletionSource<IAddable>();
-            var viewModel = new EntryWithSuggestionsViewModel(playerService, options, task);
+            var viewModel = new EntryWithSuggestionsViewModel(playerService, options, task, _nameService);
             var suggestions = new EntryWithSuggestions(viewModel);
             //ShowPopup(suggestions);
             await Shell.Current.Navigation.PushAsync(suggestions);
@@ -113,7 +113,7 @@ namespace NFCombat2.Services
         public async Task<ProgramExecution> ShowCastPopup(IPlayerService playerService)
         {
             TaskCompletionSource<ProgramExecution> taskCompletionSource = new TaskCompletionSource<ProgramExecution>();
-            var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService, playerService);
+            var viewmodel = new ProgramCastViewModel(taskCompletionSource, _programService, playerService, _nameService);
             var popup = new ProgramCastView(viewmodel);
             viewmodel.Popup = popup;
             ShowPopup(popup);

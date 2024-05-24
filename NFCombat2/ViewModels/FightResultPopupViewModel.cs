@@ -5,23 +5,20 @@ using NFCombat2.Contracts;
 
 namespace NFCombat2.ViewModels
 {
-    public class FightResultPopupViewModel
+    public class FightResultPopupViewModel : BaseViewModel
     {
         
-        private readonly INameService _nameService;
         private readonly TaskCompletionSource<bool> _taskCompletionSource;
         
-        public FightResultPopupViewModel(Fight fight, INameService nameService, TaskCompletionSource<bool> taskCompletionSource)
+        public FightResultPopupViewModel(Fight fight, INameService nameService, TaskCompletionSource<bool> taskCompletionSource) : base (nameService)
         {
             Fight = fight;
-            _nameService = nameService;
             _taskCompletionSource = taskCompletionSource;
-            AcceptButtonName = _nameService.Label(LabelType.AcceptCombatResult);
-            RejectButtonName = _nameService.Label(LabelType.RejectCombatResult);
             AcceptResultCommand = new Command(AcceptResult);
             RejectResultCommand = new Command(RejectResult);
             Message = _nameService.FightResultMessage(Fight);
             InfoMessage = _nameService.InfoMessage(Fight);
+            UpdateLanguageSpecificProperties();
         }
         public Fight Fight { get; set; }
         public string Message { get; set; }
@@ -30,6 +27,13 @@ namespace NFCombat2.ViewModels
         public Command RejectResultCommand { get; set; }
         public string AcceptButtonName { get; set; }
         public string RejectButtonName { get; set; }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            AcceptButtonName = _nameService.Label(LabelType.AcceptCombatResult);
+            RejectButtonName = _nameService.Label(LabelType.RejectCombatResult);
+        }
+
         private void AcceptResult()
         {
             _taskCompletionSource.TrySetResult(true);

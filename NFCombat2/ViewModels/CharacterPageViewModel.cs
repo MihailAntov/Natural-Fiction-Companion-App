@@ -192,6 +192,73 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        private string _characterTab;
+        public string CharacterTab { get { return _characterTab; } set
+            {
+                if(_characterTab != value)
+                {
+                    _characterTab = value;
+                    OnPropertyChanged(nameof(CharacterTab));
+                }
+            } 
+        }
+
+        private string _logTab;
+        public string LogTab
+        {
+            get { return _logTab; }
+            set
+            {
+                if (_logTab != value)
+                {
+                    _logTab = value;
+                    OnPropertyChanged(nameof(LogTab));
+                }
+            }
+        }
+
+        private string _inventoryTab;
+        public string InventoryTab
+        {
+            get { return _inventoryTab; }
+            set
+            {
+                if (_inventoryTab != value)
+                {
+                    _inventoryTab = value;
+                    OnPropertyChanged(nameof(InventoryTab));
+                }
+            }
+        }
+
+        private string _fightTab;
+        public string FightTab
+        {
+            get { return _fightTab; }
+            set
+            {
+                if (_fightTab != value)
+                {
+                    _fightTab = value;
+                    OnPropertyChanged(nameof(FightTab));
+                }
+            }
+        }
+
+        private string _diceTab;
+        public string DiceTab
+        {
+            get { return _diceTab; }
+            set
+            {
+                if (_diceTab != value)
+                {
+                    _diceTab = value;
+                    OnPropertyChanged(nameof(DiceTab));
+                }
+            }
+        }
+
         //public ObservableCollection<Player> Profiles {get; set;}
         public IList<Player> Profiles { get; set; } = new List<Player>();
         public Command OpenSettingsCommand { get; set; }
@@ -287,12 +354,18 @@ namespace NFCombat2.ViewModels
             ChangeClassPicker = _nameService.Label(LabelType.ChangeClassPicker);
             ChangeProfilePicker = _nameService.Label(LabelType.ChangeProfilePicker);
             AddNewProfileButton = _nameService.Label(LabelType.AddNewProfileButton);
-            if(Player != null)
+            LogTab = _nameService.Label(LabelType.LogTab);
+            CharacterTab = _nameService.Label(LabelType.CharacterTab);
+            DiceTab = _nameService.Label(LabelType.DiceTab);
+            InventoryTab = _nameService.Label(LabelType.InventoryTab);
+            FightTab = _nameService.Label(LabelType.FightTab);
+            if (Player != null)
             {
                 PlayerClassLabel = _nameService.ClassName(Player.Class);
             }
             //to update the class name dropdown names
             OnPropertyChanged(nameof(Classes));
+            
             
         }
     }

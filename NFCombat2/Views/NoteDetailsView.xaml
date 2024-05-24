@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Views.NoteDetailsView">
     <VerticalStackLayout>
-        <Editor VerticalTextAlignment="Start" Text="{Binding Text}">
+        <Editor VerticalTextAlignment="Start" Text="{Binding Text}" Placeholder="{Binding EditorPlaceholder}">
             
         </Editor>
         <ImageButton Source="trash" WidthRequest="35" HeightRequest="35">

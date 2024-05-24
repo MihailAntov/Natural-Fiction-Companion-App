@@ -1,4 +1,5 @@
-﻿using NFCombat2.Common.Helpers;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Common.Helpers;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Dice;
 using System.Collections.ObjectModel;
@@ -8,11 +9,12 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class DicePageViewModel : INotifyPropertyChanged
+    public class DicePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         
-        public DicePageViewModel()
+        public DicePageViewModel(INameService nameService) : base(nameService)
         {
+            UpdateLanguageSpecificProperties();
             DiceCollection = new List<Dice>();
             
             for (int i = 0; i < 25; i++)
@@ -35,6 +37,17 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+        private string _rollButtonName;
+        public string RollButtonName { get { return _rollButtonName; } set
+            {
+                if(_rollButtonName != value)
+                {
+                    _rollButtonName = value;
+                    OnPropertyChanged(nameof(RollButtonName));
+                }
+            } 
+        }
+
 
         private int bonusDamage = 0;
 
@@ -43,7 +56,7 @@ namespace NFCombat2.ViewModels
             get { return bonusDamage; }
             set
             {
-                if (bonusDamage != value && value > 0)
+                if (bonusDamage != value && value >= 0)
                 {
                     bonusDamage = value;
                     OnPropertyChanged(nameof(BonusDamage));
@@ -54,13 +67,23 @@ namespace NFCombat2.ViewModels
 
         public List<Dice> DiceCollection { get; set; }
 
-        public int Result { get; set; } = 0;
+        public string Result { get; set; } 
+
+        private string _resultFormat;
+        public string ResultFormat { get { return _resultFormat; } set
+            {
+                if(_resultFormat != value)
+                {
+                    _resultFormat = value;
+                    OnPropertyChanged(nameof(ResultFormat));
+                }
+            } 
+        }
 
         public bool ResultVisible { get; set; } = false;
 
         public Random random;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         public void Roll()
@@ -88,15 +111,27 @@ namespace NFCombat2.ViewModels
 
             
 
-            
-            Result = DiceCollection.Take(NumberOfDice).Sum(d=> d.DiceValue) + BonusDamage;
+            int resultVal = DiceCollection.Take(NumberOfDice).Sum(d => d.DiceValue) + BonusDamage;
+            Result = String.Format(ResultFormat, resultVal);
 
             OnPropertyChanged(nameof(ResultVisible));
             OnPropertyChanged(nameof(Result));
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            RollButtonName = _nameService.Label(LabelType.RollButton);
+            ResultFormat = _nameService.Label(LabelType.RollResultFormat);
+            if (ResultVisible)
+            {
+                int resultVal = DiceCollection.Take(NumberOfDice).Sum(d => d.DiceValue) + BonusDamage;
+                Result = String.Format(ResultFormat, resultVal);
+                OnPropertyChanged(nameof(Result));
+
+            }
+            
+        }
     }
 }

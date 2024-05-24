@@ -1,6 +1,8 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Common.Helpers;
+using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using NFCombat2.Models.Dice;
 using NFCombat2.Models.Player;
@@ -9,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class DiceResultViewModel : INotifyPropertyChanged
+    public class DiceResultViewModel : BaseViewModel, INotifyPropertyChanged
     {
 
         public ICollection<Dice> Dice { get; set; }
@@ -19,15 +21,16 @@ namespace NFCombat2.ViewModels
         public Command RerollCommand { get; set; }
         public Command FreeRerollCommand { get; set; }
         private TaskCompletionSource<bool> _taskCompletionSource;
-        public DiceResultViewModel(TaskCompletionSource<bool> task, Player player)
+        public DiceResultViewModel(TaskCompletionSource<bool> task, Player player, INameService nameService) : base(nameService)
         {
+            UpdateLanguageSpecificProperties();
             ConfirmCommand = new Command(ConfirmRolls);
             RerollCommand = new Command<Dice>(Reroll);
             FreeRerollCommand = new Command<Dice>(FreeReroll);
             _taskCompletionSource = task;
             Player = player;
         }
-        public DiceResultViewModel(IHaveAttackRoll effect, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll) : this(task, player)
+        public DiceResultViewModel(IHaveAttackRoll effect, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
         {
             Dice = new List<Dice>() { effect.AttackRollResult };
             foreach(var die in Dice)
@@ -39,7 +42,7 @@ namespace NFCombat2.ViewModels
             
         }
 
-        public DiceResultViewModel(IHaveRolls effect, Player player, TaskCompletionSource<bool> task,bool hasReroll, bool hasFreeReroll) : this(task, player)
+        public DiceResultViewModel(IHaveRolls effect, Player player, TaskCompletionSource<bool> task,bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
         {
             Dice = effect.RollsResult.Dice;
             foreach (var die in Dice)
@@ -51,7 +54,7 @@ namespace NFCombat2.ViewModels
             ConfirmCommand = new Command(ConfirmRolls);
         }
 
-        public DiceResultViewModel(DiceRollResult effect, string message, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll) : this(task, player)
+        public DiceResultViewModel(DiceRollResult effect, string message, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
         {
             Dice = effect.Dice;
             foreach (var die in Dice)
@@ -61,6 +64,48 @@ namespace NFCombat2.ViewModels
             }
             Message = message;
             
+        }
+
+        private string _reRollButtonName;
+        public string RerollButtonName
+        {
+            get { return _reRollButtonName; }
+            set
+            {
+                if (_reRollButtonName != value)
+                {
+                    _reRollButtonName = value;
+                    OnPropertyChanged(nameof(RerollButtonName));
+                }
+            }
+        }
+
+        private string _freeRerollButtonName;
+        public string FreeRerollButtonName
+        {
+            get { return _freeRerollButtonName; }
+            set
+            {
+                if (_freeRerollButtonName != value)
+                {
+                    _freeRerollButtonName = value;
+                    OnPropertyChanged(nameof(FreeRerollButtonName));
+                }
+            }
+        }
+
+        private string _confirmButtonName;
+        public string ConfirmButtonName
+        {
+            get { return _confirmButtonName; }
+            set
+            {
+                if (_confirmButtonName != value)
+                {
+                    _confirmButtonName = value;
+                    OnPropertyChanged(nameof(ConfirmButtonName));
+                }
+            }
         }
 
         private void ConfirmRolls()
@@ -85,12 +130,11 @@ namespace NFCombat2.ViewModels
         }
 
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-
+        public override void UpdateLanguageSpecificProperties()
+        {
+            RerollButtonName = _nameService.Label(LabelType.RerollButton);
+            FreeRerollButtonName = _nameService.Label(LabelType.FreeRerollButton);
+            ConfirmButtonName = _nameService.Label(LabelType.ConfirmRoll);
+        }
     }
 }

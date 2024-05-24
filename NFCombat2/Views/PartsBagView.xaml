@@ -3,9 +3,14 @@
              x:Name="PartsBagPage"
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NFCombat2.Views.PartsBagView">
-    <StackLayout>
-        <StackLayout BindableLayout.ItemsSource="{Binding PartsBag.Categories}">
+             x:Class="NFCombat2.Views.PartsBagView"
+             VerticalOptions="FillAndExpand">
+    <Grid VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0" BindableLayout.ItemsSource="{Binding PartsBag.Categories}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <!--<Label Text="{Binding Name}"></Label>-->
@@ -39,9 +44,8 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </StackLayout>
-        <StackLayout IsVisible="{Binding Crafting}">
-
+        <StackLayout Grid.Row="1" VerticalOptions="End">
+            <ImageButton  Source="wrench" HeightRequest="75" VerticalOptions="End" Command="{Binding CraftingPopupCommand}"/>
         </StackLayout>
-        <ImageButton Source="wrench" HeightRequest="75" VerticalOptions="End" Command="{Binding CraftingPopupCommand}"/>
-    </StackLayout>
+    </Grid>
 </ContentView>

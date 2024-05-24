@@ -11,21 +11,17 @@ using System.Threading.Tasks;
 
 namespace NFCombat2.ViewModels
 {
-    public class HandChoiceViewModel : INotifyPropertyChanged
+    public class HandChoiceViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly TaskCompletionSource<Hand> _taskCompletionSource;
-        private readonly INameService _nameService;
-        public HandChoiceViewModel(TaskCompletionSource<Hand> taskCompletionSource, INameService nameService)
+        public HandChoiceViewModel(TaskCompletionSource<Hand> taskCompletionSource, INameService nameService) : base(nameService)
         {
             _taskCompletionSource = taskCompletionSource;
-            _nameService = nameService;
-            MainHandName = _nameService.HandName(Hand.MainHand);
-            OffHandName = _nameService.HandName(Hand.OffHand);
+            UpdateLanguageSpecificProperties();
             ChooseHandCommand = new Command<string>(async (s)=> await ChooseHand(s));
         }
         private string _mainHandName;
         public Popup Popup { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
         public Command ChooseHandCommand { get; set; }
 
         public async Task ChooseHand(string hand)
@@ -38,6 +34,13 @@ namespace NFCombat2.ViewModels
         {
             _taskCompletionSource.TrySetResult(Hand.None);
         }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            MainHandName = _nameService.HandName(Hand.MainHand);
+            OffHandName = _nameService.HandName(Hand.OffHand);
+        }
+
         public string MainHandName
         {
             get { return _mainHandName; }
@@ -60,10 +63,6 @@ namespace NFCombat2.ViewModels
                 }
             } 
         }
-
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
 
     }
 }

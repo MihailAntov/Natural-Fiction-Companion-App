@@ -29,7 +29,7 @@ namespace NFCombat2.Services
             var result = fight.Player.Activatables
                 .Where(a=> !a.UnavailableForRestOfCombat)
                 .Select(o => new Option(o.Name, o)).ToList<IOption>();
-            return new OptionList(result, true, true) {Label = "Choose item to use" };
+            return new OptionList(result, true, true) {Label = _nameService.Label(LabelType.ItemChoice) };
         }
 
         public IOptionList GetStandardActions(Fight fight)
@@ -97,7 +97,7 @@ namespace NFCombat2.Services
                 string label = _nameService.Option(obj, type);
                 result.Add(new Option(label, obj));
             }
-            return new OptionList(result, false, false) { Label = "Choose standard action" };
+            return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.StandardActionChoice) };
             //TODO : involve converter service to get name of option
         }
 
@@ -130,7 +130,7 @@ namespace NFCombat2.Services
 
             //TODO: involve converter service to get name of option
             var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
-            return new OptionList(result, false, false) { Label = "Choose bonus to use" };
+            return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.BonusActionChoice) };
         }
 
         public IOptionList GetMoveActions(Fight fight)
@@ -178,7 +178,7 @@ namespace NFCombat2.Services
 
                 result.Add(new Option(_nameService.Option(obj), obj));
             }
-            return new OptionList(result, false, false) { Label = "Choose move action" };
+            return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.MoveActionChoice) };
         }
 
 
@@ -188,7 +188,7 @@ namespace NFCombat2.Services
                 .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.EffectiveMaxRange))
                 .Select(w => new Option(w.Name, w))
                 .ToList<IOption>();
-            var options =  new OptionList(weapons, true, !alreadyShot) { Label = "Choose a weapon to shoot with" };
+            var options =  new OptionList(weapons, true, !alreadyShot) { Label = _nameService.Label(LabelType.WeaponChoice) };
             if(alreadyShot)
             {
                 options.Options.Add(new Option(OptionType.Done.ToString(),new PlayerActionPass(fight)));
@@ -201,8 +201,8 @@ namespace NFCombat2.Services
             
 
             
-            var result = new OptionList(new List<IOption>(), true, true) { Label = "Choose which program to use" };
-            result.Options.Add(new Option("Manual",new ManualProgramCast()));
+            var result = new OptionList(new List<IOption>(), true, true) { Label = _nameService.Label(LabelType.ProgramChoice) };
+            result.Options.Add(new Option(_nameService.Label(LabelType.ManualProgramCast),new ManualProgramCast()));
             
             var knownPrograms = fight.Player.Programs;
             foreach(var program in knownPrograms)
@@ -218,21 +218,22 @@ namespace NFCombat2.Services
             var objects = fight.Enemies
                 .Where(e => e.Distance >= minRange && e.Distance <= maxRange)
                 .ToList();
-            string label = maxRange == 0 ? "Choose which enemy to attack" : "Choose which enemy to shoot";
+            //string label = maxRange == 0 ? "Choose which enemy to attack" : "Choose which enemy to shoot";
+            LabelType type = maxRange == 0 ? LabelType.MeleeTargetChoice : LabelType.RangedTargetChoice;
 
             var result = objects.Select(o => new Option(o.Name, o)).ToList<IOption>();
-            return new OptionList(result, false,true) { Label = label };
+            return new OptionList(result, false,true) { Label = _nameService.Label(type) };
         }
         public IOptionList GetEndTurn(Fight fight)
         {
 
-            var end = new Option("End turn", OptionType.EndTurn);
+            var end = new Option(_nameService.Label(LabelType.EndTurn), OptionType.EndTurn);
             var options = new List<IOption>() { end };
             if(_playerService.CurrentPlayer.Class == PlayerClass.SpecOps && !fight.UsedAdrenalineThisTurn)
             {
                 options.Add(new Option(_nameService.Option(OptionType.AdrenalineRush, CheckType.None, fight.AdrenalineCost), OptionType.AdrenalineRush));
             }
-            var result = new OptionList() { Label = "End turn", CanGoBack = false, IsInfoNeeded = false, Options = options };
+            var result = new OptionList() { Label = _nameService.Label(LabelType.EndOfTurn), CanGoBack = false, IsInfoNeeded = false, Options = options };
             return result;
         }
 
@@ -315,7 +316,7 @@ namespace NFCombat2.Services
                 result.Add(new ModificationOption()
                 {
                     Image = "none",
-                    Name = "Unequip",
+                    Name = _nameService.Label(LabelType.Unequip),
                     ToBeAttachedTo = AttachedTo.None
                 });
             }
@@ -334,7 +335,7 @@ namespace NFCombat2.Services
 
             return new OptionList()
             {
-                Label = "Choose mode",
+                Label = _nameService.Label(LabelType.ModeChoice),
                 Options = options
             };
         }
@@ -397,7 +398,7 @@ namespace NFCombat2.Services
                 string label = _nameService.Option(obj, type);
                 results.Add(new Option(label, obj));
             }
-            return new OptionList(results, false, false) { Label = "Choose extra action" };
+            return new OptionList(results, false, false) { Label = _nameService.Label(LabelType.ExtraActionChoice) };
         }
     }
 }

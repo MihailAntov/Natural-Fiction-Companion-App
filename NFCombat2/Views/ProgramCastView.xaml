@@ -27,7 +27,7 @@
         <!--<Button Padding="0" FontSize="Large" Grid.Row="2" Grid.Column="0" Text="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="programParadigm"/>-->
         <ImageButton Padding="0" Grid.Row="2" Grid.Column="0" Source="{Binding ProgramParadigmPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="programParadigm" MaximumHeightRequest="60"/>
         <Picker VerticalTextAlignment="Center" Grid.Row="2" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding ParadigmTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding ProgramParadigmType}" />
-        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Execute" Command="{Binding ExecuteProgramCommand}"/>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding ExecuteLabel}" Command="{Binding ExecuteProgramCommand}"/>
 
     </Grid>
 </toolkit:Popup>

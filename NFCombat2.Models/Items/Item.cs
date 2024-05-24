@@ -12,7 +12,16 @@ namespace NFCombat2.Models.Items
         public int Id { get; set; }
         public ItemType ItemType { get; set; }
         public bool IsInvention { get; set; } = false;
-        public string Name { get; set; }
+        private string _name;
+        public string Name { get { return _name; } set 
+            {
+                if(_name != value )
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            } 
+        }
         public string Description { get; set; }
         private int _quantity = 1;
         public int Quantity { get { return _quantity; }

@@ -20,7 +20,7 @@
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>0.3</ApplicationDisplayVersion>
-		<ApplicationVersion>6</ApplicationVersion>
+		<ApplicationVersion>7</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -74,6 +74,7 @@
 	  <None Remove="Resources\Images\dice4.png" />
 	  <None Remove="Resources\Images\dice5.png" />
 	  <None Remove="Resources\Images\dice6.png" />
+	  <None Remove="Resources\Images\distance.png" />
 	  <None Remove="Resources\Images\en.png" />
 	  <None Remove="Resources\Images\energyweapon.png" />
 	  <None Remove="Resources\Images\equipment.png" />

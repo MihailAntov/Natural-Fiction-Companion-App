@@ -38,10 +38,12 @@ public static class MauiProgram
 		builder.Services.AddSingleton<OptionPickerView>();
 		builder.Services.AddSingleton<InventoryPage>();
 		builder.Services.AddSingleton<NotePage>();
+		builder.Services.AddSingleton<DicePage>();
 		builder.Services.AddSingleton<SettingsPage>();
 
 
 		builder.Services.AddSingleton<InventoryPageViewModel>();
+		builder.Services.AddSingleton<DicePageViewModel>();
 		builder.Services.AddSingleton<FightPageViewModel>();
 		builder.Services.AddSingleton<OptionPickerViewModel>();
 		builder.Services.AddSingleton<EntryWithSuggestionsViewModel>();

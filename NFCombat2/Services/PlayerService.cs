@@ -316,7 +316,7 @@ namespace NFCombat2.Services
                 {
                     TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
                     string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
-                    var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource);
+                    var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource, _nameService);
                     var popup = new ConfirmationPopupView(viewModel);
                     _popupService.ShowPopup(popup);
                     bool confirmed = await taskCompletionSource.Task;

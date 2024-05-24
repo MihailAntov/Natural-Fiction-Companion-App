@@ -7,11 +7,11 @@
              x:Class="NFCombat2.Views.OptionPickerView">
     <VerticalStackLayout>
         <Label
-Text="{Binding MenuLabel}"
-SemanticProperties.HeadingLevel="Level2"
-SemanticProperties.Description=""
-FontSize="18"
-HorizontalOptions="Center" />
+            Text="{Binding MenuLabel}"
+            SemanticProperties.HeadingLevel="Level2"
+            SemanticProperties.Description=""
+            FontSize="18"
+            HorizontalOptions="Center" />
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>

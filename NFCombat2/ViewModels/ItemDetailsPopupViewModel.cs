@@ -9,9 +9,8 @@ using NFCombat2.Models.Items.Equipments;
 
 namespace NFCombat2.ViewModels
 {
-    public class ItemDetailsPopupViewModel
+    public class ItemDetailsPopupViewModel : BaseViewModel
     {
-        private readonly INameService _nameService;
         private readonly InventoryPageViewModel _parentViewModel;
         public Command UseItemCommand { get; set; }
         public IAddable Item { get; set; }
@@ -20,12 +19,11 @@ namespace NFCombat2.ViewModels
         public ItemDetailsPopupViewModel(
             IAddable item,
             InventoryPageViewModel parentViewModel,
-            INameService nameService)
+            INameService nameService) : base (nameService)
         {
             Item = item;
             _parentViewModel = parentViewModel;
-            _nameService = nameService;
-            UseItemButtonName = _nameService.Label(LabelType.UseItemButton);
+            UpdateLanguageSpecificProperties();
             UseItemCommand = new Command(async () => await UseItem());
         }
 
@@ -42,5 +40,9 @@ namespace NFCombat2.ViewModels
             _parentViewModel.UsedItem(Item);
         }
 
+        public override void UpdateLanguageSpecificProperties()
+        {
+            UseItemButtonName = _nameService.Label(LabelType.UseItemButton);
+        }
     }
 }

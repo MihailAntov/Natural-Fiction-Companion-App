@@ -12,22 +12,22 @@ using NFCombat2.Models.Items.Weapons;
 
 namespace NFCombat2.ViewModels
 {
-    public class EntryWithSuggestionsViewModel : INotifyPropertyChanged
+    public class EntryWithSuggestionsViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
 
-        public event PropertyChangedEventHandler PropertyChanged;
         private TaskCompletionSource<IAddable> _taskCompletionSource;
         public EntryWithSuggestionsViewModel(
             IPlayerService playerService,
             ICollection<IAddable> allOptions,
-            TaskCompletionSource<IAddable> taskCompletionSource
-            )
+            TaskCompletionSource<IAddable> taskCompletionSource,
+            INameService nameService
+            ) : base(nameService)
         {
             _allOptions = allOptions;
             _playerService = playerService;
             _taskCompletionSource = taskCompletionSource;
-
+            UpdateLanguageSpecificProperties();
         }
         private ICollection<IAddable> _allOptions = new List<IAddable>();
         public ObservableCollection<IAddable> Options { get; set; } = new ObservableCollection<IAddable>();
@@ -49,6 +49,16 @@ namespace NFCombat2.ViewModels
 
         public string SearchCriteria { get; set; }
 
+        private string _entryPlaceholder;
+        public string EntryPlaceholder { get { return _entryPlaceholder; } set
+            {
+                if ( _entryPlaceholder != value)
+                {
+                    _entryPlaceholder = value;
+                    OnPropertyChanged(nameof(EntryPlaceholder));
+                }
+            } 
+        }
         
 
         public async Task ChooseOption(object option)
@@ -96,10 +106,9 @@ namespace NFCombat2.ViewModels
             _taskCompletionSource.TrySetResult(null);
         }
 
-
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
-        
+        public override void UpdateLanguageSpecificProperties()
+        {
+            EntryPlaceholder = _nameService.Label(Common.Enums.LabelType.EntryPlaceholder);
+        }
     }
 }

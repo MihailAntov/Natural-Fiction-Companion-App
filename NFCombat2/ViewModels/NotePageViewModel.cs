@@ -1,5 +1,6 @@
 ﻿
 
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Notes;
 using NFCombat2.Models.Player;
@@ -12,17 +13,17 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class NotePageViewModel : INotifyPropertyChanged
+    public class NotePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly IPlayerService _playerService;
         private readonly INoteService _noteService;
         public Player Player { get; set; }  
-        public NotePageViewModel(IPlayerService playerService, INoteService noteService)
+        public NotePageViewModel(IPlayerService playerService, INoteService noteService, INameService nameService) : base(nameService)
         {
             _playerService = playerService;
             _noteService = noteService;
             Player = _playerService.CurrentPlayer;
-            Title = $"{Player.Name}'s log";
+            UpdateLanguageSpecificProperties();
             CreateNoteCommand = new Command(CreateNote);
             OpenNoteCommand = new Command<Note>(async (note)=> await OpenNote(note));
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
@@ -44,7 +45,6 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Note> Notes { get; set; }
         public Command OpenNoteCommand { get; set; }
@@ -64,7 +64,7 @@ namespace NFCombat2.ViewModels
 
         private async Task OpenNote(Note note)
         {
-            var vm = new NoteDetailsViewModel(_noteService, this);
+            var vm = new NoteDetailsViewModel(_noteService, this, _nameService);
             vm.Note = note;
             
             // todo: add navigation
@@ -78,18 +78,21 @@ namespace NFCombat2.ViewModels
             await OpenNote(newNote);
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-        private async void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
             {
                 Player = _playerService.CurrentPlayer;
-                Title = $"{Player.Name}'s log";
+                UpdateLanguageSpecificProperties();
                 LoadNotes();
                 
             }
+        }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            Title = _nameService.Label(LabelType.NotePageTitle);
         }
     }
 }

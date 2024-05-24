@@ -5,13 +5,13 @@
              x:Class="NFCombat2.Pages.NoteDetails"
              Title="NoteDetails">
     <VerticalStackLayout>
-        <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}" Placeholder="Title">
+        <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}" Placeholder="{Binding TitleEditorPlaceholder}">
 
         </Editor>
-        <Editor VerticalTextAlignment="Start" AutoSize="TextChanges" Text="{Binding Note.Text}" Placeholder="Enter text...">
+        <Editor VerticalTextAlignment="Start" AutoSize="TextChanges" Text="{Binding Note.Text}" Placeholder="{Binding EditorPlaceholder}">
 
         </Editor>
-        <Button Text="Save" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
+        <Button Text="{Binding SaveButton}" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
         <ImageButton Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
 
         </ImageButton>

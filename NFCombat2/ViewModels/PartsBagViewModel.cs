@@ -79,7 +79,16 @@ namespace NFCombat2.ViewModels
         }
         public void ExpandTab(PartCategory partCategory)
         {
-            partCategory.IsExpanded = !partCategory.IsExpanded;
+            foreach (var pc in _partBag.Categories)
+            {
+                if(pc ==  partCategory)
+                {
+                    pc.IsExpanded = !pc.IsExpanded;
+                    continue;
+                }
+                pc.IsExpanded = false;
+            }
+            //partCategory.IsExpanded = !partCategory.IsExpanded;
         }
 
 

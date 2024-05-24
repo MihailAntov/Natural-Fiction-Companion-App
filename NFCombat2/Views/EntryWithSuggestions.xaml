@@ -5,7 +5,7 @@
              x:Class="NFCombat2.Views.EntryWithSuggestions">
     <VerticalStackLayout Padding="20">
 
-        <Entry Placeholder="Enter item name" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
+        <Entry Placeholder="{Binding EntryPlaceholder}" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
         <ListView ItemsSource="{Binding Options}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">
             <ListView.ItemTemplate>
                 <DataTemplate>

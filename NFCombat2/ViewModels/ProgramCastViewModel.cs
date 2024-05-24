@@ -8,12 +8,16 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class ProgramCastViewModel : INotifyPropertyChanged
+    public class ProgramCastViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly TaskCompletionSource<ProgramExecution> _taskCompletionSource;
         private readonly IProgramService _programService;
         private readonly IPlayerService _playerService;
-        public ProgramCastViewModel(TaskCompletionSource<ProgramExecution> taskCompletionSource, IProgramService programService, IPlayerService playerService)
+        public ProgramCastViewModel(
+            TaskCompletionSource<ProgramExecution> taskCompletionSource,
+            IProgramService programService,
+            IPlayerService playerService,
+            INameService nameService) : base(nameService) 
         {
             _taskCompletionSource = taskCompletionSource;
             _programService = programService;
@@ -26,7 +30,7 @@ namespace NFCombat2.ViewModels
             ElectricalSignalType = SignalTypes.FirstOrDefault();
             ParadigmTypes = _programService.GetParadigmTypes();
             ProgramParadigmType = ParadigmTypes.FirstOrDefault();
-            
+            UpdateLanguageSpecificProperties();
         }
 
         public IList<ProgramFormulaComponent> OperationTypes { get; set; }
@@ -64,6 +68,17 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        private string _executeLabel;
+        public string ExecuteLabel { get { return _executeLabel; } set
+            {
+                if( _executeLabel != value)
+                {
+                    _executeLabel = value; 
+                    OnPropertyChanged(nameof(ExecuteLabel));
+                }
+            } 
+        }
+
         public ProgramFormulaComponent ElectricalSignalType { get; set; } 
         private bool _electricalSignalPolarity = true;
         public bool ElectricalSignalPolarity
@@ -94,7 +109,6 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public void Cancel()
         {
@@ -125,7 +139,9 @@ namespace NFCombat2.ViewModels
             return $"{LogicalOperationType.Formula}{ElectricalSignalType.Formula}{ProgramParadigmType.Formula}";
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        public override void UpdateLanguageSpecificProperties()
+        {
+            ExecuteLabel = _nameService.Label(LabelType.ExecuteLabel);
+        }
     }
 }

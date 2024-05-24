@@ -27,7 +27,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout>
+    <StackLayout VerticalOptions="Fill">
         <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
              RadioButtonGroup.SelectedValue="{Binding SelectedTabValue}">
             <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view weapons">
@@ -111,9 +111,9 @@
 
 
 
-        <Button Text="Add Equipment" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}"/>
-        <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}"/>
-        <Button Text="Add Item" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}"/>
+        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}"/>
+        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}"/>
+        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}"/>
 
         <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingEquipments}">
         <ListView.ItemTemplate>
@@ -217,7 +217,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <views:PartsBagView IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingParts}">
+        <views:PartsBagView VerticalOptions="FillAndExpand" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingParts}">
             
         </views:PartsBagView>
         

@@ -4,10 +4,10 @@ namespace NFCombat2.Pages;
 
 public partial class DicePage : ContentPage
 {
-	public DicePage()
+	public DicePage(DicePageViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = new DicePageViewModel();
+        BindingContext = viewModel;
 		
 	}
 	
