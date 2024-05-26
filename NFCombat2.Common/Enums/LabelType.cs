@@ -59,7 +59,9 @@ namespace NFCombat2.Common.Enums
         DiceTab,
         ConfirmRoll,
         AddItemButton,
-        SaveButton
+        SaveButton,
+        NoPlayerName,
+        AddedPlayer
 
     }
 }

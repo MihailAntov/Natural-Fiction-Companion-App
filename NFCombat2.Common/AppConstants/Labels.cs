@@ -62,6 +62,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ConfirmRoll, "Confirm" },
             {LabelType.AddItemButton, "Add" },
             {LabelType.SaveButton, "Save" },
+            {LabelType.NoPlayerName, "Please enter player name" },
+            {LabelType.AddedPlayer, "Successfully added {0}" },
 
 
 
@@ -123,6 +125,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ConfirmRoll, "Потвърди" },
             {LabelType.AddItemButton, "Добави" },
             {LabelType.SaveButton, "Запази" },
+            {LabelType.NoPlayerName, "Моля въведи името на играча" },
+            {LabelType.AddedPlayer, "Успешно добави {0}" },
 
         };
     }

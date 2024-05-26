@@ -18,7 +18,7 @@ namespace NFCombat2.Contracts
         public Task AddItemToPlayer(IAddable item);
         public Task AttachModificationToWeapon(IAddable option, AttachedTo hand);
         public Task RemoveItemFromPlayer(IAddable item);
-        public List<PlayerClass> GetClassOptions();
+        public List<PlayerClassDisplay> GetClassOptions();
 
         public Task SavePlayer();
 

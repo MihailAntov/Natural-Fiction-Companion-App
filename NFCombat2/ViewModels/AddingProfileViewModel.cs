@@ -74,19 +74,22 @@ namespace NFCombat2.ViewModels
             PlayerClasses = playerService.GetClassOptions();
         }
 
-        public List<PlayerClass> PlayerClasses { get; set; }
+        public List<PlayerClassDisplay> PlayerClasses { get; set; }
         public async Task RegisterPlayer(Player player)
         {
             
-            await _playerService.SavePlayer();
+          await _playerService.SavePlayer();
             if (string.IsNullOrWhiteSpace(player.Name))
             {
-                
-                _popupService.ShowToast("Please insert player name.");
+                string emptyPlayerNameToast = _nameService.Label(LabelType.NoPlayerName);
+                //_popupService.ShowToast("Please insert player name.");
+                _popupService.ShowToast(emptyPlayerNameToast);
                 return;
             }
             var result = await _playerService.RegisterPlayer(player);
-            _popupService.ShowToast($"Successfully Added {player.Name}");
+            string addPlayerSuccess = String.Format(_nameService.Label(LabelType.AddedPlayer),player.Name);
+            //_popupService.ShowToast($"Successfully Added {player.Name}");
+            _popupService.ShowToast(addPlayerSuccess);
             
             _taskCompletionSource.SetResult(result);
 

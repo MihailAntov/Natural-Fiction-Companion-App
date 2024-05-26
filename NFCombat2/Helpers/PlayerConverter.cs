@@ -13,25 +13,32 @@ namespace NFCombat2.Helpers
             if(values!= null && values.Length == 2)
             {
                 string name = values[0].ToString();
-                PlayerClass playerClass = values[1] == null ? PlayerClass.None : (PlayerClass)Enum.Parse(typeof(PlayerClass), values[1].ToString());
                 Player player = new Player() { Name = name };
-                switch (playerClass)
+                //PlayerClass playerClass = values[1] == null ? PlayerClass.None : (PlayerClass)Enum.Parse(typeof(PlayerClass), values[1].ToString());
+                if (values[1] is PlayerClassDisplay display)
                 {
-                    case PlayerClass.None:
-                        break;
-                    case PlayerClass.Hacker:
-                        player.Class = PlayerClass.Hacker;
-                        break;
-                    case PlayerClass.Soldier:
-                        player.Class = PlayerClass.Soldier;
-                        break;
-                    case PlayerClass.SpecOps:
-                        player.Class = PlayerClass.SpecOps;
-                        break;
-                    case PlayerClass.Engineer:
-                        player.Class = PlayerClass.Engineer;
-                        break;
+                    PlayerClass playerClass = display == null ? PlayerClass.None : (PlayerClass)Enum.Parse(typeof(PlayerClass), display.Class.ToString());
+                    player.Class = playerClass;
                 }
+                
+                
+                //switch (playerClass)
+                //{
+                //    case PlayerClass.None:
+                //        break;
+                //    case PlayerClass.Hacker:
+                //        player.Class = PlayerClass.Hacker;
+                //        break;
+                //    case PlayerClass.Soldier:
+                //        player.Class = PlayerClass.Soldier;
+                //        break;
+                //    case PlayerClass.SpecOps:
+                //        player.Class = PlayerClass.SpecOps;
+                //        break;
+                //    case PlayerClass.Engineer:
+                //        player.Class = PlayerClass.Engineer;
+                //        break;
+                //}
                 return player;
             }
             return null;

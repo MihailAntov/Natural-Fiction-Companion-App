@@ -11,7 +11,7 @@
         <Picker x:Name="PlayerClass"
                 Title="{Binding SelectClassLabel}"
                 ItemsSource="{Binding PlayerClasses}"
-                ItemDisplayBinding="{Binding}">
+                ItemDisplayBinding="{Binding Name}">
         </Picker>
 
 

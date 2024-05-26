@@ -378,14 +378,17 @@ namespace NFCombat2.Services
             await _repository.UpdatePlayer(CurrentPlayer);
         }
 
-        public List<PlayerClass> GetClassOptions()
+        public List<PlayerClassDisplay> GetClassOptions()
         {
-            var list = new List<PlayerClass>();
-            list.Add(PlayerClass.None);
-            list.Add(PlayerClass.Hacker);
-            list.Add(PlayerClass.Engineer);
-            list.Add(PlayerClass.Soldier);
-            list.Add(PlayerClass.SpecOps);
+            var list = new List<PlayerClassDisplay>();
+            for(int i = 0; i < 5; i++)
+            {
+                PlayerClassDisplay next = new PlayerClassDisplay();
+                next.Class = (PlayerClass)i;
+                next.Name = _nameService.ClassName(next.Class);
+                list.Add(next);
+            }
+            
             return list;
         }
 
