@@ -335,7 +335,7 @@ namespace NFCombat2.ViewModels
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
             {
-                if(_playerService.CurrentPlayer != null)
+                if(_playerService.CurrentPlayer != null && _playerService.CurrentPlayer.Name != null)
                 {
                     Player = _playerService.CurrentPlayer;
                     PlayerClassLabel = _nameService.ClassName(Player.Class);
