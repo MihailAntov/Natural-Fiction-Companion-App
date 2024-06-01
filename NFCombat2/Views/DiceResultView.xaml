@@ -2,12 +2,33 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Name="DiceResult"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="NFCombat2.Views.DiceResultView">
+               x:Class="NFCombat2.Views.DiceResultView"
+               Color="Aquamarine">
 
   
         
 
-    <StackLayout BackgroundColor="Black" Padding="20" VerticalOptions="End" >
+    <StackLayout Margin="5" Padding="20" VerticalOptions="End" >
+        <StackLayout.Background>
+            <!--<LinearGradientBrush StartPoint="0,0"
+                     EndPoint="1,1">
+                <GradientStop Color="Blue"
+                  Offset="0.0" />
+                <GradientStop Color="Aquamarine"
+                  Offset="0.25" />
+                <GradientStop Color="Blue"
+                  Offset="0.75" />
+                <GradientStop Color="Aquamarine"
+                  Offset="1.0" />
+            </LinearGradientBrush>-->
+            <RadialGradientBrush>
+                <GradientStop Color="Blue"
+                          Offset="0.1" />
+                <GradientStop Color="DarkBlue"
+                          Offset="1.0" />
+            </RadialGradientBrush>
+        </StackLayout.Background>
+        
         <Label HorizontalOptions="Center" Text="{Binding Message}" TextColor="Gold"/>
         <!-- Dice collection display -->
         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">

@@ -36,7 +36,8 @@
         <FlexLayout BindableLayout.ItemsSource="{Binding DiceCollection}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="2" Direction="Row"  Wrap="Wrap" JustifyContent="SpaceAround" Margin="10">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Image FlexLayout.Basis="30%"  Source="{Binding FileName}" IsVisible="{Binding IsVisible}"/>
+                    <Image FlexLayout.Basis="30%"  Source="{Binding FileName}" IsVisible="{Binding IsVisible}">
+                    </Image>
                 </DataTemplate>
                 </BindableLayout.ItemTemplate>
             
