@@ -150,7 +150,10 @@ namespace NFCombat2.Services
             }
             _fight.Player = _playerService.CurrentPlayer;
             _fight.SetUp();
-            await HandleTechniques(_fight.Player);
+            if(_fight.Player.Class == PlayerClass.SpecOps)
+            {
+                await HandleTechniques(_fight.Player);
+            }
             return _fight;
         }
 
@@ -609,11 +612,8 @@ namespace NFCombat2.Services
                     case ProgramExecutionResult.Success:
                         return await ProcessChoice(execution.Content);
                     case ProgramExecutionResult.NoEffect:
-                        _popupService.ShowToast("Your program had no effect in the current fight.");
-                        return await AfterOption();
                     case ProgramExecutionResult.Fail:
-                        _popupService.ShowToast("Your program had no effect.");
-                        return await AfterOption();
+                        return await ProcessChoice(new ProgramFizzle(execution.Result));
                     case ProgramExecutionResult.Cancelled:
                         return PreviousOptions;
                 }
@@ -624,6 +624,8 @@ namespace NFCombat2.Services
                 var workingEffects = program.Effects.Where(e => e.HasEffect(_fight)).ToList();
                 if(workingEffects.Count == 0)
                 {
+
+                   await AddEffect(new ProgramFizzle(ProgramExecutionResult.Fail));
                     return await AfterOption();
                 }
 

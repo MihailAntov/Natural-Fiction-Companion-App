@@ -4,8 +4,10 @@
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             x:Name="ModificationOptions"
              x:Class="NFCombat2.Views.WeaponModificationView"
-               Closed="OnClosed">
-    <StackLayout BackgroundColor="Black" Padding="20" VerticalOptions="End" >
+               Closed="OnClosed"
+               Color="Transparent">
+    <Border>
+        <StackLayout StyleClass="Popup" BackgroundColor="Black" Padding="20" VerticalOptions="End" >
         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Options}" ItemsLayout="HorizontalList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -21,4 +23,5 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </StackLayout>
+    </Border>
 </toolkit:Popup>

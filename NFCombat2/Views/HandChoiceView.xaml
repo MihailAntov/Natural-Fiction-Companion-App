@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.HandChoiceView"
-               Closed="OnClosed">
-    <HorizontalStackLayout Padding="20">
+               Closed="OnClosed"
+               Color="Transparent">
+    <Border>
+        <HorizontalStackLayout StyleClass="Popup" Padding="20">
         <Button Margin="5" Text="{Binding MainHandName}" Command="{Binding ChooseHandCommand}" CommandParameter="main"/>
         <Button Margin="5" Text="{Binding OffHandName}" Command="{Binding ChooseHandCommand}" CommandParameter="off"/>
     </HorizontalStackLayout>
+    </Border>
     
 </toolkit:Popup>

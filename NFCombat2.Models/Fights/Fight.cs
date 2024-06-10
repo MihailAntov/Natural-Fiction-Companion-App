@@ -37,6 +37,7 @@ namespace NFCombat2.Models.Fights
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public int EnemyCount => Enemies.Count;
         public int PlayerStrength { get { return _playerStrength; } set
             { 
                 if(value < 0)

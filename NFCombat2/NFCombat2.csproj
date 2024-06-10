@@ -36,7 +36,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\appicon.svg" Color="#1a200e" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#04182e" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="black" BaseSize="512,512" />
@@ -52,9 +52,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Fonts\Play-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Play-Regular.ttf" />
 	  <None Remove="Resources\Images\assaultrifle.png" />
+	  <None Remove="Resources\Images\background.png" />
 	  <None Remove="Resources\Images\backpack.png" />
 	  <None Remove="Resources\Images\baton.png" />
 	  <None Remove="Resources\Images\bg.png" />

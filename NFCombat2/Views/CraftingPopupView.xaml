@@ -4,8 +4,10 @@
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Views.CraftingPopupView"
-               Closed="OnClosed">
-    <VerticalStackLayout Padding="20">
+               Closed="OnClosed"
+               Color="Transparent">
+    <Border>
+        <VerticalStackLayout StyleClass="Popup" Padding="20">
         <CollectionView ItemsSource="{Binding Parts}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -33,4 +35,5 @@
         <Entry Text="{Binding Episode}" IsVisible="{Binding CorrectFormula}"/>
         <Button Text="{Binding ConfirmButtonLabel}" IsVisible="{Binding CorrectFormula}" Command="{Binding ConfirmEpisodeCommand}"/>
     </VerticalStackLayout>
+    </Border>
 </toolkit:Popup>

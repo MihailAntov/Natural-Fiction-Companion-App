@@ -3,14 +3,13 @@
                x:Name="DiceResult"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="NFCombat2.Views.DiceResultView"
-               Color="Aquamarine">
+               Color="Transparent">
 
-  
-        
 
-    <StackLayout Margin="5" Padding="20" VerticalOptions="End" >
-        <StackLayout.Background>
-            <!--<LinearGradientBrush StartPoint="0,0"
+    <Border>
+    <StackLayout StyleClass="Popup" VerticalOptions="End">
+        <!--<StackLayout.Background>
+            --><!--<LinearGradientBrush StartPoint="0,0"
                      EndPoint="1,1">
                 <GradientStop Color="Blue"
                   Offset="0.0" />
@@ -20,16 +19,16 @@
                   Offset="0.75" />
                 <GradientStop Color="Aquamarine"
                   Offset="1.0" />
-            </LinearGradientBrush>-->
+            </LinearGradientBrush>--><!--
             <RadialGradientBrush>
                 <GradientStop Color="Blue"
                           Offset="0.1" />
                 <GradientStop Color="DarkBlue"
                           Offset="1.0" />
             </RadialGradientBrush>
-        </StackLayout.Background>
+        </StackLayout.Background>-->
         
-        <Label HorizontalOptions="Center" Text="{Binding Message}" TextColor="Gold"/>
+        <Label HorizontalOptions="Center" Text="{Binding Message}" TextColor="Ivory"/>
         <!-- Dice collection display -->
         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding Dice}" ItemsLayout="HorizontalList">
             <CollectionView.ItemTemplate>
@@ -37,7 +36,7 @@
                     <StackLayout Margin="10">
                         <Image Source="{Binding FileName}" WidthRequest="50" HeightRequest="50" >
                             <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="Gold" />
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
                             </Image.Behaviors>
                         </Image>
                         <Button Text="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollButtonName}" Command="{Binding Source={x:Reference DiceResult}, Path=BindingContext.RerollCommand}" CommandParameter="{Binding}" IsVisible="{Binding CanReroll}" />
@@ -50,7 +49,7 @@
         <!-- Confirm button -->
         <Button Text="Confirm" HorizontalOptions="Center" VerticalOptions="End" Margin="0,20,0,0" Command="{Binding ConfirmCommand}" />
     </StackLayout>
-
+    </Border>
 
 
 

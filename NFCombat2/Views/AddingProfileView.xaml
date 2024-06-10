@@ -4,19 +4,24 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.AddingProfileView"
-               Closed="OnClosed">
-    <VerticalStackLayout Padding="20">
+               Closed="OnClosed"
+               Color="Transparent">
+    <Border>
+        
+    
+    <VerticalStackLayout StyleClass="Popup" Padding="20">
 
-
-        <Picker x:Name="PlayerClass"
+            <Picker x:Name="PlayerClass"
+                    HorizontalTextAlignment="Center"
+                    TextColor="Ivory"
                 Title="{Binding SelectClassLabel}"
                 ItemsSource="{Binding PlayerClasses}"
                 ItemDisplayBinding="{Binding Name}">
-        </Picker>
+            </Picker>
 
 
-        <Label Text="{Binding PlayerNameLabel}"/>
-        <Entry x:Name="PlayerName" Placeholder="{Binding PlayerNameHintLabel}" Text=""/>
+        <!--<Label Text="{Binding PlayerNameLabel}"/>-->
+        <Entry x:Name="PlayerName" Placeholder="{Binding PlayerNameHintLabel}" Text="" PlaceholderColor="{StaticResource Gray300}" HorizontalTextAlignment="Center"/>
         <Button Text="{Binding AddPlayerButtonLabel}" Command="{Binding RegisterCommand}" >
             <Button.CommandParameter>
                 <MultiBinding Converter="{helpers:PlayerConverter}">
@@ -33,4 +38,5 @@
         <Button Text="Add Profile" Command="{Binding RegisterCommand}" CommandParameter="{Binding Source={x:Reference ProfileName}, Path=Text}"/>
         <Button Text="View All Profiles" Command="{Binding GetAllProfilesCommand}"/>-->
     </VerticalStackLayout>
+    </Border>
 </toolkit:Popup>

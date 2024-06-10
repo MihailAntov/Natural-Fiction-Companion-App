@@ -15,22 +15,31 @@
         FontSize="Title"
         FontFamily="PlayRegular"/>
     </Shell.TitleView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Source="background" Aspect="Fill"/>
+        <VerticalStackLayout>
+            <ScrollView>
+                
+            
+            <CollectionView ItemsSource="{Binding Notes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
 
-    <VerticalStackLayout>
+                        <Button Padding="10" Margin="10" Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding}">
+                        </Button>
 
-        <CollectionView ItemsSource="{Binding Notes}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
 
-                    <Button Padding="10" Margin="10" Text="{Binding Title}" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.OpenNoteCommand}" CommandParameter="{Binding}">
-                    </Button>
-                        
-                        
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.CreateNoteCommand}">
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            </ScrollView>
+            <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.CreateNoteCommand}">
 
-        </ImageButton>
-    </VerticalStackLayout>
+            </ImageButton>
+        </VerticalStackLayout>
+    </Grid>
+    
 </ContentPage>

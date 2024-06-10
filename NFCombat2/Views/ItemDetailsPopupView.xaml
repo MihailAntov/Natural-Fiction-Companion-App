@@ -4,8 +4,10 @@
                x:Name="ItemDetails"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
-             x:Class="NFCombat2.Views.ItemDetailsPopupView">
-    <Grid Padding="20" BindingContext="{Binding Item}">
+             x:Class="NFCombat2.Views.ItemDetailsPopupView"
+               Color="Transparent">
+    <Border>
+        <Grid Padding="20" StyleClass="Popup" BindingContext="{Binding Item}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition/>
@@ -18,4 +20,5 @@
         <Label Grid.Row="1" Text="{Binding Description}"/>
         <Button Grid.Row="2" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
     </Grid>
+    </Border>
 </toolkit:Popup>

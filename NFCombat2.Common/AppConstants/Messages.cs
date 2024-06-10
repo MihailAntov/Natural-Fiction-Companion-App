@@ -62,6 +62,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
             {MessageType.ProgramDisableTentacleMessage, "Your program disables the tentacle." },
             {MessageType.ProgramNoEffect,"Your program has no effect." },
+            {MessageType.LearnProgram,"You learn a new program." },
             //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer." }, 
             {MessageType.EnemyMovePassMessage, "{0} is unable to move." }, 
@@ -158,6 +159,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramFreezeMessage, "Програмата ти пречи на движението на противника." },
             {MessageType.ProgramDisableTentacleMessage, "Програмата ти неутрализира пипалото." },
             {MessageType.ProgramNoEffect,"Програмата ти няма ефект." },
+            {MessageType.LearnProgram,"Научи нова програма." },
 
             //enemy messages
 

@@ -4,7 +4,31 @@
              x:Name="NoteDetails_"
              x:Class="NFCombat2.Pages.NoteDetails"
              Title="NoteDetails">
-    <VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="12*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.RowSpan="4" Source="background" Aspect="Fill"/>
+        <Border Grid.Row="0">
+            <Entry VerticalTextAlignment="Start" FontSize="Caption" HorizontalTextAlignment="Center" Text="{Binding Note.Title}" Placeholder="{Binding TitleEditorPlaceholder}">
+
+            </Entry>
+        </Border>
+        <Border Padding="14" Grid.Row="1">
+            <Editor  VerticalTextAlignment="Start" AutoSize="Disabled" IsSpellCheckEnabled="False" Text="{Binding Note.Text}" Placeholder="{Binding EditorPlaceholder}">
+
+            </Editor>
+        </Border>
+        
+        <Button Grid.Row="2" Text="{Binding SaveButton}" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
+        <ImageButton Grid.Row="3" Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
+
+        </ImageButton>
+    </Grid>
+    <!--<VerticalStackLayout>
         <Editor VerticalTextAlignment="Start" Text="{Binding Note.Title}" Placeholder="{Binding TitleEditorPlaceholder}">
 
         </Editor>
@@ -15,5 +39,5 @@
         <ImageButton Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
 
         </ImageButton>
-    </VerticalStackLayout>
+    </VerticalStackLayout>-->
 </ContentPage>

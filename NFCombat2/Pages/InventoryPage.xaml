@@ -27,202 +27,267 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout VerticalOptions="Fill">
-        <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
-             RadioButtonGroup.SelectedValue="{Binding SelectedTabValue}">
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view weapons">
-                <RadioButton.Content>
-                    <Image Source="pistol.png"/>
-                </RadioButton.Content>
-            </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view equipment">
-                <RadioButton.Content>
-                    <Image Source="equipment.png" />
-                </RadioButton.Content>
-            </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="items" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view items">
-                <RadioButton.Content>
-                    <Image Source="backpack.png" />
-                </RadioButton.Content>
-            </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab" IsVisible="{Binding Player.Class, Converter={helpers:EngineerConverter}}" SemanticProperties.Hint="Tap to view parts">
-                <RadioButton.Content>
-                    <Image Source="wrench.png" />
-                </RadioButton.Content>
-            </RadioButton>
-            <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab" IsVisible="{Binding Player.HasExtraBag}" SemanticProperties.Hint="Tap to view items in secondary bag">
-                <RadioButton.Content>
-                    <Image Source="sack.png" />
-                </RadioButton.Content>
-            </RadioButton>
-        </StackLayout>
-        <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
-        <Grid HeightRequest="180" Margin="20" ColumnSpacing="0" IsVisible="{Binding BrowsingWeapons}">
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="30"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
-            <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
-                <!--<ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">-->
-                <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main" SemanticProperties.Hint="Tap to change weapon">
+    <Grid>
+        <Image Source="background" Aspect="Fill"/>
+        <StackLayout VerticalOptions="Fill">
+            <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
+         RadioButtonGroup.SelectedValue="{Binding SelectedTabValue}">
+                <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="weapons" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view weapons">
+                    <RadioButton.Content>
+                        <Image Source="pistol.png">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                            </Image.Behaviors>
+                        </Image>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="equipment" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view equipment">
+                    <RadioButton.Content>
+                        <Image Source="equipment.png" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                            </Image.Behaviors>
+                        </Image>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="items" CheckedChanged="ChangedTab" SemanticProperties.Hint="Tap to view items">
+                    <RadioButton.Content>
+                        <Image Source="backpack.png" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                            </Image.Behaviors>
+                        </Image>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="parts" CheckedChanged="ChangedTab" IsVisible="{Binding Player.Class, Converter={helpers:EngineerConverter}}" SemanticProperties.Hint="Tap to view parts">
+                    <RadioButton.Content>
+                        <Image Source="wrench.png" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                            </Image.Behaviors>
+                        </Image>
+                    </RadioButton.Content>
+                </RadioButton>
+                <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="extraitems" CheckedChanged="ChangedTab" IsVisible="{Binding Player.HasExtraBag}" SemanticProperties.Hint="Tap to view items in secondary bag">
+                    <RadioButton.Content>
+                        <Image Source="sack.png" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                            </Image.Behaviors>
+                        </Image>
+                    </RadioButton.Content>
+                </RadioButton>
+            </StackLayout>
+            <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
+            <Grid HeightRequest="180" Margin="20" ColumnSpacing="0" IsVisible="{Binding BrowsingWeapons}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
+                    <!--<ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">-->
+                    <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main" SemanticProperties.Hint="Tap to change weapon">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </Border>
+
+
+                <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion" IsVisible="{Binding Player.MainHand.HasGrenadeLauncher, FallbackValue=false}" >
                     <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="Gold" />
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
                     </ImageButton.Behaviors>
                 </ImageButton>
-            </Border>
-
-
-            <ImageButton Grid.Row="0" Grid.Column="1" Source="explosion" IsVisible="{Binding Player.MainHand.HasGrenadeLauncher, FallbackValue=false}" />
-            <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair" IsVisible="{Binding Player.MainHand.HasLaserSight, FallbackValue=false}"/>
-            <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets" IsVisible="{Binding Player.MainHand.HasGasOperatedReloadingSystem, FallbackValue=false}"/>
-            <ImageButton Grid.Row="3" Grid.Column="1" Source="radar" IsVisible="{Binding Player.MainHand.HasBarrelExtender, FallbackValue=false}"/>
-            <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
-            <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}" SemanticProperties.Hint="Tap to discard main hand weapon"/>
-
-
-
-            <Border BackgroundColor="Black" Grid.Column="3" Grid.RowSpan="4" >
-                <!--<ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">-->
-                <ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="off">
+                <ImageButton Grid.Row="1" Grid.Column="1" Source="crosshair" IsVisible="{Binding Player.MainHand.HasLaserSight, FallbackValue=false}">
                     <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="Gold" />
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
                     </ImageButton.Behaviors>
                 </ImageButton>
-            </Border>
-            <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion" IsVisible="{Binding Player.OffHand.HasGrenadeLauncher, FallbackValue=false}"/>
-            <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair" IsVisible="{Binding Player.OffHand.HasLaserSight, FallbackValue=false}"/>
-            <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets" IsVisible="{Binding Player.OffHand.HasGasOperatedReloadingSystem, FallbackValue=false}"/>
-            <ImageButton Grid.Row="3" Grid.Column="4" Source="radar" IsVisible="{Binding Player.OffHand.HasBarrelExtender, FallbackValue=false}"/>
-            <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
-            <ImageButton Grid.Row="5" Grid.Column="3" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.OffHand}"/>
-        </Grid>
+                <ImageButton Grid.Row="2" Grid.Column="1" Source="bullets" IsVisible="{Binding Player.MainHand.HasGasOperatedReloadingSystem, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <ImageButton Grid.Row="3" Grid.Column="1" Source="radar" IsVisible="{Binding Player.MainHand.HasBarrelExtender, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
+                <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}" SemanticProperties.Hint="Tap to discard main hand weapon">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
 
 
 
-        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}"/>
-        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}"/>
-        <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}"/>
+                <Border BackgroundColor="Black" Grid.Column="3" Grid.RowSpan="4" >
+                    <!--<ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="off">-->
+                    <ImageButton Opacity="{Binding OffHandTransparency}" Source="{Binding OffHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="off">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </Border>
+                <ImageButton Grid.Row="0" Grid.Column="4" Source="explosion" IsVisible="{Binding Player.OffHand.HasGrenadeLauncher, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <ImageButton Grid.Row="1" Grid.Column="4" Source="crosshair" IsVisible="{Binding Player.OffHand.HasLaserSight, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <ImageButton Grid.Row="2" Grid.Column="4" Source="bullets" IsVisible="{Binding Player.OffHand.HasGasOperatedReloadingSystem, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <ImageButton Grid.Row="3" Grid.Column="4" Source="radar" IsVisible="{Binding Player.OffHand.HasBarrelExtender, FallbackValue=false}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
+                <ImageButton Grid.Row="5" Grid.Column="3" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.OffHand}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Grid>
 
-        <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingEquipments}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-               
-                    <ViewCell>
-                        <ViewCell.View>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="25"/>
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
-                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
-                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
-                            </Grid>
-                        </ViewCell.View>
-                    </ViewCell>
-                    
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
 
-        <ListView ItemsSource="{Binding Items}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingItems}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
 
-                    <ViewCell>
-                        <ViewCell.View>
-                            
-                            <!--<Grid.ColumnDefinitions>
+            <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}"/>
+            <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}"/>
+            <Button Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}"/>
+
+            <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingEquipments}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                                    <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                    <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView ItemsSource="{Binding Items}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <ViewCell.View>
+
+                                <!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="35"/>
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                        <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                                    <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                    <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                </Grid>
+
+                            </ViewCell.View>
+                        </ViewCell>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView ItemsSource="{Binding ExtraItems}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingExtraItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <ViewCell>
+                            <ViewCell.View>
+                                <!--<Grid>
+                            <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="35"/>
                             </Grid.ColumnDefinitions>
                             <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="25"/>
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
-                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
-                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
-                            </Grid>
-                            
-                        </ViewCell.View>
-                    </ViewCell>
+                            <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                        </Grid>-->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
+                                    <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                    <ImageButton Grid.Column="2" Source="{Binding Image}"/>
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
+                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
 
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <views:PartsBagView VerticalOptions="FillAndExpand" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingParts}">
 
-        <ListView ItemsSource="{Binding ExtraItems}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingExtraItems}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-
-                    <ViewCell>
-                        <ViewCell.View>
-                            <!--<Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="35"/>
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <Label VerticalTextAlignment="Center" Grid.Column="1" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                            </Grid>-->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="25"/>
-                                </Grid.ColumnDefinitions>
-                                <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
-                                <ImageButton Grid.Column="2" Source="{Binding Image}"/>
-                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
-                            </Grid>
-                        </ViewCell.View>
-                    </ViewCell>
-
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <views:PartsBagView VerticalOptions="FillAndExpand" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingParts}">
-            
-        </views:PartsBagView>
-        
-       
+            </views:PartsBagView>
 
 
-    </StackLayout>
+
+
+        </StackLayout>
+    </Grid>
+    
+    
 </ContentPage>

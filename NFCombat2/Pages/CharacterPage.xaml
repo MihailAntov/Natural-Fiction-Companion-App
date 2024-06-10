@@ -51,6 +51,8 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
             <Picker x:Name="Profile"
+                    TitleColor="White"
+                    TextColor="White"
                     Grid.Row="1"
                     Grid.Column="0" Grid.ColumnSpan="6"
                     HorizontalTextAlignment="Center"
@@ -63,7 +65,9 @@
 
             </Picker>
             <Label Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" Text="{Binding PlayerClassLabel}"/>
-            <Picker x:Name="Class"
+            <Picker
+                    TitleColor="White"
+                    TextColor="White"
                     Grid.Row="3"
                     Grid.Column="0" Grid.ColumnSpan="6"
                     HorizontalTextAlignment="Center"

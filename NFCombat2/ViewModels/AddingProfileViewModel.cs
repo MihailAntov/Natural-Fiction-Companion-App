@@ -39,6 +39,8 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+
+        
         private string _playerNameHintLabel;
         public string PlayerNameHintLabel
         {
