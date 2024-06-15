@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="NFCombat2.Views.ProfilePickerPopupView"
+               x:Name="ProfilePicker">
+    <Grid>
+        <Image Source="background" Aspect="Fill"/>
+
+        <CollectionView ItemsSource="{Binding Profiles}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Button Margin="10" Text="{Binding Name}" CommandParameter="{Binding}" Command="{Binding Source={x:Reference ProfilePicker}, Path=BindingContext.ChooseCommand}" />
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    </Grid>
+</ContentPage>

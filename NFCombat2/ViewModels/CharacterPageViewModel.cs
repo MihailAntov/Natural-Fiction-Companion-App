@@ -19,6 +19,8 @@ namespace NFCombat2.ViewModels
         private readonly SettingsPageViewModel _settingsPageViewModel;
         
         public Command AddNewProfileCommand { get; set; }
+        public Command ChangeProfileCommand { get; set; }
+        public Command ChangeClassCommand { get; set; }
         public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel) : base(nameService)
         {
             _playerService = playerService;
@@ -26,6 +28,8 @@ namespace NFCombat2.ViewModels
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             OpenSettingsCommand = new Command(async () => await OpenSettings());
+            ChangeProfileCommand = new Command(async () => await ChangeProfile());
+            ChangeClassCommand = new Command(async () => await ChangeClass());
             Player = _playerService.CurrentPlayer;
             _settingsPageViewModel = settingsPageViewModel;
             
@@ -276,6 +280,35 @@ namespace NFCombat2.ViewModels
             LoadPlayersAsync();
             
             
+        }
+
+        public async Task ChangeProfile()
+        {
+            TaskCompletionSource<Player> taskCompletionSource = new TaskCompletionSource<Player>();
+            var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles);
+            var view = new ProfilePickerPopupView(viewModel);
+            await Shell.Current.Navigation.PushAsync(view);
+            var profile = await taskCompletionSource.Task;
+            if(profile != null)
+            {
+                ProcessChoice(profile);
+                await Shell.Current.Navigation.PopAsync();
+            }
+        }
+
+        public async Task ChangeClass()
+        {
+            TaskCompletionSource<PlayerClassDisplay> taskCompletionSource = new TaskCompletionSource<PlayerClassDisplay>();
+            var viewModel = new ClassPickerPopupViewModel(taskCompletionSource, Classes);
+            var view = new ClassPickerPopupView(viewModel);
+            await Shell.Current.Navigation.PushAsync(view);
+
+            var classDisplay = await taskCompletionSource.Task;
+            if (classDisplay != null)
+            {
+                ProcessChoice(classDisplay);
+                await Shell.Current.Navigation.PopAsync();
+            }
         }
 
         
