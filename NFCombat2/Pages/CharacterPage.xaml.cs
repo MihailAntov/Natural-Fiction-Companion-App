@@ -30,6 +30,7 @@ public partial class CharacterPage : ContentPage
         }
     }
 
+
     protected override async void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
 		await _playerService.SavePlayer();

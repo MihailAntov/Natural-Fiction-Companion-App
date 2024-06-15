@@ -592,16 +592,19 @@ namespace NFCombat2.ViewModels
             foreach (var item in Items)
             {
                 item.Name = _nameService.ItemName(item.ItemType);
+                item.Description = _nameService.ItemDescription(item.ItemType);
             }
 
             foreach (var equipment in Equipment)
             {
                 equipment.Name = _nameService.ItemName(equipment.ItemType);
+                equipment.Description = _nameService.ItemDescription(equipment.ItemType);
             }
 
             foreach (var item in ExtraItems)
             {
                 item.Name = _nameService.ItemName(item.ItemType);
+                item.Description = _nameService.ItemDescription(item.ItemType);
             }
 
             if(_playerService != null && _playerService.CurrentPlayer != null)

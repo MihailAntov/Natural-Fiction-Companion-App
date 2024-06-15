@@ -61,7 +61,7 @@ namespace NFCombat2.Common.Enums
         AddItemButton,
         SaveButton,
         NoPlayerName,
-        AddedPlayer
-
+        AddedPlayer,
+        RoundBeginning,
     }
 }

@@ -26,9 +26,32 @@ namespace NFCombat2.Services
 
         public IOptionList GetItems(Fight fight)
         {
-            var result = fight.Player.Activatables
-                .Where(a=> !a.UnavailableForRestOfCombat)
-                .Select(o => new Option(o.Name, o)).ToList<IOption>();
+            //var result = fight.Player.Activatables
+            //    .Where(a=> !a.UnavailableForRestOfCombat)
+            //    .Select(o => new Option(o.Name, o)).ToList<IOption>();
+            var result = new List<IOption>();
+
+            foreach (var item in fight.Player.Activatables)
+            {
+                if (item.UnavailableForRestOfCombat)
+                {
+                    continue;
+                }
+
+                if (item is ITarget targettingEffect)
+                {
+                    if(fight.Enemies.Any(e=> e.Distance <= targettingEffect.MaxRange && e.Distance >= targettingEffect.MinRange))
+                    {
+                        result.Add(new Option(item.Name, item));
+                    }
+                    continue;
+                }
+
+                result.Add(new Option(item.Name, item));
+
+                
+            }
+
             return new OptionList(result, true, true) {Label = _nameService.Label(LabelType.ItemChoice) };
         }
 
@@ -191,7 +214,7 @@ namespace NFCombat2.Services
             var options =  new OptionList(weapons, true, !alreadyShot) { Label = _nameService.Label(LabelType.WeaponChoice) };
             if(alreadyShot)
             {
-                options.Options.Add(new Option(OptionType.Done.ToString(),new PlayerActionPass(fight)));
+                options.Options.Add(new Option(_nameService.Option(OptionType.Done),new PlayerActionPass(fight)));
             }
             return options;
         }

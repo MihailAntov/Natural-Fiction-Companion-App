@@ -11,6 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
+        <Image Source="background" Aspect="Fill" Grid.RowSpan="2"/>
         <Label Grid.Row="0"
             Text="{Binding MenuLabel}"
             SemanticProperties.HeadingLevel="Level2"

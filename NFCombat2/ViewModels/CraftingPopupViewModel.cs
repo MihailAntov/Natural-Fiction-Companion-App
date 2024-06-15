@@ -76,8 +76,6 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
 
         public void Craft()
         {
@@ -147,8 +145,6 @@ namespace NFCombat2.ViewModels
         }
 
 
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         
     }

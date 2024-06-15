@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Name="NotePage_"
              x:Class="NFCombat2.Pages.NotePage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="{Binding Title}">
     <Shell.TitleView>
         <Label
@@ -37,7 +38,9 @@
             </CollectionView>
             </ScrollView>
             <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.CreateNoteCommand}">
-
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                </ImageButton.Behaviors>
             </ImageButton>
         </VerticalStackLayout>
     </Grid>

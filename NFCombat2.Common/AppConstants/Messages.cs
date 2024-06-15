@@ -54,6 +54,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.PrimalInstinctHealmessage, "Your primal instincts kick in, restoring your health." },
             {MessageType.ComboDamage, "Your follow up with a combo attack." },
             {MessageType.WonRoundsCount, "You have won {0} rounds" },
+            
             //program action messages
             {MessageType.ProgramHealMessage, "Your program heals you." },
             {MessageType.ProgramBonusActionmessage, "Your program increases your reflexes." },
@@ -150,6 +151,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.PrimalInstinctHealmessage, "Първичните ти инстинтки се събужат, възстановявайки издръжливост." },
             {MessageType.ComboDamage, "Добавяш серия към атаката." },
             {MessageType.WonRoundsCount, "Спечелени рундове: {0}" },
+            
 
             //program action messages
             {MessageType.ProgramHealMessage, "Програмата ти те лекува." },

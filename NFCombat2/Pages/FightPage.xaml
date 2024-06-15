@@ -139,16 +139,19 @@
 
 
         <!--pick episode-->
-        <Entry
-            Grid.Row="0" Grid.ColumnSpan="3" 
+        <Border Grid.Row="0" Grid.ColumnSpan="3"  IsVisible="{Binding NotInCombat}">
+            <Entry
+             
             x:Name="EpisodeEntry"
-        IsVisible="{Binding NotInCombat}"
-        Keyboard="Numeric"
-        Text="{Binding EpisodeNumber}"
-        SemanticProperties.Hint="Enter episode number"
-        Placeholder="{Binding EpisodeEntryHint}"
-        HorizontalOptions="Center" 
-            />
+           
+            Keyboard="Numeric"
+            Text="{Binding EpisodeNumber}"
+            SemanticProperties.Hint="Enter episode number"
+            Placeholder="{Binding EpisodeEntryHint}"
+            HorizontalOptions="Center" 
+            />  
+        </Border>
+        
 
 
         <Button 

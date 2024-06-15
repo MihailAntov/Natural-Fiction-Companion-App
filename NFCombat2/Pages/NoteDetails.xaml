@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Name="NoteDetails_"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Pages.NoteDetails"
              Title="NoteDetails">
     <Grid>
@@ -25,7 +26,9 @@
         
         <Button Grid.Row="2" Text="{Binding SaveButton}" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
         <ImageButton Grid.Row="3" Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
-
+            <ImageButton.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor ="Ivory"/>
+            </ImageButton.Behaviors>
         </ImageButton>
     </Grid>
     <!--<VerticalStackLayout>

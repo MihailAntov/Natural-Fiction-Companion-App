@@ -3,16 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Views.EntryWithSuggestions">
-    <VerticalStackLayout Padding="20">
+    <Grid>
+        <Image Source="background" Aspect="Fill"/>
+        <VerticalStackLayout Padding="20">
 
-        <Entry Placeholder="{Binding EntryPlaceholder}" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
-        <ListView ItemsSource="{Binding Options}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}"></TextCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        
+            <Entry Placeholder="{Binding EntryPlaceholder}" TextChanged="EnteredText" Text="{Binding SearchCriteria}"/>
+            <ListView ItemsSource="{Binding Options}" IsVisible="{Binding AreSuggestionsVisible}" ItemTapped="ChooseItem">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </VerticalStackLayout>
+    </Grid>
+    
 </ContentPage>

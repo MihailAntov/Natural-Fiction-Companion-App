@@ -50,14 +50,16 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
+            <Button Text="{Binding ChangeProfilePicker}" Clicked=""/>
             <Picker x:Name="Profile"
-                    TitleColor="White"
-                    TextColor="White"
+                    Title="{Binding ChangeProfilePicker}"
+                    TitleColor="Ivory"
+                    TextColor="Ivory"
                     Grid.Row="1"
                     Grid.Column="0" Grid.ColumnSpan="6"
                     HorizontalTextAlignment="Center"
                     VerticalTextAlignment="Center"
-                    Title="{Binding ChangeProfilePicker}"
+                    
                     SelectedIndexChanged="ChangedProfile"
                     ItemsSource="{Binding Profiles}"
                     ItemDisplayBinding="{Binding Name}"
@@ -66,13 +68,15 @@
             </Picker>
             <Label Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" Text="{Binding PlayerClassLabel}"/>
             <Picker
-                    TitleColor="White"
-                    TextColor="White"
+                    
+                    Title="{Binding ChangeClassPicker}"
+                    TitleColor="Ivory"
+                    TextColor="Ivory"
                     Grid.Row="3"
                     Grid.Column="0" Grid.ColumnSpan="6"
                     HorizontalTextAlignment="Center"
                     VerticalTextAlignment="Center"
-                    Title="{Binding ChangeClassPicker}"
+                    
                     SelectedIndexChanged="ChangedProfile"
                     ItemsSource="{Binding Classes}"
                     ItemDisplayBinding="{Binding Name}"
@@ -82,9 +86,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="4" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
             <Slider  Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4"  Minimum="{Binding Player.MinHealth}" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}" SemanticProperties.Hint="Adjust player health"/>
@@ -93,9 +94,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="5" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
             <Slider Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}" SemanticProperties.Hint="Adjust player overload"/>
@@ -104,9 +102,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="6" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
             <Slider Grid.Column="3" Grid.Row="6"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}" SemanticProperties.Hint="Adjust player trauma"/>
@@ -115,9 +110,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Gold" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="7" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
             <Slider Grid.Column="3" Grid.Row="7"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}" SemanticProperties.Hint="Adjust player pathogens"/>
@@ -126,9 +118,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="8" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
             <Slider Grid.Column="3" Grid.Row="8"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}" SemanticProperties.Hint="Adjust player ionization"/>
@@ -137,9 +126,6 @@
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
-                <Image.Shadow>
-                    <Shadow Brush="Black" Opacity="0.9" Radius="10" Offset="10,10"/>
-                </Image.Shadow>
             </Image>
             <Label Grid.Column="1" Grid.Row="9" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
             <Slider Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="9"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}" SemanticProperties.Hint="Adjust player fuel"/>

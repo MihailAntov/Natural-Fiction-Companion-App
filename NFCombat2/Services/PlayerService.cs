@@ -107,21 +107,25 @@ namespace NFCombat2.Services
                 foreach (var item in player.Items)
                 {
                     item.Name = _nameService.ItemName(item.ItemType);
+                    item.Description = _nameService.ItemDescription(item.ItemType);
                 }
 
                 foreach (var item in player.ExtraItems)
                 {
                     item.Name = _nameService.ItemName(item.ItemType);
+                    item.Description = _nameService.ItemDescription(item.ItemType);
                 }
 
                 foreach (var item in player.Equipment)
                 {
                     item.Name = _nameService.ItemName(item.ItemType);
+                    item.Description = _nameService.ItemDescription(item.ItemType);
                 }
 
                 foreach(var weapon in player.Weapons)
                 {
                     weapon.Name = _nameService.ItemName(weapon.ItemType);
+                    weapon.Description = _nameService.ItemDescription(weapon.ItemType);
                 }
 
                 foreach (var category in player.PartsBag.Categories)
@@ -433,11 +437,13 @@ namespace NFCombat2.Services
                 if(entity is Item item)
                 {
                     entity.Name = _nameService.ItemName(item.ItemType);
+                    entity.Description = _nameService.ItemDescription(item.ItemType);
                 }
 
                 if (entity is Weapon weapon)
                 {
                     entity.Name = _nameService.ItemName(weapon.ItemType);
+                    entity.Description = _nameService.ItemDescription(weapon.ItemType);
                 }
 
             }

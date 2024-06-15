@@ -3,6 +3,7 @@ using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Fights;
 using static NFCombat2.Common.AppConstants.ItemNames;
+using static NFCombat2.Common.AppConstants.ItemDescriptions;
 using static NFCombat2.Common.AppConstants.Labels;
 using static NFCombat2.Common.AppConstants.ModeNames;
 using static NFCombat2.Common.AppConstants.FightResults;
@@ -90,10 +91,10 @@ namespace NFCombat2.Services
                 switch (Language)
                 {
                     case Language.English:
-                        return EnglishItems[type];
+                        return EnglishItemDescriptions[type];
                     case Language.Bulgarian:
                     default:
-                        return BulgarianItems[type];
+                        return BulgarianItemDescriptions[type];
                 }
             }
             catch

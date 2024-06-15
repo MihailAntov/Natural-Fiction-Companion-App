@@ -185,7 +185,7 @@ namespace NFCombat2.Services
             _fight.EnemyMovedLastTurn = _fight.EnemyMovedThisTurn;
             _fight.EnemyMovedThisTurn = false;
             _fight.HasBonusAction = false;
-            string turnAnnouncement = $"Round {_fight.Turn} beginning.";
+            string turnAnnouncement =String.Format( _nameService.Label(LabelType.RoundBeginning),_fight.Turn);
             _popupService.ShowToast(turnAnnouncement);
             
 
