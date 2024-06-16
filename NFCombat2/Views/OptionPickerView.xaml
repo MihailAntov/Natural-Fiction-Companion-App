@@ -19,30 +19,39 @@
             FontSize="18"
             HorizontalOptions="Center" />
         <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
+
+            <VerticalStackLayout>
+                
             
-        
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Options}" IsVisible="{Binding ChoosingOption}" >
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <HorizontalStackLayout>
-                        
-                    <Button Margin="5"
+                        <HorizontalStackLayout>
+                            <Button Margin="5"
 
                 Text="{Binding Label}" 
             Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.OptionChosenCommand}"
             CommandParameter="{Binding}"       
         />
-                        <ImageButton Margin="0,5,0,0" VerticalOptions="CenterAndExpand" HeightRequest="25" WidthRequest="25" Source="info.png" Opacity="50" IsVisible="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.IsInfoNeeded}"
+                            <ImageButton Margin="0,5,0,0" VerticalOptions="CenterAndExpand" HeightRequest="25" WidthRequest="25" Source="info.png" Opacity="50" IsVisible="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.IsInfoNeeded}"
                                 Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.InfoCommand}"
                                 CommandParameter="{Binding}">
-
-                        </ImageButton>
-                    </HorizontalStackLayout>
-                    
-                </DataTemplate>
+                                <ImageButton.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                                </ImageButton.Behaviors>
+                            </ImageButton>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
             </BindableLayout.ItemTemplate>
-                <ImageButton HorizontalOptions="Start" HeightRequest="30" WidthRequest="30" Source="previous.png" Command="{Binding BackCommand}" IsVisible="{Binding CanGoBack}"/>
+                <!--<ImageButton HorizontalOptions="Start" HeightRequest="30" WidthRequest="30" Source="previous.png" Command="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.BackCommand}" IsVisible="{Binding Source={x:Reference OptionPicker}, Path=BindingContext.CanGoBack}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </ImageButton.Behaviors>
+                </ImageButton>-->
             </VerticalStackLayout>
+                <Button Margin="5" VerticalOptions="End" HorizontalOptions="Start" Text="{Binding BackButtonLabel}" Command="{Binding BackCommand}" IsVisible="{Binding CanGoBack}"/>
+            </VerticalStackLayout>
+
         </ScrollView>
         
 

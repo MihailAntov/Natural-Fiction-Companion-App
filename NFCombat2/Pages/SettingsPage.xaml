@@ -31,7 +31,7 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Image Grid.RowSpan="3" Source="background" Aspect="Fill"/>
-        <Label Grid.Row="0" Text="{Binding LanguageLabel}"/>
+        <Label Grid.Row="0" Text="{Binding LanguageLabel}" FontSize="Large" VerticalTextAlignment="Center"/>
         <StackLayout Grid.Row="1" Orientation="Horizontal" RadioButtonGroup.GroupName="inventoryTabs"
  RadioButtonGroup.SelectedValue="weapons">
             <RadioButton ControlTemplate="{StaticResource ImageRadioButtonTemplate}" Value="bg" CheckedChanged="ChosenLanguage" IsChecked="{Binding BGChosen}">

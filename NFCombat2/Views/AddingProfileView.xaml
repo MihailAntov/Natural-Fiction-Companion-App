@@ -11,13 +11,13 @@
     
     <VerticalStackLayout StyleClass="Popup" Padding="20">
 
-            <Picker x:Name="PlayerClass"
+            <!--<Picker x:Name="PlayerClass"
                     HorizontalTextAlignment="Center"
                     TextColor="Ivory"
                 Title="{Binding SelectClassLabel}"
                 ItemsSource="{Binding PlayerClasses}"
                 ItemDisplayBinding="{Binding Name}">
-            </Picker>
+            </Picker>-->
 
 
         <!--<Label Text="{Binding PlayerNameLabel}"/>-->
@@ -27,7 +27,6 @@
                 <MultiBinding Converter="{helpers:PlayerConverter}">
                     <MultiBinding.Bindings>
                         <Binding Path="Text" Source="{x:Reference PlayerName}"/>
-                        <Binding Path="SelectedItem" Source="{x:Reference PlayerClass}"/>
                     </MultiBinding.Bindings>
                 </MultiBinding>
             </Button.CommandParameter>

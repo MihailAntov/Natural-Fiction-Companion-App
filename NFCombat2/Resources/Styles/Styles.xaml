@@ -34,7 +34,7 @@
 
 
     <Style TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+        <Setter Property="TextColor" Value="Ivory" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="FontFamily" Value="PlayRegular"/>
         <Setter Property="BorderColor" Value="{StaticResource Secondary}"/>

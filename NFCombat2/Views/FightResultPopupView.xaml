@@ -21,9 +21,13 @@
 
         <Label  Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.ColumnSpan="4" Text="{Binding Message}"/>
         <Label  Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.ColumnSpan="4" Text="{Binding InfoMessage}"/>
-        <Image Grid.Row="2" Grid.Column="1" Source="healthcare"/>
-        <Label Grid.Row="2"  Grid.Column="2" HorizontalTextAlignment="Start" Text="{Binding Fight.Player.Health}"/>
-        <Button Grid.Row="3" Grid.Column="1" Text="{Binding AcceptButtonName}" Command="{Binding AcceptResultCommand}"/>
+            <Image Grid.Row="2" Grid.Column="1" Source="healthcare" IsVisible="{Binding CanAccept}">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                </Image.Behaviors>
+            </Image>
+            <Label Grid.Row="2"  Grid.Column="2" HorizontalTextAlignment="Start" Text="{Binding Fight.Player.Health}" IsVisible="{Binding CanAccept}"/>
+        <Button Grid.Row="3" Grid.Column="1" Text="{Binding AcceptButtonName}" Command="{Binding AcceptResultCommand}" IsVisible="{Binding CanAccept}"/>
         <Button Grid.Row="3" Grid.Column="2" Text="{Binding RejectButtonName}" Command="{Binding RejectResultCommand}"/>
         
     </Grid>

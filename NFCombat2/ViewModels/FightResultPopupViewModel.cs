@@ -18,6 +18,7 @@ namespace NFCombat2.ViewModels
             RejectResultCommand = new Command(RejectResult);
             Message = _nameService.FightResultMessage(Fight);
             InfoMessage = _nameService.InfoMessage(Fight);
+            CanAccept = Fight.Result != FightResult.Lost;
             UpdateLanguageSpecificProperties();
         }
         public Fight Fight { get; set; }
@@ -27,6 +28,8 @@ namespace NFCombat2.ViewModels
         public Command RejectResultCommand { get; set; }
         public string AcceptButtonName { get; set; }
         public string RejectButtonName { get; set; }
+
+        public bool CanAccept { get; set; } 
 
         public override void UpdateLanguageSpecificProperties()
         {

@@ -44,79 +44,101 @@
                 SemanticProperties.Hint="Tap to cancel combat"
                 />
         <!--player-->
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.ColumnSpan="5" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
-            <Image Grid.Row="1" Grid.Column="0" Source="healthcare">
-                <Image.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Ivory" />
-                </Image.Behaviors>
-            </Image>
-            <Label Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" Text="{Binding Player.Health}"/>
-            <Image Grid.Row="1" Grid.Column="2" Source="fist">
-                <Image.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Ivory" />
-                </Image.Behaviors>
-            </Image>
-            <Label Grid.Row="1" Grid.Column="3" VerticalTextAlignment="Center" Text="{Binding Player.Strength}" IsVisible="{Binding Fight.WeaponsContributeStrength}"/>
-            <Label Grid.Row="1" Grid.Column="3" VerticalTextAlignment="Center" Text="{Binding Fight.PlayerStrength}" IsVisible="{Binding Fight.WeaponsContributeStrength, Converter={helpers:InverseBoolConverter}}"/>
-            <Image Grid.Row="1" Grid.Column="4" Source="highvoltage">
-                <Image.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Ivory" />
-                </Image.Behaviors>
-            </Image>
-            <Label Grid.Row="1" Grid.Column="5" Text="0" VerticalTextAlignment="Center"/>
-            <!--<Label FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
-            <Label>
-                <Label.Text>
-                    <MultiBinding StringFormat="{}Hp:{0}">
-                        <Binding Path="Player.Health"/>
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
-            <HorizontalStackLayout>
-                <Image Source="fist" WidthRequest="25" HeightRequest="25"/>
-                <Label Text="{Binding Player.Strength}" IsVisible="{Binding Fight.WeaponsContributeStrength}"/>
-                <Label Text="{Binding Fight.PlayerStrength}" IsVisible="{Binding Fight.WeaponsContributeStrength, Converter={helpers:InverseBoolConverter}}"/>
-            </HorizontalStackLayout>-->
-        </Grid>
-
+        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
+            <Grid HorizontalOptions="Fill" VerticalOptions="Fill" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.ColumnSpan="6" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}" HorizontalTextAlignment="Center"/>
+                
+                <Image Grid.Row="1" Grid.Column="0" Source="healthcare">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </Image.Behaviors>
+                </Image>
+                <Label Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" Text="{Binding Player.Health}"/>
+                
+                <Image Grid.Row="1" Grid.Column="2" Source="fist">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </Image.Behaviors>
+                </Image>
+                <Label Grid.Row="1" Grid.Column="3" VerticalTextAlignment="Center" Text="{Binding Player.Strength}" IsVisible="{Binding Fight.WeaponsContributeStrength}"/>
+                <Label Grid.Row="1" Grid.Column="3" VerticalTextAlignment="Center" Text="{Binding Fight.PlayerStrength}" IsVisible="{Binding Fight.WeaponsContributeStrength, Converter={helpers:InverseBoolConverter}}"/>
+                
+                <Image Grid.Row="1" Grid.Column="4" Source="highvoltage" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                    </Image.Behaviors>
+                </Image>
+                <Label Grid.Row="1" Grid.Column="5" Text="{Binding Player.Overload}" VerticalTextAlignment="Center" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
+                <!--<Label FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
+    <Label>
+        <Label.Text>
+            <MultiBinding StringFormat="{}Hp:{0}">
+                <Binding Path="Player.Health"/>
+            </MultiBinding>
+        </Label.Text>
+    </Label>
+    <HorizontalStackLayout>
+        <Image Source="fist" WidthRequest="25" HeightRequest="25"/>
+        <Label Text="{Binding Player.Strength}" IsVisible="{Binding Fight.WeaponsContributeStrength}"/>
+        <Label Text="{Binding Fight.PlayerStrength}" IsVisible="{Binding Fight.WeaponsContributeStrength, Converter={helpers:InverseBoolConverter}}"/>
+    </HorizontalStackLayout>-->
+            </Grid>
+        </Border>
+        
+        
         <!--enemies-->
         <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding Enemies}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <VerticalStackLayout Opacity="{Binding Health, Converter={helpers:OpacityConverter}}">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="35"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="35"/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.ColumnSpan="5"  Text="{Binding Name}"/>
-                                <Image Grid.Row="1" Grid.Column="0" Source="healthcare"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Health}" IsVisible="{Binding Damageable}"/>
-                                <Image Grid.Row="1" Grid.Column="2" Source="distance"/>
-                                <Label Grid.Row="1" Grid.Column="3" Text="{Binding Distance}"/>
+                                <Label Grid.Row="0" Grid.ColumnSpan="6"  Text="{Binding Name}" HorizontalTextAlignment="Center"/>
+                                <Image Grid.Row="1" Grid.Column="0" Source="healthcare">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Health}" IsVisible="{Binding Damageable}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
+                                <Image Grid.Row="1" Grid.Column="2" Source="fist">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Grid.Row="1" Grid.Column="3" Text="{Binding Strength}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
+
+                                <Image Grid.Row="1" Grid.Column="4" Source="distance">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                    </Image.Behaviors>
+                                </Image>
+                                <Label Grid.Row="1" Grid.Column="5" Text="{Binding Distance}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
+                                
                             </Grid>
-                        </VerticalStackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -149,6 +171,7 @@
             SemanticProperties.Hint="Enter episode number"
             Placeholder="{Binding EpisodeEntryHint}"
             HorizontalOptions="Center" 
+                HorizontalTextAlignment="Center"
             />  
         </Border>
         

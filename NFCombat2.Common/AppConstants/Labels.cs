@@ -65,6 +65,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.NoPlayerName, "Please enter player name" },
             {LabelType.AddedPlayer, "Successfully added {0}" },
             {LabelType.RoundBeginning, "Round {0} beginning." },
+            {LabelType.BackButton, "Back" },
         };
 
         public static Dictionary<LabelType, string> BulgarianLabels = new Dictionary<LabelType, string>
@@ -126,6 +127,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.NoPlayerName, "Моля въведи името на играча" },
             {LabelType.AddedPlayer, "Успешно добави {0}" },
             {LabelType.RoundBeginning, "Начало на рунд {0}." },
+            {LabelType.BackButton, "Назад" },
         };
     }
 }

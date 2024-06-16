@@ -13,6 +13,10 @@ namespace NFCombat2.Models.CombatResolutions
         {
             Amount = amount;
             _enemy = enemy;
+            if(enemy.Distance < Math.Abs(Amount) && Amount < 0)
+            {
+                Amount = -enemy.Distance;
+            }
             MessageArgs = new string[] { _enemy.Name, (_enemy.Distance + Amount).ToString() };
 
         }

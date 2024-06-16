@@ -63,5 +63,6 @@ namespace NFCombat2.Common.Enums
         NoPlayerName,
         AddedPlayer,
         RoundBeginning,
+        BackButton
     }
 }

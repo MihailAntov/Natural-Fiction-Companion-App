@@ -19,18 +19,32 @@ namespace NFCombat2.ViewModels
 
         
         private IFightService _fightService;
+        private INameService _nameService;
         
-        public OptionPickerViewModel(IFightService fightService)
+        public OptionPickerViewModel(IFightService fightService, INameService nameService)
         {
             _fightService = fightService;
+            _nameService = nameService;
             
             OptionChosenCommand = new Command<IOption>(o => Option(o.Content));
             InfoCommand = new Command<IOption>(o => Info(o.Content));
             BackCommand = new Command(Back);
+            BackButtonLabel = _nameService.Label(Common.Enums.LabelType.BackButton);
 
 
         }
 
+        private string _backButtonLabel;
+        public string BackButtonLabel { get { return _backButtonLabel; }
+            set
+            {
+                if(_backButtonLabel != value)
+                {
+                    _backButtonLabel = value;
+                    OnPropertyChanged(nameof(BackButtonLabel));
+                }
+            } 
+        }
 
         private bool choosingOption = true;
         public bool ChoosingOption

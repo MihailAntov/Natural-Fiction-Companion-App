@@ -11,7 +11,7 @@ namespace NFCombat2.Common.AppConstants
     {
         public static Dictionary<PlayerClass, string> EnglishClassNames = new Dictionary<PlayerClass, string>()
         {
-            {PlayerClass.None, "None" },
+            {PlayerClass.None, "No class" },
             {PlayerClass.Soldier, "Soldier" },
             {PlayerClass.SpecOps, "Spec Ops" },
             {PlayerClass.Engineer, "Engineer" },
@@ -20,7 +20,7 @@ namespace NFCombat2.Common.AppConstants
 
         public static Dictionary<PlayerClass, string> BulgarianClassNames = new Dictionary<PlayerClass, string>()
         {
-            {PlayerClass.None, "Няма" },
+            {PlayerClass.None, "Без клас" },
             {PlayerClass.Soldier, "Войник" },
             {PlayerClass.SpecOps, "Специален отряд" },
             {PlayerClass.Engineer, "Отдел по поддръжка" },

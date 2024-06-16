@@ -10,17 +10,12 @@ namespace NFCombat2.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if(values!= null && values.Length == 2)
+            if(values!= null && values.Length == 1)
             {
                 string name = values[0].ToString();
-                Player player = new Player() { Name = name };
+                Player player = new Player() { Name = name , Class = PlayerClass.None};
+                return player;
                 //PlayerClass playerClass = values[1] == null ? PlayerClass.None : (PlayerClass)Enum.Parse(typeof(PlayerClass), values[1].ToString());
-                if (values[1] is PlayerClassDisplay display)
-                {
-                    PlayerClass playerClass = display == null ? PlayerClass.None : (PlayerClass)Enum.Parse(typeof(PlayerClass), display.Class.ToString());
-                    player.Class = playerClass;
-                }
-                
                 
                 //switch (playerClass)
                 //{
@@ -39,7 +34,7 @@ namespace NFCombat2.Helpers
                 //        player.Class = PlayerClass.Engineer;
                 //        break;
                 //}
-                return player;
+               
             }
             return null;
         }

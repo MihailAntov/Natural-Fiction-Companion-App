@@ -116,7 +116,8 @@ namespace NFCombat2.Models.Player
         public int Strength => 
             BaseStrength + 
             BonusStrength +
-            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
+            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength)+
+            Class == PlayerClass.Engineer ? 1 : 0;
         public int BaseStrength 
         { 
             get 
@@ -396,7 +397,7 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
-        private int _maxOverload;
+        private int _maxOverload = 12;
         public int MaxOverload
         {
             get { return _maxOverload; }

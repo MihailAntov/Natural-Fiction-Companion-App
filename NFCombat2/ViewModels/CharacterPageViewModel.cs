@@ -284,6 +284,7 @@ namespace NFCombat2.ViewModels
 
         public async Task ChangeProfile()
         {
+            await LoadPlayersAsync();
             TaskCompletionSource<Player> taskCompletionSource = new TaskCompletionSource<Player>();
             var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles);
             var view = new ProfilePickerPopupView(viewModel);
@@ -313,7 +314,7 @@ namespace NFCombat2.ViewModels
 
         
 
-        public async void LoadPlayersAsync()
+        public async Task LoadPlayersAsync()
         {
             var players = await _playerService.GetAllPlayers();
             if(Player!= null)

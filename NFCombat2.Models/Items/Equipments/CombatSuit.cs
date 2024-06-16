@@ -8,29 +8,29 @@ namespace NFCombat2.Models.Items.Equipments
     {
         public Task<List<ICombatAction>> Modify(ICombatResolution resolution)
         {
-            if(resolution is EnemyDealDamage dealDamage)
-            {
-                dealDamage.Damage -= 3;
-            }
+            //if(resolution is EnemyDealDamage dealDamage)
+            //{
+            //    dealDamage.Damage -= 3;
+            //}
 
-            if(resolution is TakeMeleeDamage meleeDamage)
-            {
-                meleeDamage.Amount -= 3;
-            }
+            //if(resolution is TakeMeleeDamage meleeDamage)
+            //{
+            //    meleeDamage.Amount -= 3;
+            //}
             return Task.FromResult(new List<ICombatAction>());
         }
 
         public void OnAdded(Player.Player player)
         {
-            player.BonusStrength += 3;
-            player.BonusMaxHealth += 10;
+            player.BonusStrength += 5;
+            //player.BonusMaxHealth += 10;
             OnPropertyChanged(nameof(player.Strength));
         }
 
         public void OnRemoved(Player.Player player)
         {
-            player.BonusStrength -= 3;
-            player.BonusMaxHealth -= 10;
+            player.BonusStrength -= 5;
+            //player.BonusMaxHealth -= 10;
             OnPropertyChanged(nameof(player.Strength));
         }
     }

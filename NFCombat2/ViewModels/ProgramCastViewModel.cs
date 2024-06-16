@@ -24,6 +24,9 @@ namespace NFCombat2.ViewModels
             _playerService = playerService;
             ExecuteProgramCommand = new Command(ExecuteProgram);
             ChangePolarityCommand = new Command<string>(ChangePolarity);
+            CycleOperationCommand = new Command(CycleOperation);
+            CycleSignalCommand = new Command(CycleSignal);
+            CycleParadigmCommand = new Command(CycleParadigm);
             OperationTypes = _programService.GetOperationTypes();
             LogicalOperationType = OperationTypes.FirstOrDefault();
             SignalTypes = _programService.GetSignalTypes();
@@ -40,6 +43,9 @@ namespace NFCombat2.ViewModels
 
         public Command ExecuteProgramCommand { get; set; }
         public Command ChangePolarityCommand { get; set; }
+        public Command CycleOperationCommand { get; set; }
+        public Command CycleSignalCommand { get; set; }
+        public Command CycleParadigmCommand { get; set; }
         public void ChangePolarity(string component)
         {
             switch (component)
@@ -55,8 +61,35 @@ namespace NFCombat2.ViewModels
                     break;
             }
         }
-        
-        public ProgramFormulaComponent LogicalOperationType { get; set; }
+
+        public void CycleOperation()
+        {
+            int curInd = OperationTypes.IndexOf(LogicalOperationType);
+            curInd = curInd == OperationTypes.Count - 1 ? 0 : curInd + 1;
+            LogicalOperationType = OperationTypes[curInd];
+        }
+
+        public void CycleSignal()
+        {
+            int curInd = SignalTypes.IndexOf(ElectricalSignalType);
+            curInd = curInd == SignalTypes.Count - 1 ? 0 : curInd + 1;
+            ElectricalSignalType = SignalTypes[curInd];
+        }
+
+        public void CycleParadigm()
+        {
+            int curInd = ParadigmTypes.IndexOf(ProgramParadigmType);
+            curInd = curInd == ParadigmTypes.Count - 1 ? 0 : curInd + 1;
+            ProgramParadigmType = ParadigmTypes[curInd];
+        }
+        private ProgramFormulaComponent _logicalOperationType;
+        public ProgramFormulaComponent LogicalOperationType { get { return _logicalOperationType; } set 
+            {
+                _logicalOperationType = value;
+                OnPropertyChanged(nameof(LogicalOperationType));
+            } 
+        }
+
         private bool _logicalOperationPolarity = true;
         public bool LogicalOperationPolarity { get { return _logicalOperationPolarity; } set
             {
@@ -78,8 +111,13 @@ namespace NFCombat2.ViewModels
                 }
             } 
         }
-
-        public ProgramFormulaComponent ElectricalSignalType { get; set; } 
+        private ProgramFormulaComponent _electricalSignalType;
+        public ProgramFormulaComponent ElectricalSignalType { get { return _electricalSignalType; } set 
+            {
+                _electricalSignalType = value;
+                OnPropertyChanged(nameof(ElectricalSignalType));
+            }
+        } 
         private bool _electricalSignalPolarity = true;
         public bool ElectricalSignalPolarity
         {
@@ -94,7 +132,13 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public ProgramFormulaComponent ProgramParadigmType { get; set; } 
+        private ProgramFormulaComponent _programParadigmType;
+        public ProgramFormulaComponent ProgramParadigmType { get { return _programParadigmType; } set 
+            {
+                _programParadigmType = value;
+                OnPropertyChanged(nameof(ProgramParadigmType));
+            } 
+        } 
         private bool _programParadigmPolarity = true;
 
         public bool ProgramParadigmPolarity

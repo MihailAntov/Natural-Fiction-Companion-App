@@ -47,7 +47,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
             <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Text="{Binding ChangeProfilePicker}" Command="{Binding ChangeProfileCommand}"/>
@@ -109,7 +109,7 @@
 
             <Image Grid.Row="7" Source="biohazard" Margin="5">
                 <Image.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Gold" />
+                    <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
             <Label Grid.Column="1" Grid.Row="7" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>

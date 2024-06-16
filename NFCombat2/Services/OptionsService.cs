@@ -52,7 +52,7 @@ namespace NFCombat2.Services
                 
             }
 
-            return new OptionList(result, true, true) {Label = _nameService.Label(LabelType.ItemChoice) };
+            return new OptionList(result, true, true) { Label = _nameService.Label(LabelType.ItemChoice) };
         }
 
         public IOptionList GetStandardActions(Fight fight)
@@ -151,8 +151,12 @@ namespace NFCombat2.Services
                 objects.Add(OptionType.Backflip);
             }
 
+            objects.Add(OptionType.DoNothing);
+
+
+
             //TODO: involve converter service to get name of option
-            var result = objects.Select(o => new Option(o.ToString(), o)).ToList<IOption>();
+            var result = objects.Select(o => new Option(_nameService.Option(o), o)).ToList<IOption>();
             return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.BonusActionChoice) };
         }
 
@@ -211,7 +215,7 @@ namespace NFCombat2.Services
                 .Where(w => w.RemainingCooldown < w.ShotsPerTurn && fight.Enemies.Any(e => e.Distance >= w.MinRange && e.Distance <= w.EffectiveMaxRange))
                 .Select(w => new Option(w.Name, w))
                 .ToList<IOption>();
-            var options =  new OptionList(weapons, true, !alreadyShot) { Label = _nameService.Label(LabelType.WeaponChoice) };
+            var options =  new OptionList(weapons, false, !alreadyShot) { Label = _nameService.Label(LabelType.WeaponChoice) };
             if(alreadyShot)
             {
                 options.Options.Add(new Option(_nameService.Option(OptionType.Done),new PlayerActionPass(fight)));
