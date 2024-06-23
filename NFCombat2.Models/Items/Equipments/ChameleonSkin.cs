@@ -6,7 +6,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Items.Equipments
 {
-    public class ChameleonSkin : Equipment, IModifyAction
+    public class ChameleonSkin : Equipment, IModifyAccuracy
     {
         public Task Modify(ICombatAction action, Fight fight)
         {

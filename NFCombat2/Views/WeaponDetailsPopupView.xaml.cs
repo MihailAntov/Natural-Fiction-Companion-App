@@ -9,5 +9,6 @@ public partial class WeaponDetailsPopupView : Popup
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+		this.Size = new Size(DeviceDisplay.MainDisplayInfo.Width, popupStack.Height);
 	}
 }

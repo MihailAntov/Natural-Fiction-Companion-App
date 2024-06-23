@@ -10,7 +10,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
 {
     public class PlatinumPhial : Equipment, IInventoryActiveItem
     {
-        private readonly int _amount = 1;
+        private readonly int _amount = 3;
         public PlatinumPhial()
         {
             IsConsumable = true;

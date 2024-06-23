@@ -30,16 +30,16 @@
         <Image Grid.RowSpan="2" Aspect="AspectFill" Margin="0" VerticalOptions="Fill" Source="background"/>
         <Grid BindableLayout.ItemsSource="{Binding Player}" IsVisible="{Binding HasChosenHero}" Padding="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -50,7 +50,7 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Grid.ColumnSpan="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>
-            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Text="{Binding ChangeProfilePicker}" Command="{Binding ChangeProfileCommand}"/>
+            <Button StyleClass="BigButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Text="{Binding ChangeProfilePicker}" Command="{Binding ChangeProfileCommand}"/>
             <!--<Picker x:Name="Profile"
                     Title="{Binding ChangeProfilePicker}"
                     TitleColor="Ivory"
@@ -67,7 +67,7 @@
 
             </Picker>-->
             <Label Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" Text="{Binding PlayerClassLabel}"/>
-            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Text="{Binding ChangeClassPicker}" Command="{Binding ChangeClassCommand}"/>
+            <Button StyleClass="BigButton" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Text="{Binding ChangeClassPicker}" Command="{Binding ChangeClassCommand}"/>
             <!--<Picker
                     
                     Title="{Binding ChangeClassPicker}"
@@ -88,7 +88,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="4" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
+            <Label Grid.Column="1" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Health}"/>
             <Slider  Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4"  Minimum="{Binding Player.MinHealth}" Maximum="{Binding Player.MaxHealth}" Value="{Binding Player.Health, Mode=TwoWay}" SemanticProperties.Hint="Adjust player health"/>
             <Stepper Grid.Column="5" Grid.Row="4" VerticalOptions="Center" Minimum="0" Maximum="99" Value="{Binding Player.BaseMaxHealth}" SemanticProperties.Hint="Adjust player maximum health"/>
             <Image Grid.Row="5" Source="highvoltage" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}" Margin="5">
@@ -96,7 +96,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="5" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
+            <Label Grid.Column="1" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
             <Slider Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="5"  Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}" SemanticProperties.Hint="Adjust player overload"/>
 
             <Image Grid.Row="6" Source="injury" Margin="5">
@@ -104,7 +104,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="6" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
+            <Label Grid.Column="1" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Trauma}"/>
             <Slider Grid.Column="3" Grid.Row="6"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}" SemanticProperties.Hint="Adjust player trauma"/>
 
             <Image Grid.Row="7" Source="biohazard" Margin="5">
@@ -112,7 +112,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="7" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
+            <Label Grid.Column="1" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Pathogens}"/>
             <Slider Grid.Column="3" Grid.Row="7"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}" SemanticProperties.Hint="Adjust player pathogens"/>
 
             <Image Grid.Row="8" Source="radiation" Margin="5">
@@ -120,7 +120,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="8" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
+            <Label Grid.Column="1" Grid.Row="8"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Ionization}"/>
             <Slider Grid.Column="3" Grid.Row="8"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}" SemanticProperties.Hint="Adjust player ionization"/>
 
             <Image Grid.Row="9" Source="fuel" Margin="5">
@@ -128,11 +128,11 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="1" Grid.Row="9" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
+            <Label Grid.Column="1" Grid.Row="9" FontSize="Default" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Text="{Binding Player.Fuel}"/>
             <Slider Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="9"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}" SemanticProperties.Hint="Adjust player fuel"/>
             
             
         </Grid>
-        <Button Grid.Row="1" VerticalOptions="Fill" FontSize="Large" Text="{Binding AddNewProfileButton}" Command="{Binding AddNewProfileCommand}" SemanticProperties.Hint="Add a new profile"/>
+        <Button Grid.Row="1" StyleClass="BigButton" Text="{Binding AddNewProfileButton}" Command="{Binding AddNewProfileCommand}" SemanticProperties.Hint="Add a new profile"/>
     </Grid>
 </ContentPage>

@@ -95,7 +95,7 @@ namespace NFCombat2.Services
             
         }
 
-        private async Task UpdateNames(Player player)
+        public async Task UpdateNames(Player player)
         {
             if(player == null)
             {

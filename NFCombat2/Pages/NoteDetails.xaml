@@ -7,10 +7,10 @@
              Title="NoteDetails">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="16*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Image Grid.RowSpan="4" Source="background" Aspect="Fill"/>
         <Border Grid.Row="0">
@@ -23,8 +23,8 @@
 
             </Editor>
         </Border>
-        
-        <Button Grid.Row="2" Text="{Binding SaveButton}" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
+
+        <Button StyleClass="BigButton" Grid.Row="2" Text="{Binding SaveButton}" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.SaveNoteCommand}"></Button>
         <ImageButton Grid.Row="3" Source="trash" Command="{Binding Source={x:Reference NoteDetails_}, Path=BindingContext.DeleteNoteCommand}" WidthRequest="35" HeightRequest="35">
             <ImageButton.Behaviors>
                 <toolkit:IconTintColorBehavior TintColor ="Ivory"/>

@@ -122,6 +122,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+	  <PackageReference Include="OnScreenSizeMarkup.Maui" Version="3.0.18" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
 	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.6" />

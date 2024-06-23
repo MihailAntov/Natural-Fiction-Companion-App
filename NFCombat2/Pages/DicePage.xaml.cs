@@ -11,13 +11,13 @@ public partial class DicePage : ContentPage
 		
 	}
 	
-	public async void OnRoll(object sender, EventArgs e)
-	{
-        if (BindingContext is DicePageViewModel viewModel)
-        {
-            viewModel.Roll();
-        }
-    }
+	//public async void OnRoll(object sender, EventArgs e)
+	//{
+ //       if (BindingContext is DicePageViewModel viewModel)
+ //       {
+ //           viewModel.Roll();
+ //       }
+ //   }
 
     public async void OnNumberOfDiceChanged(object sender, ValueChangedEventArgs e)
     {

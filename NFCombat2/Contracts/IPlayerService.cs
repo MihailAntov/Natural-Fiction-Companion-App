@@ -20,6 +20,7 @@ namespace NFCombat2.Contracts
         public Task RemoveItemFromPlayer(IAddable item);
         public List<PlayerClassDisplay> GetClassOptions();
 
+        public Task UpdateNames(Player player);
         public Task SavePlayer();
 
         //Task<ICollection<IAddable>> GetAllItems();

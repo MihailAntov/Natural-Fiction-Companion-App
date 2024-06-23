@@ -7,7 +7,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.SpecOps
 {
-    public class Anticipation : Technique, IModifyAction
+    public class Anticipation : Technique, IModifyAccuracy
     {
         public override string Name { get; set; }
         public override int HealthThreshold => 25;

@@ -6,7 +6,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.Items.Equipments
 {
-    public class TacticalGlasses : Equipment, IModifyAction
+    public class TacticalGlasses : Equipment, IModifyAccuracy
     {
         public TacticalGlasses()
         {

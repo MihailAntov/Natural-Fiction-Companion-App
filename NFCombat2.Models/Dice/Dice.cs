@@ -25,8 +25,8 @@ namespace NFCombat2.Models.Dice
                 if (diceValue != value)
                 {
                     diceValue = value;
-                    OnPropertyChanged(nameof(DiceValue));
-                    OnPropertyChanged(nameof(FileName));
+                    OnPropertyChanged(nameof(Dice));
+                    //OnPropertyChanged(nameof(FileName));
                 }
             }
         }
@@ -85,6 +85,7 @@ namespace NFCombat2.Models.Dice
         public void Roll()
         {
             DiceValue = random.Next(1, MaxValue + 1);
+            OnPropertyChanged(string.Empty);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

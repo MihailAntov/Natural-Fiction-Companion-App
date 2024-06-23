@@ -5,7 +5,7 @@ using NFCombat2.Models.Fights;
 
 namespace NFCombat2.Models.SpecOps
 {
-    public class Feint : Technique, IModifyAction
+    public class Feint : Technique, IModifyAccuracy
     {
         public override string Name { get; set; }
         public override int HealthThreshold => 25;

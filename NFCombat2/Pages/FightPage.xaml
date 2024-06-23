@@ -26,7 +26,7 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="8*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -145,7 +145,7 @@
         </ListView>
 
         <!--combat log-->
-        <Border Padding="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
+        <Border Padding="8" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" IsVisible="{Binding NotInCombat, Converter={helpers:InverseBoolConverter}}">
             <CollectionView ItemsUpdatingScrollMode="KeepLastItemInView"
                 ItemsSource="{Binding Messages}">
                 <CollectionView.ItemTemplate>
@@ -161,11 +161,11 @@
 
 
         <!--pick episode-->
-        <Border Grid.Row="0" Grid.ColumnSpan="3"  IsVisible="{Binding NotInCombat}">
+        <Border Grid.Row="1" Grid.ColumnSpan="3"  IsVisible="{Binding NotInCombat}">
             <Entry
-             
+             VerticalTextAlignment="Center"
             x:Name="EpisodeEntry"
-           
+            VerticalOptions="Center"
             Keyboard="Numeric"
             Text="{Binding EpisodeNumber}"
             SemanticProperties.Hint="Enter episode number"
@@ -178,6 +178,7 @@
 
 
         <Button 
+            StyleClass="BigButton"
             Grid.Row="5" Grid.ColumnSpan="3" 
             Text="{Binding FindEpisodeButton}"
             IsVisible="{Binding NotInCombat}"

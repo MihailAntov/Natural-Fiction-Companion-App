@@ -5,9 +5,11 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.ItemDetailsPopupView"
-               Color="Transparent">
-    <Border>
-        <VerticalStackLayout Padding="20" StyleClass="Popup" BindingContext="{Binding Item}">
+               Color="Transparent" VerticalOptions="Center">
+
+
+    <Border x:Name="popupBorder">
+        <StackLayout x:Name="popupStack"  StyleClass="Popup" BindingContext="{Binding Item}">
         <!--<Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -16,9 +18,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>-->
-        <Label FontSize="Large" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
+            <Label FontSize="Large" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
         <Label HorizontalTextAlignment="Center" FontAttributes="Italic" Text="{Binding Description}"/>
-        <Button HorizontalOptions="Center"  Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
-    </VerticalStackLayout>
+            <Button HorizontalOptions="Center" VerticalOptions="FillAndExpand" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
+    </StackLayout>
     </Border>
 </toolkit:Popup>

@@ -12,17 +12,17 @@ namespace NFCombat2.Common.AppConstants
         public static Dictionary<PlayerClass, string> EnglishClassNames = new Dictionary<PlayerClass, string>()
         {
             {PlayerClass.None, "No class" },
-            {PlayerClass.Soldier, "Soldier" },
+            {PlayerClass.Soldier, "Elite Squad" },
             {PlayerClass.SpecOps, "Spec Ops" },
-            {PlayerClass.Engineer, "Engineer" },
-            {PlayerClass.Hacker, "Hacker" },
+            {PlayerClass.Engineer, "Maintenance Dept." },
+            {PlayerClass.Hacker, "Information Warfare" },
         };
 
         public static Dictionary<PlayerClass, string> BulgarianClassNames = new Dictionary<PlayerClass, string>()
         {
             {PlayerClass.None, "Без клас" },
-            {PlayerClass.Soldier, "Войник" },
-            {PlayerClass.SpecOps, "Специален отряд" },
+            {PlayerClass.Soldier, "Елитен отряд" },
+            {PlayerClass.SpecOps, "Специални части" },
             {PlayerClass.Engineer, "Отдел по поддръжка" },
             {PlayerClass.Hacker, "Информационни войски" },
         };

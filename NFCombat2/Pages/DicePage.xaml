@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NFCombat2.Pages.DicePage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              Title="Dice Roller">
     <Shell.TitleView>
         <Label
@@ -32,7 +33,7 @@
 
         </Grid.ColumnDefinitions>
         <Image Grid.ColumnSpan="3" Grid.RowSpan="8" Source="background" Aspect="Fill"/>
-        <FlexLayout BindableLayout.ItemsSource="{Binding DiceCollection}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Direction="Row"  Wrap="Wrap" JustifyContent="SpaceAround" Margin="10">
+        <!--<FlexLayout BindableLayout.ItemsSource="{Binding DiceCollection}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Direction="Row"  Wrap="Wrap" JustifyContent="SpaceAround" Margin="10">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Image FlexLayout.Basis="30%"  Source="{Binding FileName}" IsVisible="{Binding IsVisible}">
@@ -43,12 +44,83 @@
                 </DataTemplate>
                 </BindableLayout.ItemTemplate>
             
-        </FlexLayout>
+        </FlexLayout>-->
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="10" RowSpacing="12" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="1" Grid.Column="1" Text="{Binding RollButtonName}" Clicked="OnRoll" SemanticProperties.Hint="Tap to roll dice"/>
-        <Label Grid.Row="2" Grid.Column="0" FontSize="Large" HorizontalOptions="Center" Text="{Binding NumberOfDice}"/>
-        <Label Grid.Row="2" Grid.Column="1" FontSize="Large"  HorizontalOptions="Center" Text="+"/>
-        <Label Grid.Row="2" Grid.Column="2"  FontSize="Large" HorizontalOptions="Center" Text="{Binding BonusDamage}"/>
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" IsVisible="{Binding Ones, Converter={helpers:DiceImageConverter}}">
+                <Image  Source="dice1" >
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label  HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Ones}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" IsVisible="{Binding Twos, Converter={helpers:DiceImageConverter}}">
+                <Image  Source="dice2" IsVisible="{Binding Twos, Converter={helpers:DiceImageConverter}}">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label  HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Twos}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" IsVisible="{Binding Threes, Converter={helpers:DiceImageConverter}}">
+                <Image  Source="dice3" >
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label  HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Threes}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding Fours, Converter={helpers:DiceImageConverter}}">
+                <Image Source="dice4" >
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label  HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Fours}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding Fives, Converter={helpers:DiceImageConverter}}">
+                <Image Source="dice5" >
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label  HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Fives}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding Sixes, Converter={helpers:DiceImageConverter}}">
+                <Image Source="dice6" >
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Sixes}"/>
+            </HorizontalStackLayout>
+
+        </Grid>
+
+        
+        <Button Grid.Row="1" Grid.Column="1" StyleClass="BigButton" Text="{Binding RollButtonName}" Command="{Binding RollCommand}" SemanticProperties.Hint="Tap to roll dice"/>
+        <Border Grid.Row="2" Grid.Column="0">
+            <Label VerticalOptions="Center" FontSize="Large" HorizontalOptions="Center" Text="{Binding NumberOfDice}"/>
+        </Border>
+        <Label VerticalOptions="Center" Grid.Row="2" Grid.Column="1" FontSize="Large"  HorizontalOptions="Center" Text="+"/>
+        <Border Grid.Row="2" Grid.Column="2">
+            <Label VerticalOptions="Center"  FontSize="Large" HorizontalOptions="Center" Text="{Binding BonusDamage}"/>
+        </Border>
         <Stepper Grid.Row="3" Grid.Column="0"  Maximum="25" Minimum="1" Value="{Binding NumberOfDice}" ValueChanged="OnNumberOfDiceChanged" SemanticProperties.Hint="Adjust number of dice"/>
         <Stepper Grid.Row="3" Grid.Column="2"  Maximum="100" Minimum="0" Value="{Binding BonusDamage}" ValueChanged="OnBonusDamageChanged" SemanticProperties.Hint="Adjust bonus to roll"/>
         <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold"  x:Name="ResultLabel" FontSize="Large" HorizontalOptions="Center" Text="{Binding Result}" IsVisible="{Binding ResultVisible}"/>

@@ -11,12 +11,11 @@ using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
-    public class PartsBagViewModel : INotifyPropertyChanged
+    public class PartsBagViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private PartBag _partBag;
         private readonly InventoryPageViewModel _inventoryPageViewModel;
         private readonly IPlayerService _playerService;
-        private readonly INameService _nameService;
         private readonly IPopupService _popupService;
         private readonly IItemService _itemService;
 
@@ -25,11 +24,11 @@ namespace NFCombat2.ViewModels
             INameService nameService, 
             IPopupService popupService, 
             IItemService itemService,
-            InventoryPageViewModel inventoryPageViewModel)
+            InventoryPageViewModel inventoryPageViewModel
+            ) : base(nameService)
         {
             PartsBag = playerService.CurrentPlayer.PartsBag;
             _playerService = playerService;
-            _nameService = nameService;
             _itemService = itemService;
             _inventoryPageViewModel = inventoryPageViewModel;
             CraftButtonText = _nameService.Label(Common.Enums.LabelType.CraftButton);
@@ -40,7 +39,6 @@ namespace NFCombat2.ViewModels
 
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         public Command ExpandTabCommand { get; set; }
         public Command CraftingPopupCommand { get; set; }
         public async void DisplayCraftingPopup()
@@ -91,12 +89,6 @@ namespace NFCombat2.ViewModels
             //partCategory.IsExpanded = !partCategory.IsExpanded;
         }
 
-
-        
-
-        public void OnPropertyChanged([CallerMemberName] string name = "") =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-
         private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_playerService.CurrentPlayer))
@@ -105,6 +97,15 @@ namespace NFCombat2.ViewModels
             }
 
 
+        }
+
+        public override void UpdateLanguageSpecificProperties()
+        {
+            if(_playerService != null)
+            {
+                _playerService.UpdateNames(_playerService.CurrentPlayer);
+            }
+            
         }
     }
 }

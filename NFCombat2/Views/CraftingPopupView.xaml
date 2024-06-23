@@ -7,6 +7,9 @@
                Closed="OnClosed"
                Color="Transparent">
     <Border>
+        <ScrollView>
+            
+        
         <VerticalStackLayout StyleClass="Popup" Padding="20">
         <CollectionView ItemsSource="{Binding Parts}" IsVisible="{Binding CorrectFormula, Converter={helpers:InverseBoolConverter}}">
             <CollectionView.ItemTemplate>
@@ -35,5 +38,6 @@
         <Entry Text="{Binding Episode}" IsVisible="{Binding CorrectFormula}"/>
         <Button Text="{Binding ConfirmButtonLabel}" IsVisible="{Binding CorrectFormula}" Command="{Binding ConfirmEpisodeCommand}"/>
     </VerticalStackLayout>
+        </ScrollView>
     </Border>
 </toolkit:Popup>

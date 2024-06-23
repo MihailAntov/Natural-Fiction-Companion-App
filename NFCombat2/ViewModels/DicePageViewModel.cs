@@ -5,21 +5,24 @@ using NFCombat2.Models.Dice;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
     public class DicePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        
+        private readonly Random _random;
         public DicePageViewModel(INameService nameService) : base(nameService)
         {
             UpdateLanguageSpecificProperties();
             DiceCollection = new List<Dice>();
-            
+            RollCommand = new Command(async () => await Roll());
+            _random = new Random();
             for (int i = 0; i < 25; i++)
             {
                 var nextDice = new Dice(6);
+                nextDice.Roll();
                 DiceCollection.Add(nextDice);
             }
         }
@@ -48,6 +51,86 @@ namespace NFCombat2.ViewModels
             } 
         }
 
+        private int _ones;
+        public int Ones { get { return _ones; } set
+            {
+                if(_ones!= value)
+                {
+                    _ones = value;
+                    OnPropertyChanged(nameof(Ones));
+                }
+            } 
+        }
+
+        private int _twos;
+        public int Twos
+        {
+            get { return _twos; }
+            set
+            {
+                if (_twos != value)
+                {
+                    _twos = value;
+                    OnPropertyChanged(nameof(Twos));
+                }
+            }
+        }
+
+        private int _threes;
+        public int Threes
+        {
+            get { return _threes; }
+            set
+            {
+                if (_threes != value)
+                {
+                    _threes = value;
+                    OnPropertyChanged(nameof(Threes));
+                }
+            }
+        }
+
+        private int _fours;
+        public int Fours
+        {
+            get { return _fours; }
+            set
+            {
+                if (_fours != value)
+                {
+                    _fours = value;
+                    OnPropertyChanged(nameof(Fours));
+                }
+            }
+        }
+
+        private int _fives;
+        public int Fives
+        {
+            get { return _fives; }
+            set
+            {
+                if (_fives != value)
+                {
+                    _fives = value;
+                    OnPropertyChanged(nameof(Fives));
+                }
+            }
+        }
+
+        private int _sixes;
+        public int Sixes
+        {
+            get { return _sixes; }
+            set
+            {
+                if (_sixes != value)
+                {
+                    _sixes = value;
+                    OnPropertyChanged(nameof(Sixes));
+                }
+            }
+        }
 
         private int bonusDamage = 0;
 
@@ -64,6 +147,9 @@ namespace NFCombat2.ViewModels
             }
         }
         
+        public Command RollCommand { get; set; }
+
+
 
         public List<Dice> DiceCollection { get; set; }
 
@@ -82,41 +168,73 @@ namespace NFCombat2.ViewModels
 
         public bool ResultVisible { get; set; } = false;
 
-        public Random random;
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        public void Roll()
+        public async Task Roll()
         {
-            for (int i = 0; i < 25; i++)
+
+            Task task = new Task (()=>
             {
-                DiceCollection[i].IsVisible = false;
-            }
+                int _ones = 0;
+                int _twos = 0;
+                int _threes = 0;
+                int _fours = 0;
+                int _fives = 0;
+                int _sixes = 0;
 
-            ResultVisible = true;
+                Dice currentDice = null;
 
-            for (int i = 0; i < NumberOfDice; i++)
-            {
-                var currentDice = DiceCollection[i];
-                currentDice.Roll();
-                currentDice.IsVisible = true;
-                OnPropertyChanged(nameof(currentDice.IsVisible));
-                OnPropertyChanged(nameof(DiceCollection));
-                OnPropertyChanged(nameof(currentDice.FileName));
-                
-                
-            }
+                ResultVisible = true;
 
-            
+                for (int i = 0; i < NumberOfDice; i++)
+                {
+                    currentDice = DiceCollection[i];
+                    currentDice.Roll();
+                    switch (currentDice.DiceValue)
+                    {
+                        case 1:
+                            _ones++;
+                            break;
+                        case 2:
+                            _twos++;
+                            break;
+                        case 3:
+                            _threes++;
+                            break;
+                        case 4:
+                            _fours++;
+                            break;
+                        case 5:
+                            _fives++;
+                            break;
+                        case 6:
+                            _sixes++;
+                            break;
+                        default:
+                            break;
 
-            
+                    }   
+                }
 
-            int resultVal = DiceCollection.Take(NumberOfDice).Sum(d => d.DiceValue) + BonusDamage;
-            Result = String.Format(ResultFormat, resultVal);
+                Ones = _ones;
+                Twos = _twos; 
+                Threes = _threes;
+                Fours = _fours;
+                Fives = _fives;
+                Sixes = _sixes;
 
-            OnPropertyChanged(nameof(ResultVisible));
-            OnPropertyChanged(nameof(Result));
+                int resultVal = DiceCollection.Take(NumberOfDice).Sum(d => d.DiceValue) + BonusDamage;
+                Result = String.Format(ResultFormat, resultVal);
+
+                OnPropertyChanged(nameof(ResultVisible));
+                OnPropertyChanged(nameof(Result));
+            });
+            task.Start();
+            await task;
         }
+
+        
 
 
 

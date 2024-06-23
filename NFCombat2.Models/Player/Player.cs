@@ -116,17 +116,16 @@ namespace NFCombat2.Models.Player
         public int Strength => 
             BaseStrength + 
             BonusStrength +
-            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength)+
-            Class == PlayerClass.Engineer ? 1 : 0;
+            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
         public int BaseStrength 
         { 
             get 
             {
                 if(Techniques.Values.Any(t=> t is FightingSpirit))
                 {
-                    return (int)Math.Round(MaxHealth / 10.0);
+                    return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(MaxHealth / 10.0);
                 }
-                return (int)Math.Round(Health / 10.0); 
+                return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(Health / 10.0); 
             } 
         }
         private int _bonusMaxStrength = 0;
@@ -235,6 +234,26 @@ namespace NFCombat2.Models.Player
                 result.AddRange(Equipment.OfType<IModifyAction>());
                 result.AddRange(Items.OfType<IModifyAction>());
                 result.AddRange(Techniques.Values.OfType<IModifyAction>());
+                return result;
+            }
+        }
+
+        public virtual IList<IModifyAccuracy> AccuracyModifiers
+        {
+            get
+            {
+                var result = new List<IModifyAccuracy>();
+                if (MainHand is IModifyAccuracy mainHand)
+                {
+                    result.Add(mainHand);
+                }
+                if (OffHand is IModifyAccuracy offHand)
+                {
+                    result.Add(offHand);
+                }
+                result.AddRange(Equipment.OfType<IModifyAccuracy>());
+                result.AddRange(Items.OfType<IModifyAccuracy>());
+                result.AddRange(Techniques.Values.OfType<IModifyAccuracy>());
                 return result;
             }
         }
@@ -397,7 +416,7 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
-        private int _maxOverload = 12;
+        private int _maxOverload = 10;
         public int MaxOverload
         {
             get { return _maxOverload; }

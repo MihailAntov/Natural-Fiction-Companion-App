@@ -9,7 +9,16 @@ namespace NFCombat2.Models.Items.Parts
     public class PartCategory : INotifyPropertyChanged
     {
         private bool isExpanded = false;
-        public string Name { get; set; }
+        private string _name;
+        public string Name { get { return _name; } set
+            {
+                if(_name != value )
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
         public PartCategoryType PartCategoryType { get; set; }
         public bool IsExpanded {  get { return isExpanded; }
             set

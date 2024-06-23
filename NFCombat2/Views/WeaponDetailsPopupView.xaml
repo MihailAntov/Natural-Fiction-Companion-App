@@ -7,7 +7,7 @@
              x:Class="NFCombat2.Views.WeaponDetailsPopupView"
                Color="Transparent">
     <Border>
-        <StackLayout StyleClass="Popup" Padding="20" BindingContext="{Binding Weapon}">
+        <StackLayout x:Name="popupStack" StyleClass="Popup" Padding="20" BindingContext="{Binding Weapon}">
 
         <Label  HorizontalTextAlignment="Center" Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasWeapon}"/>
         <Label HorizontalTextAlignment="Center" Text="{Binding Description}" FontAttributes="Italic" IsVisible="{Binding Source={x:Reference WeaponDetails}, Path=BindingContext.HasWeapon}"/>

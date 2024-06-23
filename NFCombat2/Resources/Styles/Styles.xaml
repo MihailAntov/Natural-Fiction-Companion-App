@@ -3,8 +3,8 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
-
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:markups="clr-namespace:OnScreenSizeMarkup.Maui;assembly=OnScreenSizeMarkup.Maui">
 
     
     <Style TargetType="ActivityIndicator">
@@ -41,7 +41,8 @@
         <Setter Property="BorderWidth" Value="2"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="CornerRadius" Value="8"/>
-        <!--<Setter Property="Padding" Value="14,10"/>-->
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="FontAutoScalingEnabled" Value="False"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -55,6 +56,10 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="Button" Class="BigButton">
+        <Setter Property="FontSize" Value="Default"/>
     </Style>
 
 
@@ -71,6 +76,7 @@
         </Setter>
         <Setter Property="Padding" Value="20"/>
         <Setter Property="Margin" Value="0"/>
+        <!--<Setter Property="VerticalOptions" Value="FillAndExpand"/>-->
     </Style>
 
     <Style TargetType="VerticalStackLayout" Class="Popup">
@@ -86,6 +92,7 @@
         </Setter>
         <Setter Property="Padding" Value="20"/>
         <Setter Property="Margin" Value="0"/>
+        <!--<Setter Property="VerticalOptions" Value="FillAndExpand"/>-->
     </Style>
 
     <Style TargetType="Grid" Class="Popup">
@@ -164,6 +171,7 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="PlayRegular"/>
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAutoScalingEnabled" Value="False" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -209,6 +217,7 @@
         <Setter Property="TextColor" Value="Ivory" />
         <Setter Property="FontFamily" Value="PlayRegular" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAutoScalingEnabled" Value="False" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

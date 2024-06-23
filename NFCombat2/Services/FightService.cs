@@ -199,6 +199,14 @@ namespace NFCombat2.Services
             }
         }
 
+        private async Task ModifyAccuracy(ICombatAction action)
+        {
+            foreach (IModifyAccuracy modifier in _fight.Player.AccuracyModifiers)
+            {
+                await modifier.Modify(action, _fight);
+            }
+        }
+
         private async Task ModifyResolution(ICombatResolution resolution)
         {
             foreach (IModifyResolution modifier in _fight.Player.ResolutionModifiers)
@@ -437,11 +445,18 @@ namespace NFCombat2.Services
                 await taskCompletion.Task;
             }
 
-            if(effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
+            await ModifyAccuracy(effect);
+
+            if (effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
-                rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
-                var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, _playerService.CurrentPlayer, canReroll, canFreeReroll);
-                await taskCompletion.Task;
+                if(effect is IHaveAttackRoll attacked && (_accuracyService.Hits(attacked, _fight) != AttackResult.Miss || attacked.AlwaysHits || _fight.RemainingCrits > 0))
+                {
+                    rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
+                    var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, _playerService.CurrentPlayer, canReroll, canFreeReroll);
+                    await taskCompletion.Task;
+                }
+
+                
             }
 
             if(effect is IHaveOpposedRolls meleeCombat)
