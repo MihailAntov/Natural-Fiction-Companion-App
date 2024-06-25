@@ -94,7 +94,7 @@ namespace NFCombat2.ViewModels
             _popupService.ShowToast(addPlayerSuccess);
             
             _taskCompletionSource.SetResult(result);
-
+            await Shell.Current.Navigation.PopAsync();
 
             //todo add toast
         }

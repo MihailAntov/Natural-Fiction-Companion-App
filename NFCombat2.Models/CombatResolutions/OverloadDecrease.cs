@@ -17,7 +17,7 @@ namespace NFCombat2.Models.CombatResolutions
         }
         public MessageType MessageType => MessageType.OverloadDecrease;
 
-        public string[] MessageArgs => new string[2] {_amount.ToString(), _player.Overload.ToString() };
+        public string[] MessageArgs => new string[2] {_amount.ToString(), (_player.Overload - _amount >= 0 ? _player.Overload-_amount : 0).ToString() };
 
         public Task Resolve(Fight fight)
         {

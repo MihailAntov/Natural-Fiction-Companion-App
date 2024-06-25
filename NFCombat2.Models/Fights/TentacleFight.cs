@@ -47,7 +47,13 @@ namespace NFCombat2.Models.Fights
         public override void CheckWinCondition()
         {
             base.CheckWinCondition();
-            if(Player.Pathogens >= Player.MaxPathogens || 
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
+            if (Player.Pathogens >= Player.MaxPathogens || 
                 Player.Ionization >= Player.MaxIonization ||
                 Player.Trauma >= Player.MaxTrauma)
             {

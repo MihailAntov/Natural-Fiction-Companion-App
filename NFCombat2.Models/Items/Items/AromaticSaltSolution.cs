@@ -9,6 +9,8 @@ namespace NFCombat2.Models.Items.Items
 {
     public class AromaticSaltSolution : Item, ICombatActiveItem, IInventoryActiveItem
     {
+        private int _reduceAmount = 2;
+        private int _increaseMaxAmount = 1;
         public AromaticSaltSolution()
         {
             Name = "TODO";
@@ -28,12 +30,20 @@ namespace NFCombat2.Models.Items.Items
                 new OverloadDecrease(fight.Player, 2),
                 new MaxOverloadIncrease(fight.Player, 1)
             };
+
+            foreach(var  resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
             return resolutions;
         }
 
         public ICombatResolution AffectPlayer(Player.Player player)
         {
-            throw new NotImplementedException();
+
+            player.MaxOverload += _increaseMaxAmount;
+            player.Overload -= _reduceAmount;
+            return new MaxOverloadIncrease(player, _increaseMaxAmount);
         }
     }
 }

@@ -43,6 +43,19 @@ public partial class InventoryPage : ContentPage
 	//		}
  //       }
  //   }
+	
+	public async void ChangedQuantity(object sender, EventArgs e)
+	{
+		if (BindingContext is InventoryPageViewModel viewModel)
+		{
+			if(sender is Stepper stepper)
+			{
+				viewModel.OnPropertyChanged(nameof(viewModel.CurrentExtraItems));
+				viewModel.OnPropertyChanged(nameof(viewModel.CurrentItems));
+				viewModel.CheckQuantities();
+			}
+		}
+	}
 
 	public async void ChangedTab(object sender, CheckedChangedEventArgs e)
 	{

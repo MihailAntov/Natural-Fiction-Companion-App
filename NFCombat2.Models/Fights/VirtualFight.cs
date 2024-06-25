@@ -14,7 +14,13 @@ namespace NFCombat2.Models.Fights
         public override void CheckWinCondition()
         {
             base.CheckWinCondition();
-            if(Player.Overload >= Player.MaxOverload)
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
+            if (Player.Overload >= Player.MaxOverload)
             {
                 Result = FightResult.Lost;
             }

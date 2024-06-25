@@ -18,7 +18,7 @@
             SemanticProperties.Description=""
             FontSize="18"
             HorizontalOptions="Center" />
-        <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
+        <ScrollView Grid.Row="1" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Always">
 
             <VerticalStackLayout>
                 

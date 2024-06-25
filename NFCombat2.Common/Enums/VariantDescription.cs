@@ -7,6 +7,7 @@ namespace NFCombat2.Common.Enums
         None,
         IceSpark,
         MagnetDiscs,
-        AnthenasBlocked
+        AnthenasBlocked,
+        RookieFelinter
     }
 }

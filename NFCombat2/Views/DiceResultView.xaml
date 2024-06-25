@@ -47,7 +47,7 @@
         </CollectionView>
 
         <!-- Confirm button -->
-        <Button Text="Confirm" HorizontalOptions="Center" VerticalOptions="End" Margin="0,20,0,0" Command="{Binding ConfirmCommand}" />
+        <Button Text="{Binding ConfirmButtonName}" HorizontalOptions="Center" VerticalOptions="End" Margin="0,20,0,0" Command="{Binding ConfirmCommand}" />
     </StackLayout>
     </Border>
 

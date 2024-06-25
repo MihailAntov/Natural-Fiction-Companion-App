@@ -33,7 +33,13 @@ namespace NFCombat2.Models.Fights
 
         public override void CheckWinCondition()
         {
-            if(OnMaxConsecutiveRoundsReached != FightResult.None)
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
+            if (OnMaxConsecutiveRoundsReached != FightResult.None)
             {
                 if(ConsecutiveWins >= MaxConsecutiveWins)
                 {

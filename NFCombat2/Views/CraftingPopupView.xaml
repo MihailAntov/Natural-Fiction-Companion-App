@@ -7,7 +7,7 @@
                Closed="OnClosed"
                Color="Transparent">
     <Border>
-        <ScrollView>
+        <ScrollView VerticalScrollBarVisibility="Always">
             
         
         <VerticalStackLayout StyleClass="Popup" Padding="20">
@@ -19,7 +19,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="75"/>
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="75"/>
                         </Grid.ColumnDefinitions>

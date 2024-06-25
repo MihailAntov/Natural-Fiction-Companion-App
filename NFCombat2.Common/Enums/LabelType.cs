@@ -63,6 +63,17 @@ namespace NFCombat2.Common.Enums
         NoPlayerName,
         AddedPlayer,
         RoundBeginning,
-        BackButton
+        BackButton,
+        WeaponRemove,
+        BlockedAntennas,
+        UseItemOnkabuto,
+        UseNothingOnKabuto,
+        ChooseDistance,
+        WeaponsSection,
+        EquipmentSection,
+        ItemSection,
+        ExtraItemSection,
+        PartsSection,
+        AreYouSure
     }
 }

@@ -254,7 +254,7 @@ namespace NFCombat2.Services
                 else
                 {
                     var existingItem = CurrentPlayer.Items.FirstOrDefault(i => i.Id == item.Id);
-                    if (existingItem != null)
+                    if (existingItem != null && existingItem.IsConsumable)
                     {
                         existingItem.Quantity++;
                         await _repository.UpdatePlayer(CurrentPlayer);
@@ -320,6 +320,7 @@ namespace NFCombat2.Services
                 {
                     TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
                     string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
+                    //todo !
                     var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource, _nameService);
                     var popup = new ConfirmationPopupView(viewModel);
                     _popupService.ShowPopup(popup);
@@ -418,8 +419,12 @@ namespace NFCombat2.Services
         //    return GetAllItemsByCategory(ItemCategory.Item);
         //}
 
-        public Task<ICollection<IAddable>> GetAllAddableItems()
+        public Task<ICollection<IAddable>> GetAllAddableItems(ItemCategory category = ItemCategory.None)
         {
+            if(category == ItemCategory.None)
+            {
+                return GetAllItemsByCategory(category);
+            }
             return GetAllItemsByCategory();
         }
 
@@ -457,6 +462,11 @@ namespace NFCombat2.Services
                 await _repository.UpdatePlayer(CurrentPlayer);
                 OnPropertyChanged(nameof(CurrentPlayer));
             }
+        }
+
+        public async Task DeletePlayer(Player player)
+        {
+            await _repository.DeletePlayer(player);
         }
     }
 }

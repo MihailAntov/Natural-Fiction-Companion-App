@@ -1,4 +1,5 @@
-﻿using NFCombat2.Models.Actions;
+﻿using NFCombat2.Common.Enums;
+using NFCombat2.Models.Actions;
 using NFCombat2.Models.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,13 @@ namespace NFCombat2.Models.Fights
 
         public override void CheckWinCondition()
         {
-            if(!Enemies.Any(e=> e.Health > 0))
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
+            if (!Enemies.Any(e=> e.Health > 0))
             {
                 Result = Common.Enums.FightResult.Won;
             }

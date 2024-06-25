@@ -29,6 +29,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.IonizationDecrease, "Your ionization level decreases by {0} and is now {1}." },
             {MessageType.IonizationIncrease, "Your ionization level increases by {0} and is now {1}." },
             {MessageType.OverloadIncrease, "Your overload level increases by {0} and is now {1}." },
+            {MessageType.OverloadDecrease, "Your overload level decreases by {0} and is now {1}." },
             {MessageType.TemporaryStrengthDamage, "You fail the roll and lose {0} strength for the rest of the fight." },
             {MessageType.SkillCheckSuccess, "It's workng! Keep at it!" },
             {MessageType.HoldBreath, "You manage to hold your breath." },

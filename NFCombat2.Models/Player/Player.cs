@@ -95,7 +95,7 @@ namespace NFCombat2.Models.Player
 
         public int MinHealth { get; set; } = 1;
 
-        private bool _hasExtraBag { get; set; } = false;
+        private bool _hasExtraBag;
         public bool HasExtraBag { get { return _hasExtraBag; } 
             set 
             {
@@ -105,6 +105,28 @@ namespace NFCombat2.Models.Player
                     OnPropertyChanged(nameof(HasExtraBag)); 
                 }
             }
+        }
+
+        private int _credits;
+        public int Credits { get { return _credits; } set
+            {
+                if(_credits != value)
+                {
+                    _credits = value;
+                    OnPropertyChanged(nameof(Credits));
+                }
+            } 
+        }
+
+        private bool _hasShuttle;
+        public bool HasShuttle { get { return _hasShuttle; } set
+            {
+                if (_hasShuttle != value)
+                {
+                    _hasShuttle = value;
+                    OnPropertyChanged(nameof(HasShuttle));
+                }
+            } 
         }
         public bool IsEngineer => Class == PlayerClass.Engineer;
         public int InventorySlots => HasExtraBag ? 13 : 10;
@@ -287,21 +309,24 @@ namespace NFCombat2.Models.Player
                     if(_class == PlayerClass.Soldier)
                     {
                         BonusMaxHealth -= 20;
-                        MaxIonization -= 2;
-                        MaxTrauma -= 2;
-                        MaxPathogens -= 2;
+                        MaxIonization -= 1;
+                        MaxTrauma -= 1;
+                        MaxPathogens -= 1;
                         MaxWeaponWeight -= 1;
                     }else if (value == PlayerClass.Soldier)
                     {
                         BonusMaxHealth += 20;
-                        MaxIonization += 2;
-                        MaxTrauma += 2;
-                        MaxPathogens += 2;
+                        MaxIonization += 1;
+                        MaxTrauma += 1;
+                        MaxPathogens += 1;
                         MaxWeaponWeight += 1;
                     }
 
+
+
                     _class = value;
                     OnPropertyChanged(nameof(Class));
+                    OnPropertyChanged(nameof(Strength));
                 }
             }
         }

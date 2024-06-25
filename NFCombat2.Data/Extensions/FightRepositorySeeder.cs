@@ -39,6 +39,35 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    // Demo version:
+
+    {
+        50,
+        () => new TimedFight()
+        {
+            MaxTurns = 3,
+            OnTurnsReached = FightResult.Won,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.RegularBrute,
+                    Health = 40,
+                    Distance = 7,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 2,
+                            MaxRange = 15,
+                            Accuracy = Accuracy.D
+                        }
+                    }
+                }
+            }
+        }
+    },
 	// end																									
 	// start																								
 	{
@@ -58,10 +87,61 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    // Demo version:
+
+    {
+        51,
+        () => new TimedFight()
+        {
+            MaxTurns = 3,
+            OnTurnsReached = FightResult.Won,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.PaplacidGuard,
+                    Health = 50,
+                    Distance = 0
+                }
+            }
+        }
+    },
+
 	// end																									
 	// start template																								
 	{
         39,
+        () => new TimedFight()
+        {
+            MaxTurns = 3,
+            OnTurnsReached = FightResult.Won,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.RegularMeiCin,
+                    Health = 35,
+                    Distance = 6,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 1,
+                            FlatDamage = 3,
+                            MaxRange = 15,
+                            Accuracy = Accuracy.A
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    //Demo version:
+
+    {
+        52,
         () => new TimedFight()
         {
             MaxTurns = 3,
@@ -113,6 +193,32 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+    //Demo version:
+    {
+        44,
+        () => new Fight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.AlienAssassin,
+                    Health = 16,
+                    Distance = 6,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 1,
+                            MaxRange = 10,
+                            Accuracy = Accuracy.B
+                        }
+                    }
+                }
+            }
+        }
+    },
+
 	// end template																									
 	// start template																								
 	{
@@ -131,10 +237,49 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    //Demo version:
+
+    {
+        46,
+        () => new Fight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.AlienAttacker,
+                    Health = 12,
+                    Distance = 2,
+                    BonusStrength = 1
+                }
+            }
+        }
+    },
 	// end template																									
 	// start template																								
 	{
         90,
+        () => new TimedFight()
+        {
+            MaxTurns = 3,
+            OnTurnsReached = FightResult.Won,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.NephropidCommando,
+                    Health = 42,
+                    Distance = 1
+                }
+            }
+        }
+    },
+
+    //Demo version:
+
+    {
+        74,
         () => new TimedFight()
         {
             MaxTurns = 3,
@@ -185,10 +330,43 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+    //Demo version:
+
+    {
+        113,
+        () => new VirtualFight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.HologramBrute,
+                    Health = 18,
+                    Distance = 4
+                }
+            }
+        }
+    },
 	// end template																									
 	// start template																								
 	{
         121,
+        () => new Fight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.InjuredMeiCin,
+                    Health = 9,
+                    Distance = 0
+                }
+            }
+        }
+    },
+    // demo version: 
+    {
+        14,
         () => new Fight()
         {
             Enemies = new List<Enemy>()
@@ -241,7 +419,33 @@ namespace NFCombat2.Data.Extensions
 	// start template																								
 	{
         230,
-        () => new Fight()
+        () => new VariantFight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.FelinterRookie,
+                    Health = 14,
+                    Distance = 15,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 1,
+                            FlatDamage = 2,
+                            MaxRange = 15,
+                            Accuracy = Accuracy.D
+                        }
+                    }
+                }
+            }
+        }
+    },
+    //demo version :
+    {
+        27,
+        () => new VariantFight()
         {
             Enemies = new List<Enemy>()
             {
@@ -555,6 +759,32 @@ namespace NFCombat2.Data.Extensions
 	// start template																								
 	{
         454,
+        () => new Fight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.Sniper,
+                    Health = 6,
+                    Distance = 21,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 2,
+                            MaxRange = 1000,
+                            MinRange = 10,
+                            Accuracy = Accuracy.E
+                        }
+                    }
+                }
+            }
+        }
+    },
+    //Demo version:
+    {
+        62,
         () => new Fight()
         {
             Enemies = new List<Enemy>()
@@ -905,6 +1135,27 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    // Demo version:
+
+    {
+        71,
+        () => new TimedFight()
+        {
+            MinPlayerHealth = 10,
+            OnPlayerHealthReached = FightResult.Lost,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.AgentZorgy,
+                    Health = 20,
+                    BonusStrength = 1,
+                    Distance = 0
+                }
+            }
+        }
+    },
 	// end template																									
 	// start template																								
 	{
@@ -968,6 +1219,35 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    //Demo version:
+
+    {
+        92,
+        () => new TimedFight()
+        {
+            MaxTurns = 3,
+            OnTurnsReached = FightResult.Lost,
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.DefenseGun,
+                    Health = 6,
+                    Distance = 2,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 1,
+                            MaxRange = 5,
+                            Accuracy = Accuracy.B
+                        }
+                    }
+                }
+            }
+        }
+    },
 	// end template																									
 	// start template																								
 	{
@@ -995,6 +1275,35 @@ namespace NFCombat2.Data.Extensions
             }
         }
     },
+
+    //Demo version:
+
+    {
+        61,
+        () => new Fight()
+        {
+            Enemies = new List<Enemy>()
+            {
+                new Enemy()
+                {
+                    EnemyType = EnemyType.FelinterWarrior,
+                    Health = 20,
+                    BonusStrength = 1,
+                    Distance = 15,
+                    Weapons = new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            DamageDice = 2,
+                            MaxRange = 30,
+                            Accuracy = Accuracy.E
+                        }
+                    }
+                }
+            }
+        }
+    },
+
 	// end template																									
 	// start template																								
 	{

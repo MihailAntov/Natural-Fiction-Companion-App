@@ -6,7 +6,6 @@ using NFCombat2.Pages;
 using NFCombat2.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace NFCombat2.ViewModels
 {
@@ -15,24 +14,28 @@ namespace NFCombat2.ViewModels
 
         private IPlayerService _playerService;
         private IPopupService _popupService;
+        private ISettingsService _settingsService;
         private Player _player;
         private readonly SettingsPageViewModel _settingsPageViewModel;
         
         public Command AddNewProfileCommand { get; set; }
         public Command ChangeProfileCommand { get; set; }
         public Command ChangeClassCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel) : base(nameService)
+        public Command ChangeLanguageCommand { get; set; }
+        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel, ISettingsService settingsService) : base(nameService)
         {
             _playerService = playerService;
             _popupService = popupService;
+            _settingsService = settingsService;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
             OpenSettingsCommand = new Command(async () => await OpenSettings());
             ChangeProfileCommand = new Command(async () => await ChangeProfile());
             ChangeClassCommand = new Command(async () => await ChangeClass());
+            ChangeLanguageCommand = new Command(async () => await ChangeLanguage());
             Player = _playerService.CurrentPlayer;
             _settingsPageViewModel = settingsPageViewModel;
-            
+            LanguageIcon = _settingsService.Language == Language.Bulgarian ? "bg" : "en";
             LoadPlayersAsync();
             
         }
@@ -122,6 +125,20 @@ namespace NFCombat2.ViewModels
                     _player = value;
                     OnPropertyChanged(nameof(Player));                    
                     OnPropertyChanged(nameof(Player.Health));                    
+                }
+            }
+        }
+
+        private string _languageIcon;
+        public string LanguageIcon
+        {
+            get { return _languageIcon; }
+            set
+            {
+                if(value != _languageIcon)
+                {
+                    _languageIcon = value;
+                    OnPropertyChanged(nameof(LanguageIcon));
                 }
             }
         }
@@ -286,7 +303,7 @@ namespace NFCombat2.ViewModels
         {
             await LoadPlayersAsync();
             TaskCompletionSource<Player> taskCompletionSource = new TaskCompletionSource<Player>();
-            var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles);
+            var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles.Where(p=> p.Id != _player.Id).ToList(), _popupService,_playerService,_nameService, this);
             var view = new ProfilePickerPopupView(viewModel);
             await Shell.Current.Navigation.PushAsync(view);
             var profile = await taskCompletionSource.Task;
@@ -350,6 +367,7 @@ namespace NFCombat2.ViewModels
             OnPropertyChanged(nameof(Profiles));
             SelectedProfile = player;
             SelectedClass = Classes.FirstOrDefault(c=> c.Class == player.Class);
+            CharacterPageTitle = player.Name;
 
         }
 
@@ -373,6 +391,7 @@ namespace NFCombat2.ViewModels
                 {
                     Player = _playerService.CurrentPlayer;
                     PlayerClassLabel = _nameService.ClassName(Player.Class);
+                    CharacterPageTitle = Player.Name;
                     HasChosenHero = true;
                 }
                 else
@@ -382,9 +401,22 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        public async Task ChangeLanguage()
+        {
+            if (_settingsService.Language == Language.Bulgarian)
+            {
+                await _settingsService.SetLanguage(Language.English);
+                LanguageIcon = "en";
+                return;
+            }
+
+            await _settingsService.SetLanguage(Language.Bulgarian);
+            LanguageIcon = "bg";
+        }
+
         public override void UpdateLanguageSpecificProperties()
         {
-            CharacterPageTitle = _nameService.Label(LabelType.CharacterPageTitle);
+            //CharacterPageTitle = _nameService.Label(LabelType.CharacterPageTitle);
             ChangeClassPicker = _nameService.Label(LabelType.ChangeClassPicker);
             ChangeProfilePicker = _nameService.Label(LabelType.ChangeProfilePicker);
             AddNewProfileButton = _nameService.Label(LabelType.AddNewProfileButton);

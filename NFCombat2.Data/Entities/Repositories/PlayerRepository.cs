@@ -121,8 +121,9 @@ namespace NFCombat2.Data.Entities.Repositories
 
             var existingItems = await connection.Table<PlayersItemsEntity>()
                 .Where(pi => pi.PlayerId == player.Id).ToListAsync();
-            var removedItems = existingItems.Where(i=> !allItems.Select(item=> item.Id).Contains(i.ItemId)).ToList();
-            foreach (var item in removedItems)
+            //var removedItems = existingItems.Where(i=> !allItems.Select(item=> item.Id).Contains(i.ItemId)).ToList();
+            //foreach (var item in removedItems)
+            foreach (var item in existingItems)
             {
                 await connection.DeleteAsync(item);
             }
@@ -142,18 +143,38 @@ namespace NFCombat2.Data.Entities.Repositories
                         PlayerId = player.Id,
                         ItemId = item.Id,
                         Quantity = item.Quantity,
+                        IsConsumable = item.IsConsumable,
                         InExtraBag = item.InExtraBag,
                     });
                     continue;
                 }
-                playersItems.Quantity = item.Quantity;
-                playersItems.InExtraBag = item.InExtraBag;
+
+                if (playersItems.IsConsumable)
+                {
+                    playersItems.Quantity = item.Quantity;
+                    playersItems.InExtraBag = item.InExtraBag;
+                }
+                else
+                {
+                    await connection.InsertAsync(new PlayersItemsEntity()
+                    {
+                        PlayerId = player.Id,
+                        ItemId = item.Id,
+                        Quantity = item.Quantity,
+                        IsConsumable = item.IsConsumable,
+                        InExtraBag = item.InExtraBag,
+                    });
+                    continue;
+                }
+
+
+                
                 await connection.UpdateAsync(playersItems);
             }
 
            
 
-            var existingrecords = await connection.Table<PlayersItemsEntity>().ToListAsync();
+            //var existingrecords = await connection.Table<PlayersItemsEntity>().ToListAsync();
         }
 
         private async Task UpdateEquipments( Player player)
@@ -227,6 +248,19 @@ namespace NFCombat2.Data.Entities.Repositories
 
         }
 
+        public async Task DeletePlayer(Player player)
+        {
+            await connection.DeleteAsync<PlayerEntity>(player.Id);
+            int playersItemsId = connection.Table<PlayersItemsEntity>().FirstOrDefaultAsync(p=> p.PlayerId == player.Id).Id;
+            await connection.DeleteAsync<PlayersItemsEntity>(playersItemsId);
+
+            int playersEquipmentsId = connection.Table<PlayersEquipmentsEntity>().FirstOrDefaultAsync(p => p.PlayerId == player.Id).Id;
+            await connection.DeleteAsync<PlayersEquipmentsEntity>(playersEquipmentsId);
+
+            int playersWeaponsId = connection.Table<PlayersWeaponsEntity>().FirstOrDefaultAsync(p => p.PlayerId == player.Id).Id;
+            await connection.DeleteAsync<PlayersWeaponsEntity>(playersWeaponsId);
+
+        }
         private async Task UpdateWeapons(Player player)
         {
 
@@ -288,7 +322,8 @@ namespace NFCombat2.Data.Entities.Repositories
                 MaxOverload = player.MaxOverload,
                 Speed = player.Speed,
                 Fuel = player.Fuel,
-                ProgramList = player.ProgramList
+                ProgramList = player.ProgramList,
+                Credits = player.Credits
                 
 
             };
@@ -440,7 +475,8 @@ namespace NFCombat2.Data.Entities.Repositories
                         MaxOverload = pe.MaxOverload,
                         Speed = pe.Speed,
                         Fuel = pe.Fuel,
-                        ProgramList = pe.ProgramList
+                        ProgramList = pe.ProgramList,
+                        Credits = pe.Credits,
                         
 
                     }).ToList();
@@ -483,7 +519,8 @@ namespace NFCombat2.Data.Entities.Repositories
                         MaxOverload = pe.MaxOverload,
                         Speed = pe.Speed,
                         Fuel = pe.Fuel,
-                        ProgramList = pe.ProgramList
+                        ProgramList = pe.ProgramList,
+                        Credits = pe.Credits
 
 
                     })

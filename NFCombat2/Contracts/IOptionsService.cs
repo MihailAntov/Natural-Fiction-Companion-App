@@ -28,6 +28,7 @@ namespace NFCombat2.Contracts
         IOptionList GetModes(IHaveModes itemWithModes);
         IOptionList GetEndTurn(Fight fight);
         IOptionList GetAdrenalineActions(Fight fight);
+        IOptionList GetVariants(int episode);
         ICollection<IModificationOption> GetModificationOptions(WeaponModification modification);
 
         bool CanShoot(Fight fight);

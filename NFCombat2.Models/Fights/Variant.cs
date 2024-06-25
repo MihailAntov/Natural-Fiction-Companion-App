@@ -11,7 +11,8 @@ namespace NFCombat2.Models.Fights
         public VariantDescription Type { get; set; } = VariantDescription.None;
         public string Text { get; set; }
         public int AnthenasBlocked { get; set; } = 0;
-        public Weapon DiscardedWeapon { get; set; } 
+        public Weapon DiscardedWeapon { get; set; }
+        public int Distance { get; set; } = 15;
         public void Apply(Fight fight)
         {
             if(Type == VariantDescription.AnthenasBlocked)
@@ -28,6 +29,12 @@ namespace NFCombat2.Models.Fights
             {
                 
                 fight.Enemies.FirstOrDefault().Weapons.Remove(DiscardedWeapon);
+            }
+
+            if(Type == VariantDescription.RookieFelinter)
+            {
+                var enemy = fight.Enemies.FirstOrDefault();
+                fight.Enemies.FirstOrDefault().Distance = Distance;
             }
         }
     }

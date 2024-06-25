@@ -367,6 +367,61 @@ namespace NFCombat2.Services
             };
         }
 
+        public IOptionList GetVariants(int episodeNumber)
+        {
+            OptionList options = new OptionList();
+            var variants = new List<IOption>();
+            if (episodeNumber == 315 )
+            {
+
+                options.Label = _nameService.Label(LabelType.BlockedAntennas);
+                var variant0 = new Variant()
+                {
+                    Text = "0",
+
+                    AnthenasBlocked = 0,
+                    Type = VariantDescription.AnthenasBlocked
+                };
+
+                var variant1 = new Variant()
+                {
+                    Text = "1",
+                    AnthenasBlocked = 1,
+                    Type = VariantDescription.AnthenasBlocked
+                };
+
+                var variant2 = new Variant()
+                {
+                    Text = "2",
+                    AnthenasBlocked = 2,
+                    Type = VariantDescription.AnthenasBlocked
+                };
+                variants.Add(new Option(variant0.Text, variant0));
+                variants.Add(new Option(variant1.Text, variant1));
+                variants.Add(new Option(variant2.Text, variant2));
+            }
+            else if (episodeNumber == 635)
+            {
+                options.Label = _nameService.Label(LabelType.UseItemOnkabuto);
+                string none = _nameService.Label(LabelType.UseNothingOnKabuto);
+                string iceSpark = _nameService.ItemName(ItemType.IceSpark);
+                string discs = _nameService.ItemName(ItemType.MagnetDiscs);
+                variants.Add(new Option(none, new Variant() { Text = none }));
+                variants.Add(new Option(iceSpark, new Variant() { Text = iceSpark, Type = VariantDescription.IceSpark }));
+                variants.Add(new Option(discs, new Variant() { Text = discs, Type = VariantDescription.MagnetDiscs }));
+            }
+            else if (episodeNumber == 230 || episodeNumber == 27)
+            {
+                options.Label = _nameService.Label(LabelType.ChooseDistance);
+                variants.Add(new Option("9", new Variant() { Distance = 9, Type = VariantDescription.RookieFelinter }));
+                variants.Add(new Option("15", new Variant() { Distance = 15, Type = VariantDescription.RookieFelinter }));
+            }
+
+            options.Options = variants;
+            return options;
+
+        }
+
         public IOptionList GetAdrenalineActions(Fight fight)
         {
             var objects = new List<OptionType>();

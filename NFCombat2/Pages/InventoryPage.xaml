@@ -78,6 +78,29 @@
                     </RadioButton.Content>
                 </RadioButton>
             </StackLayout>
+            <Grid HeightRequest="50">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" FontSize="Large" Text="{Binding Section}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" FontSize="Large" Text="{Binding CurrentItems}" IsVisible="{Binding BrowsingItems}" VerticalTextAlignment="Center" />
+                <Label Grid.Row="0" Grid.Column="1" FontSize="Large" Text="{Binding CurrentExtraItems}" IsVisible="{Binding BrowsingExtraItems}" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="2" FontSize="Large" Text="/" IsVisible="{Binding BrowsingItems}" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="2" FontSize="Large" Text="/" IsVisible="{Binding BrowsingExtraItems}" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="3" FontSize="Large" Text="10" IsVisible="{Binding BrowsingItems}" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="3" FontSize="Large" Text="3" IsVisible="{Binding BrowsingExtraItems}" VerticalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" FontSize="Large" Text="$" IsVisible="{Binding BrowsingEquipments}" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" IsVisible="{Binding BrowsingEquipments}" VerticalOptions="Center">
+                    <Entry   HorizontalOptions="Center" Keyboard="Numeric" Text="{Binding Player.Credits}" IsVisible="{Binding BrowsingEquipments}" VerticalTextAlignment="Center" VerticalOptions="Center"/>
+                </Border>
+                
+            </Grid>
             <!--<Button Text="Add Weapon" Command="{Binding AddToPlayerCommand}" CommandParameter="weapon"/>-->
             <Grid HeightRequest="180" Margin="20" ColumnSpacing="0" IsVisible="{Binding BrowsingWeapons}">
 
@@ -96,6 +119,9 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
+                
+                
+                
                 <Border Margin="0" BackgroundColor="Black" Grid.Column="0" Grid.RowSpan="4" >
                     <!--<ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding AddWeaponToPlayerCommand}" CommandParameter="main">-->
                     <ImageButton Opacity="{Binding MainHandTransparency}" Source="{Binding MainHandImage}" Command="{Binding GetWeaponDetailsCommand}" CommandParameter="main" SemanticProperties.Hint="Tap to change weapon">
@@ -173,10 +199,10 @@
 
 
 
-            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}"/>
-            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}"/>
-            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}"/>
-
+            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="equipment" IsVisible="{Binding BrowsingEquipments}" />
+            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="item" IsVisible="{Binding BrowsingItems}" IsEnabled="{Binding CurrentItems, Converter={helpers:CapacityConverter}, ConverterParameter='10'}"/>
+            <Button StyleClass="BigButton" Text="{Binding AddItemButton}" Command="{Binding AddToPlayerCommand}" CommandParameter="extraitem" IsVisible="{Binding BrowsingExtraItems}" IsEnabled="{Binding CurrentExtraItems, Converter={helpers:CapacityConverter}, ConverterParameter='3'}"/>
+            
             <ListView ItemsSource="{Binding Equipment}" ItemTapped="TappedItem" IsVisible="{Binding Source={x:Reference Inventory}, Path=BindingContext.BrowsingEquipments}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -196,8 +222,12 @@
                                     <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
                                     <ImageButton Grid.Column="2" Source="{Binding Image}"/>
                                     <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Minimum="1"  Value="{Binding Quantity}" ValueChanged="ChangedQuantity" IsVisible="{Binding IsConsumable}"></Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>
@@ -232,8 +262,27 @@
                                     <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
                                     <ImageButton Grid.Column="2" Source="{Binding Image}"/>
                                     <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                    <Stepper 
+                                        ScaleY="0.6" 
+                                        VerticalOptions="Center" 
+                                        Grid.Column="4" 
+                                        Minimum="0"  
+                                        Value="{Binding Quantity}" 
+                                        ValueChanged="ChangedQuantity" 
+                                        IsVisible="{Binding IsConsumable}"
+                                        >
+                                        <Stepper.Maximum>
+                                            <MultiBinding Converter="{helpers:FreeSlotConverter}" ConverterParameter="10">
+                                                <Binding Path="Quantity"/>
+                                                <Binding Path="BindingContext.CurrentItems" Source="{x:Reference Inventory}"/>
+                                            </MultiBinding>
+                                        </Stepper.Maximum>
+                                    </Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                 </Grid>
 
                             </ViewCell.View>
@@ -270,8 +319,25 @@
                                     <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
                                     <ImageButton Grid.Column="2" Source="{Binding Image}"/>
                                     <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
-                                    <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Value="{Binding Quantity}" IsVisible="{Binding IsConsumable}"></Stepper>
-                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}"/>
+                                    <Stepper ScaleY="0.6" 
+                                             VerticalOptions="Center" 
+                                             Grid.Column="4" 
+                                             Minimum="0"  
+                                             Value="{Binding Quantity}" 
+                                             ValueChanged="ChangedQuantity" 
+                                             IsVisible="{Binding IsConsumable}">
+                                        <Stepper.Maximum>
+                                            <MultiBinding Converter="{helpers:FreeSlotConverter}" ConverterParameter="3">
+                                                <Binding Path="Quantity"/>
+                                                <Binding Path="BindingContext.CurrentExtraItems" Source="{x:Reference Inventory}"/>
+                                            </MultiBinding>
+                                        </Stepper.Maximum>
+                                    </Stepper>
+                                    <ImageButton Scale="0.7" Grid.Column="5" Source="trash" Command="{Binding Source={x:Reference Inventory}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Ivory" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>

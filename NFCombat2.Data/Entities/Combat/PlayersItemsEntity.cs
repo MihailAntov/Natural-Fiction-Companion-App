@@ -16,6 +16,8 @@ namespace NFCombat2.Data.Entities.Combat
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
+        public bool IsConsumable { get; set; } = false;
+
         public int Quantity { get; set; } = 1;
         public bool InExtraBag { get; set; } = false;
     }

@@ -66,6 +66,16 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.AddedPlayer, "Successfully added {0}" },
             {LabelType.RoundBeginning, "Round {0} beginning." },
             {LabelType.BackButton, "Back" },
+            {LabelType.BlockedAntennas, "Select number of blocked antennae" },
+            {LabelType.UseItemOnkabuto, "Select item to use" },
+            {LabelType.UseNothingOnKabuto, "Nothing" },
+            {LabelType.ChooseDistance, "Distance to enemy" },
+            {LabelType.WeaponRemove, "Choose weapon to remove" },
+            {LabelType.WeaponsSection, "Weapons" },
+            {LabelType.ItemSection, "Backpack" },
+            {LabelType.PartsSection, "Parts" },
+            {LabelType.EquipmentSection, "Equipment" },
+            {LabelType.AreYouSure, "Are you sure?" },
         };
 
         public static Dictionary<LabelType, string> BulgarianLabels = new Dictionary<LabelType, string>
@@ -128,6 +138,17 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.AddedPlayer, "Успешно добави {0}" },
             {LabelType.RoundBeginning, "Начало на рунд {0}." },
             {LabelType.BackButton, "Назад" },
+            {LabelType.BlockedAntennas, "Посочи брой блокирани антени" },
+            {LabelType.UseItemOnkabuto, "Избери предмет, който искаш да използваш" },
+            {LabelType.UseNothingOnKabuto, "Нищо" },
+            {LabelType.ChooseDistance, "Дистанция до противника" },
+            {LabelType.WeaponRemove, "Избери кое оръжие да премахнеш" },
+            {LabelType.WeaponsSection, "Оръжия" },
+            {LabelType.ItemSection, "Торба" },
+            {LabelType.PartsSection, "Части" },
+            {LabelType.EquipmentSection, "Екипировка" },
+            {LabelType.AreYouSure, "Сигурен ли си?" }
+
         };
     }
 }

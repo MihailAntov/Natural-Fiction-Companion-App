@@ -125,7 +125,7 @@ namespace NFCombat2.Services
 
             if(_fight is VariantFight _variantFight)
             {
-                var variants = _fightRepository.GetVariants(episodeNumber);
+                var variants = _optionsService.GetVariants(episodeNumber);
                 TaskCompletionSource<IOption> variantSelected = new TaskCompletionSource<IOption>();
                 var viewModel = new MultipleChoicePopupViewModel(variants, _variantFight, variantSelected);
                 var popup = new MultipleChoicePopupView(viewModel);
@@ -135,11 +135,14 @@ namespace NFCombat2.Services
                 Variant variant = chosenOption.Content as Variant;
                 if(variant.Type == VariantDescription.MagnetDiscs)
                 {
+                    var options = new OptionList();
+                    options.Label = _nameService.Label(LabelType.WeaponRemove);
                     var weapons = new List<IOption>(_variantFight.Enemies.FirstOrDefault()
                         .Weapons
                         .Select(w => new Option(w.Name, w)).ToList());
+                    options.Options = weapons;
                     TaskCompletionSource<IOption> weaponSelected = new TaskCompletionSource<IOption>();
-                    var weaponDiscardViewModel = new MultipleChoicePopupViewModel(weapons, _variantFight, weaponSelected);
+                    var weaponDiscardViewModel = new MultipleChoicePopupViewModel(options, _variantFight, weaponSelected);
                     var weaponDiscardPopup = new MultipleChoicePopupView(weaponDiscardViewModel);
                     weaponDiscardViewModel.Popup = weaponDiscardPopup;
                     _popupService.ShowPopup(weaponDiscardPopup);

@@ -31,7 +31,13 @@ namespace NFCombat2.Models.Fights
         public override void CheckWinCondition()
         {
             base.CheckWinCondition();
-            if(!Enemies.Any(e=> e.Health > MinEnemyHealth))
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
+            if (!Enemies.Any(e=> e.Health > MinEnemyHealth))
             {
                 Result = OnEnemyHealthReached;
                 return;

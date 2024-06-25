@@ -17,6 +17,12 @@ namespace NFCombat2.Models.Fights
         public override void CheckWinCondition()
         {
             base.CheckWinCondition();
+
+            if (Result != FightResult.None)
+            {
+                return;
+            }
+
             if (TurnsSkipped >= 5)
             {
                 Result = FightResult.Escaped;

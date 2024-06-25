@@ -18,6 +18,7 @@ namespace NFCombat2.Contracts
         public Task AddItemToPlayer(IAddable item);
         public Task AttachModificationToWeapon(IAddable option, AttachedTo hand);
         public Task RemoveItemFromPlayer(IAddable item);
+        public Task DeletePlayer(Player player);
         public List<PlayerClassDisplay> GetClassOptions();
 
         public Task UpdateNames(Player player);
@@ -26,7 +27,7 @@ namespace NFCombat2.Contracts
         //Task<ICollection<IAddable>> GetAllItems();
         Task<ICollection<IAddable>> GetAllWeapons();
         //Task<ICollection<IAddable>> GetAllEquipment();
-        Task<ICollection<IAddable>> GetAllAddableItems();
+        Task<ICollection<IAddable>> GetAllAddableItems(ItemCategory category = ItemCategory.None);
         Task<ICollection<IAddable>> GetAllCraftables();
     }
 }

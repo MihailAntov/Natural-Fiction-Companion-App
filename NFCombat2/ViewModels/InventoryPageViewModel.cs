@@ -46,6 +46,7 @@ namespace NFCombat2.ViewModels
             //AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
             GetWeaponDetailsCommand = new Command<string>(GetWeaponDetails);
             _popupService = popupService;
+            UpdateLanguageSpecificProperties();
         }
 
         private string _title;
@@ -241,6 +242,23 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+
+        public int CurrentItems => Player.Items.Select(i=> i.Quantity).Sum();
+        public int CurrentExtraItems => Player.ExtraItems.Select(i => i.Quantity).Sum();
+
+        private string _section;
+        public string Section
+        {
+            get { return _section; }
+            set
+            {
+                if (_section != value)
+                {
+                    _section = value;
+                    OnPropertyChanged(nameof(Section));
+                }
+            }
+        }
         public ObservableCollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
         public ObservableCollection<Part> Parts { get; set; } = new ObservableCollection<Part>();
@@ -282,6 +300,7 @@ namespace NFCombat2.ViewModels
             }else if(result is Item resultingItem)
             {
                 SelectedTabValue = resultingItem.InExtraBag ? "extraitems" : "items";
+                OnPropertyChanged(SelectedTabValue == "items" ? nameof(CurrentItems) : nameof(CurrentExtraItems));
             }
 
 
@@ -293,6 +312,32 @@ namespace NFCombat2.ViewModels
             ChangeTabState("equipment", type == "equipment");
             ChangeTabState("items", type == "items");
             ChangeTabState("extraitems", type == "extraitems");
+        }
+
+        public void CheckQuantities()
+        {
+            var emptyItems = Items.Where(i => i.IsConsumable && i.Quantity == 0).ToList();
+            foreach(var item in emptyItems)
+            {
+                Player.Items.Remove(item);
+                Items.Remove(item);
+            }
+
+            var emptyExtraItems = ExtraItems.Where(i => i.IsConsumable && i.Quantity == 0).ToList();
+            foreach (var item in emptyExtraItems)
+            {
+                Player.ExtraItems.Remove(item);
+                ExtraItems.Remove(item);
+            }
+
+            var emptyEquipments = Equipment.Where(i => i.IsConsumable && i.Quantity == 0).ToList();
+            foreach (var item in emptyEquipments)
+            {
+                Player.Equipment.Remove(item);
+                Equipment.Remove(item);
+            }
+
+            
         }
 
         public async Task RemoveFromPlayer(IAddable addable)
@@ -518,6 +563,28 @@ namespace NFCombat2.ViewModels
                     BrowsingExtraItems = isChecked;
                 break;
             }
+
+            if(isChecked)
+            {
+                switch (tab)
+                {
+                    case "weapons":
+                        Section = _nameService.Label(LabelType.WeaponsSection);
+                        break;
+                    case "equipment":
+                        Section = _nameService.Label(LabelType.EquipmentSection);
+                        break;
+                    case "items":
+                        Section = _nameService.Label(LabelType.ItemSection);
+                        break;
+                    case "parts":
+                        Section = _nameService.Label(LabelType.PartsSection);
+                        break;
+                    case "extraitems":
+                        Section = _nameService.ItemName(ItemType.Bundle);
+                        break;
+                }
+            }
         }
         public void AddToObservalbeCollection(IAddable added)
         {
@@ -550,6 +617,18 @@ namespace NFCombat2.ViewModels
 
         public int InventorySlots => Player.InventorySlots;
 
+        private int _freeSlots;
+        public int FreeSlots { get { return _freeSlots; } 
+            set 
+            { 
+                if(_freeSlots != value)
+                {
+                    _freeSlots = value;
+                    OnPropertyChanged(nameof(FreeSlots));
+                }
+                
+            } 
+        }
 
         private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -579,9 +658,15 @@ namespace NFCombat2.ViewModels
 
                 OnPropertyChanged(nameof(Player));
                 UpdateWeaponDisplay();
+            }else if (e.PropertyName == nameof(_playerService.CurrentPlayer.Items))
+            {
+                OnPropertyChanged(nameof(CurrentItems));
+            }else if(e.PropertyName == nameof(_playerService.CurrentPlayer.ExtraItems))
+            {
+                OnPropertyChanged(nameof(CurrentExtraItems));
             }
 
-            
+
         }
 
         public override void UpdateLanguageSpecificProperties()
@@ -620,7 +705,28 @@ namespace NFCombat2.ViewModels
                     _playerService.CurrentPlayer.OffHand.Name = _nameService.ItemName(_playerService.CurrentPlayer.OffHand.ItemType);
                     OffHandName = _playerService.CurrentPlayer.OffHand.Name;
                 }
+
+                switch (SelectedTabValue)
+                {
+                    case "weapons":
+                        Section = _nameService.Label(LabelType.WeaponsSection);
+                        break;
+                    case "equipment":
+                        Section = _nameService.Label(LabelType.EquipmentSection);
+                        break;
+                    case "items":
+                        Section = _nameService.Label(LabelType.ItemSection);
+                        break;
+                    case "parts":
+                        Section = _nameService.Label(LabelType.PartsSection);
+                        break;
+                    case "extraitems":
+                        Section = _nameService.ItemName(ItemType.Bundle);
+                        break;
+                }
             }
+
+
         }
     }
 }

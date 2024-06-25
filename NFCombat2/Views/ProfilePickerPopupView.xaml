@@ -6,13 +6,43 @@
                x:Name="ProfilePicker">
     <Grid>
         <Image Source="background" Aspect="Fill"/>
+        <ScrollView>
+            <StackLayout>
+                <CollectionView ItemsSource="{Binding Profiles}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Margin="10" Text="{Binding Name}" CommandParameter="{Binding}" Command="{Binding Source={x:Reference ProfilePicker}, Path=BindingContext.ChooseCommand}" />
+                                <ImageButton Grid.Column="1" Source="trash" CommandParameter="{Binding}" Command="{Binding Source={x:Reference ProfilePicker}, Path=BindingContext.DeleteProfileCommand}" >
+                                    <ImageButton.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                                    </ImageButton.Behaviors>
+                                </ImageButton>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-        <CollectionView ItemsSource="{Binding Profiles}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Button Margin="10" Text="{Binding Name}" CommandParameter="{Binding}" Command="{Binding Source={x:Reference ProfilePicker}, Path=BindingContext.ChooseCommand}" />
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.ColumnSpan="2" Margin="10" Text="{Binding AddNewProfileButton}" Command="{Binding AddNewProfileCommand}"/>
+                </Grid>
+               
+            </StackLayout>
+        </ScrollView>
+        
     </Grid>
 </ContentPage>
