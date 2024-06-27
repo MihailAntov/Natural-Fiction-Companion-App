@@ -322,6 +322,15 @@ namespace NFCombat2.Models.Player
                         MaxWeaponWeight += 1;
                     }
 
+                    if (_class == PlayerClass.Hacker)
+                    {
+                        BonusMaxHealth += 5;
+                    }
+                    else if (value == PlayerClass.Hacker)
+                    {
+                        BonusMaxHealth -= 5;
+                    }
+
 
 
                     _class = value;

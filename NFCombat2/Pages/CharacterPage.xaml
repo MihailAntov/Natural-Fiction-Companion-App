@@ -43,10 +43,10 @@
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <!--<Label Grid.Column="0" Grid.ColumnSpan="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" Text="{Binding Player.Name}"/>-->
@@ -109,7 +109,7 @@
                 </Image.Behaviors>
             </Image>
             <Slider Grid.Row="5" Grid.Column="1"   Minimum="0" Maximum="{Binding Player.MaxOverload}" Value="{Binding Player.Overload, Mode=TwoWay}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}" SemanticProperties.Hint="Adjust player overload"/>
-            <Label Grid.Row="5" Grid.Column="2"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
+            <Label Grid.Row="5" Grid.Column="2"  VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large" Text="{Binding Player.Overload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
             <Label Grid.Row="5" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="/" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
             <Label Grid.Row="5" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Player.MaxOverload}" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}"/>
             
@@ -120,7 +120,7 @@
                 </Image.Behaviors>
             </Image>
             <Slider Grid.Column="1" Grid.Row="6"  Minimum="0" Maximum="{Binding Player.MaxTrauma}" Value="{Binding Player.Trauma, Mode=TwoWay}" SemanticProperties.Hint="Adjust player trauma"/>
-            <Label Grid.Column="2" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large"  Text="{Binding Player.Trauma}"/>
+            <Label Grid.Column="2" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large"  Text="{Binding Player.Trauma}"/>
             <Label Grid.Row="6" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="/"/>
             <Label Grid.Row="6" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Player.MaxTrauma}"/>
 
@@ -130,7 +130,7 @@
                 </Image.Behaviors>
             </Image>
             <Slider Grid.Column="1" Grid.Row="7"  Minimum="0" Maximum="{Binding Player.MaxPathogens}" Value="{Binding Player.Pathogens, Mode=TwoWay}" SemanticProperties.Hint="Adjust player pathogens"/>
-            <Label Grid.Column="2" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="{Binding Player.Pathogens}"/>
+            <Label Grid.Column="2" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large" Text="{Binding Player.Pathogens}"/>
             <Label Grid.Row="7" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="/"/>
             <Label Grid.Row="7" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Player.MaxPathogens}"/>
 
@@ -140,7 +140,7 @@
                 </Image.Behaviors>
             </Image>
             <Slider Grid.Column="1" Grid.Row="8"  Minimum="0" Maximum="{Binding Player.MaxIonization}" Value="{Binding Player.Ionization, Mode=TwoWay}" SemanticProperties.Hint="Adjust player ionization"/>
-            <Label Grid.Column="2" Grid.Row="8"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large"  Text="{Binding Player.Ionization}"/>
+            <Label Grid.Column="2" Grid.Row="8"  VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large"  Text="{Binding Player.Ionization}"/>
             <Label Grid.Row="8" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="/"/>
             <Label Grid.Row="8" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Large" Text="{Binding Player.MaxIonization}"/>
 
@@ -149,10 +149,10 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Slider Grid.Column="1" Grid.Row="9"  Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}" SemanticProperties.Hint="Adjust player fuel" IsVisible="{Binding Player.HasShuttle}"/>
-            <Label Grid.Column="2" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large"  Text="{Binding Player.Fuel}" IsVisible="{Binding Player.HasShuttle}"/>
+            <Slider Grid.Row="9" Grid.Column="1" Minimum="0" Maximum="200" Value="{Binding Player.Fuel, Mode=TwoWay}" SemanticProperties.Hint="Adjust player fuel" IsVisible="{Binding Player.HasShuttle}"/>
+            <Label Grid.Row="9" Grid.Column="2" VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="18"  Text="{Binding Player.Fuel}" IsVisible="{Binding Player.HasShuttle}"/>
             <Label Grid.Row="9" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large" Text="/" IsVisible="{Binding Player.HasShuttle}"/>
-            <Label Grid.Row="9" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="Large" Text="200" IsVisible="{Binding Player.HasShuttle}"/>
+            <Label Grid.Row="9" Grid.Column="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" FontSize="18" Text="200" IsVisible="{Binding Player.HasShuttle}"/>
 
         </Grid>
         <Button Grid.Row="1" StyleClass="BigButton" Text="{Binding AddNewProfileButton}" Command="{Binding AddNewProfileCommand}" SemanticProperties.Hint="Add a new profile" IsVisible="{Binding HasChosenHero, Converter={helpers:InverseBoolConverter}}"/>

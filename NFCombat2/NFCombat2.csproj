@@ -66,6 +66,7 @@
 	  <None Remove="Resources\Images\bullets.png" />
 	  <None Remove="Resources\Images\cartridge.png" />
 	  <None Remove="Resources\Images\chain.png" />
+	  <None Remove="Resources\Images\cross.png" />
 	  <None Remove="Resources\Images\crosshair.png" />
 	  <None Remove="Resources\Images\cybersecurity.png" />
 	  <None Remove="Resources\Images\dagger.png" />
