@@ -100,7 +100,7 @@
                     <toolkit:IconTintColorBehavior TintColor="Ivory" />
                 </Image.Behaviors>
             </Image>
-            <Label Grid.Column="2" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large" Text="{Binding Player.Strength}"/>
+            <Label Grid.Column="2" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="End" FontSize="Large" Text="{Binding Player.Strength, Mode=TwoWay}"/>
 
 
             <Image Grid.Row="5" Source="highvoltage" IsVisible="{Binding Player.Class, Converter={helpers:HackerConverter}}" Margin="5">

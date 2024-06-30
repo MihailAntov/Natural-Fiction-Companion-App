@@ -225,11 +225,13 @@ namespace NFCombat2.Services
 
         public IOptionList GetPrograms(Fight fight)
         {
-            
-
-            
             var result = new OptionList(new List<IOption>(), true, true) { Label = _nameService.Label(LabelType.ProgramChoice) };
-            result.Options.Add(new Option(_nameService.Label(LabelType.ManualProgramCast),new ManualProgramCast()));
+            ManualProgramCast manual = new ManualProgramCast()
+            {
+                Description = _nameService.ProgramDescription(ProgramType.Manual),
+                Name = _nameService.Label(LabelType.ManualProgramCast)
+            };
+            result.Options.Add(new Option(manual.Name,manual));
             
             var knownPrograms = fight.Player.Programs;
             foreach(var program in knownPrograms)

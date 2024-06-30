@@ -20,11 +20,11 @@
             
         </Grid.ColumnDefinitions>
         
-            <ImageButton Padding="0" Grid.Row="0" Grid.Column="0"  Source="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="logicalOperation" MaximumHeightRequest="60">
+            <!--<ImageButton Padding="0" Grid.Row="0" Grid.Column="0"  Source="{Binding LogicalOperationPolarity, Converter={helpers:PolarityConverter}}" Command="{Binding ChangePolarityCommand}" CommandParameter="logicalOperation" MaximumHeightRequest="60">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory"/>
                 </ImageButton.Behaviors>
-            </ImageButton>
+            </ImageButton>-->
             <!--<Picker VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="1"  Margin="0,0,20,0" ItemsSource="{Binding OperationTypes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding LogicalOperationType}" />-->
             <Button Grid.Row="0" Grid.Column="1" Text="{Binding LogicalOperationType.Name}" Command="{Binding CycleOperationCommand}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
 

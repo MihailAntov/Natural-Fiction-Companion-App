@@ -23,7 +23,7 @@ namespace NFCombat2.Models.Programs
                 fight.Player.Overload += Cost;
                 return new List<ICombatResolution>() { new DisableMaser() };
             }
-            return new List<ICombatResolution>() { new ProgramNoEffect() };
+            return new List<ICombatResolution>() { new ProgramNoEffect(MessageType.ProgramNoEffect, 1) };
         }
 
         public bool HasEffect(Fight fight)

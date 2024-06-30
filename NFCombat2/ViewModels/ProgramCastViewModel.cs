@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Views;
 using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
+using NFCombat2.Models.Fights;
 using NFCombat2.Models.Programs;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -165,13 +166,16 @@ namespace NFCombat2.ViewModels
             var program = _programService.GetProgram(BuildProgramFormula());
             if(program != null)
             {
-                _programService.LearnNewProgram(program, _playerService.CurrentPlayer);
+                //if (!_playerService.CurrentPlayer.Programs.Any(p => p.Formula == program.Formula))
+                //{
+                //    _programService.LearnNewProgram(program, _playerService.CurrentPlayer);
+                //}
                 _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.Success, Content = program});
                 return;
             }
             else
             {
-                _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.Fail });
+                _taskCompletionSource.TrySetResult(new ProgramExecution() { Result = ProgramExecutionResult.NotExist });
             }
         }
 

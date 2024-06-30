@@ -131,7 +131,7 @@ namespace NFCombat2.ViewModels
             if (e is IAction action)
             {
                 string description = action.Description;
-                var toast = new Snackbar() { Text = description, Duration=TimeSpan.FromSeconds(3) };
+                var toast = new Snackbar() { Text = description, Duration=TimeSpan.FromSeconds(10) };
                 await toast.Show();
             }
         }

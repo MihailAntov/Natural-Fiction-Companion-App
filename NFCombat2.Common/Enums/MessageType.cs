@@ -49,6 +49,7 @@ namespace NFCombat2.Common.Enums
         ProgramCritMessage,
         ProgramDisableTentacleMessage,
         ProgramNoEffect,
+        ProgramNotExist,
         LearnProgram,
         UseItemMessage,
         UseItemWithQuantityMessage,

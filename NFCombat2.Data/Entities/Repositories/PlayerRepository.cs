@@ -375,16 +375,23 @@ namespace NFCombat2.Data.Entities.Repositories
                     throw new NullReferenceException();
                 }
                 int itemId = entity.Id.Value;
+                Weapon weapon = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
+                if(weapon is IModifyPlayer modifier)
+                {
+                    modifier.OnAdded(player);
+                }
                 switch (playersWeaponsEntity.Hand)
                 {
                     case Hand.MainHand:
-                        player.MainHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
+                        //player.MainHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
+                        player.MainHand = weapon;
                         break;
                     case Hand.OffHand:
-                        player.OffHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
+                        //player.OffHand = (Weapon)ItemConverter(entity.Type, entity.Category, itemId, playersWeaponsEntity.Hand, playersWeaponsEntity.Durability);
+                        player.OffHand = weapon;
                         break;
                 }
-                
+
             }
 
 

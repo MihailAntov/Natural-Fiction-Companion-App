@@ -44,7 +44,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.SkillCheckPanel, "You try to break the panel." },
             {MessageType.SkillCheckSwamp, "You fight against the swamp plants." },
             {MessageType.UseProgramMessage, "You use {0}. Your overload gauge is now at {1}." },
-            {MessageType.UseItemWithQuantityMessage, "You use one of your {0}. You have {0} left." },
+            {MessageType.UseItemWithQuantityMessage, "You use one of your {0}. You have {1} left." },
             {MessageType.UseItemMessage, "You use your {0}." },
             {MessageType.UseTechniqueMessage, "You use {}." },
             {MessageType.MoveCloserMessage, "You move in closer." },
@@ -63,7 +63,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramCritMessage, "Your program focuses your aim." },
             {MessageType.ProgramFreezeMessage, "Your program disrupts the movement of your enemy." },
             {MessageType.ProgramDisableTentacleMessage, "Your program disables the tentacle." },
-            {MessageType.ProgramNoEffect,"Your program has no effect." },
+            {MessageType.ProgramNoEffect,"Your program has no effect. Your overload increases by {0}." },
+            {MessageType.ProgramNotExist,"Program does not exist. Your overload increases by {0}." },
             {MessageType.LearnProgram,"You learn a new program." },
             //enemy messages
             {MessageType.EnemyMoveMessage, "{0} moves in closer." }, 
@@ -91,7 +92,7 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.NoEffect, "Your {0} had no effect." },
             {MessageType.PoleMoveCloser, "Your distance to {0} is reduced." },
             {MessageType.PoleMoveFurther, "Your distance to {0} is increased." },
-            {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {0}%." },
+            {MessageType.FuelIncrease, "Your fuel increases by {0}% and is now {1}%." },
             {MessageType.EquippedToWeapon, "Successfully equipped {0} to {1}." },
             {MessageType.UnequippedFromWeapon, "Successfully unequipped {0}." },
             {MessageType.MaxOverloadIncrease, "Your maximum overload increases by {0} and is now {1}." },
@@ -161,7 +162,8 @@ namespace NFCombat2.Common.AppConstants
             {MessageType.ProgramCritMessage, "Програмата ти фокусира прицела ти." },
             {MessageType.ProgramFreezeMessage, "Програмата ти пречи на движението на противника." },
             {MessageType.ProgramDisableTentacleMessage, "Програмата ти неутрализира пипалото." },
-            {MessageType.ProgramNoEffect,"Програмата ти няма ефект." },
+            {MessageType.ProgramNoEffect,"Програмата ти няма ефект. Претоварването ти се увеличава с {0}." },
+            {MessageType.ProgramNotExist,"Не съществува такава програма. Претоварването ти се увеличава с {0}." },
             {MessageType.LearnProgram,"Научи нова програма." },
 
             //enemy messages

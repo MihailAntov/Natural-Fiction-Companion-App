@@ -74,6 +74,7 @@ namespace NFCombat2.Common.Enums
         ItemSection,
         ExtraItemSection,
         PartsSection,
-        AreYouSure
+        AreYouSure,
+        DiscardConfirm
     }
 }

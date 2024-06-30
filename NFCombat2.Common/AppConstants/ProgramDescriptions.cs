@@ -26,6 +26,7 @@ namespace NFCombat2.Common.AppConstants
             {ProgramType.ReceiveOptimizeNAnalyze, "Your next shot is guaranteed to be a critical hit. You can take an extra action this turn (move, use an item, shoot or attack). Increase overload by 2." },
             {ProgramType.ReceiveOptimizeFix, "Restore 2d health. You can take an extra action this turn (move, use an item, shoot or attack). Increase overload by 2." },
             {ProgramType.SendDirectNUnlock, "Your multivector attack disrupts the maser's motherboard, blocking its effect." },
+            {ProgramType.Manual, "Manually input your program components." }
 
         };
 
@@ -49,6 +50,7 @@ namespace NFCombat2.Common.AppConstants
             {ProgramType.ReceiveOptimizeNAnalyze, "Следващият ти изстрел с огнестрелно оръжие задължително уцелва и нанася двойни щети на противника.\r\nМожеш да извършиш допълнително действие в този ход (придвижване, стрелба или атака).\r\nУвеличи степента на Претоварване с две нива.\r\n" },
             {ProgramType.ReceiveOptimizeFix, "Възстанови си до 2 зара издръжливост.\r\nМожеш да извършиш допълнително действие в този ход (придвижване, стрелба или атака).\r\nУвеличи степента на Претоварване с две нива.\r\n" },
             {ProgramType.SendDirectNUnlock, "Мултивекторната ти атака разстройва платката на мазера, блокирайки действието му." },
+            {ProgramType.Manual, "Въведи ръчно компонентите на програмата си." },
         };
     }
 }

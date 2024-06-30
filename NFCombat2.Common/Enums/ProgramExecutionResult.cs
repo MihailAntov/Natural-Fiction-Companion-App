@@ -10,7 +10,7 @@ namespace NFCombat2.Common.Enums
     {
         Success,
         NoEffect,
-        Fail,
+        NotExist,
         Cancelled
     }
 }

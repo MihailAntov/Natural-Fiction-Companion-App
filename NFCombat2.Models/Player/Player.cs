@@ -135,20 +135,34 @@ namespace NFCombat2.Models.Player
         public int StrengthWithoutWeapon =>
             BaseStrength +
             BonusStrength;
-        public int Strength => 
-            BaseStrength + 
+        public int Strength =>
+            BaseStrength +
             BonusStrength +
-            Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
+            WeaponStrength;
+            //Weapons.OfType<MeleeWeapon>().Sum(w => w.ExtraStrength);
         public int BaseStrength 
         { 
             get 
             {
                 if(Techniques.Values.Any(t=> t is FightingSpirit))
                 {
-                    return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(MaxHealth / 10.0);
+                    return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(MaxHealth / 10.0, MidpointRounding.AwayFromZero);
                 }
-                return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(Health / 10.0); 
+                return (Class == PlayerClass.Engineer ? 1 : 0) + (int)Math.Round(Health / 10.0, MidpointRounding.AwayFromZero); 
             } 
+        }
+        private int _weaponStrength;
+        public int WeaponStrength
+        {
+            get { return _weaponStrength; }
+            set
+            {
+                if(_weaponStrength != value)
+                {
+                    _weaponStrength = value;
+                    OnPropertyChanged(nameof(Strength));
+                }
+            }
         }
         private int _bonusMaxStrength = 0;
         public int BonusStrength { get { return _bonusMaxStrength; }
@@ -450,7 +464,7 @@ namespace NFCombat2.Models.Player
                 }
             }
         }
-        private int _maxOverload = 10;
+        private int _maxOverload = 12;
         public int MaxOverload
         {
             get { return _maxOverload; }

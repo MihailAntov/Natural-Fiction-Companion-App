@@ -11,12 +11,19 @@ namespace NFCombat2.Models.CombatResolutions
 {
     internal class ProgramNoEffect : ICombatResolution
     {
-        public MessageType MessageType => MessageType.ProgramNoEffect;
+        private int _overloadCost;
+        public ProgramNoEffect(MessageType messageType,int overloadCost)
+        {
+            _overloadCost   = overloadCost;
+            MessageType = messageType;
+        }
+        public MessageType MessageType { get; set; }
 
-        public string[] MessageArgs => Array.Empty<string>();
+        public string[] MessageArgs => new string[1] {_overloadCost.ToString()};
 
         public Task Resolve(Fight fight)
         {
+            fight.Player.Overload += _overloadCost;
             return Task.CompletedTask;
         }
     }

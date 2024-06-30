@@ -153,7 +153,13 @@
                     </ImageButton.Behaviors>
                 </ImageButton>
                 <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="0" Text="{Binding MainHandName}"/>
-                <ImageButton Grid.Row="5" Grid.Column="0" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.MainHand}" SemanticProperties.Hint="Tap to discard main hand weapon">
+                <ImageButton Grid.Row="5"
+                             Grid.Column="0"
+                             Source="trash"
+                             Command="{Binding DeleteCommand}"
+                             CommandParameter="{Binding Player.MainHand}"
+                             IsVisible="{Binding MainHandImage, Converter={helpers:DeleteIconConverter}}"
+                             SemanticProperties.Hint="Tap to discard main hand weapon">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Ivory" />
                     </ImageButton.Behaviors>
@@ -190,7 +196,12 @@
                     </ImageButton.Behaviors>
                 </ImageButton>
                 <Label FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{Binding OffHandName}"/>
-                <ImageButton Grid.Row="5" Grid.Column="3" Source="trash" Command="{Binding DeleteCommand}" CommandParameter="{Binding Player.OffHand}">
+                <ImageButton Grid.Row="5"
+                             Grid.Column="3"
+                             Source="trash"
+                             Command="{Binding DeleteCommand}"
+                             CommandParameter="{Binding Player.OffHand}"
+                             IsVisible="{Binding OffHandImage, Converter={helpers:DeleteIconConverter}}">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Ivory" />
                     </ImageButton.Behaviors>

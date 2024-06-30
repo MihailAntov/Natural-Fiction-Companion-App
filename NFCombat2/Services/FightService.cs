@@ -1,6 +1,5 @@
 ﻿using NFCombat2.Models.Fights;
 using NFCombat2.Models.Player;
-using NFCombat2.Models.CombatResolutions;
 using NFCombat2.Contracts;
 using NFCombat2.Models.Contracts;
 using System.Collections.ObjectModel;
@@ -49,6 +48,7 @@ namespace NFCombat2.Services
         private readonly IPlayerService _playerService;
         private readonly INameService _nameService;
         private readonly ITechniqueService _techniqueService;
+        private readonly IProgramService _programService;
         //private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
@@ -58,7 +58,8 @@ namespace NFCombat2.Services
             FightRepository fightRepository,
             IPlayerService playerService,
             INameService nameService,
-            ITechniqueService techniqueService
+            ITechniqueService techniqueService,
+            IProgramService programService
             )
         {
             _logService = logService;
@@ -69,6 +70,7 @@ namespace NFCombat2.Services
             _playerService = playerService;
             _nameService = nameService;
             _techniqueService = techniqueService;
+            _programService = programService;
             
         }
 
@@ -625,13 +627,15 @@ namespace NFCombat2.Services
             if(option is ManualProgramCast programCast)
             {
                 var execution = await _popupService.ShowCastPopup(_playerService);
+                
                 switch (execution.Result)
                 {
-                    case ProgramExecutionResult.Success:
+                    case ProgramExecutionResult.Success: 
                         return await ProcessChoice(execution.Content);
-                    case ProgramExecutionResult.NoEffect:
-                    case ProgramExecutionResult.Fail:
-                        return await ProcessChoice(new ProgramFizzle(execution.Result));
+                    //case ProgramExecutionResult.NoEffect:
+                    //    return await ProcessChoice(new ProgramFizzle(execution.Result, execution.Content.Effects.Sum(e=> e.Cost)));
+                    case ProgramExecutionResult.NotExist:
+                        return await ProcessChoice(new ProgramFizzle(execution.Result, 1));
                     case ProgramExecutionResult.Cancelled:
                         return PreviousOptions;
                 }
@@ -639,11 +643,17 @@ namespace NFCombat2.Services
 
             if(option is Program program)
             {
+                //this is where learning needs to happen
+                if(!_fight.Player.Programs.Any(p=> p.Formula == program.Formula))
+                {
+                    _programService.LearnNewProgram(program, _fight.Player);
+                    await AddEffect(new LearnProgram());
+                }
                 var workingEffects = program.Effects.Where(e => e.HasEffect(_fight)).ToList();
                 if(workingEffects.Count == 0)
                 {
-
-                   await AddEffect(new ProgramFizzle(ProgramExecutionResult.Fail));
+                    int cost = program.Effects.Sum(e => e.Cost);
+                    await AddEffect(new ProgramFizzle(ProgramExecutionResult.NoEffect, cost));
                     return await AfterOption();
                 }
 

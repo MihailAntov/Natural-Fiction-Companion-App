@@ -13,9 +13,11 @@ namespace NFCombat2.Models.Actions
     public class ProgramFizzle : ICombatAction
     {
         private ProgramExecutionResult _result;
-        public ProgramFizzle(ProgramExecutionResult result)
+        private int _overloadCost;
+        public ProgramFizzle(ProgramExecutionResult result, int overloadCost)
         {
             _result = result;
+            _overloadCost = overloadCost;
         }
         public MessageType MessageType => MessageType.None;
 
@@ -23,18 +25,22 @@ namespace NFCombat2.Models.Actions
 
         public IList<ICombatResolution> AddToCombatEffects(Fight fight)
         {
-            var resolutions = new List<ICombatResolution>()
-            {
-                new ProgramNoEffect(){}
-            };
+            var resolutions = new List<ICombatResolution>();
 
             if(_result == ProgramExecutionResult.NoEffect)
             {
-                resolutions.Add(new LearnProgram());
+                resolutions.Add(new ProgramNoEffect(MessageType.ProgramNoEffect, _overloadCost));
+            }
+            else
+            {
+                resolutions.Add(new ProgramNoEffect(MessageType.ProgramNotExist, _overloadCost));
             }
 
-
-            return resolutions;
+            foreach(var resolution in resolutions)
+            {
+                fight.Effects.Enqueue(resolution);
+            }
+             return resolutions;
 
         }
     }

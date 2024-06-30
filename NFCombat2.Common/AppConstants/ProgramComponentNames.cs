@@ -27,7 +27,7 @@ namespace NFCombat2.Common.AppConstants
             new Dictionary<ProgramComponentType, string>()
             {
                 {ProgramComponentType.Send, "Изпрати" },
-                {ProgramComponentType.Receive, "Получи" },
+                {ProgramComponentType.Receive, "Приеми" },
                 {ProgramComponentType.Direct, "Насочи" },
                 {ProgramComponentType.Extend, "Удължи" },
                 {ProgramComponentType.Optimize, "Оптимизирай" },

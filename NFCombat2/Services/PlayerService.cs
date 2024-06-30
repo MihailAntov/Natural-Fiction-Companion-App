@@ -209,6 +209,10 @@ namespace NFCombat2.Services
             if(option is Weapon weapon)
             {
                 await AddWeaponToPlayer(weapon, weapon.Hand);
+                if(weapon is IModifyPlayer modifier)
+                {
+                    modifier.OnAdded(CurrentPlayer);
+                }
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
@@ -273,6 +277,10 @@ namespace NFCombat2.Services
             if (option is Weapon weapon)
             {
                 await RemoveWeaponFromPlayer(weapon);
+                if(weapon is IModifyPlayer modifier)
+                {
+                    modifier.OnRemoved(CurrentPlayer);
+                }
                 await _repository.UpdatePlayer(CurrentPlayer);
                 return;
             }
@@ -319,7 +327,8 @@ namespace NFCombat2.Services
                 if(weapon.Weight + otherWeapon.Weight > 2 * CurrentPlayer.MaxWeaponWeight)
                 {
                     TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
-                    string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
+                    //string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
+                    string confirmMessage = String.Format(_nameService.Label(LabelType.DiscardConfirm), otherWeapon.Name);
                     //todo !
                     var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource, _nameService);
                     var popup = new ConfirmationPopupView(viewModel);

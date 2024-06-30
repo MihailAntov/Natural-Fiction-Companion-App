@@ -19,8 +19,8 @@
 		<ApplicationIdGuid>254f4adf-61dc-46bb-96eb-42d7ad15e28a</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>10</ApplicationVersion>
+		<ApplicationDisplayVersion>0.1.1</ApplicationDisplayVersion>
+		<ApplicationVersion>11</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -39,11 +39,9 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#04182e" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="black" BaseSize="512,512" />
+		<MauiSplashScreen Include="Resources\Splash\splash12.svg" Color="04182e" BaseSize="240,240" Resize="true" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 

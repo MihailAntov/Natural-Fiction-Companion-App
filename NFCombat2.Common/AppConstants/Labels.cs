@@ -76,6 +76,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.PartsSection, "Parts" },
             {LabelType.EquipmentSection, "Equipment" },
             {LabelType.AreYouSure, "Are you sure?" },
+            {LabelType.DiscardConfirm, "This will discard {0}. Are you sure?" },
         };
 
         public static Dictionary<LabelType, string> BulgarianLabels = new Dictionary<LabelType, string>
@@ -147,7 +148,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ItemSection, "Торба" },
             {LabelType.PartsSection, "Части" },
             {LabelType.EquipmentSection, "Екипировка" },
-            {LabelType.AreYouSure, "Сигурен ли си?" }
+            {LabelType.AreYouSure, "Сигурен ли си?" },
+            {LabelType.DiscardConfirm, "Това ще премахне {0}. Сигурен ли си?" }
 
         };
     }
