@@ -55,6 +55,7 @@ namespace NFCombat2.Models.Programs
             var damage = new DealDamage(RollsResult, Targets);
             fight.Player.Overload += Cost;
             fight.Effects.Enqueue(damage);
+            RollsResult = DiceCalculator.Calculate(NumberOfDice, DiceMessage, FlatDamage);
             result.Add(damage);
             if (BonusAction)
             {

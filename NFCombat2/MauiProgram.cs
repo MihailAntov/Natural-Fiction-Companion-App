@@ -22,7 +22,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<IFightService, FightService>();
 		builder.Services.AddSingleton<IPlayerService, PlayerService>();
 		builder.Services.AddSingleton<ILogService, LogService>();
-		builder.Services.AddSingleton<IPopupService, PopupService>();
+		builder.Services.AddSingleton<IMyPopupService, MyPopupService>();
 		builder.Services.AddSingleton<IAccuracyService, AccuracyService>();
 		builder.Services.AddSingleton<IItemService, ItemService>();
 		builder.Services.AddSingleton<INameService, NameService>();

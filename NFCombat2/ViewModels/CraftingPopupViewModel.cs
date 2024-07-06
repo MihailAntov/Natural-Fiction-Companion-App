@@ -17,9 +17,9 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
         private readonly IItemService _itemService;
         private readonly InventoryPageViewModel _inventoryPageViewModel;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         private TaskCompletionSource<CraftResult> _taskCompletionSource;   
-        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService,IPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel) : base(nameService)
+        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService, IMyPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel) : base(nameService)
         {
             _playerService = playerService;
             SetUpParts();

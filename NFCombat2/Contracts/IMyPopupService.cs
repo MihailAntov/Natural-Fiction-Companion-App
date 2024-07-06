@@ -9,7 +9,7 @@ using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Contracts
 {
-    public interface IPopupService
+    public interface IMyPopupService
     {
         void ShowPopup(Popup popup);
         void ShowToast(string text);

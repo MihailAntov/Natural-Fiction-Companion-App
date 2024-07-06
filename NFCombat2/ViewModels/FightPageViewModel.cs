@@ -26,13 +26,13 @@ namespace NFCombat2.ViewModels
         private IFightService _fightService;
         private IOptionsService _optionsService;
         private ILogService _logService;
-        private IPopupService _popupService;
+        private IMyPopupService _popupService;
 
 
         public FightPageViewModel(IFightService fightService,
             IOptionsService optionsService,
             ILogService logService,
-            IPopupService popupSerivce,
+            IMyPopupService popupSerivce,
             INameService nameService,
             OptionPickerViewModel opctionPickerViewModel) : base(nameService)
         {

@@ -22,12 +22,12 @@ namespace NFCombat2.ViewModels
     {
         private readonly IPlayerService _playerService;
         private readonly IOptionsService _optionsService;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         private readonly ILogService _logService;
         
         public InventoryPageViewModel(
             IPlayerService playerService,
-            IPopupService popupService,
+            IMyPopupService popupService,
             IOptionsService optionsService,
             ILogService logService,
             INameService nameService) : base (nameService)

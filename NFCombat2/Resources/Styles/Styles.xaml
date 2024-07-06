@@ -433,7 +433,7 @@
         <!--<Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Black}}" />-->
         <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
         <!--<Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />-->
-        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Secondary}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="Ivory" />
         <!--<Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />-->
         <Setter Property="Shell.TabBarTitleColor" Value="Ivory" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray400}" />

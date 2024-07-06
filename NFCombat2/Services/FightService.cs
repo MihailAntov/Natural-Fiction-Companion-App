@@ -42,7 +42,7 @@ namespace NFCombat2.Services
         
         private readonly ILogService _logService;
         private readonly IOptionsService _optionsService;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         private readonly IAccuracyService _accuracyService;
         private readonly FightRepository _fightRepository;
         private readonly IPlayerService _playerService;
@@ -53,7 +53,7 @@ namespace NFCombat2.Services
         public FightService(
             ILogService logService, 
             IOptionsService optionsService, 
-            IPopupService popupService, 
+            IMyPopupService popupService, 
             IAccuracyService accuracyService, 
             FightRepository fightRepository,
             IPlayerService playerService,
@@ -454,7 +454,17 @@ namespace NFCombat2.Services
 
             if (effect is IHaveRolls rollEffect && rollEffect.RollsResult.Dice.Count > 0)
             {
-                if(effect is IHaveAttackRoll attacked && (_accuracyService.Hits(attacked, _fight) != AttackResult.Miss || attacked.AlwaysHits || _fight.RemainingCrits > 0))
+                if(effect is IHaveAttackRoll attacked )
+                {
+                    if((_accuracyService.Hits(attacked, _fight) != AttackResult.Miss || attacked.AlwaysHits || _fight.RemainingCrits > 0))
+                    {
+                        rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
+                        var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, _playerService.CurrentPlayer, canReroll, canFreeReroll);
+                        await taskCompletion.Task;
+                    }
+                    
+                }
+                else
                 {
                     rollEffect.DiceMessage = _nameService.DiceMessage(rollEffect.DiceMessageType, rollEffect.DiceMessageArgs);
                     var taskCompletion = await _popupService.ShowDiceRollsPopup(rollEffect, _playerService.CurrentPlayer, canReroll, canFreeReroll);

@@ -13,7 +13,7 @@ namespace NFCombat2.ViewModels
     {
 
         private IPlayerService _playerService;
-        private IPopupService _popupService;
+        private IMyPopupService _popupService;
         private ISettingsService _settingsService;
         private Player _player;
         private readonly SettingsPageViewModel _settingsPageViewModel;
@@ -22,7 +22,7 @@ namespace NFCombat2.ViewModels
         public Command ChangeProfileCommand { get; set; }
         public Command ChangeClassCommand { get; set; }
         public Command ChangeLanguageCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel, ISettingsService settingsService) : base(nameService)
+        public CharacterPageViewModel(IPlayerService playerService, IMyPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel, ISettingsService settingsService) : base(nameService)
         {
             _playerService = playerService;
             _popupService = popupService;

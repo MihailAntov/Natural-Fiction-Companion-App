@@ -4,7 +4,7 @@
              x:Name="NoteDetails_"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Pages.NoteDetails"
-             Title="NoteDetails">
+             Title="">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>

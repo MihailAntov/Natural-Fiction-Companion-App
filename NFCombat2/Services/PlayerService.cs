@@ -19,7 +19,7 @@ namespace NFCombat2.Services
     public class PlayerService : IPlayerService, INotifyPropertyChanged
     {
         private PlayerRepository _repository;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         //private SettingsRepository _settings;
         private readonly ISettingsService _settingsService;
         private readonly IProgramService _programService;
@@ -28,7 +28,7 @@ namespace NFCombat2.Services
         public PlayerService(PlayerRepository repository,
             //SettingsRepository settings,
             ISettingsService settingsService,
-            IPopupService popupService,
+            IMyPopupService popupService,
             INameService nameService,
             IProgramService programService)
         {

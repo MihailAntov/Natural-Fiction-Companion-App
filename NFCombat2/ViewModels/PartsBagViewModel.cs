@@ -16,13 +16,13 @@ namespace NFCombat2.ViewModels
         private PartBag _partBag;
         private readonly InventoryPageViewModel _inventoryPageViewModel;
         private readonly IPlayerService _playerService;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         private readonly IItemService _itemService;
 
         public PartsBagViewModel(
             IPlayerService playerService, 
-            INameService nameService, 
-            IPopupService popupService, 
+            INameService nameService,
+            IMyPopupService popupService, 
             IItemService itemService,
             InventoryPageViewModel inventoryPageViewModel
             ) : base(nameService)

@@ -11,7 +11,7 @@ namespace NFCombat2.ViewModels
     {
         public Command RegisterCommand { get; set; }
         private readonly IPlayerService _playerService;
-        private readonly IPopupService _popupService;
+        private readonly IMyPopupService _popupService;
         private TaskCompletionSource<Player> _taskCompletionSource;
         private string _selectClassLabel;
         public string SelectClassLabel
@@ -67,7 +67,7 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public AddingProfileViewModel(IPlayerService playerService,IPopupService popupService, TaskCompletionSource<Player> taskCompletionSource, INameService nameService) : base (nameService)
+        public AddingProfileViewModel(IPlayerService playerService, IMyPopupService popupService, TaskCompletionSource<Player> taskCompletionSource, INameService nameService) : base (nameService)
         {
             RegisterCommand = new Command<Player>(async (player) => await RegisterPlayer(player));
             _playerService = playerService;

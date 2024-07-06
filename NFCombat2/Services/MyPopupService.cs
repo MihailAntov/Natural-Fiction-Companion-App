@@ -12,11 +12,11 @@ using NFCombat2.Models.SpecOps;
 
 namespace NFCombat2.Services
 {
-    public class PopupService : IPopupService
+    public class MyPopupService : IMyPopupService
     {
         private readonly IProgramService _programService;
         private readonly INameService _nameService;
-        public PopupService(IProgramService programService , INameService nameService)
+        public MyPopupService(IProgramService programService , INameService nameService)
         {
             _programService = programService;
             _nameService = nameService;

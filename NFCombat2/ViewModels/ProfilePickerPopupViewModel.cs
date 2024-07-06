@@ -9,7 +9,7 @@ namespace NFCombat2.ViewModels
     {
         private TaskCompletionSource<Player> _taskCompletionSource;
         private CharacterPageViewModel _parent;
-        private IPopupService _popupService;
+        private IMyPopupService _popupService;
         private IPlayerService _playerService;
         public ObservableCollection<Player> Profiles { get; set; }
         public Command ChooseCommand { get; set; }
@@ -33,7 +33,7 @@ namespace NFCombat2.ViewModels
         public ProfilePickerPopupViewModel(
             TaskCompletionSource<Player> taskCompletionSource,
             IList<Player> profiles,
-            IPopupService popupService,
+            IMyPopupService popupService,
             IPlayerService playerService,
             INameService nameService,
             CharacterPageViewModel parent
