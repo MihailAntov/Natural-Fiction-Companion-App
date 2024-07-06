@@ -15,12 +15,14 @@ namespace NFCombat2.Models.Actions
     {
         private readonly Fight fight;
         private readonly Enemy _enemy;
+        private readonly Weapon _weapon;
         public EnemyRangedAttack(Fight fight, Enemy enemy, Weapon weapon)
         {
             this.fight = fight;
             _enemy = enemy;
+            _weapon = weapon;
             AttackRollResult = DiceCalculator.Calculate(1, AttackDiceMessage).Dice.FirstOrDefault();
-            RollsResult = DiceCalculator.Calculate(weapon.DamageDice, DiceMessage, weapon.FlatDamage);
+            RollsResult = DiceCalculator.Calculate(_weapon.DamageDice, DiceMessage, _weapon.FlatDamage);
             BaseAccuracy = weapon.Accuracy;
             AlwaysHits = weapon.AlwaysHits;
             DiceMessageArgs[0] = _enemy.Name;
@@ -54,6 +56,7 @@ namespace NFCombat2.Models.Actions
             {
                 fight.Effects.Enqueue(resolution);
             }
+            RollsResult = DiceCalculator.Calculate(_weapon.DamageDice, DiceMessage, _weapon.FlatDamage);
             return resolutions;
         }
 
@@ -67,6 +70,7 @@ namespace NFCombat2.Models.Actions
             {
                 fight.Effects.Enqueue(resolution);
             }
+            RollsResult = DiceCalculator.Calculate(_weapon.DamageDice, DiceMessage, _weapon.FlatDamage);
             return resolutions;
         }
 
@@ -82,7 +86,7 @@ namespace NFCombat2.Models.Actions
             {
                 fight.Effects.Enqueue(resolution);
             }
-
+            RollsResult = DiceCalculator.Calculate(_weapon.DamageDice, DiceMessage, _weapon.FlatDamage);
             return resolutions;
         }
     }

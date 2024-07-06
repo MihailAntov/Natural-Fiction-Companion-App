@@ -40,7 +40,7 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             //{
             //    fight.Player.Equipment.Remove(this);
             //}
-
+            RollsResult = DiceCalculator.Calculate(3);
             return result;
         }
 

@@ -60,8 +60,8 @@ namespace NFCombat2.Models.Programs
                 };
                 fight.DelayedEffects.Enqueue(delayedEffect);
             }
-            
 
+            RollsResult = DiceCalculator.Calculate(_dice);
             return result;
         }
 

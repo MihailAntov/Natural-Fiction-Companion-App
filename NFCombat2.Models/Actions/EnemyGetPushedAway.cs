@@ -45,6 +45,7 @@ namespace NFCombat2.Models.Actions
             {
                 fight.Effects.Enqueue(resolution);
             }
+            RollsResult = DiceCalculator.Calculate(1);
             return resolutions;
         }
     }

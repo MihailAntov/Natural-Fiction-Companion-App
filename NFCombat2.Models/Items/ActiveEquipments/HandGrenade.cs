@@ -35,8 +35,8 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             
             var targets = fight.Enemies.Where(e => e.Distance <= 10).ToList();
             ICombatResolution damage = new DealDamage(RollsResult, targets);
-            RollsResult = DiceCalculator.Calculate(2);
             fight.Effects.Enqueue(damage);
+            RollsResult = DiceCalculator.Calculate(2);
             return new List<ICombatResolution>() { damage };
         }
 

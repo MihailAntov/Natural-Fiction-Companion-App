@@ -98,6 +98,7 @@ namespace NFCombat2.Models.Actions
             {
                 fight.Effects.Enqueue(resolution);
             }
+            RollsResult = DiceCalculator.Calculate(Weapon.DamageDice, DiceMessage, Weapon.FlatDamage);
             return resolutions;
         }
 

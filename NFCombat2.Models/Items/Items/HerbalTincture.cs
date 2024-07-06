@@ -33,6 +33,7 @@ namespace NFCombat2.Models.Items.Items
         {
             var heal = new Heal(RollsResult);
             fight.Effects.Enqueue(heal);
+            RollsResult = DiceCalculator.Calculate(2);
             return new List<ICombatResolution>() { heal };
         }
 
