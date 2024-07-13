@@ -40,6 +40,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<NotePage>();
 		builder.Services.AddSingleton<DicePage>();
 		builder.Services.AddSingleton<SettingsPage>();
+		builder.Services.AddSingleton<GetBookPage>();
+		builder.Services.AddSingleton<ContactPage>();
 
 
 		builder.Services.AddSingleton<InventoryPageViewModel>();
@@ -55,6 +57,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<NoteDetailsViewModel>();
 		builder.Services.AddSingleton<SettingsPageViewModel>();
 		builder.Services.AddSingleton<CharacterPageViewModel>();
+		builder.Services.AddSingleton<GetBookPageViewModel>();
+		builder.Services.AddSingleton<ContactPageViewModel>();
 		builder.Services.AddSingleton<FightRepository>();
 
 		builder.Services.AddSingleton<Note>();

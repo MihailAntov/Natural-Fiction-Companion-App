@@ -52,7 +52,7 @@ namespace NFCombat2.Common.AppConstants
             {DiceMessageType.SwampRoll, "Хвърлянето на блатото" },
             {DiceMessageType.TentacleRoll, "Хвърлянето на {0}" },
             {DiceMessageType.MedKitRoll, "Лечението от автоматизирания ти медицински комплект "},
-            {DiceMessageType.HandGrenadeRoll, "Your hand grenade's damage" },
+            {DiceMessageType.HandGrenadeRoll, "Щетите на гранатата ти" },
             {DiceMessageType.SurgicalKitRoll, "Лечението от портативния ти хирургически лазер" },
             {DiceMessageType.GrapheneRodRoll, "Щетите на заредения ти графенов прът" },
             {DiceMessageType.HerbalTinctureRoll, "Лечението от билковата ти тинктура" },

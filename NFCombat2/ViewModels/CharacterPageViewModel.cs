@@ -14,28 +14,38 @@ namespace NFCombat2.ViewModels
 
         private IPlayerService _playerService;
         private IMyPopupService _popupService;
-        private ISettingsService _settingsService;
+        private readonly GetBookPageViewModel _getBookPageViewModel;
+        private readonly ContactPageViewModel _contactPageViewModel;
+        
         private Player _player;
         private readonly SettingsPageViewModel _settingsPageViewModel;
         
         public Command AddNewProfileCommand { get; set; }
         public Command ChangeProfileCommand { get; set; }
         public Command ChangeClassCommand { get; set; }
-        public Command ChangeLanguageCommand { get; set; }
-        public CharacterPageViewModel(IPlayerService playerService, IMyPopupService popupService, INameService nameService, SettingsPageViewModel settingsPageViewModel, ISettingsService settingsService) : base(nameService)
+        
+        public CharacterPageViewModel(IPlayerService playerService,
+            IMyPopupService popupService,
+            INameService nameService,
+            SettingsPageViewModel settingsPageViewModel,
+            ISettingsService settingsService,
+            GetBookPageViewModel bookPageViewModel,
+            ContactPageViewModel contactPageViewModel) : base(nameService, settingsService)
         {
             _playerService = playerService;
             _popupService = popupService;
-            _settingsService = settingsService;
+            _getBookPageViewModel = bookPageViewModel;
+            _contactPageViewModel = contactPageViewModel;
             _playerService.PropertyChanged += OnPlayerServicePropertyChanged;
             AddNewProfileCommand = new Command(async ()=> await AddProfile());
-            OpenSettingsCommand = new Command(async () => await OpenSettings());
+            
             ChangeProfileCommand = new Command(async () => await ChangeProfile());
             ChangeClassCommand = new Command(async () => await ChangeClass());
-            ChangeLanguageCommand = new Command(async () => await ChangeLanguage());
+            OpenContactPageCommand = new Command(async() => await OpenContactPage());
+            OpenGetBookPageCommand = new Command(async() => await OpenGetBookPage());
             Player = _playerService.CurrentPlayer;
             _settingsPageViewModel = settingsPageViewModel;
-            LanguageIcon = _settingsService.Language == Language.Bulgarian ? "bg" : "en";
+            
             LoadPlayersAsync();
             
         }
@@ -129,19 +139,7 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        private string _languageIcon;
-        public string LanguageIcon
-        {
-            get { return _languageIcon; }
-            set
-            {
-                if(value != _languageIcon)
-                {
-                    _languageIcon = value;
-                    OnPropertyChanged(nameof(LanguageIcon));
-                }
-            }
-        }
+        
 
         private string _characterPageTitle;
         public string CharacterPageTitle
@@ -153,6 +151,49 @@ namespace NFCombat2.ViewModels
                 {
                     _characterPageTitle = value;
                     OnPropertyChanged(nameof(CharacterPageTitle));
+                }
+            }
+        }
+
+        public Command OpenContactPageCommand { get; set; }
+        public async Task OpenContactPage()
+        {
+            await Shell.Current.Navigation.PushAsync(new ContactPage(_contactPageViewModel));
+            Shell.Current.FlyoutIsPresented = false;
+        }
+        private string _contactPageTitle;
+        public string ContactPageTitle
+        {
+            get { return _contactPageTitle; }
+            set
+            {
+                if(_contactPageTitle != value)
+                {
+                    _contactPageTitle = value;
+                    OnPropertyChanged(nameof(ContactPageTitle));
+                }
+            }
+        }
+
+
+        public Command OpenGetBookPageCommand { get; set; }
+
+        public async Task OpenGetBookPage()
+        {
+            await Shell.Current.Navigation.PushAsync(new GetBookPage(_getBookPageViewModel));
+            Shell.Current.FlyoutIsPresented = false;
+        }
+
+        private string _getBookPageTitle;
+        public string GetBookPageTitle
+        {
+            get { return _getBookPageTitle; }
+            set
+            {
+                if (_getBookPageTitle != value)
+                {
+                    _getBookPageTitle = value;
+                    OnPropertyChanged(nameof(GetBookPageTitle));
                 }
             }
         }
@@ -303,7 +344,7 @@ namespace NFCombat2.ViewModels
         {
             await LoadPlayersAsync();
             TaskCompletionSource<Player> taskCompletionSource = new TaskCompletionSource<Player>();
-            var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles.Where(p=> p.Id != _player.Id).ToList(), _popupService,_playerService,_nameService, this);
+            var viewModel = new ProfilePickerPopupViewModel(taskCompletionSource, Profiles.Where(p=> p.Id != _player.Id).ToList(), _popupService,_playerService,_nameService, _settingsService, this);
             var view = new ProfilePickerPopupView(viewModel);
             await Shell.Current.Navigation.PushAsync(view);
             var profile = await taskCompletionSource.Task;
@@ -378,10 +419,7 @@ namespace NFCombat2.ViewModels
         }
 
         
-        public async Task OpenSettings()
-        {
-            await Shell.Current.Navigation.PushAsync(new SettingsPage(_settingsPageViewModel));
-        }
+        
 
         private void OnPlayerServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -401,18 +439,7 @@ namespace NFCombat2.ViewModels
             }
         }
 
-        public async Task ChangeLanguage()
-        {
-            if (_settingsService.Language == Language.Bulgarian)
-            {
-                await _settingsService.SetLanguage(Language.English);
-                LanguageIcon = "en";
-                return;
-            }
-
-            await _settingsService.SetLanguage(Language.Bulgarian);
-            LanguageIcon = "bg";
-        }
+        
 
         public override void UpdateLanguageSpecificProperties()
         {
@@ -429,6 +456,8 @@ namespace NFCombat2.ViewModels
             {
                 PlayerClassLabel = _nameService.ClassName(Player.Class);
             }
+            GetBookPageTitle = _nameService.Label(LabelType.GetBookTitle);
+            ContactPageTitle = _nameService.Label(LabelType.ContactTitle);
             //to update the class name dropdown names
             OnPropertyChanged(nameof(Classes));
             

@@ -18,7 +18,7 @@ namespace NFCombat2.ViewModels
         private readonly IPlayerService _playerService;
         private readonly INoteService _noteService;
         public Player Player { get; set; }  
-        public NotePageViewModel(IPlayerService playerService, INoteService noteService, INameService nameService) : base(nameService)
+        public NotePageViewModel(IPlayerService playerService, INoteService noteService, INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
         {
             _playerService = playerService;
             _noteService = noteService;
@@ -64,7 +64,7 @@ namespace NFCombat2.ViewModels
 
         private async Task OpenNote(Note note)
         {
-            var vm = new NoteDetailsViewModel(_noteService, this, _nameService);
+            var vm = new NoteDetailsViewModel(_noteService, this, _nameService, _settingsService);
             vm.Note = note;
             
             // todo: add navigation

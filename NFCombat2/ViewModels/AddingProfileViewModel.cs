@@ -67,7 +67,7 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public AddingProfileViewModel(IPlayerService playerService, IMyPopupService popupService, TaskCompletionSource<Player> taskCompletionSource, INameService nameService) : base (nameService)
+        public AddingProfileViewModel(IPlayerService playerService, IMyPopupService popupService, TaskCompletionSource<Player> taskCompletionSource, INameService nameService, ISettingsService settingsService) : base (nameService, settingsService)
         {
             RegisterCommand = new Command<Player>(async (player) => await RegisterPlayer(player));
             _playerService = playerService;

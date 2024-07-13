@@ -18,7 +18,8 @@ namespace NFCombat2.ViewModels
             TaskCompletionSource<ProgramExecution> taskCompletionSource,
             IProgramService programService,
             IPlayerService playerService,
-            INameService nameService) : base(nameService) 
+            INameService nameService, 
+            ISettingsService settingsService) : base(nameService, settingsService) 
         {
             _taskCompletionSource = taskCompletionSource;
             _programService = programService;

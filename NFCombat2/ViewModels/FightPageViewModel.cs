@@ -34,7 +34,7 @@ namespace NFCombat2.ViewModels
             ILogService logService,
             IMyPopupService popupSerivce,
             INameService nameService,
-            OptionPickerViewModel opctionPickerViewModel) : base(nameService)
+            OptionPickerViewModel opctionPickerViewModel, ISettingsService settingsService) : base(nameService, settingsService)
         {
             _fightService = fightService;
             _fightService.PropertyChanged += OnFightServiceEnemiesPropertyChanged;

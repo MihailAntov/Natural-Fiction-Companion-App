@@ -21,7 +21,7 @@ namespace NFCombat2.ViewModels
         public Command RerollCommand { get; set; }
         public Command FreeRerollCommand { get; set; }
         private TaskCompletionSource<bool> _taskCompletionSource;
-        public DiceResultViewModel(TaskCompletionSource<bool> task, Player player, INameService nameService) : base(nameService)
+        public DiceResultViewModel(TaskCompletionSource<bool> task, Player player, INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
         {
             UpdateLanguageSpecificProperties();
             ConfirmCommand = new Command(ConfirmRolls);
@@ -30,7 +30,7 @@ namespace NFCombat2.ViewModels
             _taskCompletionSource = task;
             Player = player;
         }
-        public DiceResultViewModel(IHaveAttackRoll effect, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
+        public DiceResultViewModel(IHaveAttackRoll effect, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService, ISettingsService settingsService) : this(task, player, nameService, settingsService)
         {
             Dice = new List<Dice>() { effect.AttackRollResult };
             foreach(var die in Dice)
@@ -42,7 +42,7 @@ namespace NFCombat2.ViewModels
             
         }
 
-        public DiceResultViewModel(IHaveRolls effect, Player player, TaskCompletionSource<bool> task,bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
+        public DiceResultViewModel(IHaveRolls effect, Player player, TaskCompletionSource<bool> task,bool hasReroll, bool hasFreeReroll, INameService nameService, ISettingsService settingsService) : this(task, player, nameService, settingsService)
         {
             Dice = effect.RollsResult.Dice;
             foreach (var die in Dice)
@@ -54,7 +54,7 @@ namespace NFCombat2.ViewModels
             ConfirmCommand = new Command(ConfirmRolls);
         }
 
-        public DiceResultViewModel(DiceRollResult effect, string message, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService) : this(task, player, nameService)
+        public DiceResultViewModel(DiceRollResult effect, string message, Player player, TaskCompletionSource<bool> task, bool hasReroll, bool hasFreeReroll, INameService nameService, ISettingsService settingsService) : this(task, player, nameService, settingsService)
         {
             Dice = effect.Dice;
             foreach (var die in Dice)

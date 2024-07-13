@@ -10,7 +10,7 @@ namespace NFCombat2.ViewModels
         
         private readonly TaskCompletionSource<bool> _taskCompletionSource;
         
-        public FightResultPopupViewModel(Fight fight, INameService nameService, TaskCompletionSource<bool> taskCompletionSource) : base (nameService)
+        public FightResultPopupViewModel(Fight fight, INameService nameService, ISettingsService settingsService, TaskCompletionSource<bool> taskCompletionSource) : base (nameService, settingsService)
         {
             Fight = fight;
             _taskCompletionSource = taskCompletionSource;

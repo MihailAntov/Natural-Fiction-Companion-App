@@ -6,6 +6,12 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Pages.FightPage"
              Title="Fight Simulator">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}" SemanticProperties.Hint="Tap to open the settings menu">
+        
+    </ToolbarItem>-->
+        <ToolbarItem IconImageSource="{Binding LanguageIcon}" Command="{Binding ChangeLanguageCommand}" SemanticProperties.Hint="Change Language"/>
+    </ContentPage.ToolbarItems>
     <Shell.TitleView>
         <Label
         Text="{Binding FightPageTitle}"

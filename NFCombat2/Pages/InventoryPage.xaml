@@ -8,6 +8,12 @@
              xmlns:views="clr-namespace:NFCombat2.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}" SemanticProperties.Hint="Tap to open the settings menu">
+        
+    </ToolbarItem>-->
+        <ToolbarItem IconImageSource="{Binding LanguageIcon}" Command="{Binding ChangeLanguageCommand}" SemanticProperties.Hint="Change Language"/>
+    </ContentPage.ToolbarItems>
     <Shell.TitleView>
         <Label
         Text="{Binding Title}"
@@ -158,7 +164,7 @@
                              Source="trash"
                              Command="{Binding DeleteCommand}"
                              CommandParameter="{Binding Player.MainHand}"
-                             IsVisible="{Binding MainHandImage, Converter={helpers:DeleteIconConverter}}"
+                             IsVisible="{Binding Player.MainHand, Converter={helpers:DeleteIconConverter}}"
                              SemanticProperties.Hint="Tap to discard main hand weapon">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Ivory" />
@@ -201,7 +207,7 @@
                              Source="trash"
                              Command="{Binding DeleteCommand}"
                              CommandParameter="{Binding Player.OffHand}"
-                             IsVisible="{Binding OffHandImage, Converter={helpers:DeleteIconConverter}}">
+                             IsVisible="{Binding Player.OffHand, Converter={helpers:DeleteIconConverter}}">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="Ivory" />
                     </ImageButton.Behaviors>
@@ -230,7 +236,11 @@
                                         <ColumnDefinition Width="25"/>
                                     </Grid.ColumnDefinitions>
                                     <Label VerticalTextAlignment="Center" Grid.Column="0" Text="{Binding Name}"/>
-                                    <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}"/>
+                                    <ImageButton Grid.Column="1" Source="wrench" IsVisible="{Binding IsInvention}">
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
                                     <ImageButton Grid.Column="2" Source="{Binding Image}"/>
                                     <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="3" Text="{Binding Quantity}" IsVisible="{Binding IsConsumable}"/>
                                     <Stepper ScaleY="0.6" VerticalOptions="Center" Grid.Column="4" Minimum="1"  Value="{Binding Quantity}" ValueChanged="ChangedQuantity" IsVisible="{Binding IsConsumable}"></Stepper>

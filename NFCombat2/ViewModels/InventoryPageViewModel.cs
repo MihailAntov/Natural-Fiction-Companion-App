@@ -30,7 +30,8 @@ namespace NFCombat2.ViewModels
             IMyPopupService popupService,
             IOptionsService optionsService,
             ILogService logService,
-            INameService nameService) : base (nameService)
+            INameService nameService, 
+            ISettingsService settingsService) : base (nameService, settingsService)
         {
             _playerService = playerService;
             _optionsService = optionsService;
@@ -405,7 +406,7 @@ namespace NFCombat2.ViewModels
 
         public async void GetItemDetails(IAddable item)
         {
-            var viewModel = new ItemDetailsPopupViewModel(item, this, _nameService);
+            var viewModel = new ItemDetailsPopupViewModel(item, this, _nameService, _settingsService);
             var popup = new ItemDetailsPopupView(viewModel);
             viewModel.Self = popup;
             _popupService.ShowPopup(popup);
@@ -436,6 +437,7 @@ namespace NFCombat2.ViewModels
                 bool canReroll = Player.Class == PlayerClass.SpecOps;
                 if(item is IHaveRolls rollsEffect)
                 {
+                    rollsEffect.DiceMessage = _nameService.DiceMessage(rollsEffect.DiceMessageType, rollsEffect.DiceMessageArgs);
                     var taskCompletion = await _popupService.ShowDiceRollsPopup(rollsEffect,Player, canReroll,false);
                     await taskCompletion.Task;
                 }
@@ -479,10 +481,12 @@ namespace NFCombat2.ViewModels
         {
             if(_playerService.CurrentPlayer.MainHand == null && _playerService.CurrentPlayer.OffHand == null)
             {
-                MainHandImage = "none";
-                OffHandImage = "none";
+                MainHandImage = "addweapon";
+                OffHandImage = "addweapon";
                 MainHandName = string.Empty;
                 OffHandName = string.Empty;
+                MainHandTransparency = 0.5;
+                OffHandTransparency = 0.5;
             }
 
 
@@ -501,7 +505,8 @@ namespace NFCombat2.ViewModels
                     }
                     else
                     {
-                        OffHandImage = "none";
+                        OffHandImage = "addweapon";
+                        OffHandTransparency = 0.5;
                     }
                 }
             }
@@ -521,7 +526,8 @@ namespace NFCombat2.ViewModels
                     }
                     else
                     {
-                        MainHandImage = "none";
+                        MainHandImage = "addweapon";
+                        MainHandTransparency = 0.5;
                     }
                 }
 

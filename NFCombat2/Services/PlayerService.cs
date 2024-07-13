@@ -330,7 +330,7 @@ namespace NFCombat2.Services
                     //string confirmMessage = $"This will discard {otherWeapon.Name}. Are you sure?";
                     string confirmMessage = String.Format(_nameService.Label(LabelType.DiscardConfirm), otherWeapon.Name);
                     //todo !
-                    var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource, _nameService);
+                    var viewModel = new ConfirmationPopupViewModel(confirmMessage, taskCompletionSource, _nameService, _settingsService);
                     var popup = new ConfirmationPopupView(viewModel);
                     _popupService.ShowPopup(popup);
                     bool confirmed = await taskCompletionSource.Task;
@@ -342,12 +342,20 @@ namespace NFCombat2.Services
 
                     if(hand == Hand.MainHand)
                     {
+                        if(CurrentPlayer.OffHand is IModifyPlayer modifier)
+                        {
+                            modifier.OnRemoved(CurrentPlayer);
+                        }
                         CurrentPlayer.OffHand = null;
                         CurrentPlayer.MainHand = weapon;
                         return;
                     }
                     else
                     {
+                        if (CurrentPlayer.MainHand is IModifyPlayer modifier)
+                        {
+                            modifier.OnRemoved(CurrentPlayer);
+                        }
                         CurrentPlayer.MainHand = null;
                         CurrentPlayer.OffHand = weapon;
                         return;
@@ -373,6 +381,11 @@ namespace NFCombat2.Services
                 foreach(var modification in oldWeapon.Modifications)
                 {
                     modification.UnAttachFromWeapon();
+                }
+
+                if(oldWeapon is IModifyPlayer modifier)
+                {
+                    modifier.OnRemoved(CurrentPlayer);
                 }
             }
             

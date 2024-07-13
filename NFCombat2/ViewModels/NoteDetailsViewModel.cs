@@ -13,7 +13,7 @@ namespace NFCombat2.ViewModels
     {
         private readonly INoteService _noteService;
         private NotePageViewModel _parent;
-        public NoteDetailsViewModel(INoteService noteService, NotePageViewModel parent, INameService nameService) : base (nameService)
+        public NoteDetailsViewModel(INoteService noteService, NotePageViewModel parent, INameService nameService, ISettingsService settingsService) : base (nameService, settingsService)
         {
             _noteService = noteService;
             DeleteNoteCommand = new Command(DeleteNote);

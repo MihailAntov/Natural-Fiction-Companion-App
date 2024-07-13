@@ -36,8 +36,9 @@ namespace NFCombat2.ViewModels
             IMyPopupService popupService,
             IPlayerService playerService,
             INameService nameService,
+            ISettingsService settingsService,
             CharacterPageViewModel parent
-            ) : base(nameService)
+            ) : base(nameService, settingsService)
         {
             _taskCompletionSource = taskCompletionSource;
             Profiles = new ObservableCollection<Player>(profiles);
@@ -62,7 +63,7 @@ namespace NFCombat2.ViewModels
         {
             string message = _nameService.Label(Common.Enums.LabelType.AreYouSure);
             var taskCompletionSource = new TaskCompletionSource<bool>();
-            var vm = new ConfirmationPopupViewModel(message,taskCompletionSource,_nameService);
+            var vm = new ConfirmationPopupViewModel(message,taskCompletionSource,_nameService, _settingsService);
             var popup = new ConfirmationPopupView(vm);
             _popupService.ShowPopup(popup);
 

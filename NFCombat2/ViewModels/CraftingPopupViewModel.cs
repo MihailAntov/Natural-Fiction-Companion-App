@@ -19,7 +19,7 @@ namespace NFCombat2.ViewModels
         private readonly InventoryPageViewModel _inventoryPageViewModel;
         private readonly IMyPopupService _popupService;
         private TaskCompletionSource<CraftResult> _taskCompletionSource;   
-        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService, IMyPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel) : base(nameService)
+        public CraftingPopupViewModel(IPlayerService playerService, IItemService itemService, INameService nameService, IMyPopupService popupService, TaskCompletionSource<CraftResult> taskCompletionSource, InventoryPageViewModel inventoryPageViewModel, ISettingsService settingsService) : base(nameService, settingsService)
         {
             _playerService = playerService;
             SetUpParts();
@@ -102,6 +102,12 @@ namespace NFCombat2.ViewModels
 
         public async void ConfirmEpisode()
         {
+            if(Episode == null)
+            {
+                _taskCompletionSource.TrySetResult(CraftResult.Incorrect);
+                return;
+            }
+
             if(ToBeAdded.Episode == int.Parse(Episode))
             {
                 _taskCompletionSource.TrySetResult(CraftResult.Correct);

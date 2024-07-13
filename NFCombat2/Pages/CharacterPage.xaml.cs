@@ -43,7 +43,7 @@ public partial class CharacterPage : ContentPage
         base.OnNavigatedFrom(args);
     }
 
-
+  
 
 
 

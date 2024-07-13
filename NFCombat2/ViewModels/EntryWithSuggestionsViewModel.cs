@@ -21,8 +21,9 @@ namespace NFCombat2.ViewModels
             IPlayerService playerService,
             ICollection<IAddable> allOptions,
             TaskCompletionSource<IAddable> taskCompletionSource,
-            INameService nameService
-            ) : base(nameService)
+            INameService nameService,
+            ISettingsService settingsService
+            ) : base(nameService, settingsService)
         {
             _allOptions = allOptions;
             _playerService = playerService;

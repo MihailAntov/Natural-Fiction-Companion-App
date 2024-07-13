@@ -24,8 +24,9 @@ namespace NFCombat2.ViewModels
             INameService nameService,
             IMyPopupService popupService, 
             IItemService itemService,
+            ISettingsService settingsService,
             InventoryPageViewModel inventoryPageViewModel
-            ) : base(nameService)
+            ) : base(nameService, settingsService)
         {
             PartsBag = playerService.CurrentPlayer.PartsBag;
             _playerService = playerService;
@@ -45,7 +46,7 @@ namespace NFCombat2.ViewModels
         {
 
             TaskCompletionSource<CraftResult> taskCompletionSource = new TaskCompletionSource<CraftResult>();
-            var viewModel = new CraftingPopupViewModel(_playerService, _itemService,_nameService,_popupService, taskCompletionSource, _inventoryPageViewModel);
+            var viewModel = new CraftingPopupViewModel(_playerService, _itemService,_nameService,_popupService, taskCompletionSource, _inventoryPageViewModel,_settingsService);
             var popup = new CraftingPopupView(viewModel);
             _popupService.ShowPopup(popup);
             var result = await taskCompletionSource.Task;

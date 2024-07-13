@@ -28,6 +28,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.FightPageTitle, "Combat Simulator" },
             {LabelType.NotePageTitle, "Log" },
             {LabelType.InventoryPageTitle, "Inventory" },
+            {LabelType.DicePageTitle, "Dice Roller" },
             {LabelType.FindEpisodeButton, "Find episode" },
             {LabelType.EpisodeEntryHint, "Enter the fight's episode number" },
             {LabelType.Yes, "Yes" },
@@ -77,6 +78,12 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.EquipmentSection, "Equipment" },
             {LabelType.AreYouSure, "Are you sure?" },
             {LabelType.DiscardConfirm, "This will discard {0}. Are you sure?" },
+            {LabelType.GetBookBefore, "In order you use this app, you need the Natural Fiction gamebook. You can find it at " },
+            {LabelType.GetBookAfter, "." },
+            {LabelType.GetBookTitle, "Get the book" },
+            {LabelType.ContactBefore, "You can send feedback and comments at " },
+            {LabelType.ContactAfter, "." },
+            {LabelType.ContactTitle, "Contact us" },
         };
 
         public static Dictionary<LabelType, string> BulgarianLabels = new Dictionary<LabelType, string>
@@ -101,6 +108,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.FightPageTitle, "Симулатор на битка" },
             {LabelType.NotePageTitle, "Дневник" },
             {LabelType.InventoryPageTitle, "Инвентар" },
+            {LabelType.DicePageTitle, "Зарове" },
             {LabelType.FindEpisodeButton, "Открий епизод" },
             {LabelType.EpisodeEntryHint, "Въведи епизода на битката" },
             {LabelType.Yes, "Да" },
@@ -149,7 +157,13 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.PartsSection, "Части" },
             {LabelType.EquipmentSection, "Екипировка" },
             {LabelType.AreYouSure, "Сигурен ли си?" },
-            {LabelType.DiscardConfirm, "Това ще премахне {0}. Сигурен ли си?" }
+            {LabelType.DiscardConfirm, "Това ще премахне {0}. Сигурен ли си?" },
+            {LabelType.GetBookBefore, "За да използвате това приложение, ви е нужна книгата-игра Естествена Фантастика. Можете да я намерите на  " },
+            {LabelType.GetBookAfter, "." },
+            {LabelType.GetBookTitle, "Вземи книгата" },
+            {LabelType.ContactBefore, "Можете да пишете на " },
+            {LabelType.ContactAfter, " с коментари и въпроси." },
+            {LabelType.ContactTitle, "Контакти" },
 
         };
     }

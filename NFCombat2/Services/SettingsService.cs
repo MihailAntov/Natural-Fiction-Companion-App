@@ -10,6 +10,19 @@ namespace NFCombat2.Services
     public class SettingsService : ISettingsService, INotifyPropertyChanged
     {
         //private readonly SettingsRepository _settingsRepository;
+        private string _languageIcon;
+        public string LanguageIcon
+        {
+            get { return _languageIcon; }
+            set
+            {
+                if(_languageIcon != value)
+                {
+                    _languageIcon = value; 
+                    OnPropertyChanged(nameof(LanguageIcon));
+                }
+            }
+        }
         public SettingsService()
         {
             //_settingsRepository = settingsRepository;
@@ -53,6 +66,7 @@ namespace NFCombat2.Services
             {
                 Language = (Language)language;
             }
+            LanguageIcon = Language == Language.English ? "en" : "bg";
             //Language = await _settingsRepository.GetLanguage();
         }
 
@@ -61,6 +75,7 @@ namespace NFCombat2.Services
             //await _settingsRepository.SetLanguage(language);
             Preferences.Default.Set("language",language.ToString());
             Language = language;
+            LanguageIcon = language == Language.English ? "en" : "bg";
         }
 
         public async Task<int> GetCurrentPlayerId()

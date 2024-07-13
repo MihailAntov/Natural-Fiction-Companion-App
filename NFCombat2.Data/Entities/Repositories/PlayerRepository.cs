@@ -308,10 +308,10 @@ namespace NFCombat2.Data.Entities.Repositories
 
             {
                 Id = player.Id,
+                Class = player.Class,
                 Name = player.Name,
                 Health = player.Health,
                 BaseMaxHealth = player.BaseMaxHealth,
-                Class = player.Class,
                 MaxIonization = player.MaxIonization,
                 MaxTrauma = player.MaxTrauma,
                 MaxPathogens = player.MaxPathogens,
@@ -469,9 +469,9 @@ namespace NFCombat2.Data.Entities.Repositories
                     {
                         Id = pe.Id,
                         Name = pe.Name,
+                        Class = pe.Class,
                         Health = pe.Health,
                         BaseMaxHealth = pe.BaseMaxHealth,
-                        Class = pe.Class,
                         MaxIonization = pe.MaxIonization,
                         MaxTrauma = pe.MaxTrauma,
                         MaxPathogens = pe.MaxPathogens,
@@ -513,9 +513,10 @@ namespace NFCombat2.Data.Entities.Repositories
                     {
                         Id = pe.Id,
                         Name = pe.Name,
+                        Class = pe.Class,
                         Health = pe.Health,
                         BaseMaxHealth = pe.BaseMaxHealth,
-                        Class = pe.Class,
+                        
                         MaxIonization = pe.MaxIonization,
                         MaxTrauma = pe.MaxTrauma,
                         MaxPathogens = pe.MaxPathogens,

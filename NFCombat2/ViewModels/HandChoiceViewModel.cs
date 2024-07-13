@@ -14,7 +14,7 @@ namespace NFCombat2.ViewModels
     public class HandChoiceViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly TaskCompletionSource<Hand> _taskCompletionSource;
-        public HandChoiceViewModel(TaskCompletionSource<Hand> taskCompletionSource, INameService nameService) : base(nameService)
+        public HandChoiceViewModel(TaskCompletionSource<Hand> taskCompletionSource, INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
         {
             _taskCompletionSource = taskCompletionSource;
             UpdateLanguageSpecificProperties();

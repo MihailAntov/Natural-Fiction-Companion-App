@@ -5,6 +5,12 @@
              x:Class="NFCombat2.Pages.NotePage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}" SemanticProperties.Hint="Tap to open the settings menu">
+        
+    </ToolbarItem>-->
+        <ToolbarItem IconImageSource="{Binding LanguageIcon}" Command="{Binding ChangeLanguageCommand}" SemanticProperties.Hint="Change Language"/>
+    </ContentPage.ToolbarItems>
     <Shell.TitleView>
         <Label
         Text="{Binding Title}"
@@ -21,8 +27,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Image Source="background" Aspect="Fill"/>
+        <ScrollView>
         <VerticalStackLayout>
-            <ScrollView>
+            
                 
             
             <CollectionView ItemsSource="{Binding Notes}">
@@ -36,13 +43,14 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            </ScrollView>
+            
             <ImageButton WidthRequest="45" HeightRequest="45" Source="plus" VerticalOptions="End" Command="{Binding Source={x:Reference NotePage_}, Path=BindingContext.CreateNoteCommand}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="Ivory"/>
                 </ImageButton.Behaviors>
             </ImageButton>
         </VerticalStackLayout>
+        </ScrollView>
     </Grid>
     
 </ContentPage>

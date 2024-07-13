@@ -15,5 +15,6 @@ namespace NFCombat2.Contracts
         public Task SetLanguage(Language language);
         public Task<int> GetCurrentPlayerId();
         public Task SetCurrentPlayerId(int playerId);
+        public string LanguageIcon { get; set; }
     }
 }

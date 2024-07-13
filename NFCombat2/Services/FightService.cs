@@ -49,6 +49,7 @@ namespace NFCombat2.Services
         private readonly INameService _nameService;
         private readonly ITechniqueService _techniqueService;
         private readonly IProgramService _programService;
+        private readonly ISettingsService _settingsService;
         //private readonly ISeederService _seederService;
         public FightService(
             ILogService logService, 
@@ -59,7 +60,8 @@ namespace NFCombat2.Services
             IPlayerService playerService,
             INameService nameService,
             ITechniqueService techniqueService,
-            IProgramService programService
+            IProgramService programService,
+            ISettingsService settingsService
             )
         {
             _logService = logService;
@@ -71,6 +73,7 @@ namespace NFCombat2.Services
             _nameService = nameService;
             _techniqueService = techniqueService;
             _programService = programService;
+            _settingsService = settingsService;
             
         }
 
@@ -236,7 +239,7 @@ namespace NFCombat2.Services
             }
 
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
-            var viewModel = new FightResultPopupViewModel(_fight, _nameService, taskCompletionSource);
+            var viewModel = new FightResultPopupViewModel(_fight, _nameService,_settingsService, taskCompletionSource);
             var popup = new FightResultPopupView(viewModel);
             _popupService.ShowPopup(popup);
             var output =  await taskCompletionSource.Task;

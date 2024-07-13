@@ -18,9 +18,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>-->
-            <Label FontSize="Large" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
+            <Label FontSize="Large" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
         <Label HorizontalTextAlignment="Center" FontAttributes="Italic" Text="{Binding Description}"/>
-            <Button HorizontalOptions="Center" VerticalOptions="FillAndExpand" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
+            <Button HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
     </StackLayout>
     </Border>
 </toolkit:Popup>

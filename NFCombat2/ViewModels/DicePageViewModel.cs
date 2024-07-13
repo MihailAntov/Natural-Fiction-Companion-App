@@ -13,7 +13,7 @@ namespace NFCombat2.ViewModels
     public class DicePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly Random _random;
-        public DicePageViewModel(INameService nameService) : base(nameService)
+        public DicePageViewModel(INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
         {
             UpdateLanguageSpecificProperties();
             DiceCollection = new List<Dice>();
@@ -86,6 +86,20 @@ namespace NFCombat2.ViewModels
                 {
                     _threes = value;
                     OnPropertyChanged(nameof(Threes));
+                }
+            }
+        }
+
+        private string _title;
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                if (_title != value)
+                {
+                    _title = value;
+                    OnPropertyChanged(nameof(Title));
                 }
             }
         }
@@ -240,6 +254,7 @@ namespace NFCombat2.ViewModels
 
         public override void UpdateLanguageSpecificProperties()
         {
+            Title = _nameService.Label(LabelType.DicePageTitle);
             RollButtonName = _nameService.Label(LabelType.RollButton);
             ResultFormat = _nameService.Label(LabelType.RollResultFormat);
             if (ResultVisible)

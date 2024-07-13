@@ -5,9 +5,15 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              Title="Dice Roller">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="setting.png" Command="{Binding OpenSettingsCommand}" SemanticProperties.Hint="Tap to open the settings menu">
+        
+    </ToolbarItem>-->
+        <ToolbarItem IconImageSource="{Binding LanguageIcon}" Command="{Binding ChangeLanguageCommand}" SemanticProperties.Hint="Change Language"/>
+    </ContentPage.ToolbarItems>
     <Shell.TitleView>
         <Label
-        Text="{Binding DicePageTitle}"
+        Text="{Binding Title}"
         TextColor="White"
         VerticalTextAlignment="Center"
         VerticalOptions="Center"

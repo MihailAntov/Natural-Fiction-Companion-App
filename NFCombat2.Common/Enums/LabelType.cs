@@ -26,6 +26,7 @@ namespace NFCombat2.Common.Enums
         FightPageTitle,
         NotePageTitle,
         InventoryPageTitle,
+        DicePageTitle,
         FindEpisodeButton,
         EpisodeEntryHint,
         Yes,
@@ -75,6 +76,12 @@ namespace NFCombat2.Common.Enums
         ExtraItemSection,
         PartsSection,
         AreYouSure,
-        DiscardConfirm
+        DiscardConfirm,
+        GetBookBefore,
+        GetBookAfter,
+        GetBookTitle,
+        ContactBefore,
+        ContactAfter,
+        ContactTitle
     }
 }

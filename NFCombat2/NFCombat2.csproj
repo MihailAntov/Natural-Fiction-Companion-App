@@ -80,6 +80,7 @@
 	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Fonts\Play-Bold.ttf" />
 	  <None Remove="Resources\Fonts\Play-Regular.ttf" />
+	  <None Remove="Resources\Images\addweapon.png" />
 	  <None Remove="Resources\Images\assaultrifle.png" />
 	  <None Remove="Resources\Images\background.png" />
 	  <None Remove="Resources\Images\backpack.png" />
@@ -160,10 +161,16 @@
 	  <MauiXaml Update="Pages\CharacterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ContactPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\DicePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\FightPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\GetBookPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\InventoryPage.xaml">

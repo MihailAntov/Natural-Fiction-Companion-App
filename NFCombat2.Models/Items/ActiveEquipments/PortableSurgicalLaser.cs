@@ -17,7 +17,6 @@ namespace NFCombat2.Models.Items.ActiveEquipments
             IsConsumable = true;
             Quantity = 1;
             IsInvention = true;
-            DiceMessage = "Your portable surgical laser roll:";
             RollsResult = DiceCalculator.Calculate(2);
         }
 

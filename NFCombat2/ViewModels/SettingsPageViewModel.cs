@@ -13,7 +13,7 @@ namespace NFCombat2.ViewModels
     public class SettingsPageViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private readonly ISettingsService _settingsService;
-        public SettingsPageViewModel(ISettingsService settingsService,INameService nameService) :base(nameService)
+        public SettingsPageViewModel(ISettingsService settingsService,INameService nameService) :base(nameService, settingsService)
         {
            _settingsService = settingsService;
             GetDefaultLanguage();

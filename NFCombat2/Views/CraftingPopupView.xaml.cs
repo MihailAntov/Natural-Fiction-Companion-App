@@ -10,7 +10,7 @@ public partial class CraftingPopupView : Popup
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+    }
 
     public async void OnClosed(object sender, PopupClosedEventArgs args)
     {

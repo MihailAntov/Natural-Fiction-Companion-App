@@ -19,7 +19,8 @@ namespace NFCombat2.ViewModels
         public ItemDetailsPopupViewModel(
             IAddable item,
             InventoryPageViewModel parentViewModel,
-            INameService nameService) : base (nameService)
+            INameService nameService,
+            ISettingsService settingsService) : base (nameService, settingsService)
         {
             Item = item;
             _parentViewModel = parentViewModel;

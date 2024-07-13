@@ -10,7 +10,7 @@ namespace NFCombat2.ViewModels
         private TaskCompletionSource<bool> _taskCompletionSource;
         public Command ConfirmCommand { get; set; }
         public Command CancelCommand { get; set; }
-        public ConfirmationPopupViewModel(string message , TaskCompletionSource<bool> taskCompletionSource, INameService nameService) : base (nameService)
+        public ConfirmationPopupViewModel(string message , TaskCompletionSource<bool> taskCompletionSource, INameService nameService, ISettingsService settingsService) : base (nameService, settingsService)
         {
             Message = message;
             UpdateLanguageSpecificProperties();

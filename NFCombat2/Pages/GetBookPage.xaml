@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NFCombat2.Pages.GetBookPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem SemanticProperties.Hint="EmptyBlock"/>
+    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Label
+    Text="{Binding Title}"
+    TextColor="White"
+    VerticalTextAlignment="Center"
+    VerticalOptions="Center"
+    HorizontalOptions="Center"
+    HeightRequest="50"
+    FontSize="Title"
+    FontFamily="PlayRegular"/>
+    </Shell.TitleView>
+    <Grid>
+        <Image Source="background" Aspect="Fill" />
+        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Before} " />
+                    <Span Text="https://naturalfiction.com/"
+          TextDecorations="Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TapCommand}"
+                                  CommandParameter="https://naturalfiction.com/" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                    <Span Text="{Binding After}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Grid>
+</ContentPage>
