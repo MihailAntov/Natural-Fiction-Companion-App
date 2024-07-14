@@ -1,4 +1,5 @@
-﻿using NFCombat2.Common.Enums;
+﻿using CommunityToolkit.Maui.Alerts;
+using NFCombat2.Common.Enums;
 using NFCombat2.Contracts;
 using System;
 using System.Collections.Generic;
@@ -51,38 +52,42 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
-        public ContactPageViewModel(INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
+        private IMyPopupService _popupService;
+        public ContactPageViewModel(INameService nameService, ISettingsService settingsService, IMyPopupService popupService) : base(nameService, settingsService)
         {
             UpdateLanguageSpecificProperties();
             TapCommand = new Command<string>(async(email) => await OpenEmail(email));
+            _popupService = popupService;
         }
 
         public Command TapCommand { get; set; }
         public async Task OpenEmail(string email)
         {
-            try
-            {
-                if (Email.Default.IsComposeSupported)
-                {
+            await Clipboard.SetTextAsync(email);
+            _popupService.ShowToast("Email copied to clipboard.");
+            //try
+            //{
+            //    if (Email.Default.IsComposeSupported)
+            //    {
 
-                    string subject = "";
-                    string body = "";
-                    string[] recipients = new[] { email };
+            //        string subject = "";
+            //        string body = "";
+            //        string[] recipients = new[] { email };
 
-                    var message = new EmailMessage
-                    {
-                        Subject = subject,
-                        Body = body,
-                        BodyFormat = EmailBodyFormat.PlainText,
-                        To = new List<string>(recipients)
-                    };
+            //        var message = new EmailMessage
+            //        {
+            //            Subject = subject,
+            //            Body = body,
+            //            BodyFormat = EmailBodyFormat.PlainText,
+            //            To = new List<string>(recipients)
+            //        };
 
-                    await Email.Default.ComposeAsync(message);
-                }
-            }catch (Exception)
-            {
+            //        await Email.Default.ComposeAsync(message);
+            //    }
+            //}catch (Exception)
+            //{
                 
-            }
+            //}
             
         }
 

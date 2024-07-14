@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="NFCombat2.Pages.ContactPage">
     <Shell.TitleView>
         <Label
@@ -18,24 +19,21 @@
     </ContentPage.ToolbarItems>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
-        <Image Source="background" Aspect="Fill"/>
-        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="{Binding Before} " />
-                    <Span Text="mihailantovgp@protonmail.com"
-                  TextDecorations="Underline">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding TapCommand}"
-                                          CommandParameter="mihailantovgp@protonmail.com" />
-                        </Span.GestureRecognizers>
-                    </Span>
-                    <Span Text="{Binding After}" />
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.RowSpan="3" Grid.ColumnSpan="2" Source="background" Aspect="Fill"/>
+        <Label Text="{Binding Before}" Grid.ColumnSpan="2" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        <Label Grid.Row="1" FontSize="Large"  IsEnabled="True" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="mihailantovgp@protonmail.com"></Label>
+        <ImageButton VerticalOptions="Center" Grid.Row="1" Grid.Column="1" Source="copy" Command="{Binding TapCommand}" CommandParameter="mihailantovgp@protonmail.com">
+            <ImageButton.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="Ivory"/>
+            </ImageButton.Behaviors>
+        </ImageButton>
     </Grid>
 </ContentPage>

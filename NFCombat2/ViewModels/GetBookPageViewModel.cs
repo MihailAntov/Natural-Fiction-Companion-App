@@ -55,7 +55,7 @@ namespace NFCombat2.ViewModels
         public GetBookPageViewModel(INameService nameService, ISettingsService settingsService) : base(nameService, settingsService)
         {
             UpdateLanguageSpecificProperties();
-            TapCommand = new Command<string>(async (url) => await Launcher.OpenAsync(url));
+            TapCommand = new Command<string>(async (url) => await ClickLink(url));
     }
      
         public Command TapCommand { get; set; }
@@ -64,6 +64,11 @@ namespace NFCombat2.ViewModels
             Before = _nameService.Label(LabelType.GetBookBefore);
             After = _nameService.Label(LabelType.GetBookAfter);
             Title = _nameService.Label(LabelType.GetBookTitle);
+        }
+
+        public async Task ClickLink(string url)
+        {
+            await Launcher.OpenAsync(url);
         }
     }
 }

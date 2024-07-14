@@ -18,21 +18,18 @@
     FontFamily="PlayRegular"/>
     </Shell.TitleView>
     <Grid>
-        <Image Source="background" Aspect="Fill" />
-        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="{Binding Before} " />
-                    <Span Text="https://naturalfiction.com/"
-          TextDecorations="Underline">
-                        <Span.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding TapCommand}"
-                                  CommandParameter="https://naturalfiction.com/" />
-                        </Span.GestureRecognizers>
-                    </Span>
-                    <Span Text="{Binding After}" />
-                </FormattedString>
-            </Label.FormattedText>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Grid.RowSpan="2" Source="background" Aspect="Fill" />
+        <Label Grid.Row="0" HorizontalTextAlignment="Center" VerticalTextAlignment="End" Text="{Binding Before}" FontSize="Large"/>
+        <Label Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" 
+               Text="https://naturalFiction.com/" 
+               TextDecorations="Underline" FontSize="Large">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding TapCommand}" CommandParameter="https://naturalfiction.com"/>
+            </Label.GestureRecognizers>
         </Label>
     </Grid>
 </ContentPage>

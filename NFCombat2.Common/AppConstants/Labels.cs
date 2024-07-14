@@ -161,8 +161,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.GetBookBefore, "За да използвате това приложение, ви е нужна книгата-игра Естествена Фантастика. Можете да я намерите на  " },
             {LabelType.GetBookAfter, "." },
             {LabelType.GetBookTitle, "Вземи книгата" },
-            {LabelType.ContactBefore, "Можете да пишете на " },
-            {LabelType.ContactAfter, " с коментари и въпроси." },
+            {LabelType.ContactBefore, "Можете да се свържете с нас за коментари и въпроси на " },
+            {LabelType.ContactAfter, "." },
             {LabelType.ContactTitle, "Контакти" },
 
         };
