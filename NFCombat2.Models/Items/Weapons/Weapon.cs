@@ -88,6 +88,28 @@ namespace NFCombat2.Models.Items.Weapons
             }
         }
 
+        public bool IsRanged
+        {
+            get { return MaxRange > 0; }
+        }
+
+        public bool HasFlatDamage
+        {
+            get { return FlatDamage > 0; }
+        }
+
+        public bool HasDamageDice
+        {
+            get { return DamageDice > 0; }
+        }
+
+        public bool HasWeapon
+        {
+            get { return this != null; }
+        }
+
+
+
         public string Formula { get; set; } = string.Empty;
         public int Episode { get; set; } = 0;
         public string Description { get; set; }

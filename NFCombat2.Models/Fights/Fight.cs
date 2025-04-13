@@ -57,10 +57,11 @@ namespace NFCombat2.Models.Fights
 
         public Queue<ICombatResolution> Effects { get; set; } = new Queue<ICombatResolution>();
         public bool HasBonusAction { get; set; } = false;
+        public bool HasFirstStrike { get; set; } = false;
         public int RemainingCrits { get; set; } = 0;
 
         public int Turn { get; set; } = 1;
-        public TurnPhase TurnPhase { get; set; } = TurnPhase.Move;
+        public TurnPhase TurnPhase { get; set; } = TurnPhase.FirstStrike;
 
         public List<Action> TemporaryEffects { get; set; } = new List<Action>();
 
@@ -126,7 +127,7 @@ namespace NFCombat2.Models.Fights
         public virtual void CheckWinCondition()
         {
 
-            if(!Enemies.Any(e=> e.Health > 0))
+            if(!Enemies.Any(e=> e.Health > 0) && this is not TentacleFight)
             {
                 Result = FightResult.Won;
                 return;

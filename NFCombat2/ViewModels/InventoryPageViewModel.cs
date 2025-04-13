@@ -44,8 +44,9 @@ namespace NFCombat2.ViewModels
             SetInitialValues();
             AddToPlayerCommand = new Command<string>(async (s) => await AddToPlayer(s));
             DeleteCommand = new Command<IAddable>(async (a) => await RemoveFromPlayer(a));
-            //AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s));
+            AddWeaponToPlayerCommand = new Command<string>(async (s) => await AddWeaponToPlayer(s == "main" ? Hand.MainHand : Hand.OffHand));
             GetWeaponDetailsCommand = new Command<string>(GetWeaponDetails);
+            GetWeaponDetailsViewModels();
             _popupService = popupService;
             UpdateLanguageSpecificProperties();
         }
@@ -64,6 +65,34 @@ namespace NFCombat2.ViewModels
             }
         }
 
+        private WeaponDetailsPopupViewModel _mainHandViewModel;
+        public WeaponDetailsPopupViewModel MainHandViewModel
+        {
+            get { return _mainHandViewModel; }
+            set
+            {
+                if (_mainHandViewModel != value)
+                {
+                    _mainHandViewModel = value;
+                    OnPropertyChanged(nameof(MainHandViewModel));
+                }
+            }
+        }
+
+        private WeaponDetailsPopupViewModel _offHandViewModel;
+        public WeaponDetailsPopupViewModel OffHandViewModel
+        {
+            get { return _offHandViewModel; }
+            set
+            {
+                if (_offHandViewModel != value)
+                {
+                    _offHandViewModel = value;
+                    OnPropertyChanged(nameof(OffHandViewModel));
+                }
+            }
+        }
+
         private string _addItemButton;
         public string AddItemButton
         {
@@ -77,7 +106,35 @@ namespace NFCombat2.ViewModels
                 }
             }
         }
+        private string _changeWeaponButton;
+        public string ChangeWeaponButton
+        {
+            get { return _changeWeaponButton; }
+            set
+            {
+                if (_changeWeaponButton != value)
+                {
+                    _changeWeaponButton = value;
+                    OnPropertyChanged(nameof(ChangeWeaponButton));
+                }
+            }
+        }
+
+        private string _addWeaponButton;
+        public string AddWeaponButton
+        {
+            get { return _addWeaponButton; }
+            set
+            {
+                if (_addWeaponButton != value)
+                {
+                    _addWeaponButton = value;
+                    OnPropertyChanged(nameof(AddWeaponButton));
+                }
+            }
+        }
         public Command AddToPlayerCommand { get; set; }
+        public Command AddWeaponToPlayerCommand { get; set; }
         public Command GetWeaponDetailsCommand { get; set; }
         public Command DeleteCommand { get; set; }
         public Player Player { get; set; }
@@ -404,6 +461,24 @@ namespace NFCombat2.ViewModels
             _popupService.ShowPopup(popup);
         }
 
+        public async void GetWeaponDetailsViewModels()
+        {
+            Weapon weapon1 = _playerService.CurrentPlayer.MainHand;
+            Hand hand1 = Hand.MainHand ;
+            var viewModel1 = new WeaponDetailsPopupViewModel(weapon1, this, _nameService, hand1);
+            var popup = new WeaponDetailsPopupView(viewModel1);
+            viewModel1.Self = popup;
+            _mainHandViewModel = viewModel1;
+            //_popupService.ShowPopup(popup);
+
+            Weapon weapon2 = _playerService.CurrentPlayer.OffHand;
+            Hand hand2 = Hand.OffHand;
+            var viewModel2 = new WeaponDetailsPopupViewModel(weapon2, this, _nameService, hand2);
+            var popup2 = new WeaponDetailsPopupView(viewModel2);
+            viewModel2.Self = popup;
+            _offHandViewModel = viewModel2;
+        }
+
         public async void GetItemDetails(IAddable item)
         {
             var viewModel = new ItemDetailsPopupViewModel(item, this, _nameService, _settingsService);
@@ -680,6 +755,8 @@ namespace NFCombat2.ViewModels
 
             Title = _nameService.Label(LabelType.InventoryPageTitle);
             AddItemButton = _nameService.Label(LabelType.AddItemButton);
+            ChangeWeaponButton = _nameService.Label(LabelType.ChangeWeaponButton);
+            AddWeaponButton = _nameService.Label(LabelType.AddWeaponButton);
             foreach (var item in Items)
             {
                 item.Name = _nameService.ItemName(item.ItemType);

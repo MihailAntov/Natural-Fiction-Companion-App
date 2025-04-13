@@ -160,6 +160,23 @@ namespace NFCombat2.Services
             return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.BonusActionChoice) };
         }
 
+        public IOptionList GetFirstStrikeActions(Fight fight)
+        {
+            var objects = new List<OptionType>();
+
+            if (CanShoot(fight))
+            {
+                //objects.Add("Shoot");
+                objects.Add(OptionType.Shoot);
+            }
+
+            objects.Add(OptionType.DoNothing);
+
+            var result = objects.Select(o => new Option(_nameService.Option(o), o)).ToList<IOption>();
+            fight.HasFirstStrike = false;
+            return new OptionList(result, false, false) { Label = _nameService.Label(LabelType.FirstStrikeActionChoice) };
+        }
+
         public IOptionList GetMoveActions(Fight fight)
         {
             var objects = new List<OptionType>();
@@ -297,7 +314,7 @@ namespace NFCombat2.Services
 
         private bool CanMove(Fight fight)
         {
-            if(fight is StationaryFight)
+            if(fight is StationaryFight || fight is ChaseFight)
             {
                 return false;
             }
@@ -376,31 +393,60 @@ namespace NFCombat2.Services
             if (episodeNumber == 315 )
             {
 
-                options.Label = _nameService.Label(LabelType.BlockedAntennas);
+                options.Label = _nameService.Label(LabelType.SaidFightState);
+                string antennaeLabel = _nameService.Label(LabelType.BlockedAntennae);
+                string doubleDamageLabel = _nameService.Label(LabelType.DoubleDamage);
                 var variant0 = new Variant()
                 {
-                    Text = "0",
-
+                    Text = $"0 {antennaeLabel}",
+                    DoubleDamage = false,
                     AnthenasBlocked = 0,
                     Type = VariantDescription.AnthenasBlocked
                 };
 
                 var variant1 = new Variant()
                 {
-                    Text = "1",
+                    Text = $"1 {antennaeLabel}",
+                    DoubleDamage = false,
                     AnthenasBlocked = 1,
                     Type = VariantDescription.AnthenasBlocked
                 };
 
                 var variant2 = new Variant()
                 {
-                    Text = "2",
+                    Text = $"2 {antennaeLabel}",
+                    DoubleDamage = false,
+                    AnthenasBlocked = 2,
+                    Type = VariantDescription.AnthenasBlocked
+                };
+                var variant3 = new Variant()
+                {
+                    Text = $"0 {antennaeLabel} + {doubleDamageLabel}",
+                    DoubleDamage = true,
+                    AnthenasBlocked = 0,
+
+                    Type = VariantDescription.AnthenasBlocked
+                };
+                var variant4 = new Variant()
+                {
+                    Text = $"1 {antennaeLabel} + {doubleDamageLabel}",
+                    DoubleDamage = true,
+                    AnthenasBlocked = 1,
+                    Type = VariantDescription.AnthenasBlocked
+                };
+                var variant5 = new Variant()
+                {
+                    Text = $"2 {antennaeLabel} + {doubleDamageLabel}",
+                    DoubleDamage = true,
                     AnthenasBlocked = 2,
                     Type = VariantDescription.AnthenasBlocked
                 };
                 variants.Add(new Option(variant0.Text, variant0));
                 variants.Add(new Option(variant1.Text, variant1));
                 variants.Add(new Option(variant2.Text, variant2));
+                variants.Add(new Option(variant3.Text, variant3));
+                variants.Add(new Option(variant4.Text, variant4));
+                variants.Add(new Option(variant5.Text, variant5));
             }
             else if (episodeNumber == 635)
             {

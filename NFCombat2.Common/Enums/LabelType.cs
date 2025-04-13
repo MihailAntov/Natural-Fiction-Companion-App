@@ -7,6 +7,7 @@ namespace NFCombat2.Common.Enums
     public enum LabelType
     {
         ChangeWeaponButton,
+        AddWeaponButton,
         EquipNewWeaponButton,
         UseItemButton,
         AcceptCombatResult,
@@ -43,6 +44,7 @@ namespace NFCombat2.Common.Enums
         ItemChoice,
         StandardActionChoice,
         BonusActionChoice,
+        FirstStrikeActionChoice,
         ExtraActionChoice,
         MoveActionChoice,
         WeaponChoice,
@@ -66,7 +68,7 @@ namespace NFCombat2.Common.Enums
         RoundBeginning,
         BackButton,
         WeaponRemove,
-        BlockedAntennas,
+        SaidFightState,
         UseItemOnkabuto,
         UseNothingOnKabuto,
         ChooseDistance,
@@ -82,6 +84,9 @@ namespace NFCombat2.Common.Enums
         GetBookTitle,
         ContactBefore,
         ContactAfter,
-        ContactTitle
+        ContactTitle,
+        BlockedAntennae,
+        DoubleDamage,
+        ClassReminder
     }
 }

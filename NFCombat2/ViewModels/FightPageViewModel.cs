@@ -149,7 +149,17 @@ namespace NFCombat2.ViewModels
             {
                 Enemies.Add(enemy);
             }
-            var initialOptionList = _optionsService.GetMoveActions(Fight);
+            IOptionList initialOptionList;
+            if (Fight.HasFirstStrike)
+            {
+                initialOptionList = _optionsService.GetFirstStrikeActions(Fight);
+            }
+            else
+            {
+                Fight.TurnPhase++;
+                initialOptionList = _optionsService.GetMoveActions(Fight);
+            }
+            //var initialOptionList = Fight.HasFirstStrike ? _optionsService.GetFirstStrikeActions(Fight) : _optionsService.GetMoveActions(Fight);
             _fightService.PreviousOptions = initialOptionList;
             OptionPickerViewModel.Options = new ObservableCollection<IOption>(initialOptionList.Options);
             OptionPickerViewModel.MenuLabel = initialOptionList.Label;

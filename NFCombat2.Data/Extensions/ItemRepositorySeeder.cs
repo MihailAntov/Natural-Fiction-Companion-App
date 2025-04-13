@@ -102,10 +102,13 @@ namespace NFCombat2.Data.Extensions
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.FoodCapsules},
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.GrapheneRod},
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.AluminiumCanister},
+                new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.SilverMushroom},
+                new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.EnigmaCapsule212},
+                new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.EnigmaCapsule223},
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.CrystalNecklace},
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.FuelCanister},
                 new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.MagnetDiscs},
-                new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.IceSpark},
+                new ItemEntity(){ Category = ItemCategory.GenericItem, Type = ItemType.IceSpark}
             };
 
             await repository.InsertRange(items);

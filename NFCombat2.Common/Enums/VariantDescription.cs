@@ -8,6 +8,7 @@ namespace NFCombat2.Common.Enums
         IceSpark,
         MagnetDiscs,
         AnthenasBlocked,
+        DoubleDamage,
         RookieFelinter
     }
 }

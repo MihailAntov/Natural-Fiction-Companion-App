@@ -9,6 +9,7 @@ namespace NFCombat2.Common.AppConstants
         public static Dictionary<LabelType, string> EnglishLabels = new Dictionary<LabelType, string>
         {
             {LabelType.ChangeWeaponButton, "Change" },
+            {LabelType.AddWeaponButton, "Add" },
             {LabelType.EquipNewWeaponButton, "Add" },
             {LabelType.UseItemButton, "Use" },
             {LabelType.AcceptCombatResult, "Accept" },
@@ -45,6 +46,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ItemChoice, "Choose which item to use" },
             {LabelType.StandardActionChoice, "Choose standard action" },
             {LabelType.BonusActionChoice, "Choose bonus action" },
+            {LabelType.FirstStrikeActionChoice, "Choose weapon with which to shoot Side" },
             {LabelType.ExtraActionChoice, "Choose extra action" },
             {LabelType.MoveActionChoice, "Choose move action" },
             {LabelType.WeaponChoice, "Choose a weapon to shoot with" },
@@ -67,7 +69,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.AddedPlayer, "Successfully added {0}" },
             {LabelType.RoundBeginning, "Round {0} beginning." },
             {LabelType.BackButton, "Back" },
-            {LabelType.BlockedAntennas, "Select number of blocked antennae" },
+            {LabelType.SaidFightState, "Select fight state" },
             {LabelType.UseItemOnkabuto, "Select item to use" },
             {LabelType.UseNothingOnKabuto, "Nothing" },
             {LabelType.ChooseDistance, "Distance to enemy" },
@@ -84,11 +86,15 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ContactBefore, "You can send feedback and comments at " },
             {LabelType.ContactAfter, "." },
             {LabelType.ContactTitle, "Contact us" },
+            {LabelType.BlockedAntennae, "antennas blocked" },
+            {LabelType.DoubleDamage, "Double damage" },
+            {LabelType.ClassReminder, "Double damage" },
         };
 
         public static Dictionary<LabelType, string> BulgarianLabels = new Dictionary<LabelType, string>
         {
             {LabelType.ChangeWeaponButton, "Смени" },
+            {LabelType.AddWeaponButton, "Добави" },
             {LabelType.EquipNewWeaponButton, "Добави" },
             {LabelType.UseItemButton, "Използвай" },
             {LabelType.AcceptCombatResult, "Приеми" },
@@ -114,8 +120,8 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.Yes, "Да" },
             {LabelType.No, "Не" },
             {LabelType.RollButton, "Хвърли" },
-            {LabelType.RerollButton, "Хвърли отново" },
-            {LabelType.FreeRerollButton, "Хвърли отново (-4)" },
+            {LabelType.RerollButton, "Хвърли отново (-4)" },
+            {LabelType.FreeRerollButton, "Хвърли отново" },
             {LabelType.EntryPlaceholder, "Въведи името на предмета" },
             {LabelType.EditorPlaceholder, "Въведи текст..." },
             {LabelType.TitleEditorPlaceholder, "Заглавие" },
@@ -126,6 +132,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.StandardActionChoice, "Избери действие" },
             {LabelType.MoveActionChoice, "Избери движение / предмет" },
             {LabelType.BonusActionChoice, "Избери допълнително действие" },
+            {LabelType.FirstStrikeActionChoice, "Избери с кое оръжие да стреляш по Сайд" },
             {LabelType.ExtraActionChoice, "Избери допълнително действие" },
             {LabelType.WeaponChoice, "Избери с кое оръжие да стреляш" },
             {LabelType.ModeChoice, "Избери режим" },
@@ -147,7 +154,7 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.AddedPlayer, "Успешно добави {0}" },
             {LabelType.RoundBeginning, "Начало на рунд {0}." },
             {LabelType.BackButton, "Назад" },
-            {LabelType.BlockedAntennas, "Посочи брой блокирани антени" },
+            {LabelType.SaidFightState, "Избери начало на битката" },
             {LabelType.UseItemOnkabuto, "Избери предмет, който искаш да използваш" },
             {LabelType.UseNothingOnKabuto, "Нищо" },
             {LabelType.ChooseDistance, "Дистанция до противника" },
@@ -164,6 +171,9 @@ namespace NFCombat2.Common.AppConstants
             {LabelType.ContactBefore, "Можете да се свържете с нас за коментари и въпроси на " },
             {LabelType.ContactAfter, "." },
             {LabelType.ContactTitle, "Контакти" },
+            {LabelType.BlockedAntennae, "блокирани антени" },
+            {LabelType.DoubleDamage, "Двойни щети" },
+            {LabelType.ClassReminder, "Ефектът от избора на клас влиза в действие на епизоди " },
 
         };
     }

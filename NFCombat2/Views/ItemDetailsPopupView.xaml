@@ -9,18 +9,18 @@
 
 
     <Border x:Name="popupBorder">
-        <StackLayout x:Name="popupStack"  StyleClass="Popup" BindingContext="{Binding Item}">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>-->
-            <Label FontSize="Large" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
-        <Label HorizontalTextAlignment="Center" FontAttributes="Italic" Text="{Binding Description}"/>
-            <Button HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
-    </StackLayout>
+        <StackLayout x:Name="popupStack"  StyleClass="Popup" VerticalOptions="End" BindingContext="{Binding Item}">
+            <!--<Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>-->
+                <Label FontSize="Large" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Text="{Binding Name}"/>
+                <Label HorizontalTextAlignment="Center" FontAttributes="Italic" Text="{Binding Description}"/>
+                <Button HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Text="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemButtonName}" Command="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.UseItemCommand}" IsVisible="{Binding Source={x:Reference ItemDetails}, Path=BindingContext.Item, Converter={helpers:InventoryActiveConverter}}"/>
+        </StackLayout>
     </Border>
 </toolkit:Popup>

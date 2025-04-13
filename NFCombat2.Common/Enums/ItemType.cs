@@ -98,6 +98,9 @@ namespace NFCombat2.Common.Enums
         FuelCanister,
         MagnetDiscs,
         IceSpark,
+        SilverMushroom,
+        EnigmaCapsule212,
+        EnigmaCapsule223,
 
         // misc
         KabutoMainHand,

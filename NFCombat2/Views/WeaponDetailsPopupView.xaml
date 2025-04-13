@@ -5,7 +5,7 @@
                x:Name="WeaponDetails"
                xmlns:helpers="clr-namespace:NFCombat2.Helpers"
              x:Class="NFCombat2.Views.WeaponDetailsPopupView"
-               Color="Transparent">
+               Color="Transparent" VerticalOptions="Center">
     <Border>
         <StackLayout x:Name="popupStack" StyleClass="Popup" Padding="20" BindingContext="{Binding Weapon}">
 

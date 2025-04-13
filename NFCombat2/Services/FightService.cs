@@ -296,6 +296,14 @@ namespace NFCombat2.Services
 
             switch (++_fight.TurnPhase)
             {
+                case TurnPhase.FirstStrike:
+                    if (!_fight.HasFirstStrike)
+                    {
+                        return await AfterOption();
+                    }
+                    var firstStrikeActions = _optionsService.GetFirstStrikeActions(_fight);
+                    PreviousOptions = firstStrikeActions;
+                    return firstStrikeActions;
                 case TurnPhase.Move:
                     var moves = _optionsService.GetMoveActions(_fight);
                     PreviousOptions = moves;

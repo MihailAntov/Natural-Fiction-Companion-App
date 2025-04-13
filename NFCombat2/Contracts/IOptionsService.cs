@@ -24,6 +24,7 @@ namespace NFCombat2.Contracts
         IOptionList GetStandardActions(Fight fight);
         IOptionList GetMoveActions(Fight fight);
         IOptionList GetBonusActions(Fight fight);
+        IOptionList GetFirstStrikeActions(Fight fight);
         IOptionList GetWeapons(Fight fight, bool alreadyShot);
         IOptionList GetModes(IHaveModes itemWithModes);
         IOptionList GetEndTurn(Fight fight);
